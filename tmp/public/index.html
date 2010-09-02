@@ -45,7 +45,7 @@
             }), {
                 region: 'west',
                 id: 'west-panel', // see Ext.getCmp() below
-                title: 'West',
+                title: 'Pages',
                 split: true,
                 width: 200,
                 minSize: 175,
@@ -75,14 +75,16 @@
                 region: 'center', // a center region is ALWAYS required for border layout
                 deferredRender: false,
                 activeTab: 0,     // first tab initially active
+resizeTabs      : true,
+minTabWidth     : 200,
                 items: [{
                     contentEl: 'center1',
-                    title: 'Close Me',
-                    closable: true,
+                    title: 'View',
+
                     autoScroll: true
                 }, {
                     contentEl: 'center2',
-                    title: 'Center Panel',
+                    title: 'Edit',
                     autoScroll: true
                 }]
             })]
