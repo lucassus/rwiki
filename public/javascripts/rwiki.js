@@ -73,6 +73,8 @@ Ext.onReady(function() {
         },
         listeners: {
             click: function(node, event) {
+                if (!node.leaf) return;
+                
                 Ext.Ajax.request({
                     url: '/node/content',
                     method: 'POST',
@@ -80,7 +82,8 @@ Ext.onReady(function() {
                         node: node.id
                     },
                     success: function(result, request) {
-                        Ext.get('view-container').insertHtml('beforeBegin', result.responseText);
+                        var content = result.responseText;
+                        $('#view-container').text(content);
                     },
                     failure: function(result, request) {
                     }
