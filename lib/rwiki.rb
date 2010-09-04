@@ -6,7 +6,7 @@ require 'sinatra/base'
 require 'rwiki/file_utils'
 
 module Rwiki
-  ROOT_PATH = File.dirname(__FILE__) + '/..'
+  ROOT_PATH = File.dirname(__FILE__) + '/../test/fixtures/pages'
 
   class App < Sinatra::Base
     include FileUtils

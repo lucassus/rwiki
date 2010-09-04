@@ -1,0 +1,11 @@
+<div id="shopping-cart">
+<form action="form_action" method="get">
+h3. Your cart
+
+* Item one
+* Item two
+
+<p><input type="submit" value="Check Out" /></p>
+
+</form>
+</div>

@@ -26,11 +26,6 @@ Ext.onReady(function() {
                 title: 'Navigation',
                 border: false,
                 iconCls: 'nav' // see the HEAD section for style used
-            }, {
-                title: 'Settings',
-                html: '<p>Some settings in here.</p>',
-                border: false,
-                iconCls: 'settings'
             }]
         },
         // in this instance the TabPanel is not wrapped by another panel
@@ -59,33 +54,30 @@ Ext.onReady(function() {
         useArrows: true,
         autoScroll: true,
         animate: true,
-        enableDD: true,
         containerScroll: true,
         border: false,
-        // auto create TreeLoader
         dataUrl: '/nodes',
 
         root: {
             nodeType: 'async',
-            text: 'Ext JS',
+            text: 'Home',
             draggable: false,
             id: 'src'
         },
         listeners: {
             click: function(node, event) {
                 if (!node.leaf) return;
-                
-                Ext.Ajax.request({
+
+                $.ajax({
+                    type: 'POST',
                     url: '/node/content',
-                    method: 'POST',
-                    params :{
+                    dataType: 'json',
+                    data: {
                         node: node.id
                     },
-                    success: function(result, request) {
-                        var content = result.responseText;
-                        $('#view-container').text(content);
-                    },
-                    failure: function(result, request) {
+                    success: function(data, textStatus) {
+                        $('#view-container').html(data.html);
+                        $('#edit-container').html(data.raw);
                     }
                 });
             }
