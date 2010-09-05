@@ -1,6 +1,4 @@
-h2. markItUp! Universal markup editor
-
-!../markitup/preview/picture.png(markItUp! Logo)!
+h2. markItUp! Universal
 
 *markItUp!* is a javascript over "jQuery(jQuery Website)":http://www.jquery.com plug-in which allow you to turn any textarea in a markup editor.
 

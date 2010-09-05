@@ -6,8 +6,6 @@ require 'sinatra/base'
 require 'rwiki/file_utils'
 
 module Rwiki
-  ROOT_PATH = File.dirname(__FILE__) + '/../test/fixtures/pages'
-
   class App < Sinatra::Base
     include FileUtils
 
@@ -19,14 +17,21 @@ module Rwiki
     end
 
     post '/nodes' do
-      node = params[:node]
-      node = node == 'src' ? ROOT_PATH : node
-      make_tree(node).to_json
+      dir = params[:node]
+      dir = dir == 'src' ? '/' : decode_file_name(dir)
+      make_tree(dir).to_json
     end
 
     post '/node/content' do
-      node = params[:node]
-      read_file(node).to_json
+      file_name = decode_file_name(params[:node]) + '.txt'
+      read_file(file_name).to_json
+    end
+
+    post '/node/update' do
+      file_name = decode_file_name(params[:node]) + '.txt'
+      content = params[:content]
+
+      write_file(file_name, content).to_json
     end
   end
 end
