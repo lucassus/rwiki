@@ -16,7 +16,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       },
 
       listeners: {
-        click: function(node, event) {
+        click: function(node) {
           if (node.leaf) {
             this.loadContent(node);
           } else {
@@ -31,25 +31,21 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     }, config);
 
     Rwiki.TreePanel.superclass.constructor.call(this, config);
-    this.tabPanel = config.tabPanel;
 
     this.getRootNode().expand();
   },
 
-  loadContent: function(node) {
-    var self = this;
+  setTabPanel: function(tabPanel) {
+    this.tabPanel = tabPanel;
+  },
 
-    $.ajax({
-      type: 'POST',
-      url: '/node/content',
-      dataType: 'json',
-      data: {
-        node: node.id
-      },
-      success: function(data) {
-        $('#editor').val(data.raw);
-        self.tabPanel.addFileTab(node.id, data.html);
-      }
-    });
+  loadContent: function(node) {
+    if (this.tabPanel) {
+      this.tabPanel.addTab(node.id);
+    }
+  },
+
+  getSelectedNode: function() {
+    return this.getSelectionModel().getSelectedNode();
   }
 });

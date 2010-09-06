@@ -3,10 +3,12 @@ Ext.ns('Rwiki');
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
+  var editor = new Rwiki.Editor($('textarea#editor'));
   var tabPanel = new Rwiki.TabPanel();
-  var treePanel = new Rwiki.TreePanel({
-    tabPanel: tabPanel
-  });
+  tabPanel.setEditor(editor);
+
+  var treePanel = new Rwiki.TreePanel();
+  treePanel.setTabPanel(tabPanel);
 
   var leftPanel = new Ext.Panel({
     region: 'west',
@@ -31,7 +33,7 @@ Ext.onReady(function() {
     height: 400
   });
 
-  var mainPanel = new Ext.Container({
+  var pagePanel = new Ext.Container({
     region: 'center',
     layout: 'border',
     items: [tabPanel, editorPanel]
@@ -39,42 +41,7 @@ Ext.onReady(function() {
 
   new Ext.Viewport({
     layout: 'border',
-    items: [leftPanel, mainPanel]
-  });
-
-  // hack for ff
-  $('#editor').val('');
-
-  $('#editor').bind('keydown', function() {
-    var node = treePanel.getSelectionModel().getSelectedNode();
-    if (node == null) return false;
-  });
-
-  var timeout = null;
-  $('#editor').bind('keyup', function() {
-    clearTimeout(timeout);
-    
-    var node = treePanel.getSelectionModel().getSelectedNode();
-    if (node == null) return false;
-
-    timeout = setTimeout(function() {
-      var content = $('#editor').val();
-      var fileName = node.id;
-
-      $.ajax({
-        type: 'POST',
-        url: '/node/update',
-        dataType: 'json',
-        data: {
-          node: fileName,
-          content: content
-        },
-        success: function(data) {
-          $('#' + node.id).html(data.html);
-        }
-      });
-
-    }, 900);
+    items: [leftPanel, pagePanel]
   });
 
 });

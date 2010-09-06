@@ -22,7 +22,7 @@ module Rwiki
       make_tree(dir).to_json
     end
 
-    post '/node/content' do
+    get '/node/content' do
       file_name = decode_file_name(params[:node]) + '.txt'
       read_file(file_name).to_json
     end
