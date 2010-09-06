@@ -26,7 +26,9 @@ Ext.onReady(function() {
     contentEl: 'edit-container',
     title: 'Editor',
     split: true,
-    collapsible: true
+    collapsible: true,
+    collapseMode: 'mini',
+    height: 400
   });
 
   var mainPanel = new Ext.Container({
@@ -39,17 +41,25 @@ Ext.onReady(function() {
     layout: 'border',
     items: [leftPanel, mainPanel]
   });
-  
+
+  // hack for ff
+  $('#editor').val('');
+
+  $('#editor').bind('keydown', function() {
+    var node = treePanel.getSelectionModel().getSelectedNode();
+    if (node == null) return false;
+  });
+
   var timeout = null;
   $('#editor').bind('keyup', function() {
     clearTimeout(timeout);
     
     var node = treePanel.getSelectionModel().getSelectedNode();
-    var fileName = node.id;
-    var currentTab = tabPanel.find('id', fileName)[0];
+    if (node == null) return false;
 
     timeout = setTimeout(function() {
       var content = $('#editor').val();
+      var fileName = node.id;
 
       $.ajax({
         type: 'POST',

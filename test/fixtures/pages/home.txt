@@ -1,6 +1,6 @@
-h1. Sample header test
+h1. Sample header
 
-h2. Lists sample list view
+h2. Lists sample list
 
 * An item in a bulleted (unordered) list
 * Another item in a bulleted list

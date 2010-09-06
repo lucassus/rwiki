@@ -11,4 +11,4 @@ is displayed in a fixed-width
             / ^ \
          {}/\\ //\
          __\ " " /__
-        (____/^\____)
+        (____/^\____) a rabbit (C)

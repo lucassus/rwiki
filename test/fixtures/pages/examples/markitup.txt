@@ -9,7 +9,7 @@ _Html, Textile, Wiki Syntax, Markdown, BBcode_ or even your own Markup system ca
 * integrate it easily
 * customize buttons and macros to fit all your need
 * customize keyboard shortcuts
-* customize toolbar and css look and feel
+* customize toolbar and css *look and feel*
 ** skins
 ** icons
 ** dropdown menus

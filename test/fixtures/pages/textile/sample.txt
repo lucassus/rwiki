@@ -1,8 +1,6 @@
 Search results for **Textile**:
 
-To jest tylko test eytorka ;)
-
-h1. Naglowek
+h1. Sample header
 
 h4. ["**Textile** (markup language) - Wikipedia":http://en.wikipedia.org/wiki/Textile_(markup_language)]
 
