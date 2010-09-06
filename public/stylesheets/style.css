@@ -1,12 +1,54 @@
 #edit-container {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 #editor {
-    height: 100%;
-    width: 100%;
-    font: medium;
-    font-family: courier;
+  height: 100%;
+  width: 100%;
+  font: medium;
+  font-family: courier;
+}
+
+.x-tab-panel-body div {
+  margin: 5px;
+}
+
+.x-tab-panel-body h1, h2, h3 {
+  margin-bottom: 10px;
+}
+
+.x-tab-panel-body h1 {
+  font-size: xx-large;
+}
+
+.x-tab-panel-body h2 {
+  font-size: x-large;
+}
+
+.x-tab-panel-body h3 {
+  font-size: large;
+}
+
+.x-tab-panel-body ul {
+  list-style: disc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.x-tab-panel-body ol {
+  list-style: decimal;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.x-tab-panel-body li {
+  margin-left: 30px;
+  padding-left: 5px;
+}
+
+.x-tab-panel-body p {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
