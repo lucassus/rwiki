@@ -7,6 +7,25 @@ Ext.onReady(function() {
   var tabPanel = new Rwiki.TabPanel();
   tabPanel.setEditor(editor);
 
+  editor.container.bind('contentChanged', function() {
+    var currentTab = tabPanel.getActiveTab();
+    var content = $(this).val();
+    var fileName = currentTab.id;
+
+    $.ajax({
+      type: 'POST',
+      url: '/node/update',
+      dataType: 'json',
+      data: {
+        node: fileName,
+        content: content
+      },
+      success: function(data) {
+        $('#' + currentTab.id).html(data.html);
+      }
+    });
+  });
+
   var treePanel = new Rwiki.TreePanel();
   treePanel.setTabPanel(tabPanel);
 

@@ -1,63 +1,47 @@
 Rwiki.Editor = function(container) {
   var self = this;
+
+  this.container = container;
   this.enabled = false;
 
   // hack for FF, clear text area on load
-  container.val('');
+  this.container.val('');
 
-  container.bind('keydown', function() {
+  this.container.bind('keydown', function() {
     return self.enabled;
   });
 
   var timeout = null;
-  container.bind('keyup', function() {
-    clearTimeout(timeout);
-
+  this.container.bind('keyup', function() {
     if (!self.enabled) {
       return false;
     }
 
+    clearTimeout(timeout);
     timeout = setTimeout(function() {
-      var content = container.val();
-      var fileName = currentTab.id;
-
-      $.ajax({
-        type: 'POST',
-        url: '/node/update',
-        dataType: 'json',
-        data: {
-          node: fileName,
-          content: self.getContent()
-        },
-        success: function(data) {
-          $('#' + currentTab.id).html(data.html);
-        }
-      });
-
+      self.container.trigger('contentChanged');
     }, 900);
   });
 
-  return {
-    clearContent: function() {
-      container.val('');
-      this.disable();
-    },
+  this.clearContent = function() {
+    container.val('');
+    this.disable();
+  };
 
-    getContent: function() {
-      return container.val();
-    },
+  this.getContent = function() {
+    return container.val();
+  };
 
-    setContent: function(content) {
-      container.val(content);
-      this.enable();
-    },
+  this.setContent = function(content) {
+    container.val(content);
+    this.enable();
+  };
 
-    enable: function() {
-      this.enabled = true;
-    },
+  this.enable = function() {
+    this.enabled = true;
+  };
 
-    disable: function() {
-      this.enabled = false;
-    }
+  this.disable = function() {
+    this.enabled = false;
   };
 };
