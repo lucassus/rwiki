@@ -44,7 +44,7 @@ Ext.onReady(function() {
 
   var editorPanel = new Ext.Panel({
     region: 'south',
-    contentEl: 'edit-container',
+    contentEl: 'editor-container',
     title: 'Editor',
     split: true,
     collapsible: true,

@@ -1,0 +1,152 @@
+
+.x-tab-panel-body pre, code, tt {
+	font: 1em/1.5em 'Andale Mono', 'Lucida Console', monospace;
+}
+
+.x-tab-panel-body h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 15px;
+	font-weight: bold;
+}
+
+.x-tab-panel-body b, strong {
+	font-weight: bold;
+}
+
+.x-tab-panel-body h1 {
+  font-size: xx-large;
+}
+
+.x-tab-panel-body h2 {
+  font-size: x-large;
+}
+
+.x-tab-panel-body h3 {
+  font-size: large;
+}
+
+.x-tab-panel-body h4, h5, h6 {
+  font-size: medium;
+}
+
+.x-tab-panel-body em, i, dfn {
+	font-style: italic;
+}
+
+.x-tab-panel-body dfn {
+	font-weight:bold;
+}
+
+.x-tab-panel-body p, code, pre, kbd {
+	margin:0 0 1.5em 0;
+}
+
+.x-tab-panel-body blockquote {
+	margin:0 1.5em 1.5em 1.5em;
+}
+
+.x-tab-panel-body cite {
+	font-style: italic;
+}
+
+.x-tab-panel-body li ul, li ol {
+	margin:0 1.5em;
+}
+
+.x-tab-panel-body ul, ol {
+	margin:0 1.5em 1.5em 1.5em;
+}
+
+.x-tab-panel-body ul li {
+	list-style-type:disc;
+}
+
+.x-tab-panel-body ol li {
+	list-style-type:decimal;
+}
+
+.x-tab-panel-body ol ol li {
+	list-style: upper-alpha;
+}
+
+.x-tab-panel-body ol ol ol li {
+	list-style: lower-roman;
+}
+
+.x-tab-panel-body ol ol ol ol li {
+	list-style: lower-alpha;
+}
+
+.x-tab-panel-body dl {
+	margin:0 0 1.5em 0;
+}
+
+.x-tab-panel-body dl dt {
+	font-weight:bold;
+}
+
+.x-tab-panel-body dd {
+	margin-left:1.5em;
+}
+
+.x-tab-panel-body table {
+	margin-bottom:1.4em;
+	width:100%;
+}
+
+.x-tab-panel-body th {
+	font-weight:bold;
+}
+
+.x-tab-panel-body th, td, caption {
+	padding:4px 10px 4px 5px;
+}
+
+.x-tab-panel-body tfoot {
+	font-style:italic;
+}
+
+.x-tab-panel-body sup, sub {
+	line-height:0;
+}
+
+.x-tab-panel-body abbr, acronym {
+	border-bottom: 1px dotted;
+}
+
+.x-tab-panel-body address {
+	margin:0 0 1.5em;
+	font-style:italic;
+}
+
+.x-tab-panel-body del {
+	text-decoration: line-through;
+}
+
+.x-tab-panel-body pre {
+	margin:1.5em 0;
+	white-space:pre;
+}
+
+.x-tab-panel-body img.centered, .aligncenter, div.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.x-tab-panel-body img.alignright {
+	display: inline;
+}
+
+.x-tab-panel-body img.alignleft {
+	display: inline;
+}
+
+.x-tab-panel-body .alignright {
+	float: right;
+	margin-left: 10px;
+}
+
+.x-tab-panel-body .alignleft {
+	float: left;
+	margin-right: 10px;
+}
