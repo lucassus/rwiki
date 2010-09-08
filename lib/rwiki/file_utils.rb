@@ -13,9 +13,9 @@ module Rwiki
         file_name_with_directory = File.join(directory, file_name)
         id = encode_file_name(file_name_with_directory)
         if File.directory?(File.join(ROOT_PATH, file_name_with_directory))
-          tree << {:text => file_name, :cls => 'folder', :id => id}
+          tree << { :text => file_name, :cls => 'folder', :id => "#{id}-dir" }
         else
-          tree << {:text => file_name, :cls => 'file', :leaf => true, :id => id}
+          tree << { :text => file_name, :cls => 'file', :leaf => true, :id => id }
         end
       end
 
@@ -24,7 +24,7 @@ module Rwiki
 
     def parse_content(raw)
       html = RedCloth.new(raw).to_html
-      return {:raw => raw, :html => html}
+      return { :raw => raw, :html => html }
     end
 
     def read_file(file_name)
@@ -44,8 +44,12 @@ module Rwiki
       file_name.gsub('/', '-').gsub('.txt', '')
     end
 
+    def decode_directory_name(id)
+      
+    end
+
     def decode_file_name(id)
-      id.gsub('-', '/')
+      id.gsub('-', '/') + '.txt'
     end
 
   end

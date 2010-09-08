@@ -12,7 +12,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         nodeType: 'async',
         text: 'Home',
         draggable: false,
-        id: 'src'
+        id: 'src-dir'
       },
 
       listeners: {

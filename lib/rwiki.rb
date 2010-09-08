@@ -3,9 +3,9 @@ require 'json'
 require 'sinatra'
 require 'sinatra/base'
 
-require 'rwiki/file_utils'
-
 module Rwiki
+  autoload :FileUtils, 'rwiki/file_utils'
+
   class App < Sinatra::Base
     include FileUtils
 
@@ -17,18 +17,20 @@ module Rwiki
     end
 
     post '/nodes' do
-      dir = params[:node]
-      dir = dir == 'src' ? '/' : decode_file_name(dir)
+      node_id = params[:node]
+      dir = node_id == 'src-dir' ? '/' : decode_directory_name(node_id)
       make_tree(dir).to_json
     end
 
     get '/node/content' do
-      file_name = decode_file_name(params[:node]) + '.txt'
+      node_id = params[:node]
+      file_name = decode_file_name(node_id)
       read_file(file_name).to_json
     end
 
     post '/node/update' do
-      file_name = decode_file_name(params[:node]) + '.txt'
+      node_id = params[:node]
+      file_name = decode_file_name(node_id)
       content = params[:content]
 
       write_file(file_name, content).to_json
