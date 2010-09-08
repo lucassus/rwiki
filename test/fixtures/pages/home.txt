@@ -1,23 +1,82 @@
-h1. Sample header
+h1. Sample ruby code
 
-h2. Lists sample list
+<code lang="ruby">
+require 'erb'
+require 'json'
+require 'sinatra'
+require 'sinatra/base'
 
-* An item in a bulleted (unordered) list
-* Another item in a bulleted list
-** Second Level
-** Second Level Items
-*** Third level
-*** Fourth level test
-**** yet another level
+module Rwiki
+  autoload :FileUtils, 'rwiki/file_utils'
 
-Sample text ;)
+  def foo(bar)
+    raise ArgumentError
+  end
 
-# An item in an enumerated (ordered) list
-# Another item in an enumerated list
-## Another level in an enumerated list
+  class App < Sinatra::Base
+    include FileUtils
 
-h2. Tables
+    set :public, File.dirname(__FILE__) + '/../public'
 
-|_. Header |_. Header |_. Header |
-| Cell 1 | Cell 2 | Cell 3 |
-| Cell 1 | Cell 2 | Cell 3 |
+    get '/' do
+      @time = Time.now
+      erb :index
+    end
+
+    post '/nodes' do
+      node_id = params[:node]
+      dir = node_id == 'src-dir' ? '/' : decode_directory_name(node_id)
+      make_tree(dir).to_json
+    end
+
+    get '/node/content' do
+      node_id = params[:node]
+      file_name = decode_file_name(node_id)
+      read_file(file_name).to_json
+    end
+
+    post '/node/update' do
+      node_id = params[:node]
+      file_name = decode_file_name(node_id)
+      content = params[:content]
+
+      write_file(file_name, content).to_json
+    end
+  end
+end
+</code>
+
+h1. Sample JavaScript code
+
+<code lang="javascript">
+  var textileSettings = {
+      nameSpace: "textile", // Useful to prevent multi-instances CSS conflict
+      onShiftEnter: {keepDefault:false, replaceWith:'\n\n'},
+      markupSet: [
+          {name:'Heading 1', key:'1', openWith:'h1(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
+          {name:'Heading 2', key:'2', openWith:'h2(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
+          {name:'Heading 3', key:'3', openWith:'h3(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
+          {name:'Heading 4', key:'4', openWith:'h4(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
+          {name:'Heading 5', key:'5', openWith:'h5(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
+          {name:'Heading 6', key:'6', openWith:'h6(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
+          {name:'Paragraph', key:'P', openWith:'p(!(([![Class]!]))!). '},
+          {separator:'---------------' },
+          {name:'Bold', key:'B', closeWith:'*', openWith:'*'},
+          {name:'Italic', key:'I', closeWith:'_', openWith:'_'},
+          {name:'Stroke through', key:'S', closeWith:'-', openWith:'-'},
+          {separator:'---------------' },
+          {name:'Bulleted list', openWith:'(!(* |!|*)!)'},
+          {name:'Numeric list', openWith:'(!(# |!|#)!)'},
+          {separator:'---------------' },
+          {name:'Picture', replaceWith:'![![Source:!:http://]!]([![Alternative text]!])!'},
+          {name:'Link', openWith:'"', closeWith:'([![Title]!])":[![Link:!:http://]!]', placeHolder:'Your text to link here...' },
+          {separator:'---------------' },
+          {name:'Quotes', openWith:'bq(!(([![Class]!]))!). '},
+          {name:'Code', openWith:'@', closeWith:'@'}
+      ],
+      resizeHandle: false,
+      afterInsert: function() {
+        self.container.trigger('contentChanged');
+      }
+  };
+</code>

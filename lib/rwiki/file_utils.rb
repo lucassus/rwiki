@@ -1,3 +1,4 @@
+require 'coderay'
 require 'redcloth'
 
 module Rwiki
@@ -23,7 +24,9 @@ module Rwiki
     end
 
     def parse_content(raw)
-      html = RedCloth.new(raw).to_html
+      raw_after_coderay = coderay(raw)
+      html = RedCloth.new(raw_after_coderay).to_html
+      
       return { :raw => raw, :html => html }
     end
 
@@ -50,6 +53,12 @@ module Rwiki
 
     def decode_file_name(id)
       id.gsub('-', '/') + '.txt'
+    end
+
+    def coderay(text)
+      text.gsub(/\<code( lang="(.+?)")?\>(.+?)\<\/code\>/m) do
+        "<notextile>#{CodeRay.scan($3, $2).div(:css => :class)}</notextile>"
+      end
     end
 
   end
