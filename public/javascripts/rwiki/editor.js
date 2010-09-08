@@ -13,7 +13,6 @@ Rwiki.Editor = function(container) {
 
   var myTextileSettings = {
       nameSpace:           "textile", // Useful to prevent multi-instances CSS conflict
-      previewParserPath:   "~/sets/textile/preview.php",
       onShiftEnter:        {keepDefault:false, replaceWith:'\n\n'},
       markupSet: [
           {name:'Heading 1', key:'1', openWith:'h1(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
@@ -35,9 +34,7 @@ Rwiki.Editor = function(container) {
           {name:'Link', openWith:'"', closeWith:'([![Title]!])":[![Link:!:http://]!]', placeHolder:'Your text to link here...' },
           {separator:'---------------' },
           {name:'Quotes', openWith:'bq(!(([![Class]!]))!). '},
-          {name:'Code', openWith:'@', closeWith:'@'},
-          {separator:'---------------' },
-          {name:'Preview', call:'preview', className:'preview'}
+          {name:'Code', openWith:'@', closeWith:'@'}
       ]
   };
 
