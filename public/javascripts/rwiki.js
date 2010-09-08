@@ -49,7 +49,13 @@ Ext.onReady(function() {
     split: true,
     collapsible: true,
     collapseMode: 'mini',
-    height: 400
+    height: 400,
+    listeners: {
+      resize: function(panel, width, height) {
+        var offset = 36;
+        $('.markItUpContainer').height(height - offset);
+      }
+    }
   });
 
   var pagePanel = new Ext.Container({

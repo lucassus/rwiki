@@ -45,7 +45,7 @@ module Rwiki
     end
 
     def decode_directory_name(id)
-      
+      id.gsub('-dir', '').gsub('-', '/')
     end
 
     def decode_file_name(id)

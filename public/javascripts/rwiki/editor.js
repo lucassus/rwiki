@@ -11,9 +11,9 @@ Rwiki.Editor = function(container) {
     return self.enabled;
   });
 
-  var myTextileSettings = {
-      nameSpace:           "textile", // Useful to prevent multi-instances CSS conflict
-      onShiftEnter:        {keepDefault:false, replaceWith:'\n\n'},
+  var textileSettings = {
+      nameSpace: "textile", // Useful to prevent multi-instances CSS conflict
+      onShiftEnter: {keepDefault:false, replaceWith:'\n\n'},
       markupSet: [
           {name:'Heading 1', key:'1', openWith:'h1(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
           {name:'Heading 2', key:'2', openWith:'h2(!(([![Class]!]))!). ', placeHolder:'Your title here...' },
@@ -35,10 +35,14 @@ Rwiki.Editor = function(container) {
           {separator:'---------------' },
           {name:'Quotes', openWith:'bq(!(([![Class]!]))!). '},
           {name:'Code', openWith:'@', closeWith:'@'}
-      ]
+      ],
+      resizeHandle: false,
+      afterInsert: function() {
+        self.container.trigger('contentChanged');
+      }
   };
 
-  container.markItUp(myTextileSettings);
+  container.markItUp(textileSettings);
 
   var timeout = null;
   this.container.bind('keyup', function() {

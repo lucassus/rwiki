@@ -5,8 +5,28 @@
 }
 
 #editor {
-  height: 100%;
-  width: 100%;
   font: medium;
   font-family: courier;
+  width: 99%;
+  height: 90%;
+}
+
+.markItUpContainer {
+  height: 364px;
+}
+
+.markItUp {
+  border: none;
+  margin: 0px;
+  width: auto;
+}
+
+.markItUpEditor {
+  background: white;
+  border: 1px solid #3C769D;
+  padding: 5px 5px 5px 5px;
+}
+
+.textile .markItUpEditor {
+  background-image: none;
 }
