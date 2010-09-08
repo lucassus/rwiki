@@ -12,57 +12,74 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         nodeType: 'async',
         text: 'Home',
         draggable: false,
-        id: 'src-dir'
-      },
-
-      listeners: {
-        click: function(node) {
-          if (node.leaf) {
-            this.loadContent(node);
-          } else {
-            if (node.isExpanded()) {
-              node.collapse();
-            } else {
-              node.expand();
-            }
-          }
-        }
+        id: 'dir-'
       }
     }, config);
 
     Rwiki.TreePanel.superclass.constructor.call(this, config);
-    this.on('contextmenu', this.onContextClick, this);
+
+    // install event handlers
+    this.on('click', this.onClick, this);
+    this.on('contextmenu', this.onContextMenu, this);
 
     this.getRootNode().expand();
   },
 
-  onContextClick : function(node, e) {
+  onContextMenu : function(node, e) {
     // create context menu on first right click
-    this._buildMenu();
-
-    this.menu.showAt(e.getXY());
-    e.stopEvent();
-  },
-
-  _buildMenu: function() {
-    if (!this.menu) {
+    if (!this.menu) { 
       this.menu = new Ext.menu.Menu({
-        id:'tree-ctx',
+        id: 'feeds-ctx',
         items: [{
-          text: 'New folder',
-          iconCls: 'new-folder',
+          text: 'Create folder',
+          id: 'create-folder',
+          iconCls: 'create-folder-icon',
           scope: this,
-          handler: function() {}
+          handler: function() {
+            this._newFolder(this.ctxNode);
+          }
         }, {
-          text: 'New page',
-          iconCls: 'new-page',
+          text: 'Create page',
+          id: 'create-page',
+          iconCls: 'create-page-icon',
           scope: this,
-          handler: function() {}
+          handler: function() {
+            this._newPage(this.ctxNode);
+          }
+        }, {
+          text: 'Delete node',
+          id: 'delete-node',
+          iconCls: 'delete-node',
+          scope: this,
+          handler: function() {
+            this._deleteNode(this.ctxNode);
+          }
         }]
       });
+      
+      this.menu.on('hide', this.onContextHide, this);
     }
+        
+    this.ctxNode = node;
+    this.menu.showAt(e.getXY());
+  },
 
-    return this.menu;
+  onContextHide : function(){
+    if (this.ctxNode) {
+      this.ctxNode = null;
+    }
+  },
+
+  onClick: function(node, e) {
+    if (node.isLeaf()) {
+      this.loadContent(node);
+    } else {
+      if (node.isExpanded()) {
+        node.collapse();
+      } else {
+        node.expand();
+      }
+    }
   },
 
   setTabPanel: function(tabPanel) {
@@ -77,5 +94,64 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   getSelectedNode: function() {
     return this.getSelectionModel().getSelectedNode();
+  },
+
+  _newFolder: function(node) {
+    if (node.cls == 'file') return false;
+
+    var name = prompt('Direcotry name:');
+    if (name != null && name != '') {
+      $.ajax({
+        type: 'POST',
+        url: '/node/create',
+        dataType: 'json',
+        data: {
+          node: node.id,
+          name: name,
+          directory: true
+        },
+        success: function(data) {
+          node.reload();
+        }
+      });
+    }
+  },
+
+  _newPage: function(node) {
+    if (node.cls == 'file') return false;
+
+    var name = prompt('Direcotry name:');
+    if (name != null && name != '') {
+      $.ajax({
+        type: 'POST',
+        url: '/node/create',
+        dataType: 'json',
+        data: {
+          node: node.id,
+          name: name,
+          directory: false
+        },
+        success: function(data) {
+          node.reload();
+        }
+      });
+    }
+  },
+
+  _deleteNode: function(node) {
+    if (confirm('Are you sure?')) {
+      $.ajax({
+        type: 'POST',
+        url: '/node/destroy',
+        dataType: 'json',
+        data: {
+          node: node.id
+        },
+        success: function(data) {
+          node.parentNode.reload();
+          // TODO close tab
+        }
+      });
+    }
   }
 });

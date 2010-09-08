@@ -35,5 +35,29 @@ module Rwiki
 
       write_file(file_name, content).to_json
     end
+
+    post '/node/create' do
+      node_id = params[:node]
+      parent_directory = decode_directory_name(node_id)
+
+      name = params[:name]
+      directory = params[:directory] == 'true'
+
+      if directory
+        create_directory(parent_directory, name)
+      else
+        create_file(parent_directory, name)
+      end
+
+      {:success => true}.to_json
+    end
+
+    post '/node/destroy' do
+      node_id = params[:node]
+      path = decode_node_name(node_id)
+      delete_node(path)
+      
+      {:success => true}.to_json
+    end
   end
 end

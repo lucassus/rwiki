@@ -48,12 +48,14 @@ Ext.onReady(function() {
     title: 'Editor',
     split: true,
     collapsible: true,
-    collapseMode: 'mini',
+    collapsed: true,
     height: 400,
     listeners: {
       resize: function(panel, width, height) {
         var offset = 36;
         $('.markItUpContainer').height(height - offset);
+        var editorOffset = 73;
+        $('#editor').height(height - editorOffset);
       }
     }
   });
