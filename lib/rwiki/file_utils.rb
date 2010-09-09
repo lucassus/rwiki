@@ -1,40 +1,32 @@
-require 'coderay'
-require 'redcloth'
-
 module Rwiki
   module FileUtils
+    include ::FileUtils
 
-    def make_tree(directory)
-      tree = []
+    def make_tree(dir)
+      tree_nodes = []
 
-      path = File.join(ROOT_PATH, directory)
+      path = File.join(ROOT_PATH, dir)
       entries = Dir.entries(path).sort
       entries.each do |file_name|
         next if file_name.match(/^\./)
 
-        file_name_with_directory = File.join(directory, file_name)
+        file_name_with_directory = File.join(dir, file_name)
         if File.directory?(File.join(ROOT_PATH, file_name_with_directory))
           id = encode_directory_name(file_name_with_directory)
-          tree << { :text => file_name, :cls => 'folder', :id => id }
+          tree_nodes << { :text => file_name, :cls => 'folder', :id => id }
         else
+          next unless file_name.match(/\.txt$/)
+          
           id = encode_file_name(file_name_with_directory)
-          tree << { :text => file_name, :cls => 'file', :leaf => true, :id => id }
+          tree_nodes << { :text => file_name, :cls => 'file', :leaf => true, :id => id }
         end
       end
 
-      return tree
-    end
-
-    def parse_content(raw)
-      raw_after_coderay = coderay(raw)
-      html = RedCloth.new(raw_after_coderay).to_html
-      
-      return { :raw => raw, :html => html }
+      return tree_nodes
     end
 
     def read_file(file_name)
-      raw = File.read(File.join(ROOT_PATH, file_name)) { |f| f.read }
-      return parse_content(raw)
+      return File.read(File.join(ROOT_PATH, file_name)) { |f| f.read }
     end
 
     def write_file(file_name, content)
@@ -42,7 +34,7 @@ module Rwiki
       file.write(content)
       file.close
 
-      return parse_content(content)
+      return content
     end
 
     def encode_directory_name(dir)
@@ -69,22 +61,16 @@ module Rwiki
       id.gsub(/^file-/, '').gsub('-', '/') + '.txt'
     end
 
-    def coderay(text)
-      text.gsub(/\<code( lang="(.+?)")?\>(.+?)\<\/code\>/m) do
-        "<notextile>#{CodeRay.scan($3, $2).div(:css => :class)}</notextile>"
-      end
-    end
-
     def create_directory(parent, name)
-      ::FileUtils.mkdir(File.join(ROOT_PATH, parent, name))
+      mkdir(File.join(ROOT_PATH, parent, name))
     end
 
     def create_file(parent, name)
-      ::FileUtils.touch(File.join(ROOT_PATH, parent, name) + '.txt')
+      touch(File.join(ROOT_PATH, parent, name) + '.txt')
     end
 
     def delete_node(name)
-      ::FileUtils.rm_rf(File.join(ROOT_PATH, name))
+      rm_rf(File.join(ROOT_PATH, name))
     end
 
   end

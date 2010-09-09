@@ -50,6 +50,7 @@ Ext.onReady(function() {
     collapsible: true,
     collapsed: true,
     height: 400,
+    
     listeners: {
       resize: function(panel, width, height) {
         var offset = 36;
