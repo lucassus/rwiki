@@ -42,3 +42,19 @@
 .icon-collapse-all {
   background-image: url(../images/icons/collapse-all.gif) !important;
 }
+
+.icon-page {
+  background-image: url(../images/icons/page.png) !important;
+}
+
+.icon-create-folder {
+  background-image: url(../images/icons/folder_add.png) !important;
+}
+
+.icon-create-page {
+  background-image: url(../images/icons/page_add.png) !important;
+}
+
+.icon-delete-node {
+  background-image: url(../images/icons/delete.png) !important;
+}

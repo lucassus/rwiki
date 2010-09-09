@@ -33,7 +33,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         closable: true,
         id: nodeId,
         title: title,
-        iconCls: 'tabs'
+        iconCls: 'icon-page'
       });
 
       this.add(pagePanel).show();

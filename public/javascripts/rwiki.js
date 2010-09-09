@@ -49,6 +49,7 @@ Ext.onReady(function() {
     title: 'Pages',
     split: true,
     collapsible: true,
+    width: 200,
     minSize: 175,
     maxSize: 400,
     margins: '0 0 0 5',

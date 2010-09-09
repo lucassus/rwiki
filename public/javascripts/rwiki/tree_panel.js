@@ -1,14 +1,8 @@
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function(config) {
-    config = Ext.apply({
-      useArrows: true,
-      autoScroll: true,
-      animate: true,
-      containerScroll: true,
-      border: false,
-      dataUrl: '/nodes',
-
-      tbar: [' ',
+    
+    var toolBar = new Ext.Toolbar({
+      items: [
       new Ext.form.TextField({
         width: 200,
         emptyText: 'Find a Page',
@@ -27,15 +21,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
           },
           scope: this
         }
-      }), ' ', ' ',
-      {
+      }), {
         iconCls: 'icon-expand-all',
         tooltip: 'Expand All',
         handler: function() {
           this.root.expand(true);
         },
         scope: this
-      }, '-', {
+      }, {
         iconCls: 'icon-collapse-all',
         tooltip: 'Collapse All',
         handler: function(){
@@ -43,7 +36,19 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
           this.root.expand();
         },
         scope: this
-      }],
+      }]
+    });
+
+    config = Ext.apply({
+      rootVisible: false,
+      useArrows: true,
+      autoScroll: true,
+      animate: true,
+      containerScroll: false,
+      border: false,
+      dataUrl: '/nodes',
+
+      tbar: toolBar,
 
       root: {
         nodeType: 'async',
@@ -62,19 +67,19 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   filterTree: function(t, e){
-		var text = t.getValue();
-		if (!text) {
-			this.filter.clear();
-			return;
-		}
+    var text = t.getValue();
+    if (!text) {
+      this.filter.clear();
+      return;
+    }
 
     this.expandAll();
 
-		var re = new RegExp(Ext.escapeRe(text), 'i');
-		this.filter.filterBy(function(n) {
-			return !n.isLeaf() || re.test(n.text);
-		});
-	},
+    var re = new RegExp(Ext.escapeRe(text), 'i');
+    this.filter.filterBy(function(n) {
+      return !n.isLeaf() || re.test(n.text);
+    });
+  },
 
   onContextMenu : function(node, e) {
     // create context menu on first right click
@@ -84,7 +89,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         items: [{
           text: 'Create folder',
           id: 'create-folder',
-          iconCls: 'create-folder-icon',
+          iconCls: 'icon-create-folder',
           scope: this,
           handler: function() {
             this._newFolder(this.ctxNode);
@@ -92,7 +97,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         }, {
           text: 'Create page',
           id: 'create-page',
-          iconCls: 'create-page-icon',
+          iconCls: 'icon-create-page',
           scope: this,
           handler: function() {
             this._newPage(this.ctxNode);
@@ -100,7 +105,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         }, {
           text: 'Delete node',
           id: 'delete-node',
-          iconCls: 'delete-node',
+          iconCls: 'icon-delete-node',
           scope: this,
           handler: function() {
             this._deleteNode(this.ctxNode);

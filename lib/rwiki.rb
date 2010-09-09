@@ -41,6 +41,7 @@ module Rwiki
 
     post '/node/create' do
       node = params[:node]
+      node = node == 'root-dir' ? '.' : node
       name = params[:name]
       directory = params[:directory] == 'true'
 
