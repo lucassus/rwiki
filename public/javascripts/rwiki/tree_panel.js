@@ -13,7 +13,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         width: 200,
         emptyText: 'Find a Page',
         enableKeyEvents: true,
-        listeners:{
+        listeners: {
           render: function(f) {
             this.filter = new Ext.tree.TreeFilter(this, {
               clearBlank: true,
@@ -40,6 +40,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         tooltip: 'Collapse All',
         handler: function(){
           this.root.collapse(true);
+          this.root.expand();
         },
         scope: this
       }],
@@ -55,37 +56,23 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     Rwiki.TreePanel.superclass.constructor.call(this, config);
 
     // install event handlers
-    this.on('click', this.onClick, this);
     this.on('contextmenu', this.onContextMenu, this);
 
-    this.getRootNode().expand();
+    this.root.expand();
   },
 
   filterTree: function(t, e){
 		var text = t.getValue();
-		Ext.each(this.hiddenPkgs, function(n) {
-			n.ui.show();
-		});
-
 		if (!text) {
 			this.filter.clear();
 			return;
 		}
-		this.expandAll();
 
-		var re = new RegExp('^' + Ext.escapeRe(text), 'i');
+    this.expandAll();
+
+		var re = new RegExp(Ext.escapeRe(text), 'i');
 		this.filter.filterBy(function(n) {
-			return !n.attributes.isClass || re.test(n.text);
-		});
-
-		// hide empty packages that weren't filtered
-		this.hiddenPkgs = [];
-    var me = this;
-		this.root.cascade(function(n){
-			if(!n.attributes.isClass && n.ui.ctNode.offsetHeight < 3){
-				n.ui.hide();
-				me.hiddenPkgs.push(n);
-			}
+			return !n.isLeaf() || re.test(n.text);
 		});
 	},
 
@@ -128,26 +115,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.menu.showAt(e.getXY());
   },
 
-  onContextHide: function(){
+  onContextHide: function() {
     if (this.ctxNode) {
       this.ctxNode = null;
     }
   },
 
-  onClick: function(node, e) {
-    if (node.isLeaf()) {
-      this.loadContent(node);
-    }
-  },
-
   setTabPanel: function(tabPanel) {
     this.tabPanel = tabPanel;
-  },
-
-  loadContent: function(node) {
-    if (this.tabPanel) {
-      this.tabPanel.addTab(node.id);
-    }
   },
 
   getSelectedNode: function() {
@@ -178,7 +153,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   _newPage: function(node) {
     if (node.cls == 'file') return false;
 
-    var name = prompt('Direcotry name:');
+    var name = prompt('Page name:');
     if (name != null && name != '') {
       $.ajax({
         type: 'POST',

@@ -34,3 +34,11 @@
 .x-tab-panel-body {
   padding: 5px;
 }
+
+.icon-expand-all {
+  background-image: url(../images/icons/expand-all.gif) !important;
+}
+
+.icon-collapse-all {
+  background-image: url(../images/icons/collapse-all.gif) !important;
+}

@@ -25,17 +25,14 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     Rwiki.TabPanel.superclass.constructor.call(this, config);
   },
 
-  addTab: function(id) {
-    var currentTab = this.getTabById(id);
+  updateOrCreateTab: function(nodeId, title) {
+    var currentTab = this.getTabById(nodeId);
 
     if (!currentTab) {
       var pagePanel = new Ext.Container({
         closable: true,
-        id: id,
-        data: {
-          fileName: id
-        },
-        title: id,
+        id: nodeId,
+        title: title,
         iconCls: 'tabs'
       });
 
@@ -61,8 +58,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       },
       success: function(data) {
         self.editor.setContent(data.raw);
-        var id = Rwiki.escapedId(fileName);
-        $(id).html(data.html);
+        
+        var nodeId = Rwiki.escapedId(fileName);
+        $(nodeId).html(data.html);
       }
     });
   },

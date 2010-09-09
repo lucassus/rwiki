@@ -2,8 +2,8 @@ Ext.ns('Rwiki');
 
 /**
  * Escapes any non-words characters.
- * Used for generating elements id for jQuery selectors.
- * @returs escaped text
+ * Used for generating elements ids for jQuery selectors.
+ * @returs escaped node id
  */
 Rwiki.escapedId = function(id) {
   return '#' + id.replace(/(\W)/g, '\\$1');
@@ -30,14 +30,18 @@ Ext.onReady(function() {
         content: content
       },
       success: function(data) {
-        var id = Rwiki.escapedId(currentTab.id);
-        $(id).html(data.html);
+        var nodeId = Rwiki.escapedId(fileName);
+        $(nodeId).html(data.html);
       }
     });
   });
 
   var treePanel = new Rwiki.TreePanel();
-  treePanel.setTabPanel(tabPanel);
+  treePanel.on('click',  function(node, e) {
+    if (node.isLeaf()) {
+      tabPanel.updateOrCreateTab(node.id, node.text);
+    }
+  });
 
   var leftPanel = new Ext.Panel({
     region: 'west',
@@ -45,7 +49,6 @@ Ext.onReady(function() {
     title: 'Pages',
     split: true,
     collapsible: true,
-    width: 200,
     minSize: 175,
     maxSize: 400,
     margins: '0 0 0 5',
