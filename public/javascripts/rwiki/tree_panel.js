@@ -48,7 +48,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         nodeType: 'async',
         text: 'Home',
         draggable: false,
-        id: 'dir-'
+        id: 'root-dir'
       }
     }, config);
 
@@ -128,7 +128,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.menu.showAt(e.getXY());
   },
 
-  onContextHide : function(){
+  onContextHide: function(){
     if (this.ctxNode) {
       this.ctxNode = null;
     }
@@ -137,12 +137,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   onClick: function(node, e) {
     if (node.isLeaf()) {
       this.loadContent(node);
-    } else {
-      if (node.isExpanded()) {
-        node.collapse();
-      } else {
-        node.expand();
-      }
     }
   },
 

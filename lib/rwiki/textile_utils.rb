@@ -4,6 +4,8 @@ require 'redcloth'
 module Rwiki
   module TextileUtils
 
+    HEADERS_REGEXP = /^\s*h([1-6])\.\s+(.*)/.freeze
+
     def parse_content(raw)
       raw_after_coderay = coderay(raw)
       html = parse(raw_after_coderay)
@@ -21,10 +23,8 @@ module Rwiki
     end
 
     def generate_toc(raw)
-      headreg = /^\s*h([1-6])\.\s+(.*)/
-
       toc = ''
-    	raw.gsub(headreg) do |match|
+    	raw.gsub(HEADERS_REGEXP) do |match|
     		level = $1.to_i
     		name = $2
     		
@@ -36,9 +36,7 @@ module Rwiki
     end
 
     def parse(raw)
-      headreg = /^\s*h([1-6])\.\s+(.*)/
-
-    	raw.gsub!(headreg) do |match|
+    	raw.gsub!(HEADERS_REGEXP) do |match|
     		number = $1
     		name = $2
     		header = name.gsub(/\s/, "+")

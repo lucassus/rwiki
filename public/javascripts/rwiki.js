@@ -1,5 +1,14 @@
 Ext.ns('Rwiki');
 
+/**
+ * Escapes any non-words characters.
+ * Used for generating elements id for jQuery selectors.
+ * @returs escaped text
+ */
+Rwiki.escapedId = function(id) {
+  return '#' + id.replace(/(\W)/g, '\\$1');
+};
+
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
@@ -21,7 +30,8 @@ Ext.onReady(function() {
         content: content
       },
       success: function(data) {
-        $('#' + currentTab.id).html(data.html);
+        var id = Rwiki.escapedId(currentTab.id);
+        $(id).html(data.html);
       }
     });
   });

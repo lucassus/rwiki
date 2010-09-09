@@ -32,7 +32,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       var pagePanel = new Ext.Container({
         closable: true,
         id: id,
-        title: id.replace(/-/g, '/'),
+        data: {
+          fileName: id
+        },
+        title: id,
         iconCls: 'tabs'
       });
 
@@ -46,7 +49,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     this.editor = editor;
   },
 
-  loadPageContent: function(id) {
+  loadPageContent: function(fileName) {
     var self = this;
     
     $.ajax({
@@ -54,11 +57,12 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       url: '/node/content',
       dataType: 'json',
       data: {
-        node: id
+        node: fileName
       },
       success: function(data) {
         self.editor.setContent(data.raw);
-        $('#' + id).html(data.html);
+        var id = Rwiki.escapedId(fileName);
+        $(id).html(data.html);
       }
     });
   },

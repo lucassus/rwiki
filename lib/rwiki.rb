@@ -18,49 +18,44 @@ module Rwiki
     end
 
     post '/nodes' do
-      node_id = params[:node]
-      dir = node_id == 'dir-' ? Dir.pwd : decode_directory_name(node_id)
+      node = params[:node]
+      node = node == 'root-dir' ? '.' : node
 
-      make_tree(dir).to_json
+      make_tree(node).to_json
     end
 
     get '/node/content' do
-      node_id = params[:node]
-      file_name = decode_file_name(node_id)
+      node = params[:node]
       
-      raw = read_file(file_name)
+      raw = read_file(node)
       parse_content(raw).to_json
     end
 
     post '/node/update' do
-      node_id = params[:node]
-      file_name = decode_file_name(node_id)
+      node = params[:node]
       content = params[:content]
 
-      raw = write_file(file_name, content)
+      raw = write_file(node, content)
       parse_content(raw).to_json
     end
 
     post '/node/create' do
-      node_id = params[:node]
-      parent_directory = decode_directory_name(node_id)
-
+      node = params[:node]
       name = params[:name]
       directory = params[:directory] == 'true'
 
       if directory
-        create_directory(parent_directory, name)
+        create_directory(node, name)
       else
-        create_file(parent_directory, name)
+        create_file(node, name)
       end
 
       { :success => true }.to_json
     end
 
     post '/node/destroy' do
-      node_id = params[:node]
-      path = decode_node_name(node_id)
-      delete_node(path)
+      node = params[:node]
+      delete_node(node)
       
       { :success => true }.to_json
     end
