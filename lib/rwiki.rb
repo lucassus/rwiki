@@ -11,7 +11,7 @@ module Rwiki
     include FileUtils
     include TextileUtils
 
-    set :public, File.dirname(__FILE__) + '/../public'
+    set :root, File.dirname(__FILE__) + '/..'
 
     get '/' do
       erb :index
@@ -19,7 +19,7 @@ module Rwiki
 
     post '/nodes' do
       node_id = params[:node]
-      dir = node_id == 'dir-' ? '/' : decode_directory_name(node_id)
+      dir = node_id == 'dir-' ? Dir.pwd : decode_directory_name(node_id)
 
       make_tree(dir).to_json
     end

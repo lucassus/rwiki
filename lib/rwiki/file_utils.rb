@@ -5,13 +5,12 @@ module Rwiki
     def make_tree(dir)
       tree_nodes = []
 
-      path = File.join(ROOT_PATH, dir)
-      entries = Dir.entries(path).sort
+      entries = Dir.entries(dir).sort
       entries.each do |file_name|
         next if file_name.match(/^\./)
 
         file_name_with_directory = File.join(dir, file_name)
-        if File.directory?(File.join(ROOT_PATH, file_name_with_directory))
+        if File.directory?(file_name_with_directory)
           id = encode_directory_name(file_name_with_directory)
           tree_nodes << { :text => file_name, :cls => 'folder', :id => id }
         else
@@ -26,11 +25,11 @@ module Rwiki
     end
 
     def read_file(file_name)
-      return File.read(File.join(ROOT_PATH, file_name)) { |f| f.read }
+      return File.read(file_name) { |f| f.read }
     end
 
     def write_file(file_name, content)
-      file = File.open(File.join(ROOT_PATH, file_name), 'w')
+      file = File.open(file_name, 'w')
       file.write(content)
       file.close
 
@@ -62,15 +61,15 @@ module Rwiki
     end
 
     def create_directory(parent, name)
-      mkdir(File.join(ROOT_PATH, parent, name))
+      mkdir(File.join(parent, name))
     end
 
     def create_file(parent, name)
-      touch(File.join(ROOT_PATH, parent, name) + '.txt')
+      touch(File.join(parent, name) + '.txt')
     end
 
     def delete_node(name)
-      rm_rf(File.join(ROOT_PATH, name))
+      rm_rf(File.join(name))
     end
 
   end

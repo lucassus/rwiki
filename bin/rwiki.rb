@@ -4,10 +4,12 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rwiki'
 
-root_path = Dir.pwd
-root_path = File.join(root_path, ARGV[0]) if ARGV[0]
-ROOT_PATH = root_path
+working_directory = ARGV[0] || Dir.pwd
+unless working_directory.start_with?('/')
+  working_directory = File.join(Dir.pwd, working_directory)
+end
 
-p "Working directory: #{root_path}"
+p "Working directory: #{working_directory}"
+Dir.chdir(working_directory)
 
 Rwiki::App.run!
