@@ -120,6 +120,10 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     menu.node = node;
     node.select();
 
+    var isRoot = node.id == 'root-dir';
+    menu.setItemDisabled('delete-node', isRoot);
+    menu.setItemDisabled('rename-node', isRoot);
+
     menu.showAt(e.getXY());
   },
 

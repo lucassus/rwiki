@@ -10,11 +10,12 @@ module Rwiki
         next if file_name.match(/^\./)
 
         file_name_with_directory = File.join(dir, file_name)
+        tree_node = { :text => file_name, :id => file_name_with_directory }
         if File.directory?(file_name_with_directory)
-          tree_nodes << { :text => file_name, :cls => 'folder', :id => file_name_with_directory }
+          tree_nodes << tree_node.merge(:cls => 'folder')
         else
           next unless file_name.match(/\.txt$/)
-          tree_nodes << { :text => file_name, :cls => 'file', :leaf => true, :id => file_name_with_directory }
+          tree_nodes << tree_node.merge(:cls => 'file', :leaf => true)
         end
       end
 

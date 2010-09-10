@@ -30,5 +30,20 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     }, config);
 
     Rwiki.TreePanel.Menu.superclass.constructor.call(this, config);
+  },
+
+  getItemByCommand: function(command) {
+    var item = this.items.find(function(item) {
+      return command === item.command;
+    });
+
+    return item;
+  },
+
+  setItemDisabled: function(command, disabled) {
+    var item = this.getItemByCommand(command);
+    if (item) {
+      item.setDisabled(disabled);
+    }
   }
 });
