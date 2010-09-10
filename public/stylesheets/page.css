@@ -1,10 +1,27 @@
+.toc {
+  clear: both;
+  float: right;
+  font-size: 80%;
+  width: 250px;
+}
+
+.toc ul {
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0;
+}
+
+.toc a {
+  color: black;
+}
+
 .x-tab-panel-body h1, h2, h3, h4, h5, h6 {
   margin-bottom: 15px;
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .x-tab-panel-body b, strong {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 .x-tab-panel-body h1 {
@@ -24,124 +41,124 @@
 }
 
 .x-tab-panel-body em, i, dfn {
-	font-style: italic;
+  font-style: italic;
 }
 
 .x-tab-panel-body dfn {
-	font-weight:bold;
+  font-weight:bold;
 }
 
 .x-tab-panel-body p, code, pre, kbd {
-	margin:0 0 1.5em 0;
+  margin:0 0 1.5em 0;
 }
 
 .x-tab-panel-body blockquote {
-	margin:0 1.5em 1.5em 1.5em;
+  margin:0 1.5em 1.5em 1.5em;
 }
 
 .x-tab-panel-body cite {
-	font-style: italic;
+  font-style: italic;
 }
 
 .x-tab-panel-body li ul, li ol {
-	margin:0 1.5em;
+  margin:0 1.5em;
 }
 
 .x-tab-panel-body ul, ol {
-	margin:0 1.5em 1.5em 1.5em;
+  margin:0 1.5em 1.5em 1.5em;
 }
 
 .x-tab-panel-body ul li {
-	list-style-type:disc;
+  list-style-type:disc;
 }
 
 .x-tab-panel-body ol li {
-	list-style-type:decimal;
+  list-style-type:decimal;
 }
 
 .x-tab-panel-body ol ol li {
-	list-style: upper-alpha;
+  list-style: upper-alpha;
 }
 
 .x-tab-panel-body ol ol ol li {
-	list-style: lower-roman;
+  list-style: lower-roman;
 }
 
 .x-tab-panel-body ol ol ol ol li {
-	list-style: lower-alpha;
+  list-style: lower-alpha;
 }
 
 .x-tab-panel-body dl {
-	margin:0 0 1.5em 0;
+  margin:0 0 1.5em 0;
 }
 
 .x-tab-panel-body dl dt {
-	font-weight:bold;
+  font-weight:bold;
 }
 
 .x-tab-panel-body dd {
-	margin-left:1.5em;
+  margin-left:1.5em;
 }
 
 .x-tab-panel-body table {
-	margin-bottom:1.4em;
-	width:100%;
+  margin-bottom:1.4em;
+  width:100%;
 }
 
 .x-tab-panel-body th {
-	font-weight:bold;
+  font-weight:bold;
 }
 
 .x-tab-panel-body th, td, caption {
-	padding:4px 10px 4px 5px;
+  padding:4px 10px 4px 5px;
 }
 
 .x-tab-panel-body tfoot {
-	font-style:italic;
+  font-style:italic;
 }
 
 .x-tab-panel-body sup, sub {
-	line-height:0;
+  line-height:0;
 }
 
 .x-tab-panel-body abbr, acronym {
-	border-bottom: 1px dotted;
+  border-bottom: 1px dotted;
 }
 
 .x-tab-panel-body address {
-	margin:0 0 1.5em;
-	font-style:italic;
+  margin:0 0 1.5em;
+  font-style:italic;
 }
 
 .x-tab-panel-body del {
-	text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .x-tab-panel-body pre {
-	margin:1.5em 0;
-	white-space:pre;
+  margin:1.5em 0;
+  white-space:pre;
 }
 
 .x-tab-panel-body img.centered, .aligncenter, div.aligncenter {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .x-tab-panel-body img.alignright {
-	display: inline;
+  display: inline;
 }
 
 .x-tab-panel-body img.alignleft {
-	display: inline;
+  display: inline;
 }
 
 .x-tab-panel-body .alignright {
-	float: right;
-	margin-left: 10px;
+  float: right;
+  margin-left: 10px;
 }
 
 .x-tab-panel-body .alignleft {
-	float: left;
-	margin-right: 10px;
+  float: left;
+  margin-right: 10px;
 }

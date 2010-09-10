@@ -40,7 +40,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
 
     config = Ext.apply({
-      rootVisible: false,
+      rootVisible: true,
       useArrows: true,
       autoScroll: true,
       animate: true,
@@ -82,42 +82,45 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onContextMenu : function(node, e) {
-    // create context menu on first right click
-    if (!this.menu) { 
-      this.menu = new Ext.menu.Menu({
-        id: 'feeds-ctx',
-        items: [{
-          text: 'Create folder',
-          id: 'create-folder',
-          iconCls: 'icon-create-folder',
-          scope: this,
-          handler: function() {
-            this._newFolder(this.ctxNode);
-          }
-        }, {
-          text: 'Create page',
-          id: 'create-page',
-          iconCls: 'icon-create-page',
-          scope: this,
-          handler: function() {
-            this._newPage(this.ctxNode);
-          }
-        }, {
-          text: 'Delete node',
-          id: 'delete-node',
-          iconCls: 'icon-delete-node',
-          scope: this,
-          handler: function() {
-            this._deleteNode(this.ctxNode);
-          }
-        }]
-      });
-      
-      this.menu.on('hide', this.onContextHide, this);
+    this.showContextMenu(node, e);
+  },
+
+  getContextMenu: function() {
+    if (this.contextMenu == null) {
+      this.contextMenu = new Rwiki.TreePanel.Menu();
+      this.contextMenu.on('click', this.onContextClick, this);
     }
-        
-    this.ctxNode = node;
-    this.menu.showAt(e.getXY());
+
+    return this.contextMenu;
+  },
+
+  onContextClick: function(menu, item, e) {
+    var node = menu.node;
+    switch (item.command) {
+      case 'create-folder':
+        this._createFolder(node);
+        break;
+      case 'create-page':
+        this._createPage(node);
+        break;
+      case 'rename-node':
+        break;
+      case 'delete-node':
+        this._deleteNode(node);
+        break;
+    }
+  },
+
+  showContextMenu: function(node, e) {
+    if (!node) {
+      node = this.getSelectionModel().getSelectedNode();
+    }
+
+    var menu = this.getContextMenu();
+    menu.node = node;
+    node.select();
+
+    menu.showAt(e.getXY());
   },
 
   onContextHide: function() {
@@ -134,8 +137,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     return this.getSelectionModel().getSelectedNode();
   },
 
-  _newFolder: function(node) {
-    if (node.cls == 'file') return false;
+  _createFolder: function(node) {
+    if (node.cls == 'file') return;
 
     var name = prompt('Direcotry name:');
     if (name != null && name != '') {
@@ -155,8 +158,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     }
   },
 
-  _newPage: function(node) {
-    if (node.cls == 'file') return false;
+  _createPage: function(node) {
+    if (node.cls == 'file') return;
 
     var name = prompt('Page name:');
     if (name != null && name != '') {
@@ -186,10 +189,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
           node: node.id
         },
         success: function(data) {
-          node.parentNode.reload();
+          node.getParentNode().reload();
         // TODO close tab
         }
       });
     }
+  },
+
+  _renameNode: function(node) {
+
   }
 });
