@@ -124,6 +124,10 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     menu.setItemDisabled('delete-node', isRoot);
     menu.setItemDisabled('rename-node', isRoot);
 
+    var isPage = node.attributes.cls == 'page';
+    menu.setItemDisabled('create-folder', isPage);
+    menu.setItemDisabled('create-page', isPage);
+
     menu.showAt(e.getXY());
   },
 
@@ -141,46 +145,36 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     return this.getSelectionModel().getSelectedNode();
   },
 
+  _createNode: function(node, name, isFolder) {
+    if (name == null || name == '') return;
+    
+    $.ajax({
+      type: 'POST',
+      url: '/node/create',
+      dataType: 'json',
+      data: {
+        node: node.id,
+        name: name,
+        directory: isFolder
+      },
+      success: function(data) {
+        node.reload();
+      }
+    });
+  },
+
   _createFolder: function(node) {
     if (node.cls == 'file') return;
 
     var name = prompt('Direcotry name:');
-    if (name != null && name != '') {
-      $.ajax({
-        type: 'POST',
-        url: '/node/create',
-        dataType: 'json',
-        data: {
-          node: node.id,
-          name: name,
-          directory: true
-        },
-        success: function(data) {
-          node.reload();
-        }
-      });
-    }
+    this._createNode(node, name, true);
   },
 
   _createPage: function(node) {
     if (node.cls == 'file') return;
 
     var name = prompt('Page name:');
-    if (name != null && name != '') {
-      $.ajax({
-        type: 'POST',
-        url: '/node/create',
-        dataType: 'json',
-        data: {
-          node: node.id,
-          name: name,
-          directory: false
-        },
-        success: function(data) {
-          node.reload();
-        }
-      });
-    }
+    this._createNode(node, name, false);
   },
 
   _deleteNode: function(node) {
@@ -201,6 +195,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   _renameNode: function(node) {
-
+    return;
   }
 });

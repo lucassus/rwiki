@@ -15,7 +15,7 @@ module Rwiki
           tree_nodes << tree_node.merge(:cls => 'folder')
         else
           next unless file_name.match(/\.txt$/)
-          tree_nodes << tree_node.merge(:cls => 'file', :leaf => true)
+          tree_nodes << tree_node.merge(:cls => 'page', :leaf => true)
         end
       end
 
