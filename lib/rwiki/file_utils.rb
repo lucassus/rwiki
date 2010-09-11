@@ -43,8 +43,11 @@ module Rwiki
       touch(File.join(parent, name) + '.txt')
     end
 
-    def rename_node(node, new_name)
-      mv(node, new_name)
+    def rename_node(old_name, new_name)
+      new_full_name = File.join(File.dirname(old_name), new_name)
+      mv(old_name, new_full_name)
+
+      return new_full_name
     end
 
     def move_node(file_name, dir)

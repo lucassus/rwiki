@@ -52,10 +52,11 @@ module Rwiki
     end
 
     post '/node/rename' do
+      # TODO give better names, old_name is with full relative path, new_name is only a file name
       old_name = params[:oldName]
       new_name = params[:newName]
 
-      rename_node(old_name, new_name)
+      new_name = rename_node(old_name, new_name)
       { :text => new_name, :id => File.join(Dir.pwd, new_name) }.to_json
     end
 
