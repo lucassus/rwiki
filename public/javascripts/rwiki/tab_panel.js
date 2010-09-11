@@ -10,29 +10,23 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       defaults: {
         autoScroll: true
       },
-      listeners: {
-        tabchange: function(tabPanel, tab) {
-          if (tab) {
-            this.loadPageContent(tab.id);
-          } else {
-            this.editor.clearContent();
-          }
-        }
-      },
       plugins: new Ext.ux.TabCloseMenu()
     }, config);
 
     Rwiki.TabPanel.superclass.constructor.call(this, config);
   },
 
-  updateOrCreateTab: function(nodeId, title) {
-    var currentTab = this.getTabById(nodeId);
+  updateOrCreateTab: function(fileName, data) {
+    var nodeId = Rwiki.escapedId(fileName);
+    $(nodeId).html(data.html);
 
+    var currentTab = this.getTabById(fileName);
     if (!currentTab) {
+
       var pagePanel = new Ext.Container({
         closable: true,
-        id: nodeId,
-        title: title,
+        id: fileName,
+        title: fileName,
         cls: 'page-container',
         iconCls: 'icon-page'
       });
@@ -41,29 +35,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     } else {
       currentTab.show();
     }
-  },
-
-  setEditor: function(editor) {
-    this.editor = editor;
-  },
-
-  loadPageContent: function(fileName) {
-    var self = this;
-    
-    $.ajax({
-      type: 'GET',
-      url: '/node/content',
-      dataType: 'json',
-      data: {
-        node: fileName
-      },
-      success: function(data) {
-        self.editor.setContent(data.raw);
-        
-        var nodeId = Rwiki.escapedId(fileName);
-        $(nodeId).html(data.html);
-      }
-    });
   },
 
   getTabById: function(id) {
