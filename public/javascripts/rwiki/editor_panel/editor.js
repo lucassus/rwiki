@@ -1,4 +1,4 @@
-Rwiki.Editor = function(container) {
+Rwiki.EditorPanel.Editor = function(container) {
   var self = this;
 
   this.container = container;
@@ -57,7 +57,7 @@ Rwiki.Editor = function(container) {
   });
 };
 
-Rwiki.Editor.prototype = {
+Rwiki.EditorPanel.Editor.prototype = {
   clearContent: function() {
     this.container.val('');
     this.disable();

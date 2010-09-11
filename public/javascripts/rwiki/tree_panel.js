@@ -3,40 +3,40 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     var toolBar = new Ext.Toolbar({
       items: [
-        new Ext.form.TextField({
-          width: 200,
-          emptyText: 'Find a Page',
-          enableKeyEvents: true,
-          listeners: {
-            render: function(f) {
-              this.filter = new Ext.tree.TreeFilter(this, {
-                clearBlank: true,
-                autoClear: true
-              });
-            },
-            keydown: {
-              fn: this.filterTree,
-              buffer: 350,
-              scope: this
-            }
+      new Ext.form.TextField({
+        width: 200,
+        emptyText: 'Find a Page',
+        enableKeyEvents: true,
+        listeners: {
+          render: function(f) {
+            this.filter = new Ext.tree.TreeFilter(this, {
+              clearBlank: true,
+              autoClear: true
+            });
           },
-          scope: this
-        }), {
-          iconCls: 'icon-expand-all',
-          tooltip: 'Expand All',
-          handler: function() {
-            this.root.expand(true);
-          },
-          scope: this
-        }, {
-          iconCls: 'icon-collapse-all',
-          tooltip: 'Collapse All',
-          handler: function() {
-            this.root.collapse(true);
-            this.root.expand();
-          },
-          scope: this
-        }]
+          keydown: {
+            fn: this.filterTree,
+            buffer: 350,
+            scope: this
+          }
+        },
+        scope: this
+      }), {
+        iconCls: 'icon-expand-all',
+        tooltip: 'Expand All',
+        handler: function() {
+          this.root.expand(true);
+        },
+        scope: this
+      }, {
+        iconCls: 'icon-collapse-all',
+        tooltip: 'Collapse All',
+        handler: function() {
+          this.root.collapse(true);
+          this.root.expand();
+        },
+        scope: this
+      }]
     });
 
     config = Ext.apply({
@@ -47,19 +47,26 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       animate: true,
       containerScroll: false,
       border: false,
-      dataUrl: '/nodes',
+      loader: new Rwiki.TreePanel.Loader(),
 
-      tbar: toolBar,
+      enableDD: true,
+      dropConfig: {
+        appendOnly: true
+      },
 
-      root: {
-        nodeType: 'async',
-        text: 'Home',
-        draggable: false,
-        id: Rwiki.rootNodeId
-      }
+      tbar: toolBar
     }, config);
 
     Rwiki.TreePanel.superclass.constructor.call(this, config);
+
+    // setup root node
+    var root = {
+      nodeType: 'async',
+      text: 'Home',
+      draggable: false,
+      id: Rwiki.rootDirName
+    };
+    this.setRootNode(root);
 
     // install event handlers
     this.on('contextmenu', this.onContextMenu, this);
@@ -100,13 +107,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     var node = menu.node;
     switch (item.command) {
-      case 'create-folder':
-        this._createFolder(node);
+      case 'create-directory':
+        this._createDirectory(node);
         break;
       case 'create-page':
         this._createPage(node);
         break;
       case 'rename-node':
+        this._renameNode(node);
         break;
       case 'delete-node':
         this._deleteNode(node);
@@ -130,17 +138,19 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     return this.getSelectionModel().getSelectedNode();
   },
 
-  _createNode: function(node, name, isFolder) {
+  _createNode: function(node, name, isDirectory) {
     if (name == null || name == '') return;
+
+    var parentDirectoryName = node.id;
 
     $.ajax({
       type: 'POST',
       url: '/node/create',
       dataType: 'json',
       data: {
-        node: node.id,
+        parentDirectoryName: parentDirectoryName,
         name: name,
-        directory: isFolder
+        directory: isDirectory
       },
       success: function(data) {
         node.reload();
@@ -149,7 +159,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   // TODO move this outside
-  _createFolder: function(node) {
+  _createDirectory: function(node) {
     if (node.cls == 'file') return;
 
     var name = prompt('Direcotry name:');
@@ -165,22 +175,42 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   _deleteNode: function(node) {
     if (confirm('Are you sure?')) {
+      var fileName = node.id;
+
       $.ajax({
         type: 'POST',
         url: '/node/destroy',
         dataType: 'json',
         data: {
-          node: node.id
+          fileName: fileName
         },
         success: function(data) {
-          node.getParentNode().reload();
-          // TODO close tab
+          node.remove();
+          // TODO close corresponding tab
         }
       });
     }
   },
 
   _renameNode: function(node) {
-    alert('No implemented!');
+    var oldFileName = node.id;
+
+    var oldName = node.text;
+    var newFileName = prompt('New name: ', oldName);
+    if (newFileName == null || newFileName == '') return;
+
+    $.ajax({
+      type: 'POST',
+      url: '/node/rename',
+      dataType: 'json',
+      data: {
+        oldName: oldFileName,
+        newName: newFileName
+      },
+      success: function(data) {
+        // TODO set new id
+        node.setText(newFileName);
+      }
+    });
   }
 });
