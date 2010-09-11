@@ -1,6 +1,44 @@
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function(config) {
 
+    var toolBar = new Ext.Toolbar({
+      items: [
+        new Ext.form.TextField({
+          width: 200,
+          emptyText: 'Find a Page',
+          enableKeyEvents: true,
+          listeners: {
+            render: function(f) {
+              this.filter = new Ext.tree.TreeFilter(this, {
+                clearBlank: true,
+                autoClear: true
+              });
+            },
+            keydown: {
+              fn: this.filterTree,
+              buffer: 350,
+              scope: this
+            }
+          },
+          scope: this
+        }), {
+          iconCls: 'icon-expand-all',
+          tooltip: 'Expand All',
+          handler: function() {
+            this.root.expand(true);
+          },
+          scope: this
+        }, {
+          iconCls: 'icon-collapse-all',
+          tooltip: 'Collapse All',
+          handler: function() {
+            this.root.collapse(true);
+            this.root.expand();
+          },
+          scope: this
+        }]
+    });
+
     config = Ext.apply({
       id: 'tree',
       rootVisible: true,
@@ -11,7 +49,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       border: false,
       dataUrl: '/nodes',
 
-      tbar: this.toolBar,
+      tbar: toolBar,
 
       root: {
         nodeType: 'async',
@@ -28,44 +66,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     this.root.expand();
   },
-
-  toolBar: new Ext.Toolbar({
-    items: [
-      new Ext.form.TextField({
-        width: 200,
-        emptyText: 'Find a Page',
-        enableKeyEvents: true,
-        listeners: {
-          render: function(f) {
-            this.filter = new Ext.tree.TreeFilter(this, {
-              clearBlank: true,
-              autoClear: true
-            });
-          },
-          keydown: {
-            fn: this.filterTree,
-            buffer: 350,
-            scope: this
-          },
-          scope: this
-        }
-      }), {
-        iconCls: 'icon-expand-all',
-        tooltip: 'Expand All',
-        handler: function() {
-          this.root.expand(true);
-        },
-        scope: this
-      }, {
-        iconCls: 'icon-collapse-all',
-        tooltip: 'Collapse All',
-        handler: function() {
-          this.root.collapse(true);
-          this.root.expand();
-        },
-        scope: this
-      }]
-  }),
 
   filterTree: function(t, e) {
     var text = t.getValue();
