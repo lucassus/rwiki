@@ -1,6 +1,18 @@
 = rwiki
 
-Description goes here.
+Yet another personal wiki.
+
+== Requirements
+
+* Ruby 1.9
+* gems:
+** Sinatra
+** RedCloth
+** CodeRay
+
+== Usage
+
+ruby bin/rwiki.rb /path/to/your/wiki
 
 == Note on Patches/Pull Requests
  
