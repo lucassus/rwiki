@@ -96,30 +96,9 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   getContextMenu: function() {
     if (this.contextMenu == null) {
       this.contextMenu = new Rwiki.TreePanel.Menu();
-      this.contextMenu.on('click', this.onContextMenuClick, this);
     }
 
     return this.contextMenu;
-  },
-
-  onContextMenuClick: function(menu, item, e) {
-    if (item.disabled) return;
-
-    var node = menu.node;
-    switch (item.command) {
-      case 'create-directory':
-        this._createDirectory(node);
-        break;
-      case 'create-page':
-        this._createPage(node);
-        break;
-      case 'rename-node':
-        this._renameNode(node);
-        break;
-      case 'delete-node':
-        this._deleteNode(node);
-        break;
-    }
   },
 
   showContextMenu: function(node, e) {
@@ -136,81 +115,5 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   getSelectedNode: function() {
     return this.getSelectionModel().getSelectedNode();
-  },
-
-  _createNode: function(node, name, isDirectory) {
-    if (name == null || name == '') return;
-
-    var parentDirectoryName = node.id;
-
-    $.ajax({
-      type: 'POST',
-      url: '/node/create',
-      dataType: 'json',
-      data: {
-        parentDirectoryName: parentDirectoryName,
-        name: name,
-        directory: isDirectory
-      },
-      success: function(data) {
-        node.reload();
-      }
-    });
-  },
-
-  // TODO move this outside
-  _createDirectory: function(node) {
-    if (node.cls == 'file') return;
-
-    var name = prompt('Direcotry name:');
-    this._createNode(node, name, true);
-  },
-
-  _createPage: function(node) {
-    if (node.cls == 'file') return;
-
-    var name = prompt('Page name:');
-    this._createNode(node, name, false);
-  },
-
-  _deleteNode: function(node) {
-    if (confirm('Are you sure?')) {
-      var fileName = node.id;
-
-      $.ajax({
-        type: 'POST',
-        url: '/node/destroy',
-        dataType: 'json',
-        data: {
-          fileName: fileName
-        },
-        success: function(data) {
-          node.remove();
-          // TODO close corresponding tab
-        }
-      });
-    }
-  },
-
-  _renameNode: function(node) {
-    var oldFileName = node.id;
-
-    var oldName = node.text;
-    var newFileName = prompt('New name: ', oldName);
-    if (newFileName == null || newFileName == '') return;
-
-    $.ajax({
-      type: 'POST',
-      url: '/node/rename',
-      dataType: 'json',
-      data: {
-        oldName: oldFileName,
-        newName: newFileName
-      },
-      success: function(data) {
-        // TODO set new id
-        node.setText(newFileName);
-      }
-    });
   }
 });

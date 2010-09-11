@@ -9,9 +9,10 @@ module Rwiki
       entries.each do |file_name|
         next if file_name.match(/^\./)
 
-        file_name_with_directory = File.join(dir, file_name)
-        tree_node = { :text => file_name, :id => file_name_with_directory }
-        if File.directory?(file_name_with_directory)
+        full_file_name = File.join(dir, file_name)
+        tree_node = { :text => file_name, :id => full_file_name }
+
+        if File.directory?(full_file_name)
           tree_nodes << tree_node.merge(:cls => 'folder')
         else
           next unless file_name.match(/\.txt$/)
@@ -38,8 +39,16 @@ module Rwiki
       mkdir(File.join(parent, name))
     end
 
-    def create_file(parent, name)
+    def create_page(parent, name)
       touch(File.join(parent, name) + '.txt')
+    end
+
+    def rename_node(node, new_name)
+      mv(node, new_name)
+    end
+
+    def move_node(file_name, dir)
+      mv(file_name, dir)
     end
 
     def delete_node(name)

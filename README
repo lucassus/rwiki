@@ -1,0 +1,3 @@
+WIKI_ROOT = '/path/to/wiki/root/folder'
+path - relative path to file / directory
+name - name of a file / directory

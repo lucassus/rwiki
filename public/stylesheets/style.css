@@ -47,12 +47,16 @@
   background-image: url(../images/icons/page.png) !important;
 }
 
-.icon-create-folder {
+.icon-create-directory {
   background-image: url(../images/icons/folder_add.png) !important;
 }
 
 .icon-create-page {
   background-image: url(../images/icons/page_add.png) !important;
+}
+
+.icon-rename-node {
+  background-image: url(../images/icons/folder_edit.png) !important;
 }
 
 .icon-delete-node {

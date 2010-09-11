@@ -30,6 +30,88 @@ Rwiki.loadNode = function(fileName) {
   return nodeData;
 };
 
+Rwiki.createNode = function(node, name, isDirectory) {
+  if (name == null || name == '') return;
+
+  var parentDirectoryName = node.id;
+
+  $.ajax({
+    type: 'POST',
+    url: '/node/create',
+    dataType: 'json',
+    data: {
+      parentDirectoryName: parentDirectoryName,
+      name: name,
+      directory: isDirectory
+    },
+    success: function(data) {
+      node.reload();
+    }
+  });
+};
+
+Rwiki.createDirectory = function(node) {
+  if (node.cls == 'file') return;
+
+  var name = prompt('Directory name:');
+  Rwiki.createNode(node, name, true);
+};
+
+Rwiki.createPage = function(node) {
+  if (node.cls == 'file') return;
+
+  var name = prompt('Page name:');
+  Rwiki.createNode(node, name, false);
+};
+
+Rwiki.deleteNode = function(node) {
+  var fileName = node.id;
+
+  if (confirm('Delete ' + fileName + ' node?')) {
+    $.ajax({
+      type: 'POST',
+      url: '/node/destroy',
+      dataType: 'json',
+      data: {
+        fileName: fileName
+      },
+      success: function(data) {
+        node.remove();
+      // TODO close corresponding tab
+      }
+    });
+  }
+};
+
+Rwiki.renameNode = function(node) {
+  var oldFileName = node.id;
+
+  var oldName = node.text;
+  var newFileName = prompt('New name: ', oldName);
+  if (newFileName == null || newFileName == '') return;
+
+  $.ajax({
+    type: 'POST',
+    url: '/node/rename',
+    dataType: 'json',
+    data: {
+      oldName: oldFileName,
+      newName: newFileName
+    },
+    success: function(data) {
+      // set a new ID and Text
+      var id = data.id;
+      node.setId(id);
+      node.setText(data.text);
+
+      // reflesh children nodes
+      if (node.isExpanded()) {
+        node.reload();
+      }
+    }
+  });
+};
+
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
@@ -58,7 +140,7 @@ Ext.onReady(function() {
     var content = editor.getContent();
 
     var data = {
-      node: fileName,
+      fileName: fileName,
       content: content
     };
 
@@ -72,6 +154,8 @@ Ext.onReady(function() {
       }
     });
   });
+
+  // TreePanel events
 
   treePanel.on('click', function(node, e) {
     if (node.isLeaf()) {
@@ -100,6 +184,26 @@ Ext.onReady(function() {
         console.log(data);
       }
     });
+  });
+
+  // attach listeners to the tree context menu
+
+  var treeContextMenu = treePanel.getContextMenu();
+
+  treeContextMenu.on('createDirectory', function(node) {
+    Rwiki.createDirectory(node);
+  });
+
+  treeContextMenu.on('createPage', function(node) {
+    Rwiki.createPage(node);
+  });
+
+  treeContextMenu.on('renameNode', function(node) {
+    Rwiki.renameNode(node);
+  });
+
+  treeContextMenu.on('deleteNode', function(node) {
+    Rwiki.deleteNode(node);
   });
 
   // Create main layout

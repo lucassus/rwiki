@@ -17,46 +17,58 @@ module Rwiki
       erb :index
     end
 
-    post '/nodes' do
-      node = params[:node]
-      node = node == 'root-dir' ? '.' : node
-
-      make_tree(node).to_json
+    get '/nodes' do
+      directory_name = params[:directoryName]
+      make_tree(directory_name).to_json
     end
 
     get '/node/content' do
-      node = params[:node]
+      file_name = params[:fileName]
       
-      raw = read_file(node)
+      raw = read_file(file_name)
       parse_content(raw).to_json
     end
 
     post '/node/update' do
-      node = params[:node]
+      file_name = params[:fileName]
       content = params[:content]
 
-      raw = write_file(node, content)
+      raw = write_file(file_name, content)
       parse_content(raw).to_json
     end
 
     post '/node/create' do
-      node = params[:node]
-      node = node == 'root-dir' ? '.' : node
+      parent_directory_name = params[:parentDirectoryName]
       name = params[:name]
-      directory = params[:directory] == 'true'
 
+      directory = params[:directory] == 'true'
       if directory
-        create_directory(node, name)
+        create_directory(parent_directory_name, name)
       else
-        create_file(node, name)
+        create_page(parent_directory_name, name)
       end
 
       { :success => true }.to_json
     end
 
+    post '/node/rename' do
+      old_name = params[:oldName]
+      new_name = params[:newName]
+
+      rename_node(old_name, new_name)
+      { :text => new_name, :id => File.join(Dir.pwd, new_name) }.to_json
+    end
+
+    post '/node/move' do
+      file_name = params[:fileName]
+      dest_dir = params[:destDir]
+
+      move_node(file_name, dest_dir)
+    end
+
     post '/node/destroy' do
-      node = params[:node]
-      delete_node(node)
+      file_name = params[:fileName]
+      delete_node(file_name)
       
       { :success => true }.to_json
     end
