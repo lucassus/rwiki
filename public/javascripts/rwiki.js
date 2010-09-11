@@ -64,7 +64,7 @@ Rwiki.createPage = function(node) {
   Rwiki.createNode(node, name, false);
 };
 
-Rwiki.deleteNode = function(node) {
+Rwiki.deleteNode = function(node, tabPanel) {
   var fileName = node.id;
 
   if (confirm('Delete ' + fileName + ' node?')) {
@@ -77,7 +77,14 @@ Rwiki.deleteNode = function(node) {
       },
       success: function(data) {
         node.remove();
-      // TODO close corresponding tab
+        node.cascade(function() {
+          // close all related tabs
+          var fileName = this.id;
+          var tab = tabPanel.getTabByFileName(fileName);
+          if (tab) {
+            tabPanel.remove(tab);
+          }
+        });
       }
     });
   }
@@ -99,15 +106,11 @@ Rwiki.renameNode = function(node) {
       newName: newFileName
     },
     success: function(data) {
-      // set a new ID and Text
-      var id = data.id;
-      node.setId(id);
-      node.setText(data.text);
-
-      // reflesh children nodes
-      if (node.isExpanded()) {
-        node.reload();
-      }
+      node.cascade(function() {
+        // process visibled nodes (this is a current node)
+      });
+      
+      node.parentNode.reload();
     }
   });
 };
@@ -186,7 +189,7 @@ Ext.onReady(function() {
     });
   });
 
-  // attach listeners to the tree context menu
+  // Attach listeners to the tree context menu
 
   var treeContextMenu = treePanel.getContextMenu();
 
@@ -203,7 +206,7 @@ Ext.onReady(function() {
   });
 
   treeContextMenu.on('deleteNode', function(node) {
-    Rwiki.deleteNode(node);
+    Rwiki.deleteNode(node, tabPanel);
   });
 
   // Create main layout

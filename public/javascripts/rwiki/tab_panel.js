@@ -20,7 +20,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     var nodeId = Rwiki.escapedId(fileName);
     $(nodeId).html(data.html);
 
-    var currentTab = this.getTabById(fileName);
+    var currentTab = this.getTabByFileName(fileName);
     if (!currentTab) {
 
       var pagePanel = new Ext.Container({
@@ -37,7 +37,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     }
   },
 
-  getTabById: function(id) {
+  getTabByFileName: function(id) {
     return this.find('id', id)[0];
   }
 });

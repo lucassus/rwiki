@@ -60,8 +60,8 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
 
   setItemDisabled: function(id, disabled) {
     var item = this.findById(id);
-    if (item) {
-      item.setDisabled(disabled);
-    }
+    if (item == null) return;
+    
+    item.setDisabled(disabled);
   }
 });
