@@ -53,21 +53,31 @@ Rwiki.createNode = function(node, name, isDirectory) {
 Rwiki.createDirectory = function(node) {
   if (node.cls == 'file') return;
 
-  var name = prompt('Directory name:');
-  Rwiki.createNode(node, name, true);
+  var callback = function(button, name) {
+    if (button != 'ok') return;
+    Rwiki.createNode(node, name, true);
+  };
+
+  Ext.Msg.prompt('Create directory', 'New directory name:', callback);
 };
 
 Rwiki.createPage = function(node) {
   if (node.cls == 'file') return;
 
-  var name = prompt('Page name:');
-  Rwiki.createNode(node, name, false);
+  var callback = function(button, name) {
+    if (button != 'ok') return;
+    Rwiki.createNode(node, name, false);
+  };
+
+  Ext.Msg.prompt('Create page', 'New page name:', callback);
 };
 
 Rwiki.deleteNode = function(node, tabPanel) {
   var fileName = node.id;
 
-  if (confirm('Delete ' + fileName + ' node?')) {
+  var callback = function(button) {
+    if (button != 'yes') return;
+
     $.ajax({
       type: 'POST',
       url: '/node/destroy',
@@ -88,36 +98,42 @@ Rwiki.deleteNode = function(node, tabPanel) {
       }
     });
   }
+
+  var message = 'Delete "' + fileName + '"?';
+  Ext.Msg.confirm('Confirm', message, callback);
 };
 
 Rwiki.renameNode = function(node, tabPanel) {
   var oldFileName = node.id;
-
   var oldName = node.text;
-  var newFileName = prompt('New name: ', oldName);
-  if (newFileName == null || newFileName == '') return;
 
-  $.ajax({
-    type: 'POST',
-    url: '/node/rename',
-    dataType: 'json',
-    data: {
-      oldName: oldFileName,
-      newName: newFileName
-    },
-    success: function(data) {
-      // close all related tabs
-      node.cascade(function() {
-        var fileName = this.id;
-        var tab = tabPanel.findByFileName(fileName);
-        if (tab) {
-          tabPanel.remove(tab);
-        }
-      });
-      
-      node.parentNode.reload();
-    }
-  });
+  var callback = function(button, newFileName) {
+    if (button != 'ok') return;
+    
+    $.ajax({
+      type: 'POST',
+      url: '/node/rename',
+      dataType: 'json',
+      data: {
+        oldName: oldFileName,
+        newName: newFileName
+      },
+      success: function(data) {
+        // close all related tabs
+        node.cascade(function() {
+          var fileName = this.id;
+          var tab = tabPanel.getTabByFileName(fileName);
+          if (tab) {
+            tabPanel.remove(tab);
+          }
+        });
+
+        node.parentNode.reload();
+      }
+    });
+  }
+
+  Ext.Msg.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
 };
 
 Ext.onReady(function() {
