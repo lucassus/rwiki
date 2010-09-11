@@ -39,7 +39,8 @@ Ext.onReady(function() {
   });
 
   var treePanel = new Rwiki.TreePanel();
-  treePanel.on('click',  function(node, e) {
+
+  treePanel.on('click', function(node, e) {
     if (node.isLeaf()) {
       tabPanel.updateOrCreateTab(node.id, node.text);
     }
@@ -50,11 +51,12 @@ Ext.onReady(function() {
     id: 'west-panel',
     title: 'Pages',
     split: true,
+    width: 260,
+    minSize: 260,
+    maxSize: 500,
     collapsible: true,
-    width: 200,
-    minSize: 175,
-    maxSize: 400,
-    margins: '0 0 0 5',
+    margins: '0 0 5 5',
+    cmargins: '0 0 0 0',
     items: [treePanel]
   });
 
@@ -66,7 +68,7 @@ Ext.onReady(function() {
     collapsible: true,
     collapsed: true,
     height: 400,
-    
+
     listeners: {
       resize: function(panel, width, height) {
         var offset = 36;
@@ -83,7 +85,7 @@ Ext.onReady(function() {
     items: [tabPanel, editorPanel]
   });
 
-  viewport = new Ext.Viewport({
+  var viewport = new Ext.Viewport({
     layout: 'border',
     items: [leftPanel, pagePanel]
   });

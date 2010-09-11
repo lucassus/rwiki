@@ -20,150 +20,150 @@
   color: black;
 }
 
-.x-tab-panel-body h1, h2, h3, h4, h5, h6 {
+.page-container h1, .page-container h2, .page-container h3, .page-container h4, .page-container h5, .page-container h6 {
   margin-bottom: 15px;
   font-weight: bold;
 }
 
-.x-tab-panel-body b, strong {
+.page-container b, .page-container strong {
   font-weight: bold;
 }
 
-.x-tab-panel-body h1 {
+.page-container h1 {
   font-size: xx-large;
 }
 
-.x-tab-panel-body h2 {
+.page-container h2 {
   font-size: x-large;
 }
 
-.x-tab-panel-body h3 {
+.page-container h3 {
   font-size: large;
 }
 
-.x-tab-panel-body h4, h5, h6 {
+.page-container h4, .page-container h5,.page-container  h6 {
   font-size: medium;
 }
 
-.x-tab-panel-body em, i, dfn {
+.page-container em, .page-container i, .page-container dfn {
   font-style: italic;
 }
 
-.x-tab-panel-body dfn {
+.page-container dfn {
   font-weight:bold;
 }
 
-.x-tab-panel-body p, code, pre, kbd {
+.page-container p, .page-container code,.page-container  pre, .page-container kbd {
   margin:0 0 1.5em 0;
 }
 
-.x-tab-panel-body blockquote {
+.page-container blockquote {
   margin:0 1.5em 1.5em 1.5em;
 }
 
-.x-tab-panel-body cite {
+.page-container cite {
   font-style: italic;
 }
 
-.x-tab-panel-body li ul, li ol {
+.page-container li ul, .page-container li ol {
   margin:0 1.5em;
 }
 
-.x-tab-panel-body ul, ol {
+.page-container ul, .page-container ol {
   margin:0 1.5em 1.5em 1.5em;
 }
 
-.x-tab-panel-body ul li {
+.page-container ul li {
   list-style-type:disc;
 }
 
-.x-tab-panel-body ol li {
+.page-container ol li {
   list-style-type:decimal;
 }
 
-.x-tab-panel-body ol ol li {
+.page-container ol ol li {
   list-style: upper-alpha;
 }
 
-.x-tab-panel-body ol ol ol li {
+.page-container ol ol ol li {
   list-style: lower-roman;
 }
 
-.x-tab-panel-body ol ol ol ol li {
+.page-container ol ol ol ol li {
   list-style: lower-alpha;
 }
 
-.x-tab-panel-body dl {
+.page-container dl {
   margin:0 0 1.5em 0;
 }
 
-.x-tab-panel-body dl dt {
+.page-container dl dt {
   font-weight:bold;
 }
 
-.x-tab-panel-body dd {
+.page-container dd {
   margin-left:1.5em;
 }
 
-.x-tab-panel-body table {
+.page-container table {
   margin-bottom:1.4em;
   width:100%;
 }
 
-.x-tab-panel-body th {
+.page-container th {
   font-weight:bold;
 }
 
-.x-tab-panel-body th, td, caption {
+.page-container th, .page-container td, .page-container caption {
   padding:4px 10px 4px 5px;
 }
 
-.x-tab-panel-body tfoot {
+.page-container tfoot {
   font-style:italic;
 }
 
-.x-tab-panel-body sup, sub {
+.page-container sup, .page-container sub {
   line-height:0;
 }
 
-.x-tab-panel-body abbr, acronym {
+.page-container abbr, .page-container acronym {
   border-bottom: 1px dotted;
 }
 
-.x-tab-panel-body address {
+.page-container address {
   margin:0 0 1.5em;
   font-style:italic;
 }
 
-.x-tab-panel-body del {
+.page-container del {
   text-decoration: line-through;
 }
 
-.x-tab-panel-body pre {
+.page-container pre {
   margin:1.5em 0;
   white-space:pre;
 }
 
-.x-tab-panel-body img.centered, .aligncenter, div.aligncenter {
+.page-container img.centered, .page-container .aligncenter, .page-container div.aligncenter {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.x-tab-panel-body img.alignright {
+.page-container img.alignright {
   display: inline;
 }
 
-.x-tab-panel-body img.alignleft {
+.page-container img.alignleft {
   display: inline;
 }
 
-.x-tab-panel-body .alignright {
+.page-container .alignright {
   float: right;
   margin-left: 10px;
 }
 
-.x-tab-panel-body .alignleft {
+.page-container .alignleft {
   float: left;
   margin-right: 10px;
 }
