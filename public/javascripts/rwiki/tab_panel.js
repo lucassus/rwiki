@@ -31,7 +31,8 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         iconCls: 'icon-page'
       });
 
-      this.add(pagePanel).show();
+      var tab = this.add(pagePanel);
+      tab.show();
     } else {
       currentTab.show();
     }

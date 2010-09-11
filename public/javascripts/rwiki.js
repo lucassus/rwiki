@@ -90,7 +90,7 @@ Rwiki.deleteNode = function(node, tabPanel) {
   }
 };
 
-Rwiki.renameNode = function(node) {
+Rwiki.renameNode = function(node, tabPanel) {
   var oldFileName = node.id;
 
   var oldName = node.text;
@@ -106,8 +106,13 @@ Rwiki.renameNode = function(node) {
       newName: newFileName
     },
     success: function(data) {
+      // close all related tabs
       node.cascade(function() {
-        // process visibled nodes (this is a current node)
+        var fileName = this.id;
+        var tab = tabPanel.findByFileName(fileName);
+        if (tab) {
+          tabPanel.remove(tab);
+        }
       });
       
       node.parentNode.reload();
@@ -202,7 +207,7 @@ Ext.onReady(function() {
   });
 
   treeContextMenu.on('renameNode', function(node) {
-    Rwiki.renameNode(node);
+    Rwiki.renameNode(node, tabPanel);
   });
 
   treeContextMenu.on('deleteNode', function(node) {
