@@ -11,6 +11,19 @@ Rwiki.escapedId = function(id) {
   return '#' + id.replace(/(\W)/g, '\\$1');
 };
 
+/**
+ * Closes all opened tabs related to the node.
+ */
+Rwiki.closeAllTabs = function(node, tabPanel) {
+  node.cascade(function() {
+    var fileName = this.id;
+    var tab = tabPanel.getTabByFileName(fileName);
+    if (tab) {
+      tabPanel.remove(tab);
+    }
+  });
+};
+
 Rwiki.loadNode = function(fileName) {
   var nodeData = {};
 
@@ -72,6 +85,27 @@ Rwiki.createPage = function(node) {
   Ext.Msg.prompt('Create page', 'New page name:', callback);
 };
 
+Rwiki.moveNode = function(node, newParent, tabPanel) {
+  var fileName = node.id;
+  var destDir = newParent.id;
+
+  var data = {
+    fileName: fileName,
+    destDir: destDir
+  };
+
+  $.ajax({
+    type: 'POST',
+    url: '/node/move',
+    dataType: 'json',
+    data: data,
+    success: function(data) {
+      Rwiki.closeAllTabs(node, tabPanel);
+      newParent.reload();
+    }
+  });
+};
+
 Rwiki.deleteNode = function(node, tabPanel) {
   var fileName = node.id;
 
@@ -86,15 +120,8 @@ Rwiki.deleteNode = function(node, tabPanel) {
         fileName: fileName
       },
       success: function(data) {
+        Rwiki.closeAllTabs(node, tabPanel);
         node.remove();
-        node.cascade(function() {
-          // close all related tabs
-          var fileName = this.id;
-          var tab = tabPanel.getTabByFileName(fileName);
-          if (tab) {
-            tabPanel.remove(tab);
-          }
-        });
       }
     });
   }
@@ -119,15 +146,7 @@ Rwiki.renameNode = function(node, tabPanel) {
         newName: newFileName
       },
       success: function(data) {
-        // close all related tabs
-        node.cascade(function() {
-          var fileName = this.id;
-          var tab = tabPanel.getTabByFileName(fileName);
-          if (tab) {
-            tabPanel.remove(tab);
-          }
-        });
-
+        Rwiki.closeAllTabs(node, tabPanel);
         node.parentNode.reload();
       }
     });
@@ -191,23 +210,7 @@ Ext.onReady(function() {
   });
 
   treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
-    var fileName = node.id;
-    var destDir = newParent.id;
-    
-    var data = {
-      fileName: fileName,
-      destDir: destDir
-    };
-
-    $.ajax({
-      type: 'POST',
-      url: '/node/move',
-      dataType: 'json',
-      data: data,
-      success: function(data) {
-        console.log(data);
-      }
-    });
+    Rwiki.moveNode(node, newParent, tabPanel);
   });
 
   // Attach listeners to the tree context menu
