@@ -20,7 +20,7 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
         iconCls: 'icon-rename',
         scope: this,
         command: 'rename-node'
-      }, '-', {
+      }, {
         text: 'Delete node',
         id: 'delete-node',
         iconCls: 'icon-delete-node',
@@ -30,6 +30,21 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     }, config);
 
     Rwiki.TreePanel.Menu.superclass.constructor.call(this, config);
+  },
+
+  show: function(node, xy) {
+    this.node = node;
+    node.select();
+
+    var isRoot = node.id == Rwiki.rootNodeId;
+    this.setItemDisabled('delete-node', isRoot);
+    this.setItemDisabled('rename-node', isRoot);
+
+    var isPage = node.attributes.cls == 'page';
+    this.setItemDisabled('create-folder', isPage);
+    this.setItemDisabled('create-page', isPage);
+
+    this.showAt(xy);
   },
 
   getItemByCommand: function(command) {

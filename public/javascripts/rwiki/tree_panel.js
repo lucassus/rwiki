@@ -54,7 +54,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         nodeType: 'async',
         text: 'Home',
         draggable: false,
-        id: 'root-dir'
+        id: Rwiki.rootNodeId
       }
     }, config);
 
@@ -88,13 +88,15 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   getContextMenu: function() {
     if (this.contextMenu == null) {
       this.contextMenu = new Rwiki.TreePanel.Menu();
-      this.contextMenu.on('click', this.onContextClick, this);
+      this.contextMenu.on('click', this.onContextMenuClick, this);
     }
 
     return this.contextMenu;
   },
 
-  onContextClick: function(menu, item, e) {
+  onContextMenuClick: function(menu, item, e) {
+    if (item.disabled) return;
+
     var node = menu.node;
     switch (item.command) {
       case 'create-folder':
@@ -116,25 +118,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       node = this.getSelectionModel().getSelectedNode();
     }
 
-    var menu = this.getContextMenu();
-    menu.node = node;
-    node.select();
-
-    var isRoot = node.id == 'root-dir';
-    menu.setItemDisabled('delete-node', isRoot);
-    menu.setItemDisabled('rename-node', isRoot);
-
-    var isPage = node.attributes.cls == 'page';
-    menu.setItemDisabled('create-folder', isPage);
-    menu.setItemDisabled('create-page', isPage);
-
-    menu.showAt(e.getXY());
-  },
-
-  onContextHide: function() {
-    if (this.ctxNode) {
-      this.ctxNode = null;
-    }
+    this.getContextMenu().show(node, e.getXY());
   },
 
   setTabPanel: function(tabPanel) {
@@ -163,6 +147,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
   },
 
+  // TODO move this outside
   _createFolder: function(node) {
     if (node.cls == 'file') return;
 
@@ -195,6 +180,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   _renameNode: function(node) {
-    return;
+    alert('No implemented!');
   }
 });

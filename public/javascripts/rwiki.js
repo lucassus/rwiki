@@ -1,5 +1,7 @@
 Ext.ns('Rwiki');
 
+Rwiki.rootNodeId = 'root-dir';
+
 /**
  * Escapes any non-words characters.
  * Used for generating elements ids for jQuery selectors.
@@ -81,9 +83,11 @@ Ext.onReady(function() {
     items: [tabPanel, editorPanel]
   });
 
-  new Ext.Viewport({
+  viewport = new Ext.Viewport({
     layout: 'border',
     items: [leftPanel, pagePanel]
   });
+
+  viewport.doLayout();
 
 });
