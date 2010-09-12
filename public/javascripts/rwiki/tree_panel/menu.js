@@ -3,12 +3,12 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     config = Ext.apply({
       id: 'feeds-ctx',
       items: [{
-        text: 'Create directory',
+        text: 'Create folder',
         id: 'create-folder',
-        iconCls: 'icon-create-directory',
+        iconCls: 'icon-create-folder',
         scope: this,
         handler: function(item, e) {
-          this.fireEvent('createDirectory', this.node)
+          this.fireEvent('createFolder', this.node)
         }
       }, {
         text: 'Create page',
@@ -41,7 +41,7 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
 
     // define events
     this.addEvents(
-      'createDirectory',
+      'createFolder',
       'createPage',
       'renameNode',
       'deleteNode');
@@ -51,7 +51,7 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     this.node = node;
     node.select();
 
-    var isRoot = node.id == Rwiki.rootDirName;
+    var isRoot = node.id == Rwiki.rootFolderName;
     this.setItemDisabled('delete-node', isRoot);
     this.setItemDisabled('rename-node', isRoot);
 

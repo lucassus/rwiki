@@ -33,15 +33,15 @@ module Rwiki
       file.close
     end
 
-    def create_directory(parent_directory_name, base_name)
-      directory_name = File.join(parent_directory_name, base_name)
-      mkdir(directory_name)
+    def create_folder(parent_folder_name, base_name)
+      folder_name = File.join(parent_folder_name, base_name)
+      mkdir(folder_name)
 
-      return directory_name
+      return folder_name
     end
 
-    def create_page(oarent_directory_name, base_name)
-      file_name = File.join(oarent_directory_name, base_name) + '.txt'
+    def create_page(oarent_folder_name, base_name)
+      file_name = File.join(oarent_folder_name, base_name) + '.txt'
       touch(file_name)
 
       return file_name

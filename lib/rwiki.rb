@@ -42,9 +42,9 @@ module Rwiki
       node_base_name = params[:nodeBaseName]
 
       new_node_name = ''
-      directory = params[:isDirectory] == 'true'
-      if directory
-        new_node_name = create_directory(parent_folder_name, node_base_name)
+      is_folder = params[:isFolder] == 'true'
+      if is_folder
+        new_node_name = create_folder(parent_folder_name, node_base_name)
       else
         new_node_name = create_page(parent_folder_name, node_base_name)
       end

@@ -4,13 +4,13 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rwiki'
 
-working_directory = ARGV[0] || Dir.pwd
-unless working_directory.start_with?('/')
-  working_directory = File.join(Dir.pwd, working_directory)
+working_folder = ARGV[0] || Dir.pwd
+unless working_folder.start_with?('/')
+  working_folder = File.join(Dir.pwd, working_folder)
 end
 
-WIKIR_ROOT = working_directory.freeze
-p "Working directory is: #{WIKIR_ROOT}"
+WIKIR_ROOT = working_folder.freeze
+p "Working folder is: #{WIKIR_ROOT}"
 Dir.chdir(WIKIR_ROOT)
 
 Rwiki::App.run!

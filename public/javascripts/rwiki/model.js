@@ -6,7 +6,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
   // events
   NODE_LOADED: 'nodeLoaded',
   PAGE_CREATED: 'pageCreated',
-  DIRECTORY_CREATED: 'directoryCreated',
+  FOLDER_CREATED: 'folderCreated',
   NODE_MOVED: 'nodeMoved',
   NODE_RENAMED: 'nodeRenamed',
   NODE_DELETED: 'nodeDeleted',
@@ -18,7 +18,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     this.addEvents(
       this.NODE_LOADED,
       this.PAGE_CREATED,
-      this.DIRECTORY_CREATED,
+      this.FOLDER_CREATED,
       this.NODE_MOVED,
       this.NODE_RENAMED,
       this.NODE_DELETED);
@@ -40,7 +40,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  createNode: function(parentFolderName, nodeBaseName, isDirectory) {
+  createNode: function(parentFolderName, nodeBaseName, isFolder) {
     var self = this;
 
     $.ajax({
@@ -48,12 +48,12 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       url: '/node/create',
       dataType: 'json',
       data: {
-        parentDirectoryName: parentFolderName,
+        parentFolderName: parentFolderName,
         nodeBaseName: nodeBaseName,
-        isDirectory: isDirectory
+        isFolder: isFolder
       },
       success: function(data) {
-        var eventName = isDirectory ? self.DIRECTORY_CREATED : self.PAGE_CREATED;
+        var eventName = isFolder ? self.FOLDER_CREATED : self.PAGE_CREATED;
         self.fireEvent(eventName, data.parentFolderName, data.newNodeName);
       }
     });
@@ -77,7 +77,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  moveNode: function(nodeName, destDirName) {
+  moveNode: function(nodeName, destFolderName) {
     var self = this;
     $.ajax({
       type: 'POST',
@@ -85,10 +85,10 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       dataType: 'json',
       data: {
         nodeName: nodeName,
-        destDirName: destDirName
+        destFolderName: destFolderName
       },
       success: function(data) {
-        self.fireEvent(self.NODE_MOVED, nodeName, destDirName);
+        self.fireEvent(self.NODE_MOVED, nodeName, destFolderName);
       }
     });
   },

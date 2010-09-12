@@ -1,6 +1,6 @@
 Ext.ns('Rwiki');
 
-Rwiki.rootDirName = '.';
+Rwiki.rootFolderName = '.';
 
 /**
  * Escapes any non-words characters.
@@ -43,8 +43,8 @@ Ext.onReady(function() {
     tabPanel.updateOrCreateTab(pageName, data.html);
   });
 
-  // Event: directory has been created
-  model.on(model.DIRECTORY_CREATED, function(parentFolderName, newDirectoryName) {
+  // Event: folder has been created
+  model.on(model.FOLDER_CREATED, function(parentFolderName, newFolderName) {
     var parentNode = treePanel.findNodeByPageName(parentFolderName);
     parentNode.reload();
   });
@@ -62,9 +62,9 @@ Ext.onReady(function() {
   });
 
   // Event: node has been moved
-  model.on(model.NODE_MOVED, function(oldNodeName, destDirName) {
+  model.on(model.NODE_MOVED, function(oldNodeName, destFolderName) {
     var node = treePanel.findNodeByPageName(oldNodeName);
-    var destNode = treePanel.findNodeByPageName(destDirName);
+    var destNode = treePanel.findNodeByPageName(destFolderName);
 
     Rwiki.closeAllRelatedTabs(node, tabPanel);
     destNode.reload();
@@ -134,27 +134,27 @@ Ext.onReady(function() {
   // Event: a node has been moved
   treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
     var nodeName = node.id;
-    var destDirName = newParent.id;
+    var destFolderName = newParent.id;
     
-    model.moveNode(nodeName, destDirName);
+    model.moveNode(nodeName, destFolderName);
   });
 
   // Attach listeners to the tree context menu
 
   var treeContextMenu = treePanel.getContextMenu();
 
-  // Event: context menu, create directory
-  treeContextMenu.on('createDirectory', function(node) {
+  // Event: context menu, create folder
+  treeContextMenu.on('createFolder', function(node) {
     if (node.cls == 'file') return;
 
-    var callback = function(button, directoryBaseName) {
+    var callback = function(button, folderBaseName) {
       if (button != 'ok') return;
 
-      var parentDirectoryName = node.id;
-      model.createNode(parentDirectoryName, directoryBaseName, true);
+      var parentFolderName = node.id;
+      model.createNode(parentFolderName, folderBaseName, true);
     };
 
-    Ext.Msg.prompt('Create directory', 'New directory name:', callback);
+    Ext.Msg.prompt('Create folder', 'New folder name:', callback);
   });
 
   // Event: context menu, create page
@@ -164,8 +164,8 @@ Ext.onReady(function() {
     var callback = function(button, fileBaseName) {
       if (button != 'ok') return;
 
-      var parentDirectoryName = node.id;
-      model.createNode(parentDirectoryName, fileBaseName, false);
+      var parentFolderName = node.id;
+      model.createNode(parentFolderName, fileBaseName, false);
     };
 
     Ext.Msg.prompt('Create page', 'New page name:', callback);
