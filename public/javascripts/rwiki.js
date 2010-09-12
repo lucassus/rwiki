@@ -11,36 +11,45 @@ Rwiki.escapedId = function(id) {
   return '#' + id.replace(/(\W)/g, '\\$1');
 };
 
-/**
- * Closes all opened tabs related to the node.
- * @todo refactor this method
- */
-Rwiki.closeAllRelatedTabs = function(node, tabPanel) {
-  node.cascade(function() {
-    var pageName = this.id;
-    var tab = tabPanel.findTabByPageName(pageName);
-    if (tab) {
-      tabPanel.remove(tab);
-    }
-  });
-};
-
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
   var model = new Rwiki.Model();
   
   var treePanel = new Rwiki.TreePanel();
+  treePanel.relayEvents(model, [model.PAGE_LOADED]);
+  
   var tabPanel = new Rwiki.TabPanel();
-  var editorPanel = new Rwiki.EditorPanel();
+  tabPanel.relayEvents(model, [model.PAGE_LOADED]);
 
-  // Event: node has been loaded
-  model.on(model.NODE_LOADED, function(pageName, data) {
+  var editorPanel = new Rwiki.EditorPanel();
+  editorPanel.relayEvents(model, [model.PAGE_LOADED]);
+
+  treePanel.on(model.PAGE_LOADED, function(data) {
+    if (!data.success) return;
+
+    var pageName = data.pageName;
     var node = treePanel.findNodeByPageName(pageName);
     node.select();
-    
+  });
+
+  editorPanel.on(model.PAGE_LOADED, function(data) {
+    if (!data.success) return;
     editorPanel.getEditor().setContent(data.raw);
-    tabPanel.updateOrCreateTab(pageName, data.html);
+  });
+
+  tabPanel.on(model.PAGE_LOADED, function(data) {
+    if (!data.success) return;
+
+    var pageName = data.pageName;
+    tabPanel.updateOrAddPage(pageName, data.html);
+  });
+
+  // Event: node has been loaded
+  model.on(model.PAGE_LOADED, function(data) {
+    if (!data.success) {
+      Ext.MessageBox.alert("Error!", "Can't load the page content.");
+    }
   });
 
   // Event: folder has been created
@@ -57,7 +66,7 @@ Ext.onReady(function() {
       // slect a new node and open a new page
       var node = treePanel.findNodeByPageName(newPageName, parentNode);
       node.select();
-      tabPanel.updateOrCreateTab(newPageName);
+      tabPanel.updateOrAddPage(newPageName);
     });
   });
 
@@ -66,7 +75,7 @@ Ext.onReady(function() {
     var node = treePanel.findNodeByPageName(oldNodeName);
     var destNode = treePanel.findNodeByPageName(destFolderName);
 
-    Rwiki.closeAllRelatedTabs(node, tabPanel);
+    tabPanel.closeRelatedTabs(node);
     destNode.reload();
   });
 
@@ -76,7 +85,7 @@ Ext.onReady(function() {
       var node = treePanel.findNodeByPageName(data.oldNodeName);
       if (node == null) return;
 
-      Rwiki.closeAllRelatedTabs(node, tabPanel);
+      tabPanel.closeRelatedTabs(node);
       node.parentNode.reload();
     } else {
       Ext.MessageBox.alert("Error!", "Can't rename node.");
@@ -87,20 +96,8 @@ Ext.onReady(function() {
   model.on(model.NODE_DELETED, function(nodeName) {
     var node = treePanel.findNodeByPageName(nodeName);
     
-    Rwiki.closeAllRelatedTabs(node, tabPanel);
+    tabPanel.closeRelatedTabs(node);
     node.remove();
-  });
-
-  // Event: tab has changed
-  tabPanel.on('tabchange', function(tabPanel, tab) {
-    var lastTabClosed = !tab;
-    
-    if (!lastTabClosed) {
-      var pageName = tab.id;
-      model.loadNode(pageName);
-    } else {
-      editorPanel.editor.clearContent();
-    }
   });
 
   // Event: editor content changed
@@ -120,22 +117,32 @@ Ext.onReady(function() {
       dataType: 'json',
       data: data,
       success: function(data) {
-        tabPanel.updateOrCreateTab(pageName, data.html);
+        tabPanel.updateOrAddPage(pageName, data.html);
       }
     });
   });
 
-  // TreePanel events
+  // Event: tab has changed
+  tabPanel.on('tabchange', function(tabPanel, tab) {
+    var lastTabClosed = !tab;
 
-  // Event: click on a node
-  treePanel.on('click', function(node, e) {
-    if (node.isLeaf()) {
-      var pageName = node.id;
-      tabPanel.updateOrCreateTab(pageName);
+    if (!lastTabClosed) {
+      var pageName = tab.id;
+      model.loadPage(pageName);
+    } else {
+      editorPanel.editor.clearContent();
     }
   });
 
-  // Event: a node has been moved
+  // Event: TreePanel, click on a node
+  treePanel.on('click', function(node, e) {
+    if (node.isLeaf()) {
+      var pageName = node.id;
+      model.loadPage(pageName);
+    }
+  });
+
+  // Event: TreePanel, a node has been moved
   treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
     var nodeName = node.id;
     var destFolderName = newParent.id;
@@ -144,7 +151,6 @@ Ext.onReady(function() {
   });
 
   // Attach listeners to the tree context menu
-
   var treeContextMenu = treePanel.getContextMenu();
 
   // Event: context menu, create folder

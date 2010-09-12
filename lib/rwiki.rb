@@ -24,9 +24,17 @@ module Rwiki
 
     get '/node/content' do
       page_name = params[:pageName]
-      
       raw_content = read_page(page_name)
-      parse_content(raw_content).to_json
+
+      result = { :pageName => page_name }
+      unless raw_content.nil?
+        result.merge!(parse_content(raw_content))
+        result[:success] = true
+      else
+        result[:success] = false
+      end
+
+      result.to_json
     end
 
     post '/node/update' do

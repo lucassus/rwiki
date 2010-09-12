@@ -29,6 +29,7 @@ module Rwiki
     end
 
     def read_page(page_name)
+      return nil unless File.exists?(page_name)
       return File.read(page_name) { |f| f.read }
     end
 

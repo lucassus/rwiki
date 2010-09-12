@@ -11,7 +11,7 @@ module Rwiki
       
       raw_after_coderay = coderay(raw_content)
       html = parse(raw_after_coderay)
-      toc = "<div class='toc'>" + generate_toc(raw_content) + "</div>"
+      toc = "<div class='toc'>" + generate_toc(raw_content) + "</div>\n"
 
       return { :raw => raw_content, :html => toc + html }
     end

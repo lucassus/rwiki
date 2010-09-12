@@ -4,7 +4,7 @@
 Rwiki.Model = Ext.extend(Ext.util.Observable, {
 
   // events
-  NODE_LOADED: 'nodeLoaded',
+  PAGE_LOADED: 'pageLoaded',
   PAGE_CREATED: 'pageCreated',
   FOLDER_CREATED: 'folderCreated',
   NODE_MOVED: 'nodeMoved',
@@ -16,7 +16,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
 
     // define events
     this.addEvents(
-      this.NODE_LOADED,
+      this.PAGE_LOADED,
       this.PAGE_CREATED,
       this.FOLDER_CREATED,
       this.NODE_MOVED,
@@ -24,7 +24,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       this.NODE_DELETED);
   },
 
-  loadNode: function(pageName) {
+  loadPage: function(pageName) {
     var self = this;
 
     $.ajax({
@@ -35,7 +35,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         pageName: pageName
       },
       success: function(data) {
-        self.fireEvent(self.NODE_LOADED, pageName, data);
+        self.fireEvent(self.PAGE_LOADED, data);
       }
     });
   },
