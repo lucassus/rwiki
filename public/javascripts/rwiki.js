@@ -13,170 +13,92 @@ Rwiki.escapedId = function(id) {
 
 /**
  * Closes all opened tabs related to the node.
+ * @todo refactor this method
  */
-Rwiki.closeAllTabs = function(node, tabPanel) {
+Rwiki.closeAllRelatedTabs = function(node, tabPanel) {
   node.cascade(function() {
     var fileName = this.id;
-    var tab = tabPanel.getTabByFileName(fileName);
+    var tab = tabPanel.findTabByFileName(fileName);
     if (tab) {
       tabPanel.remove(tab);
     }
   });
 };
 
-Rwiki.loadNode = function(fileName) {
-  var nodeData = {};
-
-  $.ajax({
-    async: false,
-    type: 'GET',
-    url: '/node/content',
-    dataType: 'json',
-    data: {
-      fileName: fileName
-    },
-    success: function(data) {
-      nodeData = data;
-    }
-  });
-
-  return nodeData;
-};
-
-Rwiki.createNode = function(node, name, isDirectory) {
-  if (name == null || name == '') return;
-
-  var parentDirectoryName = node.id;
-
-  $.ajax({
-    type: 'POST',
-    url: '/node/create',
-    dataType: 'json',
-    data: {
-      parentDirectoryName: parentDirectoryName,
-      name: name,
-      directory: isDirectory
-    },
-    success: function(data) {
-      node.reload();
-    }
-  });
-};
-
-Rwiki.createDirectory = function(node) {
-  if (node.cls == 'file') return;
-
-  var callback = function(button, name) {
-    if (button != 'ok') return;
-    Rwiki.createNode(node, name, true);
-  };
-
-  Ext.Msg.prompt('Create directory', 'New directory name:', callback);
-};
-
-Rwiki.createPage = function(node) {
-  if (node.cls == 'file') return;
-
-  var callback = function(button, name) {
-    if (button != 'ok') return;
-    Rwiki.createNode(node, name, false);
-  };
-
-  Ext.Msg.prompt('Create page', 'New page name:', callback);
-};
-
-Rwiki.moveNode = function(node, newParent, tabPanel) {
-  var fileName = node.id;
-  var destDir = newParent.id;
-
-  var data = {
-    fileName: fileName,
-    destDir: destDir
-  };
-
-  $.ajax({
-    type: 'POST',
-    url: '/node/move',
-    dataType: 'json',
-    data: data,
-    success: function(data) {
-      Rwiki.closeAllTabs(node, tabPanel);
-      newParent.reload();
-    }
-  });
-};
-
-Rwiki.deleteNode = function(node, tabPanel) {
-  var fileName = node.id;
-
-  var callback = function(button) {
-    if (button != 'yes') return;
-
-    $.ajax({
-      type: 'POST',
-      url: '/node/destroy',
-      dataType: 'json',
-      data: {
-        fileName: fileName
-      },
-      success: function(data) {
-        Rwiki.closeAllTabs(node, tabPanel);
-        node.remove();
-      }
-    });
-  }
-
-  var message = 'Delete "' + fileName + '"?';
-  Ext.Msg.confirm('Confirm', message, callback);
-};
-
-Rwiki.renameNode = function(node, tabPanel) {
-  var oldFileName = node.id;
-  var oldName = node.text;
-
-  var callback = function(button, newFileName) {
-    if (button != 'ok') return;
-    
-    $.ajax({
-      type: 'POST',
-      url: '/node/rename',
-      dataType: 'json',
-      data: {
-        oldName: oldFileName,
-        newName: newFileName
-      },
-      success: function(data) {
-        Rwiki.closeAllTabs(node, tabPanel);
-        node.parentNode.reload();
-      }
-    });
-  }
-
-  Ext.Msg.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
-};
-
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
+  var model = new Rwiki.Model();
+  
   var treePanel = new Rwiki.TreePanel();
   var tabPanel = new Rwiki.TabPanel();
   var editorPanel = new Rwiki.EditorPanel();
 
+  // Event: node has been loaded
+  model.on(model.NODE_LOADED, function(fileName, data) {
+    var node = treePanel.findNodeByFileName(fileName);
+    node.select();
+    
+    editorPanel.getEditor().setContent(data.raw);
+    tabPanel.updateOrCreateTab(fileName, data.html);
+  });
+
+  // Event: directory has been created
+  model.on(model.DIRECTORY_CREATED, function(parentDirectoryName, newDirectoryName) {
+    var parentNode = treePanel.findNodeByFileName(parentDirectoryName);
+    parentNode.reload();
+  });
+
+  // Event: page has been created
+  model.on(model.PAGE_CREATED, function(parentDirectoryName, newFileName) {
+    var parentNode = treePanel.findNodeByFileName(parentDirectoryName);
+
+    parentNode.reload(function() {
+      // slect a new node and open a new page
+      var node = treePanel.findNodeByFileName(newFileName, parentNode);
+      node.select();
+      tabPanel.updateOrCreateTab(newFileName);
+    });
+  });
+
+  // Event: node has been moved
+  model.on(model.NODE_MOVED, function(oldNodeName, destDirName) {
+    var node = treePanel.findNodeByFileName(oldNodeName);
+    var destNode = treePanel.findNodeByFileName(destDirName);
+
+    Rwiki.closeAllRelatedTabs(node, tabPanel);
+    destNode.reload();
+  });
+
+  // Event: node has been renamed
+  model.on(model.NODE_RENAMED, function(oldFileName, newFileName) {
+    var node = treePanel.findNodeByFileName(oldFileName);
+    
+    Rwiki.closeAllRelatedTabs(node, tabPanel);
+    node.parentNode.reload();
+  });
+
+  // Event: node has been deleted
+  model.on(model.NODE_DELETED, function(nodeName) {
+    var node = treePanel.findNodeByFileName(nodeName);
+    
+    Rwiki.closeAllRelatedTabs(node, tabPanel);
+    node.remove();
+  });
+
+  // Event: tab has changed
   tabPanel.on('tabchange', function(tabPanel, tab) {
     var lastTabClosed = !tab;
     
     if (!lastTabClosed) {
       var fileName = tab.id;
-      var nodeData = Rwiki.loadNode(fileName);
-
-      editorPanel.editor.setContent(nodeData.raw);
-      tabPanel.updateOrCreateTab(fileName, nodeData);
-
+      model.loadNode(fileName);
     } else {
       editorPanel.editor.clearContent();
     }
   });
 
+  // Event: editor content changed
   editorPanel.on('contentChanged', function(editor) {
     var currentTab = tabPanel.getActiveTab();
     var fileName = currentTab.id;
@@ -193,47 +115,88 @@ Ext.onReady(function() {
       dataType: 'json',
       data: data,
       success: function(data) {
-        tabPanel.updateOrCreateTab(fileName, data);
+        tabPanel.updateOrCreateTab(fileName, data.html);
       }
     });
   });
 
   // TreePanel events
 
+  // Event: click on a node
   treePanel.on('click', function(node, e) {
     if (node.isLeaf()) {
       var fileName = node.id;
-      var name = node.text;
-      
-      tabPanel.updateOrCreateTab(fileName, name);
+      tabPanel.updateOrCreateTab(fileName);
     }
   });
 
+  // Event: a node has been moved
   treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
-    Rwiki.moveNode(node, newParent, tabPanel);
+    var nodeName = node.id;
+    var destDirName = newParent.id;
+    
+    model.moveNode(nodeName, destDirName);
   });
 
   // Attach listeners to the tree context menu
 
   var treeContextMenu = treePanel.getContextMenu();
 
+  // Event: context menu, create directory
   treeContextMenu.on('createDirectory', function(node) {
-    Rwiki.createDirectory(node);
+    if (node.cls == 'file') return;
+
+    var callback = function(button, directoryBaseName) {
+      if (button != 'ok') return;
+
+      var parentDirectoryName = node.id;
+      model.createNode(parentDirectoryName, directoryBaseName, true);
+    };
+
+    Ext.Msg.prompt('Create directory', 'New directory name:', callback);
   });
 
+  // Event: context menu, create page
   treeContextMenu.on('createPage', function(node) {
-    Rwiki.createPage(node);
+    if (node.cls == 'file') return;
+
+    var callback = function(button, fileBaseName) {
+      if (button != 'ok') return;
+
+      var parentDirectoryName = node.id;
+      model.createNode(parentDirectoryName, fileBaseName, false);
+    };
+
+    Ext.Msg.prompt('Create page', 'New page name:', callback);
   });
 
+  // Event: context menu, rename node
   treeContextMenu.on('renameNode', function(node) {
-    Rwiki.renameNode(node, tabPanel);
+    var oldNodeName = node.id;
+    var oldBaseName = node.text;
+
+    var callback = function(button, newBaseName) {
+      if (button != 'ok') return;
+      model.renameNode(oldNodeName, newBaseName);
+    }
+
+    Ext.Msg.prompt('Rename node', 'Enter a new name:', callback, this, false, oldBaseName);
   });
 
+  // Event context menu, delete node
   treeContextMenu.on('deleteNode', function(node) {
-    Rwiki.deleteNode(node, tabPanel);
+    var nodeName = node.id;
+
+    var callback = function(button) {
+      if (button != 'yes') return;
+      model.deleteNode(nodeName);
+    }
+
+    var message = 'Delete "' + nodeName + '"?';
+    Ext.Msg.confirm('Confirm', message, callback);
   });
 
-  // Create main layout
+  // Create layout
 
   var sidePanel = new Ext.Panel({
     region: 'west',

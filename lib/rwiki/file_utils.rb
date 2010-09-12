@@ -35,23 +35,29 @@ module Rwiki
       return content
     end
 
-    def create_directory(parent, name)
-      mkdir(File.join(parent, name))
+    def create_directory(parent_directory_name, base_name)
+      directory_name = File.join(parent_directory_name, base_name)
+      mkdir(directory_name)
+
+      return directory_name
     end
 
-    def create_page(parent, name)
-      touch(File.join(parent, name) + '.txt')
+    def create_page(oarent_directory_name, base_name)
+      file_name = File.join(oarent_directory_name, base_name) + '.txt'
+      touch(file_name)
+
+      return file_name
     end
 
-    def rename_node(old_name, new_name)
-      new_full_name = File.join(File.dirname(old_name), new_name)
-      mv(old_name, new_full_name)
+    def rename_node(old_file_name, new_base_name)
+      new_full_name = File.join(File.dirname(old_file_name), new_base_name)
+      mv(old_file_name, new_full_name)
 
       return new_full_name
     end
 
-    def move_node(file_name, dir)
-      mv(file_name, dir)
+    def move_node(file_name, dest_dir_name)
+      mv(file_name, dest_dir_name)
     end
 
     def delete_node(name)

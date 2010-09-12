@@ -27,5 +27,9 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     this.editor.container.bind('contentChanged', function() {
       self.fireEvent('contentChanged', self.editor);
     });
+  },
+
+  getEditor: function() {
+    return this.editor;
   }
 });

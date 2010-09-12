@@ -39,39 +39,37 @@ module Rwiki
 
     post '/node/create' do
       parent_directory_name = params[:parentDirectoryName]
-      name = params[:name]
+      node_base_name = params[:nodeBaseName]
 
-      directory = params[:directory] == 'true'
+      new_node_name = ''
+      directory = params[:isDirectory] == 'true'
       if directory
-        create_directory(parent_directory_name, name)
+        new_node_name = create_directory(parent_directory_name, node_base_name)
       else
-        create_page(parent_directory_name, name)
+        new_node_name = create_page(parent_directory_name, node_base_name)
       end
 
-      { :success => true }.to_json
+      { :parentDirectoryName => parent_directory_name, :newNodeName => new_node_name }.to_json
     end
 
     post '/node/rename' do
-      # TODO give better names, old_name is with full relative path, new_name is only a file name
-      old_name = params[:oldName]
-      new_name = params[:newName]
+      old_node_name = params[:oldNodeName]
+      new_base_name = params[:newBaseName]
 
-      new_name = rename_node(old_name, new_name)
-      { :text => new_name, :id => File.join(Dir.pwd, new_name) }.to_json
+      new_node_name = rename_node(old_node_name, new_base_name)
+      { :text => new_base_name, :id => new_node_name }.to_json
     end
 
     post '/node/move' do
-      file_name = params[:fileName]
-      dest_dir = params[:destDir]
+      node_name = params[:nodeName]
+      dest_dir_name = params[:destDirName]
 
-      move_node(file_name, dest_dir)
+      move_node(node_name, dest_dir_name)
     end
 
     post '/node/destroy' do
-      file_name = params[:fileName]
-      delete_node(file_name)
-      
-      { :success => true }.to_json
+      node_name = params[:nodeName]
+      delete_node(node_name)
     end
   end
 end

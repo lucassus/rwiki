@@ -1,6 +1,5 @@
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function(config) {
-
     var toolBar = new Ext.Toolbar({
       items: [
       new Ext.form.TextField({
@@ -115,5 +114,19 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   getSelectedNode: function() {
     return this.getSelectionModel().getSelectedNode();
+  },
+
+  findNodeByFileName: function(fileName, startNode) {
+    var foundNode = null;
+
+    var node = startNode ? startNode : this.root;
+    node.cascade(function() {
+      if (this.id == fileName) {
+        foundNode = this;
+        return;
+      }
+    });
+
+    return foundNode;
   }
 });

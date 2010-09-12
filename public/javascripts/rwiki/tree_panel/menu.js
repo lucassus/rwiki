@@ -40,7 +40,11 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     Rwiki.TreePanel.Menu.superclass.constructor.call(this, config);
 
     // define events
-    this.addEvents('createDirectory', 'createPage', 'renameNode', 'deleteNode');
+    this.addEvents(
+      'createDirectory',
+      'createPage',
+      'renameNode',
+      'deleteNode');
   },
 
   show: function(node, xy) {
