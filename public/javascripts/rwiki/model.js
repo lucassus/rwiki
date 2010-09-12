@@ -71,8 +71,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         newBaseName: newBaseName
       },
       success: function(data) {
-        var newNodeName = data.id;
-        self.fireEvent(self.NODE_RENAMED, oldNodeName, newNodeName);
+        self.fireEvent(self.NODE_RENAMED, data);
       }
     });
   },

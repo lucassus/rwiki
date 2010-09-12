@@ -71,12 +71,16 @@ Ext.onReady(function() {
   });
 
   // Event: node has been renamed
-  model.on(model.NODE_RENAMED, function(oldNodeName, newNodeName) {
-    var node = treePanel.findNodeByPageName(oldNodeName);
-    if (node == null) return;
-    
-    Rwiki.closeAllRelatedTabs(node, tabPanel);
-    node.parentNode.reload();
+  model.on(model.NODE_RENAMED, function(data) {
+    if (data.success) {
+      var node = treePanel.findNodeByPageName(data.oldNodeName);
+      if (node == null) return;
+
+      Rwiki.closeAllRelatedTabs(node, tabPanel);
+      node.parentNode.reload();
+    } else {
+      Ext.MessageBox.alert("Error!", "Can't rename node.");
+    }
   });
 
   // Event: node has been deleted
@@ -154,7 +158,7 @@ Ext.onReady(function() {
       model.createNode(parentFolderName, folderBaseName, true);
     };
 
-    Ext.Msg.prompt('Create folder', 'New folder name:', callback);
+    Ext.MessageBox.prompt('Create folder', 'New folder name:', callback);
   });
 
   // Event: context menu, create page
@@ -168,7 +172,7 @@ Ext.onReady(function() {
       model.createNode(parentFolderName, fileBaseName, false);
     };
 
-    Ext.Msg.prompt('Create page', 'New page name:', callback);
+    Ext.MessageBox.prompt('Create page', 'New page name:', callback);
   });
 
   // Event: context menu, rename node
@@ -181,7 +185,7 @@ Ext.onReady(function() {
       model.renameNode(oldNodeName, newBaseName);
     }
 
-    Ext.Msg.prompt('Rename node', 'Enter a new name:', callback, this, false, oldBaseName);
+    Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldBaseName);
   });
 
   // Event context menu, delete node
@@ -194,7 +198,7 @@ Ext.onReady(function() {
     }
 
     var message = 'Delete "' + nodeName + '"?';
-    Ext.Msg.confirm('Confirm', message, callback);
+    Ext.MessageBox.confirm('Confirm', message, callback);
   });
 
   // Create layout
