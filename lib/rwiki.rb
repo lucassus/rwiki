@@ -56,15 +56,18 @@ module Rwiki
       old_node_name = params[:oldNodeName]
       new_base_name = params[:newBaseName]
 
-      new_node_name = rename_node(old_node_name, new_base_name)
-      { :text => new_base_name, :id => new_node_name }.to_json
+      success, new_node_name = rename_node(old_node_name, new_base_name)
+      { :success => success,
+        :oldNodeName => old_node_name,
+        :newBaseName => new_base_name, :newNodeName => new_node_name }.to_json
     end
 
     post '/node/move' do
       node_name = params[:nodeName]
       dest_folder_name = params[:destFolderName]
 
-      move_node(node_name, dest_folder_name)
+      success, new_node_name = move_node(node_name, dest_folder_name)
+      { :success => success, :newNodeName => new_node_name }.to_json
     end
 
     post '/node/destroy' do
