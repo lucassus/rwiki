@@ -6,32 +6,32 @@ module Rwiki
 
     CODE_REGEXP = /\<code( lang="(.+?)")?\>(.+?)\<\/code\>/m.freeze
 
-    def parse_content(raw)
-      raw.force_encoding('utf-8')
+    def parse_content(raw_content)
+      raw_content.force_encoding('utf-8')
       
-      raw_after_coderay = coderay(raw)
+      raw_after_coderay = coderay(raw_content)
       html = parse(raw_after_coderay)
-      toc = "<div class='toc'>" + generate_toc(raw) + "</div>"
+      toc = "<div class='toc'>" + generate_toc(raw_content) + "</div>"
 
-      return { :raw => raw, :html => toc + html }
+      return { :raw => raw_content, :html => toc + html }
     end
 
     private
 
-    def parse(raw)
-      raw = add_anchors_to_headers(raw)
-      return RedCloth.new(raw).to_html
+    def parse(raw_content)
+      raw_content = add_anchors_to_headers(raw_content)
+      return RedCloth.new(raw_content).to_html
     end
 
-    def coderay(raw)
-      raw.gsub(CODE_REGEXP) do
+    def coderay(raw_content)
+      raw_content.gsub(CODE_REGEXP) do
         "<notextile>#{CodeRay.scan($3, $2).div(:css => :class)}</notextile>"
       end
     end
 
-    def generate_raw_toc(raw)
+    def generate_raw_toc(raw_content)
       toc = ''
-    	raw.gsub(/^\s*h([1-6])\.\s+(.*)/) do |match|
+    	raw_content.gsub(/^\s*h([1-6])\.\s+(.*)/) do |match|
     		level = $1.to_i
     		name = $2
 
@@ -42,8 +42,8 @@ module Rwiki
       return toc
     end
 
-    def generate_toc(raw)
-      toc = generate_raw_toc(raw)
+    def generate_toc(raw_content)
+      toc = generate_raw_toc(raw_content)
     	return RedCloth.new(toc).to_html
     end
 

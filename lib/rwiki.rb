@@ -25,16 +25,16 @@ module Rwiki
     get '/node/content' do
       page_name = params[:pageName]
       
-      raw = read_file(page_name)
-      parse_content(raw).to_json
+      raw_content = read_page(page_name)
+      parse_content(raw_content).to_json
     end
 
     post '/node/update' do
       page_name = params[:pageName]
-      content = params[:content]
+      raw_content = params[:content]
 
-      write_file(page_name, content)
-      parse_content(content).to_json
+      write_page(page_name, raw_content)
+      parse_content(raw_content).to_json
     end
 
     post '/node/create' do

@@ -9,9 +9,9 @@ module Rwiki
     def make_nodes(folder_name)
       tree_nodes = []
 
-      entries = Dir.entries(folder_name).sort
-      entries.each do |node_base_name|
-        next if node_base_name.match(/^\./)
+      nodes = Dir.entries(folder_name).sort
+      nodes.each do |node_base_name|
+        next if node_base_name.match(/^\./) # skip hidden files
 
         node_name = File.join(folder_name, node_base_name)
         tree_node = { :text => node_base_name, :id => node_name }
@@ -28,12 +28,12 @@ module Rwiki
       return tree_nodes
     end
 
-    def read_file(file_name)
-      return File.read(file_name) { |f| f.read }
+    def read_page(page_name)
+      return File.read(page_name) { |f| f.read }
     end
 
-    def write_file(file_name, content)
-      file = File.open(file_name, 'w')
+    def write_page(page_name, content)
+      file = File.open(page_name, 'w')
       file.write(content)
       file.close
     end
