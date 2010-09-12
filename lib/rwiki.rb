@@ -18,38 +18,38 @@ module Rwiki
     end
 
     get '/nodes' do
-      directory_name = params[:directoryName]
-      make_tree(directory_name).to_json
+      folder_name = params[:folderName]
+      make_tree(folder_name).to_json
     end
 
     get '/node/content' do
-      file_name = params[:fileName]
+      page_name = params[:pageName]
       
-      raw = read_file(file_name)
+      raw = read_file(page_name)
       parse_content(raw).to_json
     end
 
     post '/node/update' do
-      file_name = params[:fileName]
+      page_name = params[:pageName]
       content = params[:content]
 
-      raw = write_file(file_name, content)
-      parse_content(raw).to_json
+      write_file(page_name, content)
+      parse_content(content).to_json
     end
 
     post '/node/create' do
-      parent_directory_name = params[:parentDirectoryName]
+      parent_folder_name = params[:parentFolderName]
       node_base_name = params[:nodeBaseName]
 
       new_node_name = ''
       directory = params[:isDirectory] == 'true'
       if directory
-        new_node_name = create_directory(parent_directory_name, node_base_name)
+        new_node_name = create_directory(parent_folder_name, node_base_name)
       else
-        new_node_name = create_page(parent_directory_name, node_base_name)
+        new_node_name = create_page(parent_folder_name, node_base_name)
       end
 
-      { :parentDirectoryName => parent_directory_name, :newNodeName => new_node_name }.to_json
+      { :parentFolderName => parent_folder_name, :newNodeName => new_node_name }.to_json
     end
 
     post '/node/rename' do
@@ -62,9 +62,9 @@ module Rwiki
 
     post '/node/move' do
       node_name = params[:nodeName]
-      dest_dir_name = params[:destDirName]
+      dest_folder_name = params[:destFolderName]
 
-      move_node(node_name, dest_dir_name)
+      move_node(node_name, dest_folder_name)
     end
 
     post '/node/destroy' do

@@ -116,12 +116,12 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     return this.getSelectionModel().getSelectedNode();
   },
 
-  findNodeByFileName: function(fileName, startNode) {
+  findNodeByPageName: function(pageName, startNode) {
     var foundNode = null;
 
     var node = startNode ? startNode : this.root;
     node.cascade(function() {
-      if (this.id == fileName) {
+      if (this.id == pageName) {
         foundNode = this;
         return;
       }

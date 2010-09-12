@@ -31,8 +31,6 @@ module Rwiki
       file = File.open(file_name, 'w')
       file.write(content)
       file.close
-
-      return content
     end
 
     def create_directory(parent_directory_name, base_name)

@@ -17,8 +17,8 @@ Rwiki.escapedId = function(id) {
  */
 Rwiki.closeAllRelatedTabs = function(node, tabPanel) {
   node.cascade(function() {
-    var fileName = this.id;
-    var tab = tabPanel.findTabByFileName(fileName);
+    var pageName = this.id;
+    var tab = tabPanel.findTabByPageName(pageName);
     if (tab) {
       tabPanel.remove(tab);
     }
@@ -35,44 +35,45 @@ Ext.onReady(function() {
   var editorPanel = new Rwiki.EditorPanel();
 
   // Event: node has been loaded
-  model.on(model.NODE_LOADED, function(fileName, data) {
-    var node = treePanel.findNodeByFileName(fileName);
+  model.on(model.NODE_LOADED, function(pageName, data) {
+    var node = treePanel.findNodeByPageName(pageName);
     node.select();
     
     editorPanel.getEditor().setContent(data.raw);
-    tabPanel.updateOrCreateTab(fileName, data.html);
+    tabPanel.updateOrCreateTab(pageName, data.html);
   });
 
   // Event: directory has been created
-  model.on(model.DIRECTORY_CREATED, function(parentDirectoryName, newDirectoryName) {
-    var parentNode = treePanel.findNodeByFileName(parentDirectoryName);
+  model.on(model.DIRECTORY_CREATED, function(parentFolderName, newDirectoryName) {
+    var parentNode = treePanel.findNodeByPageName(parentFolderName);
     parentNode.reload();
   });
 
   // Event: page has been created
-  model.on(model.PAGE_CREATED, function(parentDirectoryName, newFileName) {
-    var parentNode = treePanel.findNodeByFileName(parentDirectoryName);
+  model.on(model.PAGE_CREATED, function(parentFolderName, newPageName) {
+    var parentNode = treePanel.findNodeByPageName(parentFolderName);
 
     parentNode.reload(function() {
       // slect a new node and open a new page
-      var node = treePanel.findNodeByFileName(newFileName, parentNode);
+      var node = treePanel.findNodeByPageName(newPageName, parentNode);
       node.select();
-      tabPanel.updateOrCreateTab(newFileName);
+      tabPanel.updateOrCreateTab(newPageName);
     });
   });
 
   // Event: node has been moved
   model.on(model.NODE_MOVED, function(oldNodeName, destDirName) {
-    var node = treePanel.findNodeByFileName(oldNodeName);
-    var destNode = treePanel.findNodeByFileName(destDirName);
+    var node = treePanel.findNodeByPageName(oldNodeName);
+    var destNode = treePanel.findNodeByPageName(destDirName);
 
     Rwiki.closeAllRelatedTabs(node, tabPanel);
     destNode.reload();
   });
 
   // Event: node has been renamed
-  model.on(model.NODE_RENAMED, function(oldFileName, newFileName) {
-    var node = treePanel.findNodeByFileName(oldFileName);
+  model.on(model.NODE_RENAMED, function(oldNodeName, newNodeName) {
+    var node = treePanel.findNodeByPageName(oldNodeName);
+    if (node == null) return;
     
     Rwiki.closeAllRelatedTabs(node, tabPanel);
     node.parentNode.reload();
@@ -80,7 +81,7 @@ Ext.onReady(function() {
 
   // Event: node has been deleted
   model.on(model.NODE_DELETED, function(nodeName) {
-    var node = treePanel.findNodeByFileName(nodeName);
+    var node = treePanel.findNodeByPageName(nodeName);
     
     Rwiki.closeAllRelatedTabs(node, tabPanel);
     node.remove();
@@ -91,8 +92,8 @@ Ext.onReady(function() {
     var lastTabClosed = !tab;
     
     if (!lastTabClosed) {
-      var fileName = tab.id;
-      model.loadNode(fileName);
+      var pageName = tab.id;
+      model.loadNode(pageName);
     } else {
       editorPanel.editor.clearContent();
     }
@@ -101,11 +102,11 @@ Ext.onReady(function() {
   // Event: editor content changed
   editorPanel.on('contentChanged', function(editor) {
     var currentTab = tabPanel.getActiveTab();
-    var fileName = currentTab.id;
+    var pageName = currentTab.id;
     var content = editor.getContent();
 
     var data = {
-      fileName: fileName,
+      pageName: pageName,
       content: content
     };
 
@@ -115,7 +116,7 @@ Ext.onReady(function() {
       dataType: 'json',
       data: data,
       success: function(data) {
-        tabPanel.updateOrCreateTab(fileName, data.html);
+        tabPanel.updateOrCreateTab(pageName, data.html);
       }
     });
   });
@@ -125,8 +126,8 @@ Ext.onReady(function() {
   // Event: click on a node
   treePanel.on('click', function(node, e) {
     if (node.isLeaf()) {
-      var fileName = node.id;
-      tabPanel.updateOrCreateTab(fileName);
+      var pageName = node.id;
+      tabPanel.updateOrCreateTab(pageName);
     }
   });
 

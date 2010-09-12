@@ -24,7 +24,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       this.NODE_DELETED);
   },
 
-  loadNode: function(fileName) {
+  loadNode: function(pageName) {
     var self = this;
 
     $.ajax({
@@ -32,15 +32,15 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       url: '/node/content',
       dataType: 'json',
       data: {
-        fileName: fileName
+        pageName: pageName
       },
       success: function(data) {
-        self.fireEvent(self.NODE_LOADED, fileName, data);
+        self.fireEvent(self.NODE_LOADED, pageName, data);
       }
     });
   },
 
-  createNode: function(parentDirectoryName, nodeBaseName, isDirectory) {
+  createNode: function(parentFolderName, nodeBaseName, isDirectory) {
     var self = this;
 
     $.ajax({
@@ -48,13 +48,13 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       url: '/node/create',
       dataType: 'json',
       data: {
-        parentDirectoryName: parentDirectoryName,
+        parentDirectoryName: parentFolderName,
         nodeBaseName: nodeBaseName,
         isDirectory: isDirectory
       },
       success: function(data) {
         var eventName = isDirectory ? self.DIRECTORY_CREATED : self.PAGE_CREATED;
-        self.fireEvent(eventName, data.parentDirectoryName, data.newNodeName);
+        self.fireEvent(eventName, data.parentFolderName, data.newNodeName);
       }
     });
   },
