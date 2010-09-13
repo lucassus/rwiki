@@ -103,7 +103,7 @@ Ext.onReady(function() {
   // Event: editor content changed
   editorPanel.on('contentChanged', function(editor) {
     var currentTab = tabPanel.getActiveTab();
-    var pageName = currentTab.id;
+    var pageName = currentTab.getPageName();
     var content = editor.getContent();
 
     var data = {
@@ -127,7 +127,7 @@ Ext.onReady(function() {
     var lastTabClosed = !tab;
 
     if (!lastTabClosed) {
-      var pageName = tab.id;
+      var pageName = tab.getPageName();
       model.loadPage(pageName);
     } else {
       editorPanel.editor.clearContent();

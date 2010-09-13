@@ -22,20 +22,14 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       tab = this.addPage(pageName);
     } 
 
-    // update page content
-    var nodeId = Rwiki.escapedId(pageName);
-    $(nodeId).html(htmlContent);
-
-    this.setActiveTab(tab.id);
+    tab.setContent(htmlContent);
+    return tab.show();
   },
 
   addPage: function(pageName) {
-    var pagePanel = new Ext.Container({
-      closable: true,
+    var pagePanel = new Rwiki.TabPanel.PageContainer({
       id: pageName,
-      title: pageName,
-      cls: 'page-container',
-      iconCls: 'icon-page'
+      title: pageName
     });
 
     return this.add(pagePanel);
