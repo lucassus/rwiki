@@ -16,23 +16,23 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     Rwiki.TabPanel.superclass.constructor.call(this, config);
   },
 
-  updateOrAddPage: function(pageName, htmlContent) {
+  updateOrAddPageTab: function(pageName, htmlContent) {
     var tab = this.findTabByPageName(pageName);
     if (!tab) {
-      tab = this.addPage(pageName);
+      tab = this.addPageTab(pageName);
     } 
 
     tab.setContent(htmlContent);
-    return tab.show();
+    return tab;
   },
 
-  addPage: function(pageName) {
-    var pagePanel = new Rwiki.TabPanel.PageTab({
+  addPageTab: function(pageName) {
+    var pageTab = new Rwiki.TabPanel.PageTab({
       id: pageName,
       title: pageName
     });
 
-    return this.add(pagePanel);
+    return this.add(pageTab);
   },
 
   closeRelatedTabs: function(node) {
@@ -46,7 +46,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     });
   },
 
-  findTabByPageName: function(id) {
-    return this.find('id', id)[0];
+  findTabByPageName: function(pageName) {
+    return this.find('id', pageName)[0];
   }
 });

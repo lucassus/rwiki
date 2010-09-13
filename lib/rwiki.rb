@@ -42,7 +42,7 @@ module Rwiki
       raw_content = params[:content]
 
       write_page(page_name, raw_content)
-      parse_content(raw_content).to_json
+      parse_content(raw_content).merge(:pageName => page_name).to_json
     end
 
     post '/node/create' do

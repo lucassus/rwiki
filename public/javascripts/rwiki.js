@@ -1,17 +1,18 @@
 Ext.ns('Rwiki');
 
 Rwiki.rootFolderName = '.';
+Rwiki.currentPageName = null;
 
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
   var model = new Rwiki.Model();
-  
+
   var treePanel = new Rwiki.TreePanel();
   treePanel.relayEvents(model, [model.PAGE_LOADED]);
   
   var tabPanel = new Rwiki.TabPanel();
-  tabPanel.relayEvents(model, [model.PAGE_LOADED]);
+  tabPanel.relayEvents(model, [model.PAGE_LOADED, model.PAGE_UPDATED]);
 
   var editorPanel = new Rwiki.EditorPanel();
   editorPanel.relayEvents(model, [model.PAGE_LOADED]);
@@ -33,7 +34,8 @@ Ext.onReady(function() {
     if (!data.success) return;
 
     var pageName = data.pageName;
-    tabPanel.updateOrAddPage(pageName, data.html);
+    var tab = tabPanel.updateOrAddPageTab(pageName, data.html);
+    tab.show();
   });
 
   // Event: node has been loaded
@@ -50,14 +52,14 @@ Ext.onReady(function() {
   });
 
   // Event: page has been created
-  model.on(model.PAGE_CREATED, function(parentFolderName, newPageName) {
+  model.on(model.NODE_CREATED, function(parentFolderName, newPageName) {
     var parentNode = treePanel.findNodeByPageName(parentFolderName);
 
     parentNode.reload(function() {
       // slect a new node and open a new page
       var node = treePanel.findNodeByPageName(newPageName, parentNode);
       node.select();
-      tabPanel.updateOrAddPage(newPageName);
+      tabPanel.updateOrAddPageTab(newPageName);
     });
   });
 
@@ -92,25 +94,17 @@ Ext.onReady(function() {
   });
 
   // Event: editor content changed
-  editorPanel.on('contentChanged', function(editor) {
+  editorPanel.on('contentChanged', function(content) {
     var currentTab = tabPanel.getActiveTab();
     var pageName = currentTab.getPageName();
-    var content = editor.getContent();
 
-    var data = {
-      pageName: pageName,
-      content: content
-    };
+    model.updatePage(pageName, content);
+  });
 
-    $.ajax({
-      type: 'POST',
-      url: '/node/update',
-      dataType: 'json',
-      data: data,
-      success: function(data) {
-        tabPanel.updateOrAddPage(pageName, data.html);
-      }
-    });
+  tabPanel.on(model.PAGE_UPDATED, function(data) {
+    var pageName = data.pageName;
+    var tab = tabPanel.findTabByPageName(pageName);
+    tab.setContent(data.html);
   });
 
   // Event: tab has changed

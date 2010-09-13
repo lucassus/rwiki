@@ -5,7 +5,8 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
 
   // events
   PAGE_LOADED: 'pageLoaded',
-  PAGE_CREATED: 'pageCreated',
+  NODE_CREATED: 'nodeCreated',
+  PAGE_UPDATED: 'pageUpdated',
   FOLDER_CREATED: 'folderCreated',
   NODE_MOVED: 'nodeMoved',
   NODE_RENAMED: 'nodeRenamed',
@@ -17,7 +18,8 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     // define events
     this.addEvents(
       this.PAGE_LOADED,
-      this.PAGE_CREATED,
+      this.NODE_CREATED,
+      this.PAGE_UPDATED,
       this.FOLDER_CREATED,
       this.NODE_MOVED,
       this.NODE_RENAMED,
@@ -53,8 +55,25 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         isFolder: isFolder
       },
       success: function(data) {
-        var eventName = isFolder ? self.FOLDER_CREATED : self.PAGE_CREATED;
+        var eventName = isFolder ? self.FOLDER_CREATED : self.NODE_CREATED;
         self.fireEvent(eventName, data.parentFolderName, data.newNodeName);
+      }
+    });
+  },
+
+  updatePage: function(pageName, content) {
+    var self = this;
+
+    $.ajax({
+      type: 'POST',
+      url: '/node/update',
+      dataType: 'json',
+      data: {
+        pageName: pageName,
+        content: content
+      },
+      success: function(data) {
+        self.fireEvent(self.PAGE_UPDATED, data);
       }
     });
   },
