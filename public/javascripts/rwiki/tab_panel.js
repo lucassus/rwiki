@@ -27,7 +27,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   addPage: function(pageName) {
-    var pagePanel = new Rwiki.TabPanel.PageContainer({
+    var pagePanel = new Rwiki.TabPanel.PageTab({
       id: pageName,
       title: pageName
     });

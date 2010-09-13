@@ -2,15 +2,6 @@ Ext.ns('Rwiki');
 
 Rwiki.rootFolderName = '.';
 
-/**
- * Escapes any non-words characters.
- * Used for generating elements ids for jQuery selectors.
- * @returs escaped node id
- */
-Rwiki.escapedId = function(id) {
-  return '#' + id.replace(/(\W)/g, '\\$1');
-};
-
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
