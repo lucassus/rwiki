@@ -1,0 +1,10 @@
+<script type="text/javascript" src="Rwiki.Viewport.ui.js"></script>
+<script type="text/javascript" src="Rwiki.Viewport.js"></script>
+<script type="text/javascript" src="Rwiki.TreePanel.ui.js"></script>
+<script type="text/javascript" src="Rwiki.TreePanel.js"></script>
+<script type="text/javascript" src="Rwiki.EditorPanel.ui.js"></script>
+<script type="text/javascript" src="Rwiki.EditorPanel.js"></script>
+<script type="text/javascript" src="Rwiki.TabPanel.ui.js"></script>
+<script type="text/javascript" src="Rwiki.TabPanel.js"></script>
+<script type="text/javascript" src="Rwiki.MainPanel.ui.js"></script>
+<script type="text/javascript" src="Rwiki.MainPanel.js"></script>

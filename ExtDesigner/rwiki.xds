@@ -1,0 +1,169 @@
+{
+	"name": "rwiki.xds",
+	"projectId": "6CA68E73-828B-40E8-B3D0-A5F96D2E5EC5",
+	"settings": {
+		"urlPrefix": "http://localhost/",
+		"spacesToIndent": 4,
+		"codeGenFormat": "Class",
+		"extPath": "http://extjs.cachefly.net/ext-3.2.1/",
+		"exportPath": ".",
+		"lineEnding": "LF"
+	},
+	"xdsVersion": "xds-1.0.2.14",
+	"components": [
+		{
+			"id": "MyViewport",
+			"cid": "viewport",
+			"jsClass": "MyViewport",
+			"snapToGrid": 10,
+			"userConfig": {
+				"layout": "border"
+			},
+			"cn": [
+				{
+					"id": "MyUserComponent",
+					"cid": "usercomponent",
+					"jsClass": "MyTreePanel",
+					"snapToGrid": 10,
+					"userConfig": {
+						"jsClass": "Rwiki.TreePanel",
+						"userXType": "mytreepanel",
+						"region": "west",
+						"split": true
+					},
+					"userComponent": "MyTreePanel1"
+				},
+				{
+					"id": "MyUserComponent3",
+					"cid": "usercomponent",
+					"jsClass": "MyPanel",
+					"snapToGrid": 10,
+					"userConfig": {
+						"jsClass": "Rwiki.MainPanel",
+						"userXType": "mypanel",
+						"region": "center"
+					},
+					"userComponent": "MyPanel"
+				}
+			]
+		},
+		{
+			"id": "MyTreePanel1",
+			"cid": "treepanel",
+			"jsClass": "Rwiki.TreePanel",
+			"snapToGrid": 10,
+			"userConfig": {
+				"title": "Pages",
+				"width": 200,
+				"collapsible": true,
+				"frame": "-ext-undefined-",
+				"footer": "-ext-undefined-",
+				"titleCollapse": "-ext-undefined-",
+				"containerScroll": "-ext-undefined-"
+			},
+			"userXType": "mytreepanel",
+			"cn": [
+				{
+					"id": "MyAsyncTreeNode1",
+					"cid": "asynctreenode",
+					"jsClass": "MyAsyncTreeNode",
+					"dock": "root",
+					"snapToGrid": 10,
+					"userConfig": {
+						"text": "Tree Node"
+					}
+				},
+				{
+					"id": "MyTreeLoader1",
+					"cid": "treeloader",
+					"jsClass": "MyTreeLoader",
+					"dock": "loader",
+					"snapToGrid": 10
+				}
+			]
+		},
+		{
+			"id": "MyPanel2",
+			"cid": "panel",
+			"jsClass": "Rwiki.EditorPanel",
+			"snapToGrid": 10,
+			"userConfig": {
+				"title": "Editor",
+				"width": 100,
+				"titleCollapse": "-ext-undefined-",
+				"collapsible": true
+			},
+			"userXType": "mypanel2",
+			"cn": [
+				{
+					"id": "MyContainer",
+					"cid": "container",
+					"jsClass": "MyContainer",
+					"snapToGrid": 10,
+					"userConfig": {
+						"height": 400
+					}
+				}
+			]
+		},
+		{
+			"id": "MyTabPanel",
+			"cid": "tabpanel",
+			"jsClass": "Rwiki.TabPanel",
+			"snapToGrid": 10,
+			"userConfig": {
+				"activeTab": 0
+			},
+			"userXType": "mytabpanel",
+			"cn": [
+				{
+					"id": "MyPanel1",
+					"cid": "panel",
+					"jsClass": "MyPanel1",
+					"snapToGrid": 10,
+					"userConfig": {
+						"title": "Page name"
+					}
+				}
+			]
+		},
+		{
+			"id": "MyPanel",
+			"cid": "panel",
+			"jsClass": "Rwiki.MainPanel",
+			"snapToGrid": 10,
+			"userConfig": {
+				"title": "-ext-undefined-",
+				"layout": "border"
+			},
+			"userXType": "mypanel",
+			"cn": [
+				{
+					"id": "MyUserComponent2",
+					"cid": "usercomponent",
+					"jsClass": "MyTabPanel",
+					"snapToGrid": 10,
+					"userConfig": {
+						"jsClass": "Rwiki.TabPanel",
+						"userXType": "mytabpanel",
+						"region": "center"
+					},
+					"userComponent": "MyTabPanel"
+				},
+				{
+					"id": "MyUserComponent1",
+					"cid": "usercomponent",
+					"jsClass": "MyPanel2",
+					"snapToGrid": 10,
+					"userConfig": {
+						"jsClass": "Rwiki.EditorPanel",
+						"userXType": "mypanel2",
+						"region": "south"
+					},
+					"userComponent": "MyPanel2"
+				}
+			]
+		}
+	],
+	"stores": []
+}
