@@ -6,7 +6,7 @@ Rwiki.TabPanel.PageContainer = Ext.extend(Ext.Container, {
       iconCls: 'icon-page'
     }, config);
 
-    this.pageName = config.pageName;
+    this.pageName = config.id;
 
     Rwiki.TabPanel.PageContainer.superclass.constructor.call(this, config);
   },

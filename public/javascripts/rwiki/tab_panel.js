@@ -38,7 +38,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   closeRelatedTabs: function(node) {
     var self = this;
     node.cascade(function() {
-      var pageName = this.id;
+      var pageName = this.getPageName();
       var tab = self.findTabByPageName(pageName);
       if (tab) {
         self.remove(tab);
