@@ -1,10 +1,15 @@
+.toc-container {
+  position: fixed;
+  width: 100%;
+}
+
 .toc {
   clear: both;
   float: right;
   font-size: 80%;
   width: 250px;
   border: 1px solid #D0DFF0;
-  margin-right: 5px;
+  margin-right: 300px;
   background-color: #F5F5F5;
   padding: 5px;
   -moz-border-radius: 8px;
