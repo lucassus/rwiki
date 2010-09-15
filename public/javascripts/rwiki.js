@@ -121,10 +121,8 @@ Ext.onReady(function() {
 
   // Event: TreePanel, click on a node
   treePanel.on('click', function(node, e) {
-    if (node.isLeaf()) {
-      var pageName = node.id;
-      model.loadPage(pageName);
-    }
+    var pageName = node.id;
+    tabPanel.updateOrAddPage(pageName);
   });
 
   // Event: TreePanel, a node has been moved
