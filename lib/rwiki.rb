@@ -19,7 +19,8 @@ module Rwiki
 
     get '/nodes' do
       folder_name = params[:folderName]
-      make_tree(folder_name).to_json
+      tree = make_tree(folder_name)
+      tree.to_json
     end
 
     get '/node/content' do
@@ -28,8 +29,11 @@ module Rwiki
 
       result = { :pageName => page_name }
       unless raw_content.nil?
-        result.merge!(parse_content(raw_content))
+        html = parse_content(raw_content)
+
         result[:success] = true
+        result[:raw] = raw_content
+        result[:html] = html
       else
         result[:success] = false
       end
@@ -41,23 +45,30 @@ module Rwiki
       page_name = params[:pageName]
       raw_content = params[:content]
 
-      write_page(page_name, raw_content)
-      parse_content(raw_content).merge(:pageName => page_name).to_json
+      success = write_page(page_name, raw_content)
+      result = { :success => success, :pageName => page_name, :raw => raw_content }
+      result[:html] = parse_content(raw_content) if success
+
+      result.to_json
     end
 
     post '/node/create' do
       parent_folder_name = params[:parentFolderName]
       node_base_name = params[:nodeBaseName]
 
-      new_node_name = ''
       is_folder = params[:isFolder] == 'true'
       if is_folder
         new_node_name = create_folder(parent_folder_name, node_base_name)
       else
+        node_base_name += PAGE_FILE_EXT
         new_node_name = create_page(parent_folder_name, node_base_name)
       end
 
-      { :parentFolderName => parent_folder_name, :newNodeName => new_node_name }.to_json
+      result = { :success => !!new_node_name,
+        :parentFolderName => parent_folder_name, :isFolder => is_folder,
+        :newNodeName => new_node_name, :newNodeBaseName => node_base_name }
+
+      result.to_json
     end
 
     post '/node/rename' do
@@ -67,7 +78,7 @@ module Rwiki
       success, new_node_name = rename_node(old_node_name, new_base_name)
       { :success => success,
         :oldNodeName => old_node_name,
-        :newBaseName => new_base_name, :newNodeName => new_node_name }.to_json
+        :newNodeName => new_node_name, :newBaseName => new_base_name }.to_json
     end
 
     post '/node/move' do
@@ -80,7 +91,8 @@ module Rwiki
 
     post '/node/destroy' do
       node_name = params[:nodeName]
-      delete_node(node_name)
+      success = delete_node(node_name)
+      { :success => success, :nodeName => node_name }.to_json
     end
   end
 end

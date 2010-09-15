@@ -9,69 +9,10 @@ Ext.onReady(function() {
   var model = new Rwiki.Model();
 
   var treePanel = new Rwiki.TreePanel();
-  treePanel.relayEvents(model, [model.PAGE_LOADED]);
-  
   var tabPanel = new Rwiki.TabPanel();
-  tabPanel.relayEvents(model, [model.PAGE_LOADED, model.PAGE_UPDATED]);
-
   var editorPanel = new Rwiki.EditorPanel();
-  editorPanel.relayEvents(model, [model.PAGE_LOADED]);
 
-  treePanel.on(model.PAGE_LOADED, function(data) {
-    if (!data.success) return;
-
-    var pageName = data.pageName;
-    var node = treePanel.findNodeByPageName(pageName);
-    node.select();
-  });
-
-  editorPanel.on(model.PAGE_LOADED, function(data) {
-    if (!data.success) return;
-    editorPanel.getEditor().setContent(data.raw);
-  });
-
-  tabPanel.on(model.PAGE_LOADED, function(data) {
-    if (!data.success) return;
-
-    var pageName = data.pageName;
-    var tab = tabPanel.updateOrAddPageTab(pageName, data.html);
-    tab.show();
-  });
-
-  // Event: node has been loaded
-  model.on(model.PAGE_LOADED, function(data) {
-    if (!data.success) {
-      Ext.MessageBox.alert("Error!", "Can't load the page content.");
-    }
-  });
-
-  // Event: folder has been created
-  model.on(model.FOLDER_CREATED, function(parentFolderName, newFolderName) {
-    var parentNode = treePanel.findNodeByPageName(parentFolderName);
-    parentNode.reload();
-  });
-
-  // Event: page has been created
-  model.on(model.NODE_CREATED, function(parentFolderName, newPageName) {
-    var parentNode = treePanel.findNodeByPageName(parentFolderName);
-
-    parentNode.reload(function() {
-      // slect a new node and open a new page
-      var node = treePanel.findNodeByPageName(newPageName, parentNode);
-      node.select();
-      var tab = tabPanel.updateOrAddPageTab(newPageName);
-      tab.show();
-    });
-  });
-
-  // Event: node has been moved
-  model.on(model.NODE_MOVED, function(oldNodeName, destFolderName) {
-    var node = treePanel.findNodeByPageName(oldNodeName);
-    var destNode = treePanel.findNodeByPageName(destFolderName);
-
-    tabPanel.closeRelatedTabs(node);
-    destNode.reload();
-  });
+  // TODO: 1/ insert a new node, 2/ sort nodes by name, 3/ if page open it in new tab
 
   // Event: node has been renamed
   model.on(model.NODE_RENAMED, function(data) {
@@ -86,12 +27,13 @@ Ext.onReady(function() {
     }
   });
 
-  // Event: node has been deleted
-  model.on(model.NODE_DELETED, function(nodeName) {
-    var node = treePanel.findNodeByPageName(nodeName);
-    
+  // Event: node has been moved
+  model.on(model.NODE_MOVED, function(oldNodeName, destFolderName) {
+    var node = treePanel.findNodeByPageName(oldNodeName);
+    var destNode = treePanel.findNodeByPageName(destFolderName);
+
     tabPanel.closeRelatedTabs(node);
-    node.remove();
+    destNode.reload();
   });
 
   // Event: editor content changed
@@ -114,7 +56,24 @@ Ext.onReady(function() {
 
     if (!lastTabClosed) {
       var pageName = tab.getPageName();
-      model.loadPage(pageName);
+      
+      model.loadPage(pageName, function(data) {
+        if (!data.success) return;
+
+        var pageName = data.pageName;
+        var raw = data.raw;
+
+        // select loaded node in tree
+        var node = treePanel.findNodeByPageName(pageName);
+        node.select();
+
+        // show tab with page
+        var tab = tabPanel.updateOrAddPageTab(pageName, data.html);
+        tab.show();
+
+        // set editor content
+        editorPanel.getEditor().setContent(raw);
+      });
     } else {
       editorPanel.editor.clearContent();
     }
@@ -125,7 +84,7 @@ Ext.onReady(function() {
     if (node.isLeaf()) {
       var pageName = node.id;
       var tab = tabPanel.updateOrAddPageTab(pageName);
-      tab.show();
+      tab.show(); // it will fire the 'tabchange' event
     }
   });
 
@@ -148,7 +107,25 @@ Ext.onReady(function() {
       if (button != 'ok') return;
 
       var parentFolderName = node.id;
-      model.createNode(parentFolderName, folderBaseName, true);
+      model.createNode(parentFolderName, folderBaseName, true, function(data) {
+        if (!data.success) return;
+
+        var parentFolderName = data.parentFolderName;
+        var newFolderName = data.newNodeName;
+        var newFolderBaseName = data.newNodeBaseName;
+
+        var parentNode = treePanel.findNodeByPageName(parentFolderName);
+
+        var node = new Ext.tree.TreeNode({
+          id: newFolderName,
+          text: newFolderBaseName,
+          cls: 'folder',
+          expandable: true,
+          leaf: false
+        });
+
+        parentNode.appendChild(node);
+      });
     };
 
     Ext.MessageBox.prompt('Create folder', 'New folder name:', callback);
@@ -162,7 +139,30 @@ Ext.onReady(function() {
       if (button != 'ok') return;
 
       var parentFolderName = node.id;
-      model.createNode(parentFolderName, fileBaseName, false);
+      model.createNode(parentFolderName, fileBaseName, false, function(data) {
+        if (!data.success) return;
+
+        var parentFolderName = data.parentFolderName;
+        var newPageName = data.newNodeName;
+        var newPageBaseName = data.newNodeBaseName;
+
+        var parentNode = treePanel.findNodeByPageName(parentFolderName);
+
+        var node = new Ext.tree.TreeNode({
+          id: newPageName,
+          text: newPageBaseName,
+          cls: 'page',
+          expandable: false,
+          leaf: true
+        });
+
+        parentNode.appendChild(node);
+        node.select();
+
+        // open tab with new page
+        var tab = tabPanel.updateOrAddPageTab(newPageName);
+        tab.show();
+      });
     };
 
     Ext.MessageBox.prompt('Create page', 'New page name:', callback);
@@ -187,7 +187,15 @@ Ext.onReady(function() {
 
     var callback = function(button) {
       if (button != 'yes') return;
-      model.deleteNode(nodeName);
+      model.deleteNode(nodeName, function(data) {
+        if (!data.success) return;
+        
+        var nodeName = data.nodeName;
+        var node = treePanel.findNodeByPageName(nodeName);
+
+        tabPanel.closeRelatedTabs(node);
+        node.remove();
+      });
     }
 
     var message = 'Delete "' + nodeName + '"?';

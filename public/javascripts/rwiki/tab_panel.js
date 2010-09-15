@@ -5,7 +5,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       deferredRender: false,
       activeTab: 0,
       resizeTabs: true,
-      minTabWidth: 200,
       enableTabScroll: true,
       defaults: {
         autoScroll: true
@@ -16,6 +15,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     Rwiki.TabPanel.superclass.constructor.call(this, config);
   },
 
+  /**
+   * @todo refactor this method
+   */
   updateOrAddPageTab: function(pageName, htmlContent) {
     var tab = this.findTabByPageName(pageName);
     if (!tab) {
@@ -41,7 +43,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   closeRelatedTabs: function(node) {
     var self = this;
     node.cascade(function() {
-      var pageName = this.getPageName();
+      var pageName = this.id;
       var tab = self.findTabByPageName(pageName);
       if (tab) {
         self.remove(tab);
