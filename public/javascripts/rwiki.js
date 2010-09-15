@@ -59,7 +59,8 @@ Ext.onReady(function() {
       // slect a new node and open a new page
       var node = treePanel.findNodeByPageName(newPageName, parentNode);
       node.select();
-      tabPanel.updateOrAddPageTab(newPageName);
+      var tab = tabPanel.updateOrAddPageTab(newPageName);
+      tab.show();
     });
   });
 
@@ -121,8 +122,11 @@ Ext.onReady(function() {
 
   // Event: TreePanel, click on a node
   treePanel.on('click', function(node, e) {
-    var pageName = node.id;
-    tabPanel.updateOrAddPage(pageName);
+    if (node.isLeaf()) {
+      var pageName = node.id;
+      var tab = tabPanel.updateOrAddPageTab(pageName);
+      tab.show();
+    }
   });
 
   // Event: TreePanel, a node has been moved

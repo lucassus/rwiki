@@ -22,7 +22,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       tab = this.addPageTab(pageName);
     } 
 
-    tab.setContent(htmlContent);
+    if (htmlContent) {
+      tab.setContent(htmlContent);
+    }
+
     return tab;
   },
 

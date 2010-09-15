@@ -34,7 +34,12 @@ Rwiki.EditorPanel.Editor = function(container) {
       {name:'Link', openWith:'"', closeWith:'([![Title]!])":[![Link:!:http://]!]', placeHolder:'Your text to link here...' },
       {separator:'---------------' },
       {name:'Quotes', openWith:'bq(!(([![Class]!]))!). '},
-      {name:'Code', openWith:'<code lang="ruby">\n', closeWith:'\n</code>'}
+      {separator:'---------------' },
+      {name:'Code', openWith:'<code>\n', closeWith:'\n</code>'},
+      {name:'Ruby Code', openWith:'<code lang="ruby">\n', closeWith:'\n</code>'},
+      {name:'JavaScript Code', openWith:'<code lang="javascript">\n', closeWith:'\n</code>'},
+      {name:'HTML Code', openWith:'<code lang="html">\n', closeWith:'\n</code>'},
+      {name:'Css Code', openWith:'<code lang="css">\n', closeWith:'\n</code>'}
     ],
     resizeHandle: false,
     afterInsert: function() {
