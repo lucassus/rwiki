@@ -23,7 +23,7 @@
 				{
 					"id": "MyUserComponent",
 					"cid": "usercomponent",
-					"jsClass": "MyTreePanel",
+					"jsClass": "Rwiki.TreePanel",
 					"snapToGrid": 10,
 					"userConfig": {
 						"jsClass": "Rwiki.TreePanel",
@@ -36,7 +36,7 @@
 				{
 					"id": "MyUserComponent3",
 					"cid": "usercomponent",
-					"jsClass": "MyPanel",
+					"jsClass": "Rwiki.MainPanel",
 					"snapToGrid": 10,
 					"userConfig": {
 						"jsClass": "Rwiki.MainPanel",
@@ -117,13 +117,26 @@
 			"userXType": "mytabpanel",
 			"cn": [
 				{
-					"id": "MyPanel1",
-					"cid": "panel",
+					"id": "MyUserComponent4",
+					"cid": "usercomponent",
 					"jsClass": "MyPanel1",
 					"snapToGrid": 10,
 					"userConfig": {
-						"title": "Page name"
-					}
+						"jsClass": "Rwiki.TabPane.PageTab",
+						"userXType": "rwiki.tabpanel.pagetab"
+					},
+					"userComponent": "MyPanel1"
+				},
+				{
+					"id": "MyUserComponent5",
+					"cid": "usercomponent",
+					"jsClass": "Rwiki.TabPane.PageTab",
+					"snapToGrid": 10,
+					"userConfig": {
+						"jsClass": "Rwiki.TabPane.PageTab",
+						"userXType": "rwiki.tabpanel.pagetab"
+					},
+					"userComponent": "MyPanel1"
 				}
 			]
 		},
@@ -141,7 +154,7 @@
 				{
 					"id": "MyUserComponent2",
 					"cid": "usercomponent",
-					"jsClass": "MyTabPanel",
+					"jsClass": "Rwiki.TabPanel",
 					"snapToGrid": 10,
 					"userConfig": {
 						"jsClass": "Rwiki.TabPanel",
@@ -153,7 +166,7 @@
 				{
 					"id": "MyUserComponent1",
 					"cid": "usercomponent",
-					"jsClass": "MyPanel2",
+					"jsClass": "Rwiki.EditorPanel",
 					"snapToGrid": 10,
 					"userConfig": {
 						"jsClass": "Rwiki.EditorPanel",
@@ -163,6 +176,16 @@
 					"userComponent": "MyPanel2"
 				}
 			]
+		},
+		{
+			"id": "MyPanel1",
+			"cid": "panel",
+			"jsClass": "Rwiki.TabPane.PageTab",
+			"snapToGrid": 10,
+			"userConfig": {
+				"title": "Page name"
+			},
+			"userXType": "rwiki.tabpanel.pagetab"
 		}
 	],
 	"stores": []
