@@ -24,15 +24,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         iconCls: 'icon-expand-all',
         tooltip: 'Expand All',
         handler: function() {
-          this.root.expand(true);
+          this.root.expandChildNodes(true);
         },
         scope: this
       }, {
         iconCls: 'icon-collapse-all',
         tooltip: 'Collapse All',
         handler: function() {
-          this.root.collapse(true);
-          this.root.expand();
+          this.root.collapseChildNodes(true);
         },
         scope: this
       }]
@@ -66,7 +65,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       id: Rwiki.rootFolderName
     };
     this.setRootNode(root);
-    new Ext.tree.TreeSorter(this, { folderSort: false });
+    new Ext.tree.TreeSorter(this, {folderSort: false});
 
     // install event handlers
     this.on('contextmenu', this.onContextMenu, this);
