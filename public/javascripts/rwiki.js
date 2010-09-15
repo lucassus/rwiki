@@ -15,39 +15,37 @@ Ext.onReady(function() {
   // TODO: 1/ insert a new node, 2/ sort nodes by name, 3/ if page open it in new tab
 
   // Event: node has been renamed
-  model.on(model.NODE_RENAMED, function(data) {
-    if (data.success) {
-      var node = treePanel.findNodeByPageName(data.oldNodeName);
-      if (node == null) return;
-
-      tabPanel.closeRelatedTabs(node);
-      node.parentNode.reload();
-    } else {
-      Ext.MessageBox.alert("Error!", "Can't rename node.");
-    }
-  });
+//  model.on(model.NODE_RENAMED, function(data) {
+//    if (data.success) {
+//      var node = treePanel.findNodeByPageName(data.oldNodeName);
+//      if (node == null) return;
+//
+//      tabPanel.closeRelatedTabs(node);
+//      node.parentNode.reload();
+//    } else {
+//      Ext.MessageBox.alert("Error!", "Can't rename node.");
+//    }
+//  });
 
   // Event: node has been moved
-  model.on(model.NODE_MOVED, function(oldNodeName, destFolderName) {
-    var node = treePanel.findNodeByPageName(oldNodeName);
-    var destNode = treePanel.findNodeByPageName(destFolderName);
-
-    tabPanel.closeRelatedTabs(node);
-    destNode.reload();
-  });
+//  model.on(model.NODE_MOVED, function(oldNodeName, destFolderName) {
+//    var node = treePanel.findNodeByPageName(oldNodeName);
+//    var destNode = treePanel.findNodeByPageName(destFolderName);
+//
+//    tabPanel.closeRelatedTabs(node);
+//    destNode.reload();
+//  });
 
   // Event: editor content changed
   editorPanel.on('contentChanged', function(content) {
     var currentTab = tabPanel.getActiveTab();
     var pageName = currentTab.getPageName();
 
-    model.updatePage(pageName, content);
-  });
-
-  tabPanel.on(model.PAGE_UPDATED, function(data) {
-    var pageName = data.pageName;
-    var tab = tabPanel.findTabByPageName(pageName);
-    tab.setContent(data.html);
+    model.updatePage(pageName, content, function(data) {
+      var pageName = data.pageName;
+      var tab = tabPanel.findTabByPageName(pageName);
+      tab.setContent(data.html);
+    });
   });
 
   // Event: tab has changed

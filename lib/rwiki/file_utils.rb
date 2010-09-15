@@ -81,7 +81,7 @@ module Rwiki
     end
 
     def delete_node(node_name)
-      return false if File.exists?(node_name)
+      return false unless File.exists?(node_name)
       rm_rf(File.join(node_name))
       return true
     end

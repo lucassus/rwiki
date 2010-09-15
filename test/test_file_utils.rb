@@ -6,12 +6,4 @@ class TestFileUtils < Test::Unit::TestCase
     include Rwiki::FileUtils
   end
 
-  context 'nodes id encoding' do
-    setup do
-      @instance = Dummy.new
-    end
-
-    
-  end
-
 end

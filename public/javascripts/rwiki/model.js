@@ -18,7 +18,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         pageName: pageName
       },
       success: function(data) {
-        callback.apply(self, data);
+        callback.call(self, data);
       }
     });
   },
@@ -36,12 +36,12 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         isFolder: isFolder
       },
       success: function(data) {
-        callback.apply(self, data);
+        callback.call(self, data);
       }
     });
   },
 
-  updatePage: function(pageName, content) {
+  updatePage: function(pageName, content, callback) {
     var self = this;
 
     $.ajax({
@@ -53,12 +53,12 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         content: content
       },
       success: function(data) {
-        callback.apply(self, data);
+        callback.call(self, data);
       }
     });
   },
 
-  renameNode: function(oldNodeName, newBaseName) {
+  renameNode: function(oldNodeName, newBaseName, callback) {
     var self = this;
     
     $.ajax({
@@ -70,12 +70,12 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         newBaseName: newBaseName
       },
       success: function(data) {
-        callback.apply(self, data);
+        callback.call(self, data);
       }
     });
   },
 
-  moveNode: function(nodeName, destFolderName) {
+  moveNode: function(nodeName, destFolderName, callback) {
     var self = this;
     $.ajax({
       type: 'POST',
@@ -86,12 +86,12 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         destFolderName: destFolderName
       },
       success: function(data) {
-        callback.apply(self, data);
+        callback.call(self, data);
       }
     });
   },
 
-  deleteNode: function(nodeName) {
+  deleteNode: function(nodeName, callback) {
     var self = this;
     
     $.ajax({
@@ -102,7 +102,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
         nodeName: nodeName
       },
       success: function(data) {
-        callback.apply(self, data);
+        callback.call(self, data);
       }
     });
   }
