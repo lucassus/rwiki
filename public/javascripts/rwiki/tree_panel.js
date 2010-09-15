@@ -66,6 +66,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       id: Rwiki.rootFolderName
     };
     this.setRootNode(root);
+    new Ext.tree.TreeSorter(this, { folderSort: false });
 
     // install event handlers
     this.on('contextmenu', this.onContextMenu, this);
