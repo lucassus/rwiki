@@ -13,6 +13,12 @@ begin
     gem.homepage = "http://github.com/lucassus/rwiki"
     gem.authors = ["Łukasz Bandzarewicz"]
 
+    gem.add_dependency "sinatra"
+    gem.add_dependency "RedCloth"
+    gem.add_dependency "coderay"
+    gem.add_dependency "json_pure"
+    gem.add_dependency "fssm"
+
     gem.add_development_dependency "shoulda", ">= 0"
     
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
