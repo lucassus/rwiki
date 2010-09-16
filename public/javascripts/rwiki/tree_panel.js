@@ -75,44 +75,49 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   filterTree: function(t, e) {
-    //    var text = t.getValue();
-    //    if (!text) {
-    //      this.filter.clear();
-    //      return;
-    //    }
-    //
-    //    this.expandAll();
-    //
-    //    var re = new RegExp(Ext.escapeRe(text), 'i');
-    //    this.filter.filterBy(function(n) {
-    //      return !n.isLeaf() || re.test(n.text);
-    //    });
+    var self = this;
+    
     var text = t.getValue();
-    Ext.each(this.hiddenPkgs, function(n){
-      n.ui.show();
+    Ext.each(this.hiddenPkgs, function(node) {
+      node.ui.show();
     });
-    if(!text){
+
+    if (!text) {
       this.filter.clear();
       return;
     }
     this.expandAll();
 
-    var re = new RegExp('^' + Ext.escapeRe(text), 'i');
-    this.filter.filterBy(function(n){
-      return n.attributes.isFolder || re.test(n.text);
-    });
-
-    // hide empty packages that weren't filtered
+    this.markCount  = [];
     this.hiddenPkgs = [];
-    var me = this;
-    this.root.cascade(function(n){
-      console.log(n.id);
-      console.log(n.ui.ctNode.offsetHeight);
-//      if(n.attributes.isFolder && n.ui.ctNode.offsetHeight < 3){
-//        n.ui.hide();
-//        me.hiddenPkgs.push(n);
-//      }
-    });
+
+    if (text.trim().length > 0) {
+      this.expandAll();
+
+      var re = new RegExp( Ext.escapeRe(text), 'i');
+      this.root.cascade(function(n) {
+        if (re.test(n.text))
+          self.markToRoot(n, self.root);
+      });
+
+      // hide empty packages that weren't filtered
+      this.root.cascade(function(n){
+        if ((!self.markCount[n.id] || self.markCount[n.id] == 0 ) && n != self.root) {
+          n.ui.hide();
+          self.hiddenPkgs.push(n);
+        }
+      });
+    }
+  },
+
+  markToRoot: function( n, root ){
+    if (this.markCount[n.id])
+      return;
+
+    this.markCount[n.id] = 1;
+
+    if (n.parentNode != null)
+      this.markToRoot(n.parentNode, root);
   },
 
   onContextMenu : function(node, e) {
