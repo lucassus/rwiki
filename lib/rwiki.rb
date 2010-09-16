@@ -57,6 +57,7 @@ module Rwiki
       node_base_name = params[:nodeBaseName]
 
       is_folder = params[:isFolder] == 'true'
+      text = node_base_name
       if is_folder
         new_node_name = create_folder(parent_folder_name, node_base_name)
       else
@@ -64,7 +65,7 @@ module Rwiki
         new_node_name = create_page(parent_folder_name, node_base_name)
       end
 
-      result = { :success => !!new_node_name,
+      result = { :success => !!new_node_name, :text => text,
         :parentFolderName => parent_folder_name, :isFolder => is_folder,
         :newNodeName => new_node_name, :newNodeBaseName => node_base_name }
 

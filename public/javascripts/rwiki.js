@@ -84,12 +84,6 @@ Ext.onReady(function() {
       var pageName = node.id;
       var tab = tabPanel.updateOrAddPageTab(pageName);
       tab.show(); // it will fire the 'tabchange' event
-    } else {
-      if (node.isExpanded()) {
-        node.collapse();
-      } else {
-        node.expand();
-      }
     }
   });
 
@@ -147,6 +141,7 @@ Ext.onReady(function() {
       model.createNode(parentFolderName, fileBaseName, false, function(data) {
         if (!data.success) return;
 
+        var text = data.text;
         var parentFolderName = data.parentFolderName;
         var newPageName = data.newNodeName;
         var newPageBaseName = data.newNodeBaseName;
@@ -155,7 +150,7 @@ Ext.onReady(function() {
 
         var node = new Ext.tree.TreeNode({
           id: newPageName,
-          text: newPageBaseName,
+          text: text,
           cls: 'page',
           expandable: false,
           leaf: true
