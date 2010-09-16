@@ -67,6 +67,7 @@ Ext.onReady(function() {
 
         // show tab with page
         var tab = tabPanel.updateOrAddPageTab(pageName, data.html);
+        tab.setTitle(data.title);
         tab.show();
 
         // set editor content
@@ -83,6 +84,12 @@ Ext.onReady(function() {
       var pageName = node.id;
       var tab = tabPanel.updateOrAddPageTab(pageName);
       tab.show(); // it will fire the 'tabchange' event
+    } else {
+      if (node.isExpanded()) {
+        node.collapse();
+      } else {
+        node.expand();
+      }
     }
   });
 
@@ -173,7 +180,11 @@ Ext.onReady(function() {
 
     var callback = function(button, newBaseName) {
       if (button != 'ok') return;
-      model.renameNode(oldNodeName, newBaseName);
+
+      var isFolder = node.isFolder;
+      model.renameNode(oldNodeName, newBaseName, isFolder, function(data) {
+
+      });
     }
 
     Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldBaseName);
@@ -207,10 +218,11 @@ Ext.onReady(function() {
     id: 'west-panel',
     title: 'Pages',
     split: true,
-    width: 260,
-    minSize: 260,
+    width: 265,
+    minSize: 265,
     maxSize: 500,
     collapsible: true,
+    autoScroll: true,
     margins: '0 0 5 5',
     cmargins: '0 0 0 0',
     items: [treePanel]

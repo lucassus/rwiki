@@ -58,7 +58,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  renameNode: function(oldNodeName, newBaseName, callback) {
+  renameNode: function(oldNodeName, newBaseName, isFolder, callback) {
     var self = this;
     
     $.ajax({
@@ -67,7 +67,8 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       dataType: 'json',
       data: {
         oldNodeName: oldNodeName,
-        newBaseName: newBaseName
+        newBaseName: newBaseName,
+        isFolder: isFolder
       },
       success: function(data) {
         callback.call(self, data);

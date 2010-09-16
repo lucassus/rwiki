@@ -20,5 +20,9 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
     var pageName = this.getPageName();
     var pageContainer = $('#' + pageName.replace(/(\W)/g, '\\$1'));
     pageContainer.html(htmlContent);
+  },
+
+  setTitle: function(title) {
+    $(this.tabEl).find('.x-tab-strip-text').text(title);
   }
 });

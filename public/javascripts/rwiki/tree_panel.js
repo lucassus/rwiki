@@ -1,49 +1,13 @@
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function(config) {
-    var toolBar = new Ext.Toolbar({
-      items: [
-      new Ext.form.TextField({
-        width: 200,
-        emptyText: 'Find a Page',
-        enableKeyEvents: true,
-        listeners: {
-          render: function(f) {
-            this.filter = new Ext.tree.TreeFilter(this, {
-              clearBlank: true,
-              autoClear: true
-            });
-          },
-          keydown: {
-            fn: this.filterTree,
-            buffer: 350,
-            scope: this
-          }
-        },
-        scope: this
-      }), {
-        iconCls: 'icon-expand-all',
-        tooltip: 'Expand All',
-        handler: function() {
-          this.root.expandChildNodes(true);
-        },
-        scope: this
-      }, {
-        iconCls: 'icon-collapse-all',
-        tooltip: 'Collapse All',
-        handler: function() {
-          this.root.collapseChildNodes(true);
-        },
-        scope: this
-      }]
-    });
+    var self = this;
+    this.hiddenPkgs = [];
 
     config = Ext.apply({
       id: 'tree',
       rootVisible: true,
       useArrows: true,
-      autoScroll: true,
       animate: true,
-      containerScroll: false,
       border: false,
       loader: new Rwiki.TreePanel.Loader(),
 
@@ -52,7 +16,42 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         appendOnly: true
       },
 
-      tbar: toolBar
+      tbar: {
+        items: [
+        new Ext.form.TextField({
+          width: 200,
+          emptyText: 'Find a Page',
+          enableKeyEvents: true,
+          listeners: {
+            render: function(f) {
+              self.filter = new Ext.tree.TreeFilter(self, {
+                clearBlank: true,
+                autoClear: true
+              });
+            },
+            keydown: {
+              fn: self.filterTree,
+              buffer: 350,
+              scope: this
+            }
+          },
+          scope: this
+        }), {
+          iconCls: 'icon-expand-all',
+          tooltip: 'Expand All',
+          handler: function() {
+            this.root.expandChildNodes(true);
+          },
+          scope: this
+        }, {
+          iconCls: 'icon-collapse-all',
+          tooltip: 'Collapse All',
+          handler: function() {
+            this.root.collapseChildNodes(true);
+          },
+          scope: this
+        }]
+      }
     }, config);
 
     Rwiki.TreePanel.superclass.constructor.call(this, config);
@@ -65,7 +64,9 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       id: Rwiki.rootFolderName
     };
     this.setRootNode(root);
-    new Ext.tree.TreeSorter(this, {folderSort: false});
+    new Ext.tree.TreeSorter(this, {
+      folderSort: false
+    });
 
     // install event handlers
     this.on('contextmenu', this.onContextMenu, this);
@@ -74,17 +75,43 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   filterTree: function(t, e) {
+    //    var text = t.getValue();
+    //    if (!text) {
+    //      this.filter.clear();
+    //      return;
+    //    }
+    //
+    //    this.expandAll();
+    //
+    //    var re = new RegExp(Ext.escapeRe(text), 'i');
+    //    this.filter.filterBy(function(n) {
+    //      return !n.isLeaf() || re.test(n.text);
+    //    });
     var text = t.getValue();
-    if (!text) {
+    Ext.each(this.hiddenPkgs, function(n){
+      n.ui.show();
+    });
+    if(!text){
       this.filter.clear();
       return;
     }
-
     this.expandAll();
 
-    var re = new RegExp(Ext.escapeRe(text), 'i');
-    this.filter.filterBy(function(n) {
-      return !n.isLeaf() || re.test(n.text);
+    var re = new RegExp('^' + Ext.escapeRe(text), 'i');
+    this.filter.filterBy(function(n){
+      return n.attributes.isFolder || re.test(n.text);
+    });
+
+    // hide empty packages that weren't filtered
+    this.hiddenPkgs = [];
+    var me = this;
+    this.root.cascade(function(n){
+      console.log(n.id);
+      console.log(n.ui.ctNode.offsetHeight);
+//      if(n.attributes.isFolder && n.ui.ctNode.offsetHeight < 3){
+//        n.ui.hide();
+//        me.hiddenPkgs.push(n);
+//      }
     });
   },
 

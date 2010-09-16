@@ -16,14 +16,16 @@ module Rwiki
         next if node_base_name.match(/^\./) # skip hidden files
 
         node_name = File.join(folder_name, node_base_name)
-        tree_node = { :text => node_base_name, :id => node_name }
+        tree_node = { :id => node_name }
 
         if File.directory?(node_name)
           children = make_nodes(node_name)
-          tree_nodes << tree_node.merge(:cls => 'folder', :children => children)
+          tree_nodes << tree_node.merge(:text => node_base_name,
+            :cls => 'folder', :children => children, :isFolder => true)
         else
           next unless node_base_name.match(/\.txt$/)
-          tree_nodes << tree_node.merge(:cls => 'page', :leaf => true)
+          tree_nodes << tree_node.merge(:text => node_base_name.gsub(/\.txt$/, ''),
+            :cls => 'page', :leaf => true, :isFolder => false)
         end
       end
 

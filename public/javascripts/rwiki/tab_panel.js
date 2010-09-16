@@ -4,7 +4,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       region: 'center',
       deferredRender: false,
       activeTab: 0,
-      resizeTabs: true,
       enableTabScroll: true,
       defaults: {
         autoScroll: true

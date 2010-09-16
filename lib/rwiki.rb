@@ -27,7 +27,7 @@ module Rwiki
       page_name = params[:pageName]
       raw_content = read_page(page_name)
 
-      result = { :pageName => page_name }
+      result = { :pageName => page_name, :title => File.basename(page_name).gsub(/\.txt$/, '') }
       unless raw_content.nil?
         html = parse_content(raw_content)
 
