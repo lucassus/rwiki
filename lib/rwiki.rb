@@ -4,11 +4,12 @@ require 'sinatra'
 require 'sinatra/base'
 
 module Rwiki
-  autoload :FileUtils, 'rwiki/file_utils'
+  autoload :Models, 'rwiki/models'
+  autoload :Utils, 'rwiki/utils'
   autoload :TextileUtils, 'rwiki/textile_utils'
 
   class App < Sinatra::Base
-    include FileUtils
+    include Utils
     include TextileUtils
 
     set :root, File.dirname(__FILE__) + '/..'
