@@ -1,7 +1,0 @@
-Search results for **Textile**:
-
-h1. Sample header
-
-h4. ["**Textile** (markup language) - Wikipedia":http://en.wikipedia.org/wiki/Textile_(markup_language)]
-
-**Textile** is a lightweight markup language originally developed by Dean Allen and billed as a "humane Web text generator".  **Textile** converts its marked-up text ...

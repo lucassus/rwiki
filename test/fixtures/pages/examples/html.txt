@@ -1,6 +1,0 @@
-h3. Your cart
-
-* Item one
-* Item two
-* Item three
-** Last item
