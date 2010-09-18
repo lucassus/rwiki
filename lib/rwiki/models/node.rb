@@ -6,5 +6,15 @@ module Rwiki::Models
       return klass.new(path)
     end
 
+    def base_name
+      File.basename(@path)
+    end
+
+    private
+
+    def initialize(path)
+      @path = path
+    end
+
   end
 end

@@ -8,7 +8,7 @@ module Rwiki::Models
       raise ArgumentError unless File.file?(path)
       raise ArgumentError unless path.end_with?(FILE_EXTENSION)
 
-      @path = path
+      super(path)
     end
 
   end

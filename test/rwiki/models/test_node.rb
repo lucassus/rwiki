@@ -25,4 +25,24 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
 
   end
 
+  context 'Node#base_name method' do
+    context 'for page' do
+      setup { @path = './home.txt' }
+
+      should 'return valid page basename' do
+        page = Page.new(@path)
+        assert_equal 'home.txt', page.base_name
+      end
+    end
+
+    context 'for folder' do
+      setup { @path = './folder' }
+
+      should 'return valid folder basename' do
+        page = Folder.new(@path)
+        assert_equal 'folder', page.base_name
+      end
+    end
+  end
+
 end

@@ -5,7 +5,7 @@ module Rwiki::Models
       raise ArgumentError unless File.exist?(path)
       raise ArgumentError unless File.directory?(path)
 
-      @path = path
+      super(path)
     end
 
   end
