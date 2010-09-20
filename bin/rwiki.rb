@@ -9,8 +9,8 @@ unless working_folder.start_with?('/')
   working_folder = File.join(Dir.pwd, working_folder)
 end
 
-WIKIR_ROOT = working_folder.freeze
-p "Working folder is: #{WIKIR_ROOT}"
-Dir.chdir(WIKIR_ROOT)
+RWIKI_ROOT = working_folder.freeze
+p "Working folder is: #{RWIKI_ROOT}"
+Dir.chdir(RWIKI_ROOT)
 
 Rwiki::App.run!
