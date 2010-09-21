@@ -49,8 +49,7 @@ module Rwiki::Models
 
     def parse_content
       coderay
-      add_anchors_to_headers
-      return RedCloth.new(raw_content).to_html
+      return RedCloth.new(raw_toc + raw_content).to_html
     end
 
     def coderay

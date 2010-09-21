@@ -1,3 +1,5 @@
+Ext.ns('Rwiki');
+
 Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   constructor: function(config) {
     config = Ext.apply({
@@ -8,10 +10,36 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       defaults: {
         autoScroll: true
       },
-      plugins: new Ext.ux.TabCloseMenu()
+      plugins: new Ext.ux.TabCloseMenu(),
+      listeners: {
+        tabchange: this.onTabChange
+      }
     }, config);
 
     Rwiki.TabPanel.superclass.constructor.call(this, config);
+
+    this.addEvents('pageLoaded');
+
+    this.on('pageChanged', function(data) {
+      var tab = this.findTabByPagePath(data.path);
+      tab.setContent(data.html);
+    });
+  },
+
+  onTabChange: function(tabPanel, tab) {
+    var path = tab.getPagePath();
+
+    $.ajax({
+      type: 'GET',
+      url: '/node',
+      dataType: 'json',
+      data: {
+        path: path
+      },
+      success: function(data) {
+        tabPanel.fireEvent('pageLoaded', data);
+      }
+    });
   },
 
   /**
@@ -35,6 +63,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       id: path,
       title: path
     });
+    pageTab.relayEvents(this, ['pageLoaded']);
 
     return this.add(pageTab);
   },

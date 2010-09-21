@@ -1,3 +1,5 @@
+Ext.ns('Rwiki.TreePanel');
+
 Rwiki.TreePanel.Toolbar = Ext.extend(Ext.Toolbar, {
   constructor: function(config) {
     var self = this;

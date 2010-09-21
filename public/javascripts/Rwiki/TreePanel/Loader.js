@@ -1,3 +1,5 @@
+Ext.ns('Rwiki.TreePanel');
+
 Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
   constructor: function(config) {
     config = Ext.apply({

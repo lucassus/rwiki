@@ -1,3 +1,5 @@
+Ext.ns('Rwiki.TreePanel');
+
 Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
   constructor: function(config) {
     config = Ext.apply({

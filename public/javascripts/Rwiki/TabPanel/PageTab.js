@@ -1,3 +1,5 @@
+Ext.ns('Rwiki.TabPanel');
+
 Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
   constructor: function(config) {
     config = Ext.apply({
@@ -7,6 +9,12 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
     }, config);
 
     Rwiki.TabPanel.PageTab.superclass.constructor.call(this, config);
+
+    this.on('pageLoaded', function(data) {
+      if (this.getPagePath() != data.path) return;
+      
+      this.setContent(data.html);
+    });
   },
 
   getPagePath: function() {

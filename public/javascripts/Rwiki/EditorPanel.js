@@ -1,3 +1,5 @@
+Ext.ns('Rwiki');
+
 Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
   constructor: function(config) {
     config = Ext.apply({
@@ -24,8 +26,8 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     this.editor = new Rwiki.EditorPanel.Editor($('textarea#editor'));
 
     var self = this;
-    this.editor.container.bind('contentChanged', function() {
-      self.fireEvent('contentChanged', self.editor.getContent());
+    this.editor.container.bind('pageChanged', function() {
+      self.fireEvent('pageChanged', self.editor.getContent());
     });
   },
 

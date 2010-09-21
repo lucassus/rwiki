@@ -6,8 +6,7 @@ Rwiki.currentPageName = null;
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
-  var model = new Rwiki.Model();
-
+//  var model = new Rwiki.Model();
   var treePanel = new Rwiki.TreePanel();
   var tabPanel = new Rwiki.TabPanel();
   var editorPanel = new Rwiki.EditorPanel();
@@ -15,68 +14,71 @@ Ext.onReady(function() {
   // TODO: 1/ insert a new node, 2/ sort nodes by name, 3/ if page open it in new tab
 
   // Event: node has been renamed
-//  model.on(model.NODE_RENAMED, function(data) {
-//    if (data.success) {
-//      var node = treePanel.findNodeByPageName(data.oldNodeName);
-//      if (node == null) return;
-//
-//      tabPanel.closeRelatedTabs(node);
-//      node.parentNode.reload();
-//    } else {
-//      Ext.MessageBox.alert("Error!", "Can't rename node.");
-//    }
-//  });
+  //  model.on(model.NODE_RENAMED, function(data) {
+  //    if (data.success) {
+  //      var node = treePanel.findNodeByPageName(data.oldNodeName);
+  //      if (node == null) return;
+  //
+  //      tabPanel.closeRelatedTabs(node);
+  //      node.parentNode.reload();
+  //    } else {
+  //      Ext.MessageBox.alert("Error!", "Can't rename node.");
+  //    }
+  //  });
 
   // Event: node has been moved
-//  model.on(model.NODE_MOVED, function(oldNodeName, destFolderName) {
-//    var node = treePanel.findNodeByPageName(oldNodeName);
-//    var destNode = treePanel.findNodeByPageName(destFolderName);
-//
-//    tabPanel.closeRelatedTabs(node);
-//    destNode.reload();
-//  });
+  //  model.on(model.NODE_MOVED, function(oldNodeName, destFolderName) {
+  //    var node = treePanel.findNodeByPageName(oldNodeName);
+  //    var destNode = treePanel.findNodeByPageName(destFolderName);
+  //
+  //    tabPanel.closeRelatedTabs(node);
+  //    destNode.reload();
+  //  });
 
   // Event: editor content changed
-  editorPanel.on('contentChanged', function(content) {
-    var currentTab = tabPanel.getActiveTab();
-    var pageName = currentTab.getPagePath();
+//  editorPanel.on('pageChanged', function(content) {
+//    var currentTab = tabPanel.getActiveTab();
+//    var pageName = currentTab.getPagePath();
+//
+//    model.updatePage(pageName, content, function(data) {
+//      var path = data.path;
+//      var tab = tabPanel.findTabByPagePath(path);
+//      tab.setContent(data.html);
+//    });
+//  });
 
-    model.updatePage(pageName, content, function(data) {
-      var path = data.path;
-      var tab = tabPanel.findTabByPagePath(path);
-      tab.setContent(data.html);
-    });
-  });
+  var editor = editorPanel.getEditor();
+  editor.relayEvents(tabPanel, ['pageLoaded']);
+  tabPanel.relayEvents(editor, ['pageChanged']);
 
   // Event: tab has changed
-  tabPanel.on('tabchange', function(tabPanel, tab) {
-    var lastTabClosed = !tab;
-
-    if (!lastTabClosed) {
-      var pageName = tab.getPagePath();
-      
-      model.loadPage(pageName, function(data) {
-        if (!data.success) return;
-
-        var path = data.path;
-        var raw = data.raw;
-
-        // select loaded node in tree
-        var node = treePanel.findNodeByPagePath(path);
-        node.select();
-
-        // show tab with page
-        var tab = tabPanel.updateOrAddPageTab(path, data.html);
-        tab.setTitle(data.title);
-        tab.show();
-
-        // set editor content
-        editorPanel.getEditor().setContent(raw);
-      });
-    } else {
-      editorPanel.editor.clearContent();
-    }
-  });
+//  tabPanel.on('tabchange', function(tabPanel, tab) {
+//    var lastTabClosed = !tab;
+//
+//    if (!lastTabClosed) {
+//      var pageName = tab.getPagePath();
+//
+//      model.loadPage(pageName, function(data) {
+//        if (!data.success) return;
+//
+//        var path = data.path;
+//        var raw = data.raw;
+//
+//        // select loaded node in tree
+//        var node = treePanel.findNodeByPagePath(path);
+//        node.select();
+//
+//        // show tab with page
+//        var tab = tabPanel.updateOrAddPageTab(path, data.html);
+//        tab.setTitle(data.title);
+//
+//        // set editor content
+//        editorPanel.getEditor().setContent(raw);
+//      });
+//    } else {
+//      editorPanel.editor.clearContent();
+//    }
+//  });
 
   // Event: TreePanel, click on a node
   treePanel.on('click', function(node, e) {
@@ -88,12 +90,12 @@ Ext.onReady(function() {
   });
 
   // Event: TreePanel, a node has been moved
-  treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
-    var path = node.id;
-    var destPath = newParent.id;
-    
-    model.moveNode(path, destPath);
-  });
+//  treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
+//    var path = node.id;
+//    var destPath = newParent.id;
+//
+//    model.moveNode(path, destPath);
+//  });
 
   // Attach listeners to the tree context menu
   var treeContextMenu = treePanel.getContextMenu();
@@ -102,7 +104,7 @@ Ext.onReady(function() {
   treeContextMenu.on('createFolder', function(node) {
     if (node.cls == 'file') return;
 
-    var callback = function(button, folderBaseName) {
+    Ext.MessageBox.prompt('Create folder', 'New folder name:', function(button, folderBaseName) {
       if (button != 'ok') return;
 
       var parentPath = node.id;
@@ -125,16 +127,14 @@ Ext.onReady(function() {
 
         parentNode.appendChild(node);
       });
-    };
-
-    Ext.MessageBox.prompt('Create folder', 'New folder name:', callback);
+    });
   });
 
   // Event: context menu, create page
   treeContextMenu.on('createPage', function(node) {
     if (node.cls == 'file') return;
 
-    var callback = function(button, name) {
+    Ext.MessageBox.prompt('Create page', 'New page name:', function(button, name) {
       if (button != 'ok') return;
 
       var parentPath = node.id;
@@ -162,9 +162,7 @@ Ext.onReady(function() {
         var tab = tabPanel.updateOrAddPageTab(newPageName);
         tab.show();
       });
-    };
-
-    Ext.MessageBox.prompt('Create page', 'New page name:', callback);
+    });
   });
 
   // Event: context menu, rename node
@@ -174,10 +172,6 @@ Ext.onReady(function() {
 
     var callback = function(button, newName) {
       if (button != 'ok') return;
-
-      model.renameNode(oldPath, newName, function(data) {
-
-      });
     };
 
     Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
@@ -227,9 +221,11 @@ Ext.onReady(function() {
     items: [tabPanel, editorPanel]
   });
 
-  new Ext.Viewport({
-    layout: 'border',
-    items: [sidePanel, mainPanel]
+  var app = new Rwiki.Viewport({
+    items: [sidePanel, mainPanel],
+    renderTo: Ext.getBody()
   });
+
+  app.show();
 
 });
