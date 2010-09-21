@@ -2,9 +2,7 @@ module Rwiki::Models
   class Folder < Node
 
     def initialize(path)
-      raise ArgumentError unless File.exist?(path)
-      raise ArgumentError unless File.directory?(path)
-
+      raise Rwiki::FolderNotFoundError.new("cannot find #{path}") if !File.exist?(path) || ! File.directory?(path)
       super(path)
     end
 
@@ -16,7 +14,7 @@ module Rwiki::Models
 
     def self.create(path)
       within_working_path do
-        raise ArgumentError if File.exist?(path)
+        raise Rwiki::FolderError.new("#{path} already exists") if File.exist?(path)
         FileUtils.mkdir(path)
       end
 

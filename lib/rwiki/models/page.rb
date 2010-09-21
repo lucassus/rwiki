@@ -8,10 +8,8 @@ module Rwiki::Models
 
     def initialize(path)
       within_working_path do
-        raise ArgumentError unless File.exist?(path)
-        raise ArgumentError unless File.file?(path)
-        raise ArgumentError unless path.end_with?(FILE_EXTENSION)
-
+        raise Rwiki::PageNotFoundError.new("cannot find #{path}") if !File.exist?(path) || !File.file?(path)
+        raise Rwiki::PageNotFoundError.new("#{path} has illegal name") unless path.end_with?(FILE_EXTENSION)
         super(path)
       end
     end

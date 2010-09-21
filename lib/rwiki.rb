@@ -8,6 +8,10 @@ module Rwiki
   autoload :Models, 'rwiki/models'
   autoload :Utils, 'rwiki/utils'
 
+  class FolderError < StandardError; end
+  class FolderNotFoundError < FolderError; end
+  class PageNotFoundError < StandardError; end
+
   def self.debug
     require 'debug'
     debugger
@@ -38,7 +42,7 @@ module Rwiki
                    :path => page.path, :title => page.title,
                    :raw => page.raw_content, :html => page.html_content }
       rescue => e
-        result = { :success => false, :message => e.backtrace}
+        result = { :success => false, :message => e.message }
       end
 
       result.to_json
@@ -56,7 +60,7 @@ module Rwiki
 
         { :success => true, :path => path, :raw => page.raw_content, :html => page.html_content }.to_json
       rescue => e
-        { :success => false, :message => e.backtrace }.to_json
+        { :success => false, :message => e.message }.to_json
       end
     end
 
@@ -107,7 +111,7 @@ module Rwiki
         success = node.delete
         { :success => success, :path => path }.to_json
       rescue => e
-        { :success => false, :message => e.backtrace }
+        { :success => false, :message => e.message }
       end
     end
   end

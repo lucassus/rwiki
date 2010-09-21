@@ -7,30 +7,36 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
     context 'with path to non-existing file' do
       setup { @file_name = '/.non-existing.txt' }
 
-      should 'raise an exception' do
-        assert_raise ArgumentError do
+      should 'raise PageNotFountError' do
+        exception = assert_raise Rwiki::PageNotFoundError do
           Page.new(@file_name)
         end
+
+        assert_equal "cannot find #{@file_name}", exception.message
       end
     end
 
     context 'with path to the folder' do
       setup { @file_name = './folder' }
 
-      should 'raise an exception' do
-        assert_raise ArgumentError do
+      should 'raise PageNotFountError' do
+        exception = assert_raise Rwiki::PageNotFoundError do
           Page.new(@file_name)
         end
+
+        assert_equal "cannot find #{@file_name}", exception.message
       end
     end
 
     context 'with illegal filename' do
       setup { @file_name = './empty_folder/dummy' }
 
-      should 'raise an exception' do
-        assert_raise ArgumentError do
+      should 'raise PageNotFountError' do
+        exception = assert_raise Rwiki::PageNotFoundError do
           Page.new(@file_name)
         end
+
+        assert_equal "#{@file_name} has illegal name", exception.message
       end
     end
   end

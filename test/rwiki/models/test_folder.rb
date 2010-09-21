@@ -8,9 +8,11 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @path = '/.non-existing' }
 
       should 'raise an exception' do
-        assert_raise ArgumentError do
+        exception = assert_raise Rwiki::FolderNotFoundError do
           Folder.new(@path)
         end
+
+        assert_equal "cannot find #{@path}", exception.message
       end
     end
 
@@ -18,9 +20,11 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @path = './home.txt' }
 
       should 'raise an exception' do
-        assert_raise ArgumentError do
+        exception = assert_raise Rwiki::FolderNotFoundError do
           Folder.new(@path)
         end
+
+        assert_equal "cannot find #{@path}", exception.message
       end
     end
   end
@@ -30,9 +34,11 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @path = './folder' }
 
       should 'raise an exception' do
-        assert_raise ArgumentError do
+        exception = assert_raise Rwiki::FolderError do
           Folder.create(@path)
         end
+
+        assert_equal "#{@path} already exists", exception.message
       end
     end
 
