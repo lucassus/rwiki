@@ -10,7 +10,7 @@ Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
     // pass extra parameters
     this.on('beforeload', function(loader, node) {
       loader.baseParams = {
-        folderName: node.id
+        path: node.id
       }
     });
   }

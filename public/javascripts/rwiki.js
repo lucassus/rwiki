@@ -58,15 +58,15 @@ Ext.onReady(function() {
       model.loadPage(pageName, function(data) {
         if (!data.success) return;
 
-        var pageName = data.pageName;
+        var path = data.path;
         var raw = data.raw;
 
         // select loaded node in tree
-        var node = treePanel.findNodeByPageName(pageName);
+        var node = treePanel.findNodeByPageName(path);
         node.select();
 
         // show tab with page
-        var tab = tabPanel.updateOrAddPageTab(pageName, data.html);
+        var tab = tabPanel.updateOrAddPageTab(path, data.html);
         tab.setTitle(data.title);
         tab.show();
 
@@ -81,18 +81,18 @@ Ext.onReady(function() {
   // Event: TreePanel, click on a node
   treePanel.on('click', function(node, e) {
     if (node.isLeaf()) {
-      var pageName = node.id;
-      var tab = tabPanel.updateOrAddPageTab(pageName);
+      var path = node.id;
+      var tab = tabPanel.updateOrAddPageTab(path);
       tab.show(); // it will fire the 'tabchange' event
     }
   });
 
   // Event: TreePanel, a node has been moved
   treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
-    var nodeName = node.id;
-    var destFolderName = newParent.id;
+    var path = node.id;
+    var destPath = newParent.id;
     
-    model.moveNode(nodeName, destFolderName);
+    model.moveNode(path, destPath);
   });
 
   // Attach listeners to the tree context menu
@@ -105,19 +105,19 @@ Ext.onReady(function() {
     var callback = function(button, folderBaseName) {
       if (button != 'ok') return;
 
-      var parentFolderName = node.id;
-      model.createNode(parentFolderName, folderBaseName, true, function(data) {
+      var parentPath = node.id;
+      model.createNode(parentPath, folderBaseName, true, function(data) {
         if (!data.success) return;
 
-        var parentFolderName = data.parentFolderName;
-        var newFolderName = data.newNodeName;
-        var newFolderBaseName = data.newNodeBaseName;
+        var parentPath = data.parentPath;
+        var path = data.path;
+        var title = data.title;
 
-        var parentNode = treePanel.findNodeByPageName(parentFolderName);
+        var parentNode = treePanel.findNodeByPageName(parentPath);
 
         var node = new Ext.tree.TreeNode({
-          id: newFolderName,
-          text: newFolderBaseName,
+          id: path,
+          text: title,
           cls: 'folder',
           expandable: true,
           leaf: false
@@ -134,17 +134,16 @@ Ext.onReady(function() {
   treeContextMenu.on('createPage', function(node) {
     if (node.cls == 'file') return;
 
-    var callback = function(button, fileBaseName) {
+    var callback = function(button, name) {
       if (button != 'ok') return;
 
-      var parentFolderName = node.id;
-      model.createNode(parentFolderName, fileBaseName, false, function(data) {
+      var parentPath = node.id;
+      model.createNode(parentPath, name, false, function(data) {
         if (!data.success) return;
 
         var text = data.text;
         var parentFolderName = data.parentFolderName;
         var newPageName = data.newNodeName;
-        var newPageBaseName = data.newNodeBaseName;
 
         var parentNode = treePanel.findNodeByPageName(parentFolderName);
 
@@ -170,19 +169,18 @@ Ext.onReady(function() {
 
   // Event: context menu, rename node
   treeContextMenu.on('renameNode', function(node) {
-    var oldNodeName = node.id;
-    var oldBaseName = node.text;
+    var oldPath = node.id;
+    var oldName = node.text;
 
-    var callback = function(button, newBaseName) {
+    var callback = function(button, newName) {
       if (button != 'ok') return;
 
-      var isFolder = node.isFolder;
-      model.renameNode(oldNodeName, newBaseName, isFolder, function(data) {
+      model.renameNode(oldPath, newName, function(data) {
 
       });
-    }
+    };
 
-    Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldBaseName);
+    Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
   });
 
   // Event context menu, delete node

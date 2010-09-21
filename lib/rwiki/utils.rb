@@ -2,51 +2,7 @@ module Rwiki::Utils
   include FileUtils
 
   PAGE_FILE_EXT = '.txt'
-
-  def make_tree(folder_name)
-    make_nodes(folder_name)
-  end
-
-  def make_nodes(folder_name)
-    tree_nodes = []
-
-    nodes = Dir.entries(folder_name).sort
-    nodes.each do |node_base_name|
-      next if node_base_name.match(/^\./) # skip hidden files
-
-      node_name = File.join(folder_name, node_base_name)
-      tree_node = { :id => node_name }
-
-      if File.directory?(node_name)
-        children = make_nodes(node_name)
-        tree_nodes << tree_node.merge(:text => node_base_name,
-          :cls => 'folder', :children => children, :isFolder => true)
-      else
-        next unless node_base_name.match(/\.txt$/)
-        tree_nodes << tree_node.merge(:text => node_base_name.gsub(/\.txt$/, ''),
-          :cls => 'page', :leaf => true, :isFolder => false)
-      end
-    end
-
-    return tree_nodes
-  end
-
-  def read_page(page_name)
-    return nil unless File.exists?(page_name)
-    return File.read(page_name) { |f| f.read } rescue nil
-  end
-
-  def write_page(page_name, content)
-    return false unless File.exists?(page_name)
-      
-    file = File.open(page_name, 'w')
-    file.write(content)
-    file.close
-
-    return true
-  rescue e
-    return false
-  end
+  CODE_REGEXP = /\<code( lang="(.+?)")?\>(.+?)\<\/code\>/m.freeze
 
   def create_folder(parent_folder_name, folder_base_name)
     folder_name = File.join(parent_folder_name, folder_base_name)

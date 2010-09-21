@@ -19,8 +19,9 @@ begin
     gem.add_dependency "json_pure"
     gem.add_dependency "fssm"
 
-    gem.add_development_dependency "shoulda", ">= 0"
-    
+    gem.add_development_dependency "rack-test"
+    gem.add_development_dependency "shoulda"
+
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

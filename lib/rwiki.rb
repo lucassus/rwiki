@@ -1,16 +1,21 @@
+require 'rubygems'
 require 'erb'
-require 'json'
+require 'json/pure'
 require 'sinatra'
 require 'sinatra/base'
 
 module Rwiki
   autoload :Models, 'rwiki/models'
   autoload :Utils, 'rwiki/utils'
-  autoload :TextileUtils, 'rwiki/textile_utils'
+
+  def self.debug
+    require 'debug'
+    debugger
+  end
 
   class App < Sinatra::Base
+    include Models
     include Utils
-    include TextileUtils
 
     set :root, File.dirname(__FILE__) + '/..'
 
@@ -19,41 +24,44 @@ module Rwiki
     end
 
     get '/nodes' do
-      folder_name = params[:folderName]
-      tree = make_tree(folder_name)
-      tree.to_json
+      path = params[:path]
+
+      folder = Folder.new(path)
+      folder.nodes.to_json
     end
 
-    get '/node/content' do
-      page_name = params[:pageName]
-      raw_content = read_page(page_name)
-
-      result = { :pageName => page_name, :title => File.basename(page_name).gsub(/\.txt$/, '') }
-      unless raw_content.nil?
-        html = parse_content(raw_content)
-
-        result[:success] = true
-        result[:raw] = raw_content
-        result[:html] = html
-      else
-        result[:success] = false
+    get '/node' do
+      begin
+        path = params[:path]
+        page = Page.new(path)
+        result = { :success => true,
+                   :path => page.path, :title => page.title,
+                   :raw => page.raw_content, :html => page.html_content }
+      rescue => e
+        result = { :success => false, :message => e.backtrace}
       end
 
       result.to_json
     end
 
-    post '/node/update' do
-      page_name = params[:pageName]
-      raw_content = params[:content]
+    # update page content
+    put '/node' do
+      begin
+        path = params[:path]
+        raw_content = params[:raw_content]
 
-      success = write_page(page_name, raw_content)
-      result = { :success => success, :pageName => page_name, :raw => raw_content }
-      result[:html] = parse_content(raw_content) if success
+        page = Page.new(path)
+        page.raw_content = raw_content
+        page.save
 
-      result.to_json
+        { :success => true }.to_json
+      rescue => e
+        { :success => false, :message => e.backtrace }.to_json
+      end
     end
 
-    post '/node/create' do
+    # create new node
+    post '/node' do
       parent_folder_name = params[:parentFolderName]
       node_base_name = params[:nodeBaseName]
 
@@ -92,9 +100,15 @@ module Rwiki
     end
 
     post '/node/destroy' do
-      node_name = params[:nodeName]
-      success = delete_node(node_name)
-      { :success => success, :nodeName => node_name }.to_json
+      begin
+        path = params[:path]
+        node = Node.new_from_path(path)
+
+        success = node.delete
+        { :success => success, :path => path }.to_json
+      rescue => e
+        { :success => false, :message => e.backtrace }
+      end
     end
   end
 end

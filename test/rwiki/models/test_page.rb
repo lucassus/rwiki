@@ -35,4 +35,29 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
     end
   end
 
+  context 'A page instance' do
+    setup { @page = Page.new('./home.txt') }
+
+    context 'raw_content method' do
+      should 'return valid raw_content' do
+        assert @page.raw_content
+        assert_equal 'h1. Sample page', @page.raw_content
+      end
+    end
+
+    context 'html_content method' do
+      should 'return valid html_content' do
+        assert @page.html_content
+        assert_equal '<h1><a name="Sample+page">Sample page</a></h1>', @page.html_content
+      end
+    end
+
+    context 'title method' do
+      should 'return valid title' do
+        assert_equal 'home', @page.title
+      end
+    end
+  end
+
+
 end

@@ -7,15 +7,15 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     Rwiki.Model.superclass.constructor.call(this, options);
   },
 
-  loadPage: function(pageName, callback) {
+  loadPage: function(path, callback) {
     var self = this;
 
     $.ajax({
       type: 'GET',
-      url: '/node/content',
+      url: '/node',
       dataType: 'json',
       data: {
-        pageName: pageName
+        path: path
       },
       success: function(data) {
         callback.call(self, data);
@@ -23,16 +23,16 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  createNode: function(parentFolderName, nodeBaseName, isFolder, callback) {
+  createNode: function(parentPath, name, isFolder, callback) {
     var self = this;
 
     $.ajax({
       type: 'POST',
-      url: '/node/create',
+      url: '/node',
       dataType: 'json',
       data: {
-        parentFolderName: parentFolderName,
-        nodeBaseName: nodeBaseName,
+        parentPath: parentPath,
+        name: name,
         isFolder: isFolder
       },
       success: function(data) {
@@ -45,8 +45,8 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     var self = this;
 
     $.ajax({
-      type: 'POST',
-      url: '/node/update',
+      type: 'PUT',
+      url: '/node',
       dataType: 'json',
       data: {
         pageName: pageName,
@@ -58,7 +58,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  renameNode: function(oldNodeName, newBaseName, isFolder, callback) {
+  renameNode: function(oldNodeName, newBaseName, callback) {
     var self = this;
     
     $.ajax({
@@ -67,8 +67,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       dataType: 'json',
       data: {
         oldNodeName: oldNodeName,
-        newBaseName: newBaseName,
-        isFolder: isFolder
+        newBaseName: newBaseName
       },
       success: function(data) {
         callback.call(self, data);
