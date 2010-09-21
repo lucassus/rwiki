@@ -48,13 +48,13 @@ module Rwiki
     put '/node' do
       begin
         path = params[:path]
-        raw_content = params[:raw_content]
+        raw_content = params[:rawContent]
 
         page = Page.new(path)
         page.raw_content = raw_content
         page.save
 
-        { :success => true }.to_json
+        { :success => true, :path => path, :raw => page.raw_content, :html => page.html_content }.to_json
       rescue => e
         { :success => false, :message => e.backtrace }.to_json
       end
