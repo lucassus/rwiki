@@ -41,7 +41,7 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  updatePage: function(pageName, content, callback) {
+  updatePage: function(path, rawContent, callback) {
     var self = this;
 
     $.ajax({
@@ -49,8 +49,8 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       url: '/node',
       dataType: 'json',
       data: {
-        pageName: pageName,
-        content: content
+        path: path,
+        rawContent: rawContent
       },
       success: function(data) {
         callback.call(self, data);

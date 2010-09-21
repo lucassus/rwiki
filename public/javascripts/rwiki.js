@@ -39,11 +39,11 @@ Ext.onReady(function() {
   // Event: editor content changed
   editorPanel.on('contentChanged', function(content) {
     var currentTab = tabPanel.getActiveTab();
-    var pageName = currentTab.getPageName();
+    var pageName = currentTab.getPagePath();
 
     model.updatePage(pageName, content, function(data) {
-      var pageName = data.pageName;
-      var tab = tabPanel.findTabByPageName(pageName);
+      var path = data.path;
+      var tab = tabPanel.findTabByPagePath(path);
       tab.setContent(data.html);
     });
   });
@@ -53,7 +53,7 @@ Ext.onReady(function() {
     var lastTabClosed = !tab;
 
     if (!lastTabClosed) {
-      var pageName = tab.getPageName();
+      var pageName = tab.getPagePath();
       
       model.loadPage(pageName, function(data) {
         if (!data.success) return;
@@ -62,7 +62,7 @@ Ext.onReady(function() {
         var raw = data.raw;
 
         // select loaded node in tree
-        var node = treePanel.findNodeByPageName(path);
+        var node = treePanel.findNodeByPagePath(path);
         node.select();
 
         // show tab with page
@@ -113,7 +113,7 @@ Ext.onReady(function() {
         var path = data.path;
         var title = data.title;
 
-        var parentNode = treePanel.findNodeByPageName(parentPath);
+        var parentNode = treePanel.findNodeByPagePath(parentPath);
 
         var node = new Ext.tree.TreeNode({
           id: path,
@@ -145,7 +145,7 @@ Ext.onReady(function() {
         var parentFolderName = data.parentFolderName;
         var newPageName = data.newNodeName;
 
-        var parentNode = treePanel.findNodeByPageName(parentFolderName);
+        var parentNode = treePanel.findNodeByPagePath(parentFolderName);
 
         var node = new Ext.tree.TreeNode({
           id: newPageName,
@@ -193,7 +193,7 @@ Ext.onReady(function() {
         if (!data.success) return;
         
         var nodeName = data.nodeName;
-        var node = treePanel.findNodeByPageName(nodeName);
+        var node = treePanel.findNodeByPagePath(nodeName);
 
         tabPanel.closeRelatedTabs(node);
         node.remove();

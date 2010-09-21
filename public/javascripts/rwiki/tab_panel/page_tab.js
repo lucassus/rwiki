@@ -9,7 +9,7 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
     Rwiki.TabPanel.PageTab.superclass.constructor.call(this, config);
   },
 
-  getPageName: function() {
+  getPagePath: function() {
     return this.id;
   },
 
@@ -17,8 +17,8 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
    * Update the page content.
    */
   setContent: function(htmlContent) {
-    var pageName = this.getPageName();
-    var pageContainer = $('#' + pageName.replace(/(\W)/g, '\\$1'));
+    var path = this.getPagePath();
+    var pageContainer = $('#' + path.replace(/(\W)/g, '\\$1'));
     pageContainer.html(htmlContent);
   },
 
