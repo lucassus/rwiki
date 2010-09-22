@@ -9,22 +9,6 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
     Rwiki.Model.superclass.constructor.call(this, options);
   },
 
-//  loadPage: function(path, callback) {
-//    var self = this;
-//
-//    $.ajax({
-//      type: 'GET',
-//      url: '/node',
-//      dataType: 'json',
-//      data: {
-//        path: path
-//      },
-//      success: function(data) {
-//        callback.call(self, data);
-//      }
-//    });
-//  },
-
   createNode: function(parentPath, name, isFolder, callback) {
     var self = this;
 
@@ -42,23 +26,6 @@ Rwiki.Model = Ext.extend(Ext.util.Observable, {
       }
     });
   },
-
-//  updatePage: function(path, rawContent, callback) {
-//    var self = this;
-//
-//    $.ajax({
-//      type: 'PUT',
-//      url: '/node',
-//      dataType: 'json',
-//      data: {
-//        path: path,
-//        rawContent: rawContent
-//      },
-//      success: function(data) {
-//        callback.call(self, data);
-//      }
-//    });
-//  },
 
   renameNode: function(oldNodeName, newBaseName, callback) {
     var self = this;

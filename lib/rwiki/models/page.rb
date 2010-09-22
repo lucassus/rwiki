@@ -49,7 +49,7 @@ module Rwiki::Models
 
     def parse_content
       coderay
-      return RedCloth.new(raw_toc + raw_content).to_html
+      return generate_toc + RedCloth.new(raw_content).to_html
     end
 
     def coderay
@@ -72,7 +72,7 @@ module Rwiki::Models
     end
 
     def generate_toc
-      toc = generate_raw_toc(raw_content)
+      toc = generate_raw_toc
       return RedCloth.new(toc).to_html
     end
 

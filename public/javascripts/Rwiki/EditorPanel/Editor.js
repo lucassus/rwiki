@@ -5,7 +5,7 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
     this.addEvents('pageCanged');
 
     this.listeners = {
-      pageLoaded: function(data) {
+      pageContentLoaded: function(data) {
         this.setPagePath(data.path);
         this.setContent(data.raw);
       }
@@ -92,7 +92,7 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
         rawContent: self.getContent()
       },
       success: function(data) {
-        self.fireEvent('pageChanged', data);
+        self.fireEvent('pageContentChanged', data);
       }
     });
   },

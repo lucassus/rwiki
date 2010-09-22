@@ -24,10 +24,19 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         appendOnly: true
       },
 
-      tbar: toolBar
+      tbar: toolBar,
+      listeners: {
+        click: function(node) {
+          if (!node.isLeaf()) return;
+          
+          var path = node.id;
+          this.fireEvent('pageChanged', path);
+        }
+      }
     };
 
     Rwiki.TreePanel.superclass.constructor.call(this, Ext.apply(defaultConfig, config));
+    this.addEvents('pageChanged');
 
     // setup root node
     var root = {

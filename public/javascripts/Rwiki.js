@@ -6,7 +6,6 @@ Rwiki.currentPageName = null;
 Ext.onReady(function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
-//  var model = new Rwiki.Model();
   var treePanel = new Rwiki.TreePanel();
   var tabPanel = new Rwiki.TabPanel();
   var editorPanel = new Rwiki.EditorPanel();
@@ -35,59 +34,10 @@ Ext.onReady(function() {
   //    destNode.reload();
   //  });
 
-  // Event: editor content changed
-//  editorPanel.on('pageChanged', function(content) {
-//    var currentTab = tabPanel.getActiveTab();
-//    var pageName = currentTab.getPagePath();
-//
-//    model.updatePage(pageName, content, function(data) {
-//      var path = data.path;
-//      var tab = tabPanel.findTabByPagePath(path);
-//      tab.setContent(data.html);
-//    });
-//  });
-
   var editor = editorPanel.getEditor();
-  editor.relayEvents(tabPanel, ['pageLoaded']);
-  tabPanel.relayEvents(editor, ['pageChanged']);
-
-  // Event: tab has changed
-//  tabPanel.on('tabchange', function(tabPanel, tab) {
-//    var lastTabClosed = !tab;
-//
-//    if (!lastTabClosed) {
-//      var pageName = tab.getPagePath();
-//
-//      model.loadPage(pageName, function(data) {
-//        if (!data.success) return;
-//
-//        var path = data.path;
-//        var raw = data.raw;
-//
-//        // select loaded node in tree
-//        var node = treePanel.findNodeByPagePath(path);
-//        node.select();
-//
-//        // show tab with page
-//        var tab = tabPanel.updateOrAddPageTab(path, data.html);
-//        tab.setTitle(data.title);
-//
-//        // set editor content
-//        editorPanel.getEditor().setContent(raw);
-//      });
-//    } else {
-//      editorPanel.editor.clearContent();
-//    }
-//  });
-
-  // Event: TreePanel, click on a node
-  treePanel.on('click', function(node, e) {
-    if (node.isLeaf()) {
-      var path = node.id;
-      var tab = tabPanel.updateOrAddPageTab(path);
-      tab.show(); // it will fire the 'tabchange' event
-    }
-  });
+  editor.relayEvents(tabPanel, ['pageContentLoaded']);
+  tabPanel.relayEvents(editor, ['pageContentChanged']);
+  tabPanel.relayEvents(treePanel, ['pageChanged']);
 
   // Event: TreePanel, a node has been moved
 //  treePanel.on('movenode', function(tree, node, oldParent, newParent, position) {
@@ -166,40 +116,41 @@ Ext.onReady(function() {
   });
 
   // Event: context menu, rename node
-  treeContextMenu.on('renameNode', function(node) {
-    var oldPath = node.id;
-    var oldName = node.text;
-
-    var callback = function(button, newName) {
-      if (button != 'ok') return;
-    };
-
-    Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
-  });
+//  treeContextMenu.on('renameNode', function(node) {
+//    var oldPath = node.id;
+//    var oldName = node.text;
+//
+//    var callback = function(button, newName) {
+//      if (button != 'ok') return;
+//    };
+//
+//    Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
+//  });
 
   // Event context menu, delete node
-  treeContextMenu.on('deleteNode', function(node) {
-    var nodeName = node.id;
-
-    var callback = function(button) {
-      if (button != 'yes') return;
-      model.deleteNode(nodeName, function(data) {
-        if (!data.success) return;
-        
-        var nodeName = data.nodeName;
-        var node = treePanel.findNodeByPagePath(nodeName);
-
-        tabPanel.closeRelatedTabs(node);
-        node.remove();
-      });
-    }
-
-    var message = 'Delete "' + nodeName + '"?';
-    Ext.MessageBox.confirm('Confirm', message, callback);
-  });
+//  treeContextMenu.on('deleteNode', function(node) {
+//    var nodeName = node.id;
+//
+//    var callback = function(button) {
+//      if (button != 'yes') return;
+//      model.deleteNode(nodeName, function(data) {
+//        if (!data.success) return;
+//
+//        var nodeName = data.nodeName;
+//        var node = treePanel.findNodeByPagePath(nodeName);
+//
+//        tabPanel.closeRelatedTabs(node);
+//        node.remove();
+//      });
+//    }
+//
+//    var message = 'Delete "' + nodeName + '"?';
+//    Ext.MessageBox.confirm('Confirm', message, callback);
+//  });
 
   // Create layout
 
+  // TODO: promote to class
   var sidePanel = new Ext.Panel({
     region: 'west',
     id: 'west-panel',

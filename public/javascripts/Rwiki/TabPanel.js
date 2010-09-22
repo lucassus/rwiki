@@ -18,11 +18,16 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     Rwiki.TabPanel.superclass.constructor.call(this, config);
 
-    this.addEvents('pageLoaded');
+    this.addEvents('pageContentLoaded');
 
-    this.on('pageChanged', function(data) {
+    this.on('pageContentChanged', function(data) {
       var tab = this.findTabByPagePath(data.path);
       tab.setContent(data.html);
+    });
+
+    this.on('pageChanged', function(path) {
+      var tab = this.updateOrAddPageTab(path);
+      tab.show(); // it will fire the 'tabchange' event
     });
   },
 
@@ -37,7 +42,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         path: path
       },
       success: function(data) {
-        tabPanel.fireEvent('pageLoaded', data);
+        tabPanel.fireEvent('pageContentLoaded', data);
       }
     });
   },
@@ -63,7 +68,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       id: path,
       title: path
     });
-    pageTab.relayEvents(this, ['pageLoaded']);
+    pageTab.relayEvents(this, ['pageContentLoaded']);
 
     return this.add(pageTab);
   },
