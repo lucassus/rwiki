@@ -12,6 +12,29 @@ module Rwiki::Models
       end
     end
 
+    def create_sub_folder(name)
+      within_working_path do
+        new_folder_path = File.join(@path, name)
+        raise Rwiki::FolderError.new("#{new_folder_path} already exists") if File.exists?(new_folder_path)
+
+        FileUtils.mkdir(new_folder_path)
+
+        return Folder.new(new_folder_path)
+      end
+    end
+
+    def create_sub_page(name)
+      within_working_path do
+        name = name + '.txt' unless name.end_with?('.txt')
+        new_page_path = File.join(@path, name)
+        raise Rwiki::PageError.new("#{new_page_path} already exists") if File.exists?(new_page_path)
+
+        FileUtils.touch(new_page_path)
+
+        return Page.new(new_page_path)
+      end
+    end
+
     def self.create(path)
       within_working_path do
         raise Rwiki::FolderError.new("#{path} already exists") if File.exist?(path)
@@ -36,11 +59,11 @@ module Rwiki::Models
         if File.directory?(path)
           children = make_nodes(path)
           tree_nodes << tree_node.merge(:text => node_base_name,
-                                        :cls => 'folder', :children => children)
+            :cls => 'folder', :children => children)
         else
           next unless node_base_name.match(/#{FILE_EXTENSION}$/)
           tree_nodes << tree_node.merge(:text => node_base_name.gsub(/#{FILE_EXTENSION}$/, ''),
-                                        :cls => 'page', :leaf => true)
+            :cls => 'page', :leaf => true)
         end
       end
 

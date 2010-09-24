@@ -77,4 +77,52 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
     end
   end
 
+  context 'create_sub_folder method' do
+    setup { @parent = Folder.new('.') }
+
+    context 'for existing folder' do
+      setup { @new_folder_name = 'folder' }
+
+      should 'raise an exception' do
+        exception = assert_raise Rwiki::FolderError do
+          @parent.create_sub_folder(@new_folder_name)
+        end
+
+        assert_equal "./folder already exists", exception.message
+      end
+    end
+
+    context 'for non-existing folder' do
+      setup { @new_folder_name = 'new_folder' }
+
+      should 'not raise an expection' do
+        assert_nothing_raised do
+          @parent.create_sub_folder(@new_folder_name)
+        end
+      end
+
+      should 'create a new folder' do
+        folder = @parent.create_sub_folder(@new_folder_name)
+        assert folder
+        assert_equal './new_folder', folder.path
+      end
+    end
+  end
+
+  context 'create_sub_page method' do
+    setup { @parent = Folder.new('.') }
+
+    context 'for existing page' do
+      setup { @new_page_name = 'home.txt' }
+
+      should 'raise an exception' do
+        exception = assert_raise Rwiki::PageError do
+          @parent.create_sub_page(@new_page_name)
+        end
+
+        assert_equal "./home.txt already exists", exception.message
+      end
+    end
+  end
+
 end

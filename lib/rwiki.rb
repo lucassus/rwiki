@@ -10,7 +10,8 @@ module Rwiki
 
   class FolderError < StandardError; end
   class FolderNotFoundError < FolderError; end
-  class PageNotFoundError < StandardError; end
+  class PageError < StandardError; end
+  class PageNotFoundError < PageError; end
 
   def self.debug
     require 'debug'
@@ -39,8 +40,8 @@ module Rwiki
         path = params[:path]
         page = Page.new(path)
         result = { :success => true,
-                   :path => page.path, :title => page.title,
-                   :raw => page.raw_content, :html => page.html_content }
+          :path => page.path, :title => page.title,
+          :raw => page.raw_content, :html => page.html_content }
       rescue => e
         result = { :success => false, :message => e.message }
       end
@@ -64,23 +65,22 @@ module Rwiki
       end
     end
 
-    # create new node
+    # create a new node
     post '/node' do
-      parent_folder_name = params[:parentFolderName]
-      node_base_name = params[:nodeBaseName]
+      parent_path = params[:parentPath]
+      name = params[:name]
 
+      parent_folder = Folder.new(parent_path)
       is_folder = params[:isFolder] == 'true'
-      text = node_base_name
       if is_folder
-        new_node_name = create_folder(parent_folder_name, node_base_name)
+        node = parent_folder.create_sub_folder(name)
       else
-        node_base_name += PAGE_FILE_EXT
-        new_node_name = create_page(parent_folder_name, node_base_name)
+        node = parent_folder.create_sub_page(name)
       end
 
-      result = { :success => !!new_node_name, :text => text,
-        :parentFolderName => parent_folder_name, :isFolder => is_folder,
-        :newNodeName => new_node_name, :newNodeBaseName => node_base_name }
+      result = { :success => true, :text => name,
+        :parentFolderName => parent_path, :isFolder => is_folder,
+        :newNodeName => node.path, :newNodeBaseName => parent_folder.path }
 
       result.to_json
     end
