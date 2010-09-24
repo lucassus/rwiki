@@ -13,11 +13,6 @@ module Rwiki
   class PageError < StandardError; end
   class PageNotFoundError < PageError; end
 
-  def self.debug
-    require 'debug'
-    debugger
-  end
-
   class App < Sinatra::Base
     include Models
     include Utils
@@ -79,37 +74,37 @@ module Rwiki
       end
 
       result = { :success => true, :text => name,
-        :parentFolderName => parent_path, :isFolder => is_folder,
-        :newNodeName => node.path, :newNodeBaseName => parent_folder.path }
+        :parentPath => parent_folder.path, :isFolder => is_folder,
+        :path => node.path }
 
       result.to_json
     end
 
-    post '/node/rename' do
-      old_node_name = params[:oldNodeName]
-      new_base_name = params[:newBaseName]
+#    post '/node/rename' do
+#      old_node_name = params[:oldNodeName]
+#      new_base_name = params[:newBaseName]
+#
+#      success, new_node_name = rename_node(old_node_name, new_base_name)
+#      { :success => success,
+#        :oldNodeName => old_node_name,
+#        :newNodeName => new_node_name, :newBaseName => new_base_name }.to_json
+#    end
 
-      success, new_node_name = rename_node(old_node_name, new_base_name)
-      { :success => success,
-        :oldNodeName => old_node_name,
-        :newNodeName => new_node_name, :newBaseName => new_base_name }.to_json
-    end
+#    post '/node/move' do
+#      node_name = params[:nodeName]
+#      dest_folder_name = params[:destFolderName]
+#
+#      success, new_node_name = move_node(node_name, dest_folder_name)
+#      { :success => success, :newNodeName => new_node_name }.to_json
+#    end
 
-    post '/node/move' do
-      node_name = params[:nodeName]
-      dest_folder_name = params[:destFolderName]
-
-      success, new_node_name = move_node(node_name, dest_folder_name)
-      { :success => success, :newNodeName => new_node_name }.to_json
-    end
-
-    post '/node/destroy' do
+    delete '/node' do
       begin
         path = params[:path]
         node = Node.new_from_path(path)
+        node.delete
 
-        success = node.delete
-        { :success => success, :path => path }.to_json
+        { :success => true, :path => node.path }.to_json
       rescue => e
         { :success => false, :message => e.message }
       end

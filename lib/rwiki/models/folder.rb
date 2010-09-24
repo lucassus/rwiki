@@ -2,8 +2,10 @@ module Rwiki::Models
   class Folder < Node
 
     def initialize(path)
-      raise Rwiki::FolderNotFoundError.new("cannot find #{path}") if !File.exist?(path) || ! File.directory?(path)
-      super(path)
+      within_working_path do
+        raise Rwiki::FolderNotFoundError.new("cannot find #{path}") if !File.exist?(path) || ! File.directory?(path)
+        super(path)
+      end
     end
 
     def nodes
@@ -13,31 +15,32 @@ module Rwiki::Models
     end
 
     def create_sub_folder(name)
+      new_folder_path = File.join(@path, name)
+      raise Rwiki::FolderError.new("#{new_folder_path} already exists") if File.exists?(new_folder_path)
+
       within_working_path do
-        new_folder_path = File.join(@path, name)
-        raise Rwiki::FolderError.new("#{new_folder_path} already exists") if File.exists?(new_folder_path)
-
         FileUtils.mkdir(new_folder_path)
-
-        return Folder.new(new_folder_path)
       end
+      
+      return Folder.new(new_folder_path)
     end
 
     def create_sub_page(name)
+      name = name + '.txt' unless name.end_with?('.txt')
+      new_page_path = File.join(@path, name)
+      raise Rwiki::PageError.new("#{new_page_path} already exists") if File.exists?(new_page_path)
+
       within_working_path do
-        name = name + '.txt' unless name.end_with?('.txt')
-        new_page_path = File.join(@path, name)
-        raise Rwiki::PageError.new("#{new_page_path} already exists") if File.exists?(new_page_path)
-
         FileUtils.touch(new_page_path)
-
-        return Page.new(new_page_path)
       end
+      
+      return Page.new(new_page_path)
     end
 
     def self.create(path)
+      raise Rwiki::FolderError.new("#{path} already exists") if File.exist?(path)
+
       within_working_path do
-        raise Rwiki::FolderError.new("#{path} already exists") if File.exist?(path)
         FileUtils.mkdir(path)
       end
 

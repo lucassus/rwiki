@@ -22,6 +22,12 @@ module Rwiki::Models
       end
     end
 
+    def delete
+      within_working_path do
+        FileUtils.rm_rf(@path)
+      end
+    end
+
     private
 
     def initialize(path)
