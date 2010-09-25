@@ -68,11 +68,12 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
               {:text => 'folder', :id => './folder', :cls => 'folder', :children => [
                       {:text => 'test 1', :id => './folder/test 1.txt', :cls => 'page', :leaf => true},
                       {:text => 'test 2', :id => './folder/test 2.txt', :cls => 'page', :leaf => true}]},
-              {:text => 'home', :id => './home.txt', :cls => 'page', :leaf => true}
+              {:text => 'home', :id => './home.txt', :cls => 'page', :leaf => true},
+              {:text => 'test', :id => './test.txt', :cls => 'page', :leaf => true}
       ]
 
       nodes = @folder.nodes
-      assert_equal 3, nodes.size
+      assert_equal expected_nodes.size, nodes.size
       assert_equal expected_nodes, nodes
     end
   end
@@ -99,6 +100,13 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
         assert_nothing_raised do
           @parent.create_sub_folder(@new_folder_name)
         end
+      end
+
+      should 'create a new directory' do
+        @parent.create_sub_folder(@new_folder_name)
+        directory_path = File.join(@parent.full_path, @new_folder_name)
+        assert File.exist?(directory_path), "directory #{directory_path} does not exist"
+        assert File.directory?(directory_path)
       end
 
       should 'create a new folder' do
@@ -131,6 +139,13 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
         assert_nothing_raised do
           @parent.create_sub_page(@new_page_name)
         end
+      end
+
+      should 'create a file' do
+        @parent.create_sub_page(@new_page_name)
+        file_path = File.join(@parent.full_path, @new_page_name)
+        assert File.exists?(file_path), "file #{file_path} does not exist"
+        assert File.file?(file_path)
       end
 
       should 'create a new page' do

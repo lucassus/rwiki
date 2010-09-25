@@ -66,15 +66,15 @@ module Rwiki
       result.to_json
     end
 
-    #    post '/node/rename' do
-    #      old_node_name = params[:oldNodeName]
-    #      new_base_name = params[:newBaseName]
-    #
-    #      success, new_node_name = rename_node(old_node_name, new_base_name)
-    #      { :success => success,
-    #        :oldNodeName => old_node_name,
-    #        :newNodeName => new_node_name, :newBaseName => new_base_name }.to_json
-    #    end
+    post '/node/rename' do
+      path = params[:path]
+      new_name = params[:newName]
+
+      page = Page.new(path)
+      page.rename(new_name)
+
+      { :success => true, :path => page.path, :text => page.title }.to_json
+    end
 
     #    post '/node/move' do
     #      node_name = params[:nodeName]

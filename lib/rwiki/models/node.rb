@@ -7,8 +7,14 @@ module Rwiki::Models
 
     @@working_path = '.'
 
-    def self.working_path=(path)
-      @@working_path = path
+    class << self
+      def working_path
+        @@working_path
+      end
+
+      def working_path=(path)
+        @@working_path = path
+      end
     end
 
     def self.new_from_path(path)
@@ -19,6 +25,14 @@ module Rwiki::Models
 
     def base_name
       File.basename(full_path)
+    end
+
+    def full_path
+      self.class.full_path_for(@path)
+    end
+
+    def parent_folder
+      return Folder.new(File.dirname(@path))
     end
 
     def delete
@@ -33,10 +47,6 @@ module Rwiki::Models
 
     def self.full_path_for(path)
       File.join(@@working_path, path)
-    end
-
-    def full_path
-      self.class.full_path_for(@path)
     end
 
   end

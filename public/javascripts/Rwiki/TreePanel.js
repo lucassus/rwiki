@@ -62,6 +62,133 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
     toolBar.on('filterFieldChanged', this.filterTree, this);
 
+    // context menu events
+    this.contextMenu = new Rwiki.TreePanel.Menu();
+
+    this.contextMenu.on('createFolder', function(node) {
+      if (node.cls == 'file') return;
+
+      Ext.MessageBox.prompt('Create folder', 'New folder name:', function(button, name) {
+        if (button != 'ok') return;
+
+        var parentPath = node.id;
+
+        $.ajax({
+          type: 'POST',
+          url: '/node',
+          dataType: 'json',
+          data: {
+            parentPath: parentPath,
+            name: name,
+            isFolder: true
+          },
+          success: function(data) {
+            if (!data.success) return;
+
+            var parentPath = data.parentPath;
+            var path = data.path;
+            var text = data.text;
+
+            var node = new Ext.tree.TreeNode({
+              id: path,
+              text: text,
+              cls: 'folder',
+              expandable: true,
+              leaf: false
+            });
+
+            var parentNode = treePanel.findNodeByPagePath(parentPath);
+            parentNode.appendChild(node);
+          }
+        });
+      });
+    });
+
+    // Event: context menu, create page
+    this.contextMenu.on('createPage', function(node) {
+      if (node.cls == 'file') return;
+
+      Ext.MessageBox.prompt('Create page', 'New page name:', function(button, name) {
+        if (button != 'ok') return;
+
+        var parentPath = node.id;
+
+        $.ajax({
+          type: 'POST',
+          url: '/node',
+          dataType: 'json',
+          data: {
+            parentPath: parentPath,
+            name: name,
+            isFolder: false
+          },
+          success: function(data) {
+            if (!data.success) return;
+
+            var text = data.text;
+            var parentPath = data.parentPath;
+            var path = data.path;
+
+            var node = new Ext.tree.TreeNode({
+              id: path,
+              text: text,
+              cls: 'page',
+              expandable: false,
+              leaf: true
+            });
+
+            var parentNode = treePanel.findNodeByPagePath(parentPath);
+            parentNode.appendChild(node);
+            node.select();
+
+            // open tab with new page
+            var tab = tabPanel.updateOrAddPageTab(path);
+            tab.show();
+          }
+        });
+      });
+    });
+
+    // Event: context menu, rename node
+    //  this.contextMenu.on('renameNode', function(node) {
+    //    var oldPath = node.id;
+    //    var oldName = node.text;
+    //
+    //    var callback = function(button, newName) {
+    //      if (button != 'ok') return;
+    //    };
+    //
+    //    Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
+    //  });
+
+    // Event context menu, delete node
+    this.contextMenu.on('deleteNode', function(node) {
+      var path = node.id;
+
+      var callback = function(button) {
+        if (button != 'yes') return;
+
+
+        $.ajax({
+          type: 'DELETE',
+          url: '/node?path=' + path,
+          dataType: 'json',
+          success: function(data) {
+            if (!data.success) return;
+
+            var path = data.path;
+            var node = treePanel.findNodeByPagePath(path);
+
+            tabPanel.closeRelatedTabs(node);
+            node.remove();
+          }
+        });
+      }
+
+      var message = 'Delete "' + path + '"?';
+      Ext.MessageBox.confirm('Confirm', message, callback);
+    });
+
     this.root.expand();
   },
 
@@ -114,20 +241,12 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.showContextMenu(node, e);
   },
 
-  getContextMenu: function() {
-    if (this.contextMenu == null) {
-      this.contextMenu = new Rwiki.TreePanel.Menu();
-    }
-
-    return this.contextMenu;
-  },
-
   showContextMenu: function(node, e) {
     if (!node) {
       node = this.getSelectionModel().getSelectedNode();
     }
 
-    this.getContextMenu().show(node, e.getXY());
+    this.contextMenu.show(node, e.getXY());
   },
 
   setTabPanel: function(tabPanel) {
