@@ -57,8 +57,8 @@ module Rwiki::Models
           tree_nodes << tree_node.merge(:text => node_base_name,
             :cls => 'folder', :children => children)
         else
-          next unless node_base_name.match(/#{FILE_EXTENSION}$/)
-          tree_nodes << tree_node.merge(:text => node_base_name.gsub(/#{FILE_EXTENSION}$/, ''),
+          next unless node_base_name.match(/#{PAGE_FILE_EXTENSION}$/)
+          tree_nodes << tree_node.merge(:text => node_base_name.gsub(/#{PAGE_FILE_EXTENSION}$/, ''),
             :cls => 'page', :leaf => true)
         end
       end

@@ -1,7 +1,7 @@
 module Rwiki::Models
   class Node
 
-    FILE_EXTENSION = '.txt'
+    PAGE_FILE_EXTENSION = '.txt'
 
     attr_accessor :path
 

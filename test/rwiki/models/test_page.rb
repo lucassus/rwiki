@@ -108,5 +108,4 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
       end
     end
   end
-
 end

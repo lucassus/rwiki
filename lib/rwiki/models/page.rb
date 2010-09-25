@@ -6,7 +6,7 @@ module Rwiki::Models
     def initialize(path)
       full_path = self.class.full_path_for(path)
       raise Rwiki::NodeNotFoundError.new("cannot find #{path}") if !File.exist?(full_path) || !File.file?(full_path)
-      raise Rwiki::NodeNotFoundError.new("#{path} has illegal name") unless path.end_with?(FILE_EXTENSION)
+      raise Rwiki::NodeNotFoundError.new("#{path} has illegal name") unless path.end_with?(PAGE_FILE_EXTENSION)
 
       super(path)
     end
@@ -25,11 +25,11 @@ module Rwiki::Models
     end
 
     def title
-      File.basename(full_path).gsub(/#{FILE_EXTENSION}$/, '')
+      File.basename(full_path).gsub(/#{PAGE_FILE_EXTENSION}$/, '')
     end
 
     def rename(new_name)
-      new_name = new_name + FILE_EXTENSION unless new_name.end_with?(FILE_EXTENSION)
+      new_name = new_name + PAGE_FILE_EXTENSION unless new_name.end_with?(PAGE_FILE_EXTENSION)
       new_path = File.join(File.dirname(@path), new_name)
       new_full_path = File.join(@@working_path, new_path)
       raise Rwiki::NodeError.new("#{new_path} already exists") if File.exist?(new_full_path)
