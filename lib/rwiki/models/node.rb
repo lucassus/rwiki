@@ -12,20 +12,17 @@ module Rwiki::Models
     end
 
     def self.new_from_path(path)
-      klass = File.directory?(path) ? Folder : Page
+      full_path = File.join(@@working_path, path)
+      klass = File.directory?(full_path) ? Folder : Page
       return klass.new(path)
     end
 
     def base_name
-      within_working_path do
-        File.basename(@path)
-      end
+      File.basename(full_path)
     end
 
     def delete
-      within_working_path do
-        FileUtils.rm_rf(@path)
-      end
+      FileUtils.rm_rf(full_path)
     end
 
     private
@@ -34,12 +31,12 @@ module Rwiki::Models
       @path = path
     end
 
-    def within_working_path(&block)
-      self.class.within_working_path(&block)
+    def self.full_path_for(path)
+      File.join(@@working_path, path)
     end
 
-    def self.within_working_path(&block)
-      Dir.chdir(@@working_path, &block)
+    def full_path
+      self.class.full_path_for(@path)
     end
 
   end

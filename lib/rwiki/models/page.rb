@@ -1,17 +1,14 @@
-require 'coderay'
-require 'redcloth'
-
 module Rwiki::Models
   class Page < Node
 
     CODE_REGEXP = /\<code( lang="(.+?)")?\>(.+?)\<\/code\>/m.freeze
 
     def initialize(path)
-      within_working_path do
-        raise Rwiki::PageNotFoundError.new("cannot find #{path}") if !File.exist?(path) || !File.file?(path)
-        raise Rwiki::PageNotFoundError.new("#{path} has illegal name") unless path.end_with?(FILE_EXTENSION)
-        super(path)
-      end
+      full_path = self.class.full_path_for(path)
+      raise Rwiki::PageNotFoundError.new("cannot find #{path}") if !File.exist?(full_path) || !File.file?(full_path)
+      raise Rwiki::PageNotFoundError.new("#{path} has illegal name") unless path.end_with?(FILE_EXTENSION)
+
+      super(path)
     end
 
     def raw_content
@@ -28,23 +25,19 @@ module Rwiki::Models
     end
 
     def title
-      File.basename(@path).gsub(/#{FILE_EXTENSION}$/, '')
+      File.basename(full_path).gsub(/#{FILE_EXTENSION}$/, '')
     end
 
     def save
-      within_working_path do
-        file = File.open(@path, 'w')
-        file.write(@raw_content)
-        file.close
-      end
+      file = File.open(full_path, 'w')
+      file.write(@raw_content)
+      file.close
     end
 
     private
 
     def read_file
-      within_working_path do
-        File.read(@path) { |f| f.read }
-      end
+      File.read(full_path) { |f| f.read }
     end
 
     def parse_content

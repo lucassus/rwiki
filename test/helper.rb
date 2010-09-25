@@ -1,12 +1,12 @@
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+require 'rwiki'
+
 require 'rubygems'
 require 'test/unit'
 require 'rack/test'
 require 'shoulda'
 
 ENV['RACK_ENV'] = 'test'
-
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'rwiki'
 
 class Test::Unit::TestCase
   TMP_DIR = '/tmp/rwiki_test'
