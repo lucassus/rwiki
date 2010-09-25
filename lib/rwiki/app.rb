@@ -1,7 +1,6 @@
 module Rwiki
   class App < Sinatra::Base
     include Models
-    include Utils
 
     set :raise_errors, false
     set :show_exceptions, false
@@ -75,14 +74,6 @@ module Rwiki
 
       { :success => true, :path => page.path, :text => page.title }.to_json
     end
-
-    #    post '/node/move' do
-    #      node_name = params[:nodeName]
-    #      dest_folder_name = params[:destFolderName]
-    #
-    #      success, new_node_name = move_node(node_name, dest_folder_name)
-    #      { :success => success, :newNodeName => new_node_name }.to_json
-    #    end
 
     delete '/node' do
       path = params[:path]
