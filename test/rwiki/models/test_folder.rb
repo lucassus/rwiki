@@ -123,6 +123,24 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
         assert_equal "./home.txt already exists", exception.message
       end
     end
+
+    context 'for non-existing page' do
+      setup { @new_page_name = 'new_page.txt' }
+
+      should 'not raise an existing' do
+        assert_nothing_raised do
+          @parent.create_sub_page(@new_page_name)
+        end
+      end
+
+      should 'create a new page' do
+        page = @parent.create_sub_page(@new_page_name)
+        assert page
+        assert_equal './new_page.txt', page.path
+        assert_equal '', page.raw_content
+        assert_equal '', page.html_content
+      end
+    end
   end
 
 end

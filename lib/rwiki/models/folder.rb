@@ -28,7 +28,7 @@ module Rwiki::Models
       new_page_full_path = self.class.full_path_for(new_page_path)
       raise Rwiki::NodeError.new("#{new_page_path} already exists") if File.exists?(new_page_full_path)
 
-      FileUtils.touch(new_page_path)
+      FileUtils.touch(new_page_full_path)
       return Page.new(new_page_path)
     end
 
