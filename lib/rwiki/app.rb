@@ -3,7 +3,14 @@ module Rwiki
     include Models
     include Utils
 
+    set :raise_errors, false
+    set :show_exceptions, false
     set :root, File.join(File.dirname(__FILE__), '../..')
+
+    error NodeNotFoundError do
+      message = request.env['sinatra.error'].message
+      { :success => false, :message => message }.to_json
+    end
 
     get '/' do
       erb :index
@@ -17,33 +24,26 @@ module Rwiki
     end
 
     get '/node' do
-      begin
-        path = params[:path]
-        page = Page.new(path)
-        result = { :success => true,
-          :path => page.path, :title => page.title,
-          :raw => page.raw_content, :html => page.html_content }
-      rescue => e
-        result = { :success => false, :message => e.message }
-      end
+      path = params[:path]
+      page = Page.new(path)
+
+      result = { :success => true,
+        :path => page.path, :title => page.title,
+        :raw => page.raw_content, :html => page.html_content }
 
       result.to_json
     end
 
     # update page content
     put '/node' do
-      begin
-        path = params[:path]
-        raw_content = params[:rawContent]
+      path = params[:path]
+      raw_content = params[:rawContent]
 
-        page = Page.new(path)
-        page.raw_content = raw_content
-        page.save
+      page = Page.new(path)
+      page.raw_content = raw_content
+      page.save
 
-        { :success => true, :path => path, :raw => page.raw_content, :html => page.html_content }.to_json
-      rescue => e
-        { :success => false, :message => e.message }.to_json
-      end
+      { :success => true, :path => path, :raw => page.raw_content, :html => page.html_content }.to_json
     end
 
     # create a new node
@@ -85,15 +85,11 @@ module Rwiki
     #    end
 
     delete '/node' do
-      begin
-        path = params[:path]
-        node = Node.new_from_path(path)
-        node.delete
+      path = params[:path]
+      node = Node.new_from_path(path)
+      node.delete
 
-        { :success => true, :path => node.path }.to_json
-      rescue => e
-        { :success => false, :message => e.message }
-      end
+      { :success => true, :path => node.path }.to_json
     end
   end
 end

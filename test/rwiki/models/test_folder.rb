@@ -8,7 +8,7 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @path = '/.non-existing' }
 
       should 'raise an exception' do
-        exception = assert_raise Rwiki::FolderNotFoundError do
+        exception = assert_raise Rwiki::NodeNotFoundError do
           Folder.new(@path)
         end
 
@@ -20,7 +20,7 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @path = './home.txt' }
 
       should 'raise an exception' do
-        exception = assert_raise Rwiki::FolderNotFoundError do
+        exception = assert_raise Rwiki::NodeNotFoundError do
           Folder.new(@path)
         end
 
@@ -34,7 +34,7 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @path = './folder' }
 
       should 'raise an exception' do
-        exception = assert_raise Rwiki::FolderError do
+        exception = assert_raise Rwiki::NodeError do
           Folder.create(@path)
         end
 
@@ -84,7 +84,7 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @new_folder_name = 'folder' }
 
       should 'raise an exception' do
-        exception = assert_raise Rwiki::FolderError do
+        exception = assert_raise Rwiki::NodeError do
           @parent.create_sub_folder(@new_folder_name)
         end
 
@@ -116,7 +116,7 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       setup { @new_page_name = 'home.txt' }
 
       should 'raise an exception' do
-        exception = assert_raise Rwiki::PageError do
+        exception = assert_raise Rwiki::NodeError do
           @parent.create_sub_page(@new_page_name)
         end
 

@@ -8,7 +8,7 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
       setup { @file_name = '/.non-existing.txt' }
 
       should 'raise PageNotFountError' do
-        exception = assert_raise Rwiki::PageNotFoundError do
+        exception = assert_raise Rwiki::NodeNotFoundError do
           Page.new(@file_name)
         end
 
@@ -20,7 +20,7 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
       setup { @file_name = './folder' }
 
       should 'raise PageNotFountError' do
-        exception = assert_raise Rwiki::PageNotFoundError do
+        exception = assert_raise Rwiki::NodeNotFoundError do
           Page.new(@file_name)
         end
 
@@ -32,7 +32,7 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
       setup { @file_name = './empty_folder/dummy' }
 
       should 'raise PageNotFountError' do
-        exception = assert_raise Rwiki::PageNotFoundError do
+        exception = assert_raise Rwiki::NodeNotFoundError do
           Page.new(@file_name)
         end
 

@@ -9,10 +9,8 @@ require 'sinatra/base'
 
 module Rwiki
 
-  class FolderError < StandardError; end
-  class FolderNotFoundError < FolderError; end
-  class PageError < StandardError; end
-  class PageNotFoundError < PageError; end
+  class NodeError < StandardError; end
+  class NodeNotFoundError < NodeError; end
 
   autoload :App, 'rwiki/app'
   autoload :Models, 'rwiki/models'

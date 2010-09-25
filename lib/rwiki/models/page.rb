@@ -5,8 +5,8 @@ module Rwiki::Models
 
     def initialize(path)
       full_path = self.class.full_path_for(path)
-      raise Rwiki::PageNotFoundError.new("cannot find #{path}") if !File.exist?(full_path) || !File.file?(full_path)
-      raise Rwiki::PageNotFoundError.new("#{path} has illegal name") unless path.end_with?(FILE_EXTENSION)
+      raise Rwiki::NodeNotFoundError.new("cannot find #{path}") if !File.exist?(full_path) || !File.file?(full_path)
+      raise Rwiki::NodeNotFoundError.new("#{path} has illegal name") unless path.end_with?(FILE_EXTENSION)
 
       super(path)
     end
@@ -41,11 +41,15 @@ module Rwiki::Models
     end
 
     def parse_content
-      coderay
-      return generate_toc + RedCloth.new(raw_content).to_html
+      coderay!
+
+      toc = generate_toc
+      add_anchors_to_headers!
+      
+      return toc + RedCloth.new(raw_content).to_html
     end
 
-    def coderay
+    def coderay!
       @raw_content = raw_content.gsub(CODE_REGEXP) do
         "<notextile>#{CodeRay.scan($3, $2).div(:css => :class)}</notextile>"
       end
@@ -53,7 +57,7 @@ module Rwiki::Models
 
     def generate_raw_toc
       toc = ''
-      raw_content.gsub(/^\s*h([1-6])\.\s+(.*)/) do |match|
+      raw_content.gsub(/^\s*h([1-6])\.\s+(.*)/) do
         level = $1.to_i
         name = $2
 
@@ -65,11 +69,11 @@ module Rwiki::Models
     end
 
     def generate_toc
-      toc = generate_raw_toc
-      return RedCloth.new(toc).to_html
+      raw_toc = generate_raw_toc
+      return RedCloth.new(raw_toc).to_html
     end
 
-    def add_anchors_to_headers
+    def add_anchors_to_headers!
       @raw_content = raw_content.gsub(/^\s*h([1-6])\.\s+(.*)/) do |match|
         level = $1.to_i
         name = $2
