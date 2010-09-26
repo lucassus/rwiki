@@ -97,7 +97,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
               leaf: false
             });
 
-            var parentNode = treePanel.findNodeByPagePath(parentPath);
+            var parentNode = self.findNodeByPagePath(parentPath);
             parentNode.appendChild(node);
           }
         });
