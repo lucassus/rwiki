@@ -30,12 +30,7 @@ module Rwiki::Models
 
     def rename(new_name)
       new_name = new_name + PAGE_FILE_EXTENSION unless new_name.end_with?(PAGE_FILE_EXTENSION)
-      new_path = File.join(File.dirname(@path), new_name)
-      new_full_path = File.join(working_path, new_path)
-      raise Rwiki::NodeError.new("#{new_path} already exists") if File.exist?(new_full_path)
-
-      FileUtils.mv(full_path, new_full_path)
-      @path = new_path
+      super(new_name)
     end
 
     def reload!

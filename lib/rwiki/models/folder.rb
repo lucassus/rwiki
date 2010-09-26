@@ -32,15 +32,6 @@ module Rwiki::Models
       return Page.new(new_page_path)
     end
 
-    def rename(new_name)
-      new_path = File.join(parent_folder.path, new_name)
-      new_full_path = self.class.full_path_for(new_path)
-      raise Rwiki::NodeError.new("#{new_path} already exists") if File.exists?(new_full_path)
-
-      FileUtils.mv(full_path, new_full_path)
-      @path = new_path
-    end
-
     private
 
     def self.make_nodes(root_path)
