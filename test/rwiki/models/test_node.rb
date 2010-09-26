@@ -4,7 +4,7 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
   include Rwiki::Models
 
   context 'Node class' do
-    should 'respond to :working_path' do
+    should 'respond to :working_path and :working_path=' do
       assert Node.respond_to?(:working_path)
       assert Node.respond_to?(:working_path=)
     end
@@ -26,6 +26,13 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
           page = Node.new_from_path(@path)
           assert page.is_a?(Page)
         end
+      end
+    end
+
+    context ':full_path_for method' do
+      should 'return valid path' do
+        assert_equal File.join(@working_path, 'empty_folder'), Node.full_path_for('empty_folder')
+        assert_equal File.join(@working_path, 'folder/test 1.txt'), Node.full_path_for('folder/test 1.txt')
       end
     end
   end

@@ -25,13 +25,13 @@ module Rwiki::Models
     end
 
     def title
-      File.basename(full_path).gsub(/#{PAGE_FILE_EXTENSION}$/, '')
+      super.gsub(/#{PAGE_FILE_EXTENSION}$/, '')
     end
 
     def rename(new_name)
       new_name = new_name + PAGE_FILE_EXTENSION unless new_name.end_with?(PAGE_FILE_EXTENSION)
       new_path = File.join(File.dirname(@path), new_name)
-      new_full_path = File.join(@@working_path, new_path)
+      new_full_path = File.join(working_path, new_path)
       raise Rwiki::NodeError.new("#{new_path} already exists") if File.exist?(new_full_path)
 
       FileUtils.mv(full_path, new_full_path)
@@ -89,7 +89,7 @@ module Rwiki::Models
     end
 
     def add_anchors_to_headers!
-      @raw_content = raw_content.gsub(/^\s*h([1-6])\.\s+(.*)/) do |match|
+      self.raw_content = raw_content.gsub(/^\s*h([1-6])\.\s+(.*)/) do
         level = $1.to_i
         name = $2
 

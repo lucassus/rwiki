@@ -91,7 +91,6 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
           old_full_path = File.join(@page.parent_folder.full_path, 'home.txt')
           assert !File.exist?(old_full_path), "#{old_full_path} is still exists"
 
-          assert_equal "./gierrary_hirr.txt", @page.path
           new_full_path = File.join(@page.parent_folder.full_path, 'gierrary_hirr.txt')
           assert File.exist?(new_full_path), "#{new_full_path} is not exist"
         end
@@ -101,7 +100,7 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
           assert_equal @content_before_rename, @page.raw_content
         end
 
-        should 'set valid path and name' do
+        should 'set valid path and title' do
           assert_equal "./gierrary_hirr.txt", @page.path
           assert_equal "gierrary_hirr", @page.title
         end

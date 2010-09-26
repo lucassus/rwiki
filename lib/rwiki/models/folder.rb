@@ -8,7 +8,7 @@ module Rwiki::Models
     end
 
     def nodes
-      Dir.chdir(@@working_path) do
+      Dir.chdir(working_path) do
         self.class.make_nodes(@path)
       end
     end
@@ -32,12 +32,13 @@ module Rwiki::Models
       return Page.new(new_page_path)
     end
 
-    def self.create(path)
-      full_path = full_path_for(path)
-      raise Rwiki::NodeError.new("#{path} already exists") if File.exist?(full_path)
+    def rename(new_name)
+      new_path = File.join(parent_folder.path, new_name)
+      new_full_path = self.class.full_path_for(new_path)
+      raise Rwiki::NodeError.new("#{new_path} already exists") if File.exists?(new_full_path)
 
-      FileUtils.mkdir(full_path)
-      return Folder.new(path)
+      FileUtils.mv(full_path, new_full_path)
+      @path = new_path
     end
 
     private

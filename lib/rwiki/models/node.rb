@@ -18,7 +18,7 @@ module Rwiki::Models
     end
 
     def self.new_from_path(path)
-      full_path = File.join(@@working_path, path)
+      full_path = File.join(working_path, path)
       klass = File.directory?(full_path) ? Folder : Page
       return klass.new(path)
     end
@@ -39,14 +39,22 @@ module Rwiki::Models
       FileUtils.rm_rf(full_path)
     end
 
+    def title
+      File.basename(full_path)
+    end
+
     private
 
     def initialize(path)
       @path = path
     end
 
+    def working_path
+      self.class.working_path
+    end
+
     def self.full_path_for(path)
-      File.join(@@working_path, path)
+      File.join(working_path, path)
     end
 
   end
