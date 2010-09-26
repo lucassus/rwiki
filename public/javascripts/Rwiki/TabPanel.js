@@ -25,15 +25,26 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       tab.setContent(data.html);
     });
 
+    this.on('pageCreated', function(data) {
+      var path = data.path;
+      var tab = this.updateOrAddPageTab(path);
+      tab.show();
+    });
+
     this.on('pageChanged', function(path) {
       var tab = this.updateOrAddPageTab(path);
       tab.show(); // it will fire the 'tabchange' event
     });
+
+    this.on('nodeDeleted', function(node) {
+      this.closeRelatedTabs(node);
+    });
   },
 
   onTabChange: function(tabPanel, tab) {
-    var path = tab.getPagePath();
+    if (!tab) return;
 
+    var path = tab.getPagePath();
     $.ajax({
       type: 'GET',
       url: '/node',

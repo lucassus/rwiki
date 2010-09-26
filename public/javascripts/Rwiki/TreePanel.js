@@ -36,7 +36,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     };
 
     Rwiki.TreePanel.superclass.constructor.call(this, Ext.apply(defaultConfig, config));
-    this.addEvents('pageChanged');
+    this.addEvents('pageChanged', 'pageCreated', 'nodeDeleted');
 
     // setup root node
     var root = {
@@ -137,13 +137,11 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
               leaf: true
             });
 
-            var parentNode = treePanel.findNodeByPagePath(parentPath);
+            var parentNode = self.findNodeByPagePath(parentPath);
             parentNode.appendChild(node);
             node.select();
 
-            // open tab with new page
-            var tab = tabPanel.updateOrAddPageTab(path);
-            tab.show();
+            self.fireEvent('pageCreated', data);
           }
         });
       });
@@ -177,9 +175,9 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
             if (!data.success) return;
 
             var path = data.path;
-            var node = treePanel.findNodeByPagePath(path);
+            var node = self.findNodeByPagePath(path);
 
-            tabPanel.closeRelatedTabs(node);
+            self.fireEvent('nodeDeleted', node);
             node.remove();
           }
         });

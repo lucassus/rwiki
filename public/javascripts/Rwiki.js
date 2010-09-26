@@ -13,7 +13,7 @@ Ext.onReady(function() {
   var editor = editorPanel.getEditor();
   editor.relayEvents(tabPanel, ['pageContentLoaded']);
   tabPanel.relayEvents(editor, ['pageContentChanged']);
-  tabPanel.relayEvents(treePanel, ['pageChanged']);
+  tabPanel.relayEvents(treePanel, ['pageChanged', 'pageCreated', 'nodeDeleted']);
 
   // Create layout
 
