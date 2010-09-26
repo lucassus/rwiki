@@ -70,7 +70,7 @@ module Rwiki
       page = Page.new(path)
       page.rename(new_name)
 
-      { :success => true, :path => page.path, :title => page.title }.to_json
+      { :success => true, :oldPah => path,:path => page.path, :title => page.title }.to_json
     end
 
     delete '/node' do

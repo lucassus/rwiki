@@ -36,7 +36,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     };
 
     Rwiki.TreePanel.superclass.constructor.call(this, Ext.apply(defaultConfig, config));
-    this.addEvents('pageChanged', 'pageCreated', 'nodeDeleted');
+    this.addEvents('pageChanged', 'pageCreated', 'nodeRenamed', 'nodeDeleted');
 
     // setup root node
     var root = {
@@ -147,17 +147,41 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       });
     });
 
-    // Event: context menu, rename node
-    //  this.contextMenu.on('renameNode', function(node) {
-    //    var oldPath = node.id;
-    //    var oldName = node.text;
-    //
-    //    var callback = function(button, newName) {
-    //      if (button != 'ok') return;
-    //    };
-    //
-    //    Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
-    //  });
+    this.contextMenu.on('renameNode', function(node) {
+      var oldPath = node.id;
+      var oldName = node.text;
+
+      var callback = function(button, newName) {
+        if (button != 'ok') return;
+
+        $.ajax({
+          type: 'POST',
+          url: '/node/rename',
+          dataType: 'json',
+          data: {
+            path: oldPath,
+            newName: newName
+          },
+          success: function(data) {
+            if (!data.success) return;
+
+            // set node new name
+            var node = self.findNodeByPagePath(oldPath);
+            node.setText(data.title);
+
+            // update children ids
+            node.cascade(function(childNode) {
+              // TODO use regexp here
+              childNode.id = childNode.id.replace(oldPath, newPath);
+            });
+
+            self.fireEvent('nodeRenamed', data);
+          }
+        });
+      };
+
+      Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
+    });
 
     // Event context menu, delete node
     this.contextMenu.on('deleteNode', function(node) {

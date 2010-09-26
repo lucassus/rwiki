@@ -22,6 +22,7 @@ begin
 
     gem.add_development_dependency "rack-test"
     gem.add_development_dependency "shoulda"
+    gem.add_development_dependency "jasmine"
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
@@ -63,3 +64,6 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+require 'jasmine'
+load 'jasmine/tasks/jasmine.rake'
