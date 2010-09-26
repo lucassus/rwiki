@@ -55,7 +55,7 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
 
     var isRoot = node.id == Rwiki.rootFolderName;
     this.setItemDisabled('delete-node', isRoot);
-    this.setItemDisabled('rename-node', isRoot);
+    this.setItemDisabled('rename-node', true);
 
     var isPage = node.attributes.cls == 'page';
     this.setItemDisabled('create-folder', isPage);

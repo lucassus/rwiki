@@ -19,7 +19,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       border: false,
       loader: new Rwiki.TreePanel.Loader(),
 
-      enableDD: true,
+      enableDD: false,
       dropConfig: {
         appendOnly: true
       },
