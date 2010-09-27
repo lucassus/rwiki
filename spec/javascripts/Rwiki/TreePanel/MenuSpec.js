@@ -138,4 +138,82 @@ describe("Rwiki.TreePanel.Menu", function() {
     });
   });
 
+  describe("menu elements", function() {
+    var currentNode = {};
+    var item;
+
+    beforeEach(function() {
+      menu.node = currentNode;
+      menu.fireEvent = jasmine.createSpy('fireEvent');
+    });
+
+    describe("'Create folder' option", function() {
+      beforeEach(function() {
+        item = menu.findById('create-folder');
+      });
+
+      it("should have 'Create folder' title", function() {
+        expect(item.text).toEqual("Create folder");
+      });
+
+      describe("on click", function() {
+        it("should fire 'createFolder' event", function() {
+          item.fireEvent('click');
+          expect(menu.fireEvent).toHaveBeenCalledWith('createFolder', currentNode);
+        });
+      });
+    });
+
+    describe("'Create page' option", function() {
+      beforeEach(function() {
+        item = menu.findById('create-page');
+      });
+
+      it("should have 'Create page' title", function() {
+        expect(item.text).toEqual("Create page");
+      });
+
+      describe("on click", function() {
+        it("should fire 'createPage' event", function() {
+          item.fireEvent('click');
+          expect(menu.fireEvent).toHaveBeenCalledWith('createPage', currentNode);
+        });
+      });
+    });
+
+    describe("'Rename node' option", function() {
+      beforeEach(function() {
+        item = menu.findById('rename-node');
+      });
+
+      it("should have 'Rename node' title", function() {
+        expect(item.text).toEqual("Rename node");
+      });
+
+      describe("on click", function() {
+        it("should fire 'renameNode' event", function() {
+          item.fireEvent('click');
+          expect(menu.fireEvent).toHaveBeenCalledWith('renameNode', currentNode);
+        });
+      });
+    });
+
+    describe("'Delete node' option", function() {
+      beforeEach(function() {
+        item = menu.findById('delete-node');
+      });
+
+      it("should have 'Delete node' title", function() {
+        expect(item.text).toEqual("Delete node");
+      });
+      
+      describe("on click", function() {
+        it("should fire 'deleteNode' event", function() {
+          item.fireEvent('click');
+          expect(menu.fireEvent).toHaveBeenCalledWith('deleteNode', currentNode);
+        });
+      });
+    });
+  });
+
 });
