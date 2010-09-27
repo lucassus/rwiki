@@ -54,20 +54,20 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     node.select();
 
     var isRoot = node.id == Rwiki.rootFolderName;
-    this.setItemEnabled('delete-node', !isRoot);
-    this.setItemEnabled('rename-node', !isRoot);
+    this.setItemDisabled('delete-node', isRoot);
+    this.setItemDisabled('rename-node', isRoot);
 
     var isPage = node.attributes.cls == 'page';
-    this.setItemEnabled('create-folder', !isPage);
-    this.setItemEnabled('create-page', !isPage);
+    this.setItemDisabled('create-folder', isPage);
+    this.setItemDisabled('create-page', isPage);
 
     this.showAt(xy);
   },
 
-  setItemEnabled: function(id, enabled) {
+  setItemDisabled: function(id, disabled) {
     var item = this.findById(id);
     if (item == null) return;
-    
-    item.setEnabled(enabled);
+
+    item.setDisabled(disabled);
   }
 });
