@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>Jasmine Test Runner</title>
+    <link rel="stylesheet" type="text/css" href="jasmine/jasmine.css">
+    <script type="text/javascript" src="jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/jasmine-html.js"></script>
+
+    <!-- include source files here... -->
+
+    <!-- ** CSS ** -->
+    <link rel="stylesheet" type="text/css" href="resources/ext/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="resources/markitup/skins/markitup/style.css" />
+    <link rel="stylesheet" type="text/css" href="resources/markitup/sets/textile/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/page.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/coderay.css" />
+
+    <!-- ** Javascript ** -->
+    <script type="text/javascript" src="javascripts/vendor/jquery/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="javascripts/vendor/ext/adapter/jquery/ext-jquery-adapter-debug.js"></script>
+    <script type="text/javascript" src="javascripts/vendor/ext/ext-all-debug.js"></script>
+    <script type="text/javascript" src="javascripts/vendor/ext/ux/TabCloseMenu.js"></script>
+
+    <!-- ** MarkItUp editor ** -->
+    <script type="text/javascript" src="javascripts/vendor/markitup/jquery.markitup.js"></script>
+    <script type="text/javascript" src="resources/markitup/sets/textile/set.js"></script>
+
+    <!-- ** Rwiki ** -->
+    <script type="text/javascript" src="javascripts/Rwiki/EditorPanel.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/EditorPanel/Editor.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/Model.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/TabPanel.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/TabPanel/PageTab.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/Toolbat.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/TreePanel.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/TreePanel/Loader.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/TreePanel/Menu.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/TreePanel/Toolbar.js"></script>
+    <script type="text/javascript" src="javascripts/Rwiki/Viewport.js"></script>
+
+    <script type="text/javascript" src="javascripts/Rwiki.js"></script>
+
+    <!-- include spec files here... -->
+    <script type="text/javascript" src="../spec/javascripts/Rwiki/TabPanelSpec.js"></script>
+    <script type="text/javascript" src="../spec/javascripts/Rwiki/TabPanel/PageTabSpec.js"></script>
+    <script type="text/javascript" src="../spec/javascripts/Rwiki/TreePanel/MenuSpec.js"></script>
+
+  </head>
+  <body>
+    <div id="REMOVE_THIS_LINE_FROM_BUILD"><p>You must be trying to look at examples in the Jasmine source tree.</p><p>Please download a distribution version of Jasmine at <a href="http://pivotal.github.com/jasmine/">http://pivotal.github.com/jasmine/</a>.</p></div>
+    <script type="text/javascript">
+      jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+      jasmine.getEnv().execute();
+    </script>
+
+  </body>
+</html>
