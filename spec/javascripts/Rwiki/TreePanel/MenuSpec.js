@@ -27,9 +27,32 @@ describe("Rwiki.TreePanel.Menu", function() {
     var node = {};
     var xy = {};
 
+    var itShouldDisable = function(menuItemId) {
+      it("should disable '" + menuItemId + "' option", function() {
+        var item = menu.findById(menuItemId);
+        expect(item).toBeDisabled();
+      });
+    };
+
+    var itShouldEnable = function(menuItemId) {
+      it("should enable '" + menuItemId + "' option", function() {
+        var item = menu.findById(menuItemId);
+        expect(item).toBeEnabled();
+      });
+    };
+
     beforeEach(function() {
       node.select = jasmine.createSpy('select');
       menu.showAt = jasmine.createSpy('showAt');
+
+      this.addMatchers({
+        toBeDisabled: function() {
+          return this.actual.disabled == true;
+        },
+        toBeEnabled: function() {
+          return this.actual.disabled == false;
+        }
+      });
     });
 
     describe("when root node is selected", function() {
@@ -48,23 +71,12 @@ describe("Rwiki.TreePanel.Menu", function() {
 
       it("should show the menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
-      })
-
-      it("should disable 'delete node' option", function() {
-        expect(menu.findById('delete-node').disabled).toBeTruthy();
       });
 
-      it("should disable 'rename node' option", function() {
-        expect(menu.findById('rename-node').disabled).toBeTruthy();
-      });
-
-      it("should enable 'create folder' option", function() {
-        expect(menu.findById('create-folder').disabled).toBeFalsy();
-      });
-
-      it("should enable 'create page' option", function() {
-        expect(menu.findById('create-page').disabled).toBeFalsy();
-      });
+      itShouldDisable('delete-node');
+      itShouldDisable('rename-node');
+      itShouldEnable('create-folder');
+      itShouldEnable('create-page');
     });
 
     describe("when folder node is selected", function() {
@@ -85,21 +97,10 @@ describe("Rwiki.TreePanel.Menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
       })
 
-      it("should enable 'delete node' option", function() {
-        expect(menu.findById('delete-node').disabled).toBeFalsy();
-      });
-
-      it("should enable 'rename node' option", function() {
-        expect(menu.findById('rename-node').disabled).toBeFalsy();
-      });
-
-      it("should enable 'create folder' option", function() {
-        expect(menu.findById('create-folder').disabled).toBeFalsy();
-      });
-
-      it("should enable 'create page' option", function() {
-        expect(menu.findById('create-page').disabled).toBeFalsy();
-      });
+      itShouldEnable('delete-node');
+      itShouldEnable('rename-node');
+      itShouldEnable('create-folder');
+      itShouldEnable('create-page');
     });
 
     describe("when page node is selected", function() {
@@ -120,21 +121,10 @@ describe("Rwiki.TreePanel.Menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
       })
 
-      it("should enable 'delete node' option", function() {
-        expect(menu.findById('delete-node').disabled).toBeFalsy();
-      });
-
-      it("should enable 'rename node' option", function() {
-        expect(menu.findById('rename-node').disabled).toBeFalsy();
-      });
-
-      it("should disable 'create folder' option", function() {
-        expect(menu.findById('create-folder').disabled).toBeTruthy();
-      });
-
-      it("should disable 'create page' option", function() {
-        expect(menu.findById('create-page').disabled).toBeTruthy();
-      });
+      itShouldEnable('delete-node');
+      itShouldEnable('rename-node');
+      itShouldDisable('create-folder');
+      itShouldDisable('create-page');
     });
   });
 
@@ -145,7 +135,20 @@ describe("Rwiki.TreePanel.Menu", function() {
     beforeEach(function() {
       menu.node = currentNode;
       menu.fireEvent = jasmine.createSpy('fireEvent');
+
+      this.addMatchers({
+        toBeTitledAs: function(title) {
+          return this.actual.text == title;
+        }
+      });
     });
+
+    var itShouldFireEvent = function(eventName) {
+      it("should fire '" + eventName + "' event", function() {
+        item.fireEvent('click');
+        expect(menu.fireEvent).toHaveBeenCalledWith(eventName, currentNode);
+      });
+    };
 
     describe("'Create folder' option", function() {
       beforeEach(function() {
@@ -153,14 +156,15 @@ describe("Rwiki.TreePanel.Menu", function() {
       });
 
       it("should have 'Create folder' title", function() {
-        expect(item.text).toEqual("Create folder");
+        expect(item).toBeTitledAs("Create folder");
       });
 
       describe("on click", function() {
-        it("should fire 'createFolder' event", function() {
+        beforeEach(function() {
           item.fireEvent('click');
-          expect(menu.fireEvent).toHaveBeenCalledWith('createFolder', currentNode);
         });
+
+        itShouldFireEvent('createFolder');
       });
     });
 
@@ -170,14 +174,15 @@ describe("Rwiki.TreePanel.Menu", function() {
       });
 
       it("should have 'Create page' title", function() {
-        expect(item.text).toEqual("Create page");
+        expect(item).toBeTitledAs("Create page");
       });
 
       describe("on click", function() {
-        it("should fire 'createPage' event", function() {
+        beforeEach(function() {
           item.fireEvent('click');
-          expect(menu.fireEvent).toHaveBeenCalledWith('createPage', currentNode);
         });
+
+        itShouldFireEvent('createPage');
       });
     });
 
@@ -187,14 +192,15 @@ describe("Rwiki.TreePanel.Menu", function() {
       });
 
       it("should have 'Rename node' title", function() {
-        expect(item.text).toEqual("Rename node");
+        expect(item).toBeTitledAs("Rename node");
       });
 
       describe("on click", function() {
-        it("should fire 'renameNode' event", function() {
+        beforeEach(function() {
           item.fireEvent('click');
-          expect(menu.fireEvent).toHaveBeenCalledWith('renameNode', currentNode);
         });
+
+        itShouldFireEvent('renameNode');
       });
     });
 
@@ -204,14 +210,15 @@ describe("Rwiki.TreePanel.Menu", function() {
       });
 
       it("should have 'Delete node' title", function() {
-        expect(item.text).toEqual("Delete node");
+        expect(item).toBeTitledAs("Delete node");
       });
       
       describe("on click", function() {
-        it("should fire 'deleteNode' event", function() {
+        beforeEach(function() {
           item.fireEvent('click');
-          expect(menu.fireEvent).toHaveBeenCalledWith('deleteNode', currentNode);
         });
+
+        itShouldFireEvent('deleteNode');
       });
     });
   });

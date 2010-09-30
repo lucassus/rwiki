@@ -21,13 +21,22 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
     return this.id;
   },
 
+  setPagePath: function(id) {
+    this.id = id;
+  },
+
   /**
    * Update the page content.
    */
   setContent: function(htmlContent) {
-    var path = this.getPagePath();
-    var pageContainer = $('#' + path.replace(/(\W)/g, '\\$1'));
+    pageContainer = this.getPageContainer();
     pageContainer.html(htmlContent);
+  },
+
+  getPageContainer: function() {
+    var path = this.getPagePath();
+    var escapedSelector = '#' + path.replace(/(\W)/g, '\\$1');
+    return $(escapedSelector);
   },
 
   setTitle: function(title) {

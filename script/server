@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'webrick'
+include WEBrick    
+
+def start_webrick(config = {})
+  config.update(:Port => 80)     
+  server = HTTPServer.new(config)
+  yield server if block_given?
+  ['INT', 'TERM'].each do |signal|
+    trap(signal) {server.shutdown}
+  end
+  server.start
+end
+
+web_root = File.join(File.dirname(__FILE__),'..', 'public')  
+start_webrick(:DocumentRoot => web_root)

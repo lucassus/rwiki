@@ -18,6 +18,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     Rwiki.TabPanel.superclass.constructor.call(this, config);
 
+    // TODO redundant event, use pageLoaded
     this.addEvents('pageContentLoaded');
 
     this.on('pageContentChanged', function(data) {
@@ -27,7 +28,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     this.on('pageCreated', function(data) {
       var path = data.path;
-      var tab = this.updateOrAddPageTab(path);
+      var tab = this.addPageTab(path);
       tab.show();
     });
 
@@ -75,13 +76,13 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   addPageTab: function(path) {
-    var pageTab = new Rwiki.TabPanel.PageTab({
+    var tab = new Rwiki.TabPanel.PageTab({
       id: path,
       title: path
     });
-    pageTab.relayEvents(this, ['pageContentLoaded']);
+    tab.relayEvents(this, ['pageContentLoaded']);
 
-    return this.add(pageTab);
+    return this.add(tab);
   },
 
   closeRelatedTabs: function(node) {

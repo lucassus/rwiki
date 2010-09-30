@@ -3,14 +3,6 @@ Ext.ns('Rwiki');
 Rwiki.rootFolderName = '.';
 Rwiki.currentPageName = null;
 
-//Rwiki.basePath = function(path) {
-//  if (path == '.') return path;
-//
-//  var parts = path.split('/');
-//  parts.splice(parts.length - 1, 1);
-//  return parts.join('/');
-//};
-
 Rwiki.init = function() {
   Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
 
