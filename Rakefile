@@ -17,9 +17,8 @@ begin
     gem.add_dependency "RedCloth"
     gem.add_dependency "coderay"
     gem.add_dependency "json_pure"
-    gem.add_dependency "fssm"
-    gem.add_dependency "ruby-debug19"
 
+    gem.add_development_dependency "ruby-debug19"
     gem.add_development_dependency "rack-test"
     gem.add_development_dependency "shoulda"
     gem.add_development_dependency "jasmine"
