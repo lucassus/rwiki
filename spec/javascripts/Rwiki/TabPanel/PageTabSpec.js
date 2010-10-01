@@ -7,13 +7,13 @@ describe("Rwiki.TabPanel.PageTab", function() {
     tab.setPagePath(pagePath);
   });
 
-  describe(":getPagePath", function() {
+  describe(":getPagePath method", function() {
     it("should return '" + pagePath + "'", function() {
       expect(tab.getPagePath()).toEqual(pagePath);
     });
   });
 
-  describe(":setPagePath", function() {
+  describe(":setPagePath method", function() {
     it("should set the page path", function() {
       tab.setPagePath("./anoter.txt");
       expect(tab.getPagePath()).toEqual("./anoter.txt");

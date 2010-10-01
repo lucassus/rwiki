@@ -23,6 +23,7 @@ Rwiki.init = function() {
   var tabPanel = new Rwiki.TabPanel();
   tabPanel.relayEvents(Rwiki.nodeManager,
     ['pageLoaded', 'folderCreated', 'pageCreated', 'pageSaved', 'nodeRenamed', 'nodeDeleted']);
+  tabPanel.relayEvents(treePanel, ['pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
   editorPanel.relayEvents(Rwiki.nodeManager,
@@ -30,18 +31,7 @@ Rwiki.init = function() {
 
   // Create layout
 
-  var sidePanel = new Ext.Panel({
-    region: 'west',
-    id: 'west-panel',
-    title: 'Pages',
-    split: true,
-    width: 265,
-    minSize: 265,
-    maxSize: 500,
-    collapsible: true,
-    autoScroll: true,
-    margins: '0 0 5 5',
-    cmargins: '0 0 0 0',
+  var sidePanel = new Rwiki.SidePanel({
     items: [treePanel]
   });
 

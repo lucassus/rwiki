@@ -2,29 +2,24 @@ Ext.ns('Rwiki.EditorPanel');
 
 Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
   constructor: function(container, config) {
-    this.addEvents('pageCanged');
-
-    this.listeners = {
-      pageContentLoaded: function(data) {
-        this.setPagePath(data.path);
-        this.setContent(data.raw);
-      }
-    };
-
     Rwiki.EditorPanel.Editor.superclass.constructor.call(this, config);
 
-    var self = this;
     this.container = container;
     this.enabled = false;
 
     // hack for FF, clear text area on load
     this.container.val('');
 
+    this.initEventHandlers();
+    this.initMarkItUp();
+  },
+
+  initEventHandlers: function() {
+    var self = this;
+
     this.container.bind('keydown', function() {
       return self.enabled;
     });
-
-    this.initializeMarkItUp();
 
     var timeout = null;
     this.container.bind('keyup', function() {
@@ -38,7 +33,7 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  initializeMarkItUp: function() {
+  initMarkItUp: function() {
     var self = this;
 
     var textileSettings = {

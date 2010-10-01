@@ -58,7 +58,7 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     this.setItemDisabled('rename-node', isRoot);
 
     var isPage = node.attributes.cls == 'page';
-    this.setItemDisabled('rename-node', !isPage); // TODO rename folder is not supported yet
+    this.setItemDisabled('rename-node', isPage);
     this.setItemDisabled('create-folder', isPage);
     this.setItemDisabled('create-page', isPage);
 

@@ -18,6 +18,11 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   initEventHandlers: function() {
+    this.on('pageSelected', function(path) {
+      var tab = this.findOrCreatePageTab(path);
+      tab.show();
+    }),
+
     this.on('tabchange', function(panel, tab) {
       if (tab == null) return;
       Rwiki.nodeManager.fireEvent('loadPage', tab.getPagePath());
@@ -42,11 +47,27 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     });
 
     this.on('nodeRenamed', function(data) {
-      var tab = this.findTabByPagePath(data.oldPath);
-      if (tab == null) return;
+      var oldPath = data.oldPath;
+      var path = data.path;
+      var title = data.title;
 
-      tab.setPagePath(data.path);
-      tab.setTitle(data.title);
+      var isPage = oldPath.match(new RegExp('\.txt$'));
+      if (isPage) {
+        // rename page
+        var tab = this.findTabByPagePath(oldPath);
+        if (tab == null) return;
+        
+        tab.setPagePath(path);
+        tab.setTitle(title);
+      } else {
+        // rename folder
+        var tabs = this.findTabsByParentPath(oldPath);
+        for (var i = 0; i < tabs.length; i++) {
+          var tab = tabs[i];
+          var newPath = tab.getPagePath().replace(oldPath, path);
+          tab.setPagePath(newPath);
+        }
+      }
     });
 
     this.on('nodeDeleted', function(data) {
@@ -86,10 +107,22 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   findTabsByParentPath: function(parentPath) {
-    var re = new RegExp('^' + parentPath);
+    var parentPathParts = parentPath.split('/');
+
     return this.findBy(function() {
       var path = this.getPagePath();
-      return path.match(re) != null;
+      var pathParts = path.split('/');
+
+      var result = true;
+      var n = Math.min(parentPathParts.length, pathParts.length);
+      for (var i = 0; i < n; i++) {
+        if (parentPathParts[i] != pathParts[i]) {
+          result = false;
+          break;
+        }
+      }
+
+      return result;
     });
   }
 });

@@ -16,39 +16,39 @@ module Rwiki
     end
 
     get '/nodes' do
-      path = params[:path]
+      path = params[:path].strip
 
       folder = Folder.new(path)
       folder.nodes.to_json
     end
 
     get '/node' do
-      path = params[:path]
-      page = Page.new(path)
+      path = params[:path].strip
+      node = Page.new(path)
 
       result = { :success => true,
-        :path => page.path, :title => page.title,
-        :raw => page.raw_content, :html => page.html_content }
+        :path => node.path, :title => node.title,
+        :raw => node.raw_content, :html => node.html_content }
 
       result.to_json
     end
 
     # update page content
     put '/node' do
-      path = params[:path]
+      path = params[:path].strip
       raw_content = params[:rawContent]
 
-      page = Page.new(path)
-      page.raw_content = raw_content
-      page.save
+      node = Page.new(path)
+      node.raw_content = raw_content
+      node.save
 
-      { :success => true, :path => path, :raw => page.raw_content, :html => page.html_content }.to_json
+      { :success => true, :path => path, :raw => node.raw_content, :html => node.html_content }.to_json
     end
 
     # create a new node
     post '/node' do
-      parent_path = params[:parentPath]
-      name = params[:name]
+      parent_path = params[:parentPath].strip
+      name = params[:name].strip
 
       parent_folder = Folder.new(parent_path)
       is_folder = params[:isFolder] == 'true'
@@ -64,17 +64,17 @@ module Rwiki
     end
 
     post '/node/rename' do
-      path = params[:path]
-      new_name = params[:newName]
+      path = params[:path].strip
+      new_name = params[:newName].strip
 
-      page = Page.new(path)
-      page.rename(new_name)
+      node = Node.new_from_path(path)
+      node.rename(new_name)
 
-      { :success => true, :oldPath => path, :path => page.path, :title => page.title }.to_json
+      { :success => true, :oldPath => path, :path => node.path, :title => node.title }.to_json
     end
 
     delete '/node' do
-      path = params[:path]
+      path = params[:path].strip
       node = Node.new_from_path(path)
       node.delete
 

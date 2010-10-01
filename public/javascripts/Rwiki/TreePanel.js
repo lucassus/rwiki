@@ -28,7 +28,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     };
 
     Rwiki.TreePanel.superclass.constructor.call(this, Ext.apply(defaultConfig, config));
-    this.addEvents('pageChanged', 'pageCreated', 'nodeRenamed', 'nodeDeleted');
 
     // setup root node
     var root = {
@@ -53,6 +52,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
     toolBar.on('filterFieldChanged', this.filterTree, this);
 
+    this.addEvents('pageSelected');
     this.initEventHandlers();
     this.initContextMenu();
     this.on('contextmenu', this.onContextMenu, this);
@@ -65,7 +65,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       if (!node.isLeaf()) return;
 
       var path = node.id;
-      Rwiki.nodeManager.fireEvent('loadPage', path);
+      this.fireEvent('pageSelected', path);
     });
 
     this.on('folderCreated', function(data) {
@@ -104,15 +104,19 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
 
     this.on('nodeRenamed', function(data) {
-      var node = this.findNodeByPagePath(data.oldPath);
-      
-      node.setId(data.path);
+      var path = data.path;
+      var oldPath = data.oldPath;
+
+      var node = this.findNodeByPagePath(oldPath);
+      node.setId(path);
       node.setText(data.title);
 
       if (!node.isLeaf()) {
         // update children ids
-        var newId = childNode.id.replace(oldPath, newPath);
-        childNode.setId(newId);
+        node.cascade(function() {
+          var newId = this.id.replace(oldPath, path);
+          this.setId(newId);
+        });
       }
     });
 
@@ -189,17 +193,17 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   findNodeByPagePath: function(path, startNode) {
-    var foundNode = null;
-
     var node = startNode ? startNode : this.root;
+
+    var result = null;
     node.cascade(function() {
       if (this.id == path) {
-        foundNode = this;
+        result = this;
         return;
       }
     });
 
-    return foundNode;
+    return result;
   },
 
   initContextMenu: function() {
