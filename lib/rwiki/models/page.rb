@@ -53,7 +53,7 @@ module Rwiki::Models
     def parse_content
       coderay!
 
-      toc = generate_toc
+      toc = '<div class="toc-container"><div class="toc">' + generate_toc + '</div></div>'
       add_anchors_to_headers!
       
       return toc + RedCloth.new(raw_content).to_html
