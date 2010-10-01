@@ -35,9 +35,21 @@ Rwiki.init = function() {
     items: [treePanel]
   });
 
+  var toggleEditorAction = new Ext.Action({
+    text: 'Toggle editor',
+    handler: function() {
+      editorPanel.toggleCollapse();
+    }
+  });
+
+  var toolbar = new Rwiki.Toolbar({
+    items: [toggleEditorAction]
+  });
+
   var mainPanel = new Ext.Panel({
     region: 'center',
     layout: 'border',
+    tbar: toolbar,
     items: [tabPanel, editorPanel]
   });
 
