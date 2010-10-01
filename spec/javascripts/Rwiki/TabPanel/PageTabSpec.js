@@ -3,9 +3,8 @@ describe("Rwiki.TabPanel.PageTab", function() {
   var pagePath = './page.txt';
 
   beforeEach(function() {
-    tab = new Rwiki.TabPanel.PageTab({
-      id: pagePath
-    });
+    tab = new Rwiki.TabPanel.PageTab();
+    tab.setPagePath(pagePath);
   });
 
   describe(":getPagePath", function() {
@@ -25,7 +24,7 @@ describe("Rwiki.TabPanel.PageTab", function() {
     var observable = new Ext.util.Observable();
     observable.addEvents('pageContentLoaded');
 
-    describe("on 'pageContentLoaded'", function() {
+    xdescribe("on 'pageContentLoaded'", function() {
       beforeEach(function() {
         tab.relayEvents(observable, ['pageContentLoaded']);
         tab.setContent = jasmine.createSpy();

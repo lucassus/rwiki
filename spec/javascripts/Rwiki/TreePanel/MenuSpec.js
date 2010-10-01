@@ -98,7 +98,7 @@ describe("Rwiki.TreePanel.Menu", function() {
       })
 
       itShouldEnable('delete-node');
-      itShouldEnable('rename-node');
+//      itShouldEnable('rename-node');
       itShouldEnable('create-folder');
       itShouldEnable('create-page');
     });

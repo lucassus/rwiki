@@ -18,12 +18,13 @@ describe("Rwiki.TabPanel", function() {
         tab.show = jasmine.createSpy('tab.show');
 
         observable.fireEvent('pageCreated', {
-          path: './page.txt'
+          path: './page.txt',
+          text: 'page'
         });
       });
 
       it("should create a new tab", function() {
-        expect(tabPanel.createPageTab).toHaveBeenCalledWith('./page.txt');
+        expect(tabPanel.createPageTab).toHaveBeenCalledWith('./page.txt', 'page');
       });
 
       it("should open a new tab", function() {
