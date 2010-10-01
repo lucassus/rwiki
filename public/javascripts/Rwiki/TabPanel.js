@@ -107,22 +107,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   findTabsByParentPath: function(parentPath) {
-    var parentPathParts = parentPath.split('/');
-
     return this.findBy(function() {
       var path = this.getPagePath();
-      var pathParts = path.split('/');
-
-      var result = true;
-      var n = Math.min(parentPathParts.length, pathParts.length);
-      for (var i = 0; i < n; i++) {
-        if (parentPathParts[i] != pathParts[i]) {
-          result = false;
-          break;
-        }
-      }
-
-      return result;
+      return Rwiki.nodeManager.isParent(parentPath, path);
     });
   }
 });

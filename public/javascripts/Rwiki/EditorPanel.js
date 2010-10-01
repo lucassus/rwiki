@@ -33,8 +33,21 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     });
 
     this.on('nodeRenamed', function(data) {
-      if (data.oldPath == this.editor.getPagePath()) {
-        this.editor.setPagePath(data.path);
+      var oldPath = data.oldPath;
+      var path = data.path;
+      var currentPagePath = this.editor.getPagePath();
+      if (currentPagePath == null) return;
+
+      var isPage = oldPath.match(new RegExp('\.txt$'));
+      var currentPageWasChanged = isPage && oldPath == currentPagePath;
+      if (currentPageWasChanged) {
+        this.editor.setPagePath(path);
+      } else {
+        var parentPathWasChanged = Rwiki.nodeManager.isParent(oldPath, currentPagePath);
+        if (parentPathWasChanged) {
+          var newPath = currentPagePath.replace(oldPath, path);
+          this.editor.setPagePath(newPath);
+        }
       }
     });
 

@@ -5,15 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rwiki}
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Łukasz Bandzarewicz"]
   s.date = %q{2010-10-01}
-  s.default_executable = %q{rwiki.rb}
+  s.default_executable = %q{rwiki}
   s.description = %q{Personal wiki based on ExtJS}
   s.email = %q{lucassus@gmail.com}
-  s.executables = ["rwiki.rb"]
+  s.executables = ["rwiki"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README",
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "bin/rwiki.rb",
+     "bin/rwiki",
      "lib/rwiki.rb",
      "lib/rwiki/app.rb",
      "lib/rwiki/models.rb",
@@ -2014,6 +2014,7 @@ Gem::Specification.new do |s|
      "public/stylesheets/coderay.css",
      "public/stylesheets/page.css",
      "public/stylesheets/style.css",
+     "rwiki.gemspec",
      "script/server",
      "spec/javascripts/Rwiki/TabPanel/PageTabSpec.js",
      "spec/javascripts/Rwiki/TabPanelSpec.js",

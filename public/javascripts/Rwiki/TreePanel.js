@@ -99,6 +99,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       });
 
       var parentNode = this.findNodeByPagePath(parentPath);
+      parentNode.expand();
       parentNode.appendChild(node);
       node.select();
     });
@@ -113,10 +114,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
       if (!node.isLeaf()) {
         // update children ids
-        node.cascade(function() {
-          var newId = this.id.replace(oldPath, path);
-          this.setId(newId);
-        });
+        this.renameChildren(node, oldPath, path);
       }
     });
 
@@ -125,6 +123,34 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       var node = this.findNodeByPagePath(path);
       node.remove();
     });
+  },
+
+  /**
+   * Hack for ExtJS.
+   * eachChild method iteates only over expanded nodes.
+   */
+  renameChildren: function(node, oldPath, path) {
+    var self = this;
+
+    var nodeWasCollapsed = false;
+    if (!node.isExpanded()) {
+      node.expand(null, false);
+      nodeWasCollapsed = true;
+    }
+
+    node.eachChild(function(currNode) {
+      var newId = currNode.id.replace(oldPath, path);
+      currNode.setId(newId);
+
+      if (!node.isLeaf()) {
+        self.renameChildren(currNode, oldPath, path);
+      }
+    });
+
+    if (nodeWasCollapsed) {
+      // collapse node back to retain previous state
+      node.collapse(null, false);
+    }
   },
 
   filterTree: function(text) {

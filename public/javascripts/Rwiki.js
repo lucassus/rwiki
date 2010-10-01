@@ -1,6 +1,7 @@
 Ext.ns('Rwiki');
 
 Rwiki.rootFolderName = '.';
+Rwiki.nodeManager = new Rwiki.Node();
 
 /**
  * Log the event names to the console of any observable object.
@@ -13,7 +14,6 @@ Rwiki.captureEvents = function(observable) {
 };
 
 Rwiki.init = function() {
-  Rwiki.nodeManager = new Rwiki.Node();
   Rwiki.captureEvents(Rwiki.nodeManager);
 
   var treePanel = new Rwiki.TreePanel();

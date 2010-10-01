@@ -123,6 +123,22 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         self.fireEvent('nodeDeleted', data);
       }
     });
+  },
+
+  isParent: function(parentPath, path) {
+    var parentParts = parentPath.split('/');
+    var pathParts = path.split('/');
+
+    var result = true;
+    var n = Math.min(parentParts.length, pathParts.length);
+    for (var i = 0; i < n; i++) {
+      if (parentParts[i] != pathParts[i]) {
+        result = false;
+        break;
+      }
+    }
+
+    return result;
   }
 
 });
