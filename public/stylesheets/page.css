@@ -1,30 +1,3 @@
-.toc-container {
-  position: fixed;
-  width: 100%;
-}
-
-.toc {
-  clear: both;
-  float: right;
-  font-size: 80%;
-  width: 250px;
-  border: 1px solid #D0DFF0;
-  margin-right: 300px;
-  background-color: #F5F5F5;
-  padding: 5px;
-  -moz-border-radius: 8px;
-}
-
-.toc ul {
-  list-style-image: none;
-  list-style-type: none;
-  margin: 0;
-}
-
-.toc a {
-  color: black;
-}
-
 .page-container h1, .page-container h2, .page-container h3, .page-container h4, .page-container h5, .page-container h6 {
   margin-bottom: 15px;
   font-weight: bold;
@@ -171,4 +144,35 @@
 .page-container .alignleft {
   float: left;
   margin-right: 10px;
+}
+
+.toc-container {
+  position: fixed;
+  width: 100%;
+}
+
+.toc {
+  clear: both;
+  float: right;
+  font-size: 80%;
+  width: 250px;
+  border: 1px solid #D0DFF0;
+  margin-right: 300px;
+  background-color: #F5F5F5;
+  padding: 5px;
+  -moz-border-radius: 8px;
+}
+
+.toc ol {
+  margin: 0 1.5em;
+}
+
+.toc ul {
+  list-style-image: none;
+  list-style-type: none;
+  margin: 0;
+}
+
+.toc a {
+  color: black;
 }
