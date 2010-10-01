@@ -7,8 +7,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rwiki"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Yet another personal wiki}
+    gem.description = %Q{Personal wiki based on ExtJS}
     gem.email = "lucassus@gmail.com"
     gem.homepage = "http://github.com/lucassus/rwiki"
     gem.authors = ["Łukasz Bandzarewicz"]
