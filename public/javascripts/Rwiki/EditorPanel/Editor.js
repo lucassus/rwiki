@@ -34,7 +34,7 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
       var callback = function() {
         self.savePage();
       };
-      timeout = setTimeout(callback, 900);
+      timeout = setTimeout(callback, 500);
     });
   },
 
@@ -81,20 +81,10 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
   },
 
   savePage: function() {
-    var self = this;
-    
-    $.ajax({
-      type: 'PUT',
-      url: '/node',
-      dataType: 'json',
-      data: {
-        path: self.getPagePath(),
-        rawContent: self.getContent()
-      },
-      success: function(data) {
-        self.fireEvent('pageContentChanged', data);
-      }
-    });
+    var path = this.getPagePath();
+    var rawContent = this.getContent();
+
+    Rwiki.nodeManager.fireEvent('savePage', path, rawContent);
   },
 
   clearContent: function() {

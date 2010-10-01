@@ -9,20 +9,14 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
     }, config);
 
     Rwiki.TabPanel.PageTab.superclass.constructor.call(this, config);
-
-    this.on('pageContentLoaded', function(data) {
-      if (this.getPagePath() != data.path) return;
-      
-      this.setContent(data.html);
-    });
   },
 
   getPagePath: function() {
-    return this.id;
+    return this.path;
   },
 
-  setPagePath: function(id) {
-    this.id = id;
+  setPagePath: function(path) {
+    this.path = path;
   },
 
   /**
@@ -34,9 +28,7 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
   },
 
   getPageContainer: function() {
-    var path = this.getPagePath();
-    var escapedSelector = '#' + path.replace(/(\W)/g, '\\$1');
-    return $(escapedSelector);
+    return $('#' + this.id);
   },
 
   setTitle: function(title) {

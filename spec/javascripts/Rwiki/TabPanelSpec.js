@@ -14,7 +14,7 @@ describe("Rwiki.TabPanel", function() {
       
       beforeEach(function() {
         tabPanel.relayEvents(observable, ['pageCreated']);
-        spyOn(tabPanel, 'addPageTab').andReturn(tab);
+        spyOn(tabPanel, 'createPageTab').andReturn(tab);
         tab.show = jasmine.createSpy('tab.show');
 
         observable.fireEvent('pageCreated', {
@@ -23,7 +23,7 @@ describe("Rwiki.TabPanel", function() {
       });
 
       it("should create a new tab", function() {
-        expect(tabPanel.addPageTab).toHaveBeenCalledWith('./page.txt');
+        expect(tabPanel.createPageTab).toHaveBeenCalledWith('./page.txt');
       });
 
       it("should open a new tab", function() {

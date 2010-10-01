@@ -10,93 +10,86 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       defaults: {
         autoScroll: true
       },
-      plugins: new Ext.ux.TabCloseMenu(),
-      listeners: {
-        tabchange: this.onTabChange
-      }
+      plugins: new Ext.ux.TabCloseMenu()
     }, config);
 
     Rwiki.TabPanel.superclass.constructor.call(this, config);
+    this.initEventHandlers();
+  },
 
-    // TODO redundant event, use pageLoaded
-    this.addEvents('pageContentLoaded');
-
-    this.on('pageContentChanged', function(data) {
-      var tab = this.findTabByPagePath(data.path);
-      tab.setContent(data.html);
+  initEventHandlers: function() {
+    this.on('tabchange', function(panel, tab) {
+      if (tab == null) return;
+      Rwiki.nodeManager.fireEvent('loadPage', tab.getPagePath());
     });
 
     this.on('pageCreated', function(data) {
-      var path = data.path;
-      var tab = this.addPageTab(path);
+      var tab = this.createPageTab(data.path, data.text);
       tab.show();
     });
 
-    this.on('pageChanged', function(path) {
-      var tab = this.updateOrAddPageTab(path);
-      tab.show(); // it will fire the 'tabchange' event
+    this.on('pageLoaded', function(data) {
+      var tab = this.findOrCreatePageTab(data.path);
+      tab.setTitle(data.title);
+      tab.setContent(data.html);
+      tab.show();
     });
 
-    this.on('nodeDeleted', function(node) {
-      this.closeRelatedTabs(node);
+    this.on('pageSaved', function(data) {
+      var tab = this.findTabByPagePath(data.path);
+      if (tab == null) return;
+      tab.setContent(data.html);
     });
-  },
 
-  onTabChange: function(tabPanel, tab) {
-    if (!tab) return;
+    this.on('nodeRenamed', function(data) {
+      var tab = this.findTabByPagePath(data.oldPath);
+      if (tab == null) return;
 
-    var path = tab.getPagePath();
-    $.ajax({
-      type: 'GET',
-      url: '/node',
-      dataType: 'json',
-      data: {
-        path: path
-      },
-      success: function(data) {
-        tabPanel.fireEvent('pageContentLoaded', data);
+      tab.setPagePath(data.path);
+      tab.setTitle(data.title);
+    });
+
+    this.on('nodeDeleted', function(data) {
+      var tabs = this.findTabsByParentPath(data.path);
+      for (var i = 0; i < tabs.length; i++) {
+        var tab = tabs[i];
+        this.remove(tab);
       }
     });
   },
 
-  /**
-   * @todo refactor this method
-   */
-  updateOrAddPageTab: function(path, htmlContent) {
+  findOrCreatePageTab: function(path) {
     var tab = this.findTabByPagePath(path);
+    
     if (!tab) {
-      tab = this.addPageTab(path);
+      tab = this.createPageTab(path);
     } 
-
-    if (htmlContent) {
-      tab.setContent(htmlContent);
-    }
 
     return tab;
   },
 
-  addPageTab: function(path) {
+  createPageTab: function(path, title) {
     var tab = new Rwiki.TabPanel.PageTab({
-      id: path,
-      title: path
+      title: title
     });
-    tab.relayEvents(this, ['pageContentLoaded']);
 
-    return this.add(tab);
+    tab.setPagePath(path);
+    this.add(tab);
+    
+    return tab;
   },
 
-  closeRelatedTabs: function(node) {
-    var self = this;
-    node.cascade(function() {
-      var path = this.id;
-      var tab = self.findTabByPagePath(path);
-      if (tab) {
-        self.remove(tab);
-      }
-    });
+  findTabByPagePath: function(pagePath) {
+    return this.findBy(function() {
+      return this.getPagePath() == pagePath;
+    })[0];
   },
 
-  findTabByPagePath: function(pageName) {
-    return this.find('id', pageName)[0];
+  findTabsByParentPath: function(parentPath) {
+    var re = new RegExp('^' + parentPath);
+    return this.findBy(function() {
+      var path = this.getPagePath();
+      return path.match(re) != null;
+    });
   }
 });

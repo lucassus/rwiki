@@ -63,7 +63,7 @@ module Rwiki::Models
     end
 
     def self.full_path_for(path)
-      File.join(working_path, path)
+      File.expand_path(File.join(working_path, path))
     end
 
   end

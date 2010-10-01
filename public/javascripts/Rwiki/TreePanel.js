@@ -24,15 +24,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         appendOnly: true
       },
 
-      tbar: toolBar,
-      listeners: {
-        click: function(node) {
-          if (!node.isLeaf()) return;
-          
-          var path = node.id;
-          this.fireEvent('pageChanged', path);
-        }
-      }
+      tbar: toolBar
     };
 
     Rwiki.TreePanel.superclass.constructor.call(this, Ext.apply(defaultConfig, config));
@@ -45,12 +37,12 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       draggable: false,
       id: Rwiki.rootFolderName
     };
+
     this.setRootNode(root);
+    
     new Ext.tree.TreeSorter(this, {
       folderSort: false
     });
-
-    // install event handlers
 
     // toolbar events
     toolBar.on('expandAll', function() {
@@ -61,10 +53,74 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
     toolBar.on('filterFieldChanged', this.filterTree, this);
 
+    this.initEventHandlers();
     this.initContextMenu();
     this.on('contextmenu', this.onContextMenu, this);
     
     this.root.expand();
+  },
+
+  initEventHandlers: function() {
+    this.on('click', function(node) {
+      if (!node.isLeaf()) return;
+
+      var path = node.id;
+      Rwiki.nodeManager.fireEvent('loadPage', path);
+    });
+
+    this.on('folderCreated', function(data) {
+      var parentPath = data.parentPath;
+      var path = data.path;
+      var name = data.text;
+
+      var node = new Ext.tree.TreeNode({
+        id: path,
+        text: name,
+        cls: 'folder',
+        expandable: true,
+        leaf: false
+      });
+
+      var parentNode = this.findNodeByPagePath(parentPath);
+      parentNode.appendChild(node);
+    });
+
+    this.on('pageCreated', function(data) {
+      var name = data.text;
+      var parentPath = data.parentPath;
+      var path = data.path;
+
+      var node = new Ext.tree.TreeNode({
+        id: path,
+        text: name,
+        cls: 'page',
+        expandable: false,
+        leaf: true
+      });
+
+      var parentNode = this.findNodeByPagePath(parentPath);
+      parentNode.appendChild(node);
+      node.select();
+    });
+
+    this.on('nodeRenamed', function(data) {
+      var node = this.findNodeByPagePath(data.oldPath);
+      
+      node.setId(data.path);
+      node.setText(data.title);
+
+      if (!node.isLeaf()) {
+        // update children ids
+        var newId = childNode.id.replace(oldPath, newPath);
+        childNode.setId(newId);
+      }
+    });
+
+    this.on('nodeDeleted', function(data) {
+      var path = data.path;
+      var node = this.findNodeByPagePath(path);
+      node.remove();
+    });
   },
 
   filterTree: function(text) {
@@ -147,89 +203,29 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   initContextMenu: function() {
-    var self = this;
     this.contextMenu = new Rwiki.TreePanel.Menu();
-    this.relayEvents(this.contextMenu, 'createFolder', 'createPage', 'renameNode', 'deleteNode');
+    this.relayEvents(this.contextMenu, ['createFolder', 'createPage', 'renameNode', 'deleteNode']);
 
-    this.on('createFolder', function(node) {
-      if (node.cls == 'file') return;
+    this.on('createFolder', function(parentNode) {
+      if (parentNode.cls == 'file') return;
 
       Ext.MessageBox.prompt('Create folder', 'New folder name:', function(button, name) {
         if (button != 'ok') return;
 
-        var parentPath = node.id;
-
-        $.ajax({
-          type: 'POST',
-          url: '/node',
-          dataType: 'json',
-          data: {
-            parentPath: parentPath,
-            name: name,
-            isFolder: true
-          },
-          success: function(data) {
-            if (!data.success) return;
-
-            var parentPath = data.parentPath;
-            var path = data.path;
-            var text = data.text;
-
-            var node = new Ext.tree.TreeNode({
-              id: path,
-              text: text,
-              cls: 'folder',
-              expandable: true,
-              leaf: false
-            });
-
-            var parentNode = self.findNodeByPagePath(parentPath);
-            parentNode.appendChild(node);
-          }
-        });
+        var parentPath = parentNode.id;
+        Rwiki.nodeManager.fireEvent('createFolder', parentPath, name);
       });
     });
 
     // Event: context menu, create page
-    this.on('createPage', function(node) {
-      if (node.cls == 'file') return;
+    this.on('createPage', function(parentNode) {
+      if (parentNode.cls == 'file') return;
 
       Ext.MessageBox.prompt('Create page', 'New page name:', function(button, name) {
         if (button != 'ok') return;
 
-        var parentPath = node.id;
-
-        $.ajax({
-          type: 'POST',
-          url: '/node',
-          dataType: 'json',
-          data: {
-            parentPath: parentPath,
-            name: name,
-            isFolder: false
-          },
-          success: function(data) {
-            if (!data.success) return;
-
-            var text = data.text;
-            var parentPath = data.parentPath;
-            var path = data.path;
-
-            var node = new Ext.tree.TreeNode({
-              id: path,
-              text: text,
-              cls: 'page',
-              expandable: false,
-              leaf: true
-            });
-
-            var parentNode = self.findNodeByPagePath(parentPath);
-            parentNode.appendChild(node);
-            node.select();
-
-            self.fireEvent('pageCreated', data);
-          }
-        });
+        var parentPath = parentNode.id;
+        Rwiki.nodeManager.fireEvent('createPage', parentPath, name);
       });
     });
 
@@ -239,57 +235,18 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
       var callback = function(button, newName) {
         if (button != 'ok') return;
-
-        $.ajax({
-          type: 'POST',
-          url: '/node/rename',
-          dataType: 'json',
-          data: {
-            path: oldPath,
-            newName: newName
-          },
-          success: function(data) {
-            if (!data.success) return;
-
-            // set node new name
-            var node = self.findNodeByPagePath(oldPath);
-            node.setText(data.title);
-
-            // update children ids
-            node.cascade(function(childNode) {
-              // TODO use regexp here
-              childNode.id = childNode.id.replace(oldPath, newPath);
-            });
-
-            self.fireEvent('nodeRenamed', data);
-          }
-        });
+        Rwiki.nodeManager.fireEvent('renameNode', oldPath, newName);
       };
 
       Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
     });
 
-    // Event context menu, delete node
     this.on('deleteNode', function(node) {
       var path = node.id;
 
       var callback = function(button) {
         if (button != 'yes') return;
-
-        $.ajax({
-          type: 'DELETE',
-          url: '/node?path=' + path,
-          dataType: 'json',
-          success: function(data) {
-            if (!data.success) return;
-
-            var path = data.path;
-            var node = self.findNodeByPagePath(path);
-
-            self.fireEvent('nodeDeleted', node);
-            node.remove();
-          }
-        });
+        Rwiki.nodeManager.fireEvent('deleteNode', path);
       }
 
       var message = 'Delete "' + path + '"?';

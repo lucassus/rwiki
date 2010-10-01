@@ -58,7 +58,7 @@ module Rwiki
         node = parent_folder.create_sub_page(name)
       end
 
-      { :success => true, :text => name,
+      { :success => true, :text => node.title ,
         :parentPath => parent_folder.path, :isFolder => is_folder,
         :path => node.path }.to_json
     end
@@ -70,7 +70,7 @@ module Rwiki
       page = Page.new(path)
       page.rename(new_name)
 
-      { :success => true, :oldPah => path,:path => page.path, :title => page.title }.to_json
+      { :success => true, :oldPath => path, :path => page.path, :title => page.title }.to_json
     end
 
     delete '/node' do

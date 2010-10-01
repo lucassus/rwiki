@@ -22,16 +22,26 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     }, config);
 
     Rwiki.EditorPanel.superclass.constructor.call(this, config);
-
     this.editor = new Rwiki.EditorPanel.Editor($('textarea#editor'));
-
-    var self = this;
-    this.editor.container.bind('pageContentChanged', function() {
-      self.fireEvent('pageContentChanged', self.editor.getContent());
-    });
+    this.initEventHandlers();
   },
 
-  getEditor: function() {
-    return this.editor;
+  initEventHandlers: function() {
+    this.on('pageLoaded', function(data) {
+      this.editor.setPagePath(data.path);
+      this.editor.setContent(data.raw);
+    });
+
+    this.on('nodeRenamed', function(data) {
+      if (data.oldPath == this.editor.getPagePath()) {
+        this.editor.setPagePath(data.path);
+      }
+    });
+
+    this.on('nodeDeleted', function(data) {
+      if (data.path == this.editor.getPagePath()) {
+        this.editor.clearContent();
+      }
+    });
   }
 });

@@ -38,6 +38,15 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
   end
 
   context 'A node instance' do
+    context ':full_path method' do
+      setup { @path = './home.txt' }
+
+      should 'return valid full path' do
+        page = Page.new(@path)
+        assert_equal File.join(Rwiki::Models::Node.working_path, 'home.txt'), page.full_path
+      end
+    end
+
     context ':base_name method' do
       context 'for page' do
         setup { @path = './home.txt' }

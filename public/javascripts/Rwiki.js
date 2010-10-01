@@ -1,23 +1,35 @@
 Ext.ns('Rwiki');
 
 Rwiki.rootFolderName = '.';
-Rwiki.currentPageName = null;
+
+/**
+ * Log the event names to the console of any observable object.
+ */
+Rwiki.captureEvents = function(observable) {
+  Ext.util.Observable.capture(observable, function(eventName) {
+    if (console === undefined) return;
+    console.log(eventName);
+  });
+};
 
 Rwiki.init = function() {
-  Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+  Rwiki.nodeManager = new Rwiki.Node();
+  Rwiki.captureEvents(Rwiki.nodeManager);
 
   var treePanel = new Rwiki.TreePanel();
-  var tabPanel = new Rwiki.TabPanel();
-  var editorPanel = new Rwiki.EditorPanel();
+  treePanel.relayEvents(Rwiki.nodeManager,
+    ['folderCreated', 'pageCreated', 'nodeRenamed', 'nodeDeleted']);
 
-  var editor = editorPanel.getEditor();
-  editor.relayEvents(tabPanel, ['pageContentLoaded']);
-  tabPanel.relayEvents(editor, ['pageContentChanged']);
-  tabPanel.relayEvents(treePanel, ['pageChanged', 'pageCreated', 'nodeDeleted']);
+  var tabPanel = new Rwiki.TabPanel();
+  tabPanel.relayEvents(Rwiki.nodeManager,
+    ['pageLoaded', 'folderCreated', 'pageCreated', 'pageSaved', 'nodeRenamed', 'nodeDeleted']);
+
+  var editorPanel = new Rwiki.EditorPanel();
+  editorPanel.relayEvents(Rwiki.nodeManager,
+    ['pageLoaded', 'nodeRenamed', 'nodeDeleted']);
 
   // Create layout
 
-  // TODO: promote to class
   var sidePanel = new Ext.Panel({
     region: 'west',
     id: 'west-panel',
