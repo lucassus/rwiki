@@ -14,8 +14,6 @@ Rwiki.captureEvents = function(observable) {
 };
 
 Rwiki.init = function() {
-  Rwiki.captureEvents(Rwiki.nodeManager);
-
   var treePanel = new Rwiki.TreePanel();
   treePanel.relayEvents(Rwiki.nodeManager,
     ['folderCreated', 'pageCreated', 'nodeRenamed', 'nodeDeleted']);
@@ -53,16 +51,21 @@ Rwiki.init = function() {
     items: [toggleTreePanelAction, toggleEditorAction]
   });
 
-  var mainPanel = new Ext.Panel({
-    region: 'center',
+  var pageAndEditorPanel = new Ext.Panel({
     layout: 'border',
-    tbar: toolbar,
+    region: 'center',
     items: [tabPanel, editorPanel]
   });
 
+  var mainPanel = new Ext.Panel({
+    layout: 'border',
+    region: 'center',
+    tbar: toolbar,
+    items: [sidePanel, pageAndEditorPanel]
+  });
+
   var app = new Rwiki.Viewport({
-    items: [sidePanel, mainPanel],
-    renderTo: Ext.getBody()
+    items: [mainPanel]
   });
 
   app.show();
