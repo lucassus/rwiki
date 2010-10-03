@@ -51,20 +51,19 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       var oldPath = data.oldPath;
       var path = data.path;
 
+      var tab = null;
       var isPage = oldPath.match(new RegExp('\.txt$'));
       if (isPage) {
-        // rename page
-        var tab = this.findTabByPagePath(oldPath);
+        tab = this.findTabByPagePath(oldPath);
         if (tab == null) return;
         
         tab.setPagePath(path);
         var title = Rwiki.nodeManager.pageTitle(path);
         tab.setTitle(title);
       } else {
-        // rename folder
         var tabs = this.findTabsByParentPath(oldPath);
         for (var i = 0; i < tabs.length; i++) {
-          var tab = tabs[i];
+          tab = tabs[i];
           var newPath = tab.getPagePath().replace(oldPath, path);
           tab.setPagePath(newPath);
         }

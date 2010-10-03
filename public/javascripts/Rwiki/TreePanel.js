@@ -128,9 +128,10 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       var path = node.id;
       var newParentPath = newParent.id;
 
-//      Rwiki.nodeManager.moveNode(path, newParentPath);
+      var result = Rwiki.nodeManager.moveNode(path, newParentPath);
+      var success = result.success == true;
 
-      return false;
+      return success;
     });
   },
 

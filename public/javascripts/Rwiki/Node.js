@@ -130,19 +130,21 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
   moveNode: function(path, newParentPath) {
     var self = this;
 
-    $.ajax({
+    var result = $.ajax({
       type: 'PUT',
       url: '/node/move',
       dataType: 'json',
+      async: false,
       data: {
         path: path,
         newParentPath: newParentPath
       },
       success: function(data) {
-        self.fireEvent('nodeMoved', data);
+        self.fireEvent('nodeRenamed', data);
       }
     });
 
+    return Ext.util.JSON.decode(result.responseText);
   },
 
   isParent: function(parentPath, path) {
