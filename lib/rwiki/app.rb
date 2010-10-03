@@ -72,6 +72,10 @@ module Rwiki
       { :success => true, :oldPath => path, :path => node.path }.to_json
     end
 
+    put '/node/move' do
+
+    end
+
     delete '/node' do
       path = params[:path].strip
       node = Node.new_from_path(path)

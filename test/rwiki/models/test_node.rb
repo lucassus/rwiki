@@ -77,5 +77,71 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
         assert_equal './folder', parent_folder.path
       end
     end
+
+    context ':move method' do
+      should 'raise an exception if the new parent is a page' do
+        node = Node.new_from_path('./test.txt')
+        new_parent = Page.new('./test.txt')
+
+        exception = assert_raise Rwiki::NodeError do
+          node.move(new_parent)
+        end
+        assert_equal 'cannot move node', exception.message
+      end
+
+      should 'raise an exception if the new parent has a node with the same name' do
+        node = Node.new_from_path('./test.txt')
+        new_parent = Node.new_from_path('./folder')
+
+        exception = assert_raise Rwiki::NodeError do
+          node.move(new_parent)
+        end
+        assert_equal 'cannot move node', exception.message
+      end
+
+      context 'on page' do
+        setup do
+          @node = Node.new_from_path('./test.txt')
+          @new_parent = Folder.new('./folder/subfolder')
+          assert_nothing_raised do
+            @node.move(@new_parent)
+          end
+        end
+
+        should 'set a new path' do
+          assert_equal './folder/subfolder/test.txt', @node.path
+        end
+
+        should 'move a file' do
+          assert !File.exists?(File.join(Node.working_path, './test.txt'))
+          assert File.exists?(File.join(Node.working_path, './folder/subfolder/test.txt'))
+        end
+      end
+
+      context 'on folder' do
+        setup do
+          @node = Folder.new('./folder')
+          @new_parent = Folder.new('./empty_folder')
+          assert_nothing_raised do
+            @node.move(@new_parent)
+          end
+        end
+
+        should 'set a new path' do
+          assert_equal './empty_folder/folder', @node.path
+        end
+
+        should 'move a folder' do
+          assert !File.exists?(File.join(Node.working_path, './folder'))
+          assert File.exists?(File.join(Node.working_path, './empty_folder/folder'))
+        end
+
+        should 'move all files' do
+          assert File.exists?(File.join(Node.working_path, './empty_folder/folder/subfolder/ruby.txt'))
+          assert File.exists?(File.join(Node.working_path, './empty_folder/folder/test 1.txt'))
+          assert File.exists?(File.join(Node.working_path, './empty_folder/folder/test 2.txt'))
+        end
+      end
+    end
   end
 end

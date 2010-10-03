@@ -70,8 +70,10 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
               {:text => 'subfolder', :id => './folder/subfolder', :cls => 'folder', :children => [
                   {:text => 'ruby', :id => './folder/subfolder/ruby.txt', :cls => 'page', :leaf => true}]},
               {:text => 'test 1', :id => './folder/test 1.txt', :cls => 'page', :leaf => true},
-              {:text => 'test 2', :id => './folder/test 2.txt', :cls => 'page', :leaf => true}]},
+              {:text => 'test 2', :id => './folder/test 2.txt', :cls => 'page', :leaf => true},
+              {:text => 'test', :id => './folder/test.txt', :cls => 'page', :leaf => true}]},
           {:text => 'home', :id => './home.txt', :cls => 'page', :leaf => true},
+          {:text => 'subfolder', :id => './subfolder', :cls => 'folder', :children => []},
           {:text => 'test', :id => './test.txt', :cls => 'page', :leaf => true}
         ]
 

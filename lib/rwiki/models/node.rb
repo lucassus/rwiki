@@ -43,6 +43,16 @@ module Rwiki::Models
       File.basename(full_path)
     end
 
+    def move(new_parent)
+      new_path = File.join(new_parent.path, base_name)
+      new_full_path = self.class.full_path_for(new_path)
+      raise Rwiki::NodeError.new("cannot move node") if new_parent.is_a?(Page)
+      raise Rwiki::NodeError.new("cannot move node") if File.exists?(new_full_path)
+
+      FileUtils.mv(full_path, new_full_path)
+      @path = new_path
+    end
+
     def rename(new_name)
       new_path = File.join(parent_folder.path, new_name)
       new_full_path = self.class.full_path_for(new_path)
