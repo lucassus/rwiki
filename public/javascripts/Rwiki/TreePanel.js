@@ -107,10 +107,11 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('nodeRenamed', function(data) {
       var path = data.path;
       var oldPath = data.oldPath;
+      var title = Rwiki.nodeManager.pageTitle(path);
 
       var node = this.findNodeByPagePath(oldPath);
       node.setId(path);
-      node.setText(data.title);
+      node.setText(title);
 
       if (!node.isLeaf()) {
         // update children ids

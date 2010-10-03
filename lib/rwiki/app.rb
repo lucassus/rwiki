@@ -26,8 +26,7 @@ module Rwiki
       path = params[:path].strip
       node = Page.new(path)
 
-      result = { :success => true,
-        :path => node.path, :title => node.title,
+      result = { :success => true, :path => node.path,
         :raw => node.raw_content, :html => node.html_content }
 
       result.to_json
@@ -58,7 +57,7 @@ module Rwiki
         node = parent_folder.create_sub_page(name)
       end
 
-      { :success => true, :text => node.title ,
+      { :success => true,
         :parentPath => parent_folder.path, :isFolder => is_folder,
         :path => node.path }.to_json
     end
@@ -70,7 +69,7 @@ module Rwiki
       node = Node.new_from_path(path)
       node.rename(new_name)
 
-      { :success => true, :oldPath => path, :path => node.path, :title => node.title }.to_json
+      { :success => true, :oldPath => path, :path => node.path }.to_json
     end
 
     delete '/node' do

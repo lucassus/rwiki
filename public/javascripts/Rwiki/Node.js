@@ -139,6 +139,16 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
     }
 
     return result;
+  },
+
+  pageTitle: function(path) {
+    if (path == Rwiki.rootFolderName) {
+      return Rwiki.rootFolderName;
+    }
+
+    var pathParts = path.split('/');
+    var name = pathParts[pathParts.length - 1];
+    return name.replace(new RegExp('\.txt$'), '');
   }
 
 });
