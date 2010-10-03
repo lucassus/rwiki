@@ -34,7 +34,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       nodeType: 'async',
       text: 'Home',
       draggable: false,
-      id: Rwiki.rootFolderName
+      id: Rwiki.rootFolderPath
     };
 
     this.setRootNode(root);

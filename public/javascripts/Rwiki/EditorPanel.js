@@ -5,7 +5,9 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     config = Ext.apply({
       region: 'south',
       contentEl: 'editor-container',
-      title: 'Editor',
+      title: 'Page editor',
+      titleCollapse: true,
+      collapseMode: 'mini',
       split: true,
       collapsible: true,
       collapsed: true,
