@@ -21,7 +21,7 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
           $('#editor').height(height - editorOffset);
         }
       }
-    })
+    });
 
     Rwiki.EditorPanel.superclass.constructor.apply(this, arguments);
     this.editor = new Rwiki.EditorPanel.Editor($('textarea#editor'));
@@ -42,14 +42,13 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
 
       var isPage = oldPath.match(new RegExp('\.txt$'));
       var currentPageWasChanged = isPage && oldPath == currentPagePath;
+      var parentPathWasChanged = Rwiki.nodeManager.isParent(oldPath, currentPagePath);
+      
       if (currentPageWasChanged) {
         this.editor.setPagePath(path);
-      } else {
-        var parentPathWasChanged = Rwiki.nodeManager.isParent(oldPath, currentPagePath);
-        if (parentPathWasChanged) {
-          var newPath = currentPagePath.replace(oldPath, path);
-          this.editor.setPagePath(newPath);
-        }
+      } else if (parentPathWasChanged) {
+        var newPath = currentPagePath.replace(oldPath, path);
+        this.editor.setPagePath(newPath);
       }
     });
 
