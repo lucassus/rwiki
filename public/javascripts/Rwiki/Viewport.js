@@ -5,6 +5,6 @@ Rwiki.Viewport = Ext.extend(Ext.Viewport, {
   renderTo: Ext.getBody(),
   
   initComponent: function() {
-    Rwiki.Viewport.superclass.initComponent.call(this);
+    Rwiki.Viewport.superclass.initComponent.apply(this);
   }
 });

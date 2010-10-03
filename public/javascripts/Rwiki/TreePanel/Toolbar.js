@@ -1,7 +1,7 @@
 Ext.ns('Rwiki.TreePanel');
 
 Rwiki.TreePanel.Toolbar = Ext.extend(Ext.Toolbar, {
-  constructor: function(config) {
+  constructor: function() {
     var self = this;
     
     var filterField = new Ext.form.TextField({
@@ -19,7 +19,7 @@ Rwiki.TreePanel.Toolbar = Ext.extend(Ext.Toolbar, {
       }
     });
 
-    var defaultConfig = {
+    Ext.apply(this, {
       items: [
       filterField,
       {
@@ -35,10 +35,9 @@ Rwiki.TreePanel.Toolbar = Ext.extend(Ext.Toolbar, {
           self.fireEvent('collapseAll');
         }
       }]
-    };
+    });
 
-    var config = Ext.apply(defaultConfig, config);
-    Rwiki.TreePanel.Toolbar.superclass.constructor.call(this, config);
+    Rwiki.TreePanel.Toolbar.superclass.constructor.apply(this, arguments);
 
     this.addEvents('filterFieldChanged', 'expandAll', 'collapseAll');
   }

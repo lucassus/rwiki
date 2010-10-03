@@ -1,8 +1,8 @@
 Ext.ns('Rwiki');
 
 Rwiki.SidePanel = Ext.extend(Ext.Panel, {
-  constructor: function(config) {
-    var defaultConfig = {
+  constructor: function() {
+    Ext.apply(this, {
       region: 'west',
       id: 'west-panel',
       title: 'Pages',
@@ -14,8 +14,8 @@ Rwiki.SidePanel = Ext.extend(Ext.Panel, {
       autoScroll: true,
       margins: '0 0 5 5',
       cmargins: '0 0 0 0'
-    };
+    });
 
-    Rwiki.SidePanel.superclass.constructor.call(this, Ext.apply(defaultConfig, config));
+    Rwiki.SidePanel.superclass.constructor.apply(this, arguments);
   }
 });

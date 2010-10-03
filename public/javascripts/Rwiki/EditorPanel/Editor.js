@@ -1,8 +1,8 @@
 Ext.ns('Rwiki.EditorPanel');
 
 Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
-  constructor: function(container, config) {
-    Rwiki.EditorPanel.Editor.superclass.constructor.call(this, config);
+  constructor: function(container) {
+    Rwiki.EditorPanel.Editor.superclass.constructor.apply(this, arguments);
 
     this.container = container;
     this.enabled = false;

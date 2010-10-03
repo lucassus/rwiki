@@ -1,8 +1,8 @@
 Ext.ns('Rwiki.TreePanel');
 
 Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
-  constructor: function(config) {
-    config = Ext.apply({
+  constructor: function() {
+    Ext.apply(this, {
       id: 'feeds-ctx',
       items: [{
         text: 'Create folder',
@@ -37,9 +37,9 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
           this.fireEvent('deleteNode', this.node);
         }
       }]
-    }, config);
+    });
 
-    Rwiki.TreePanel.Menu.superclass.constructor.call(this, config);
+    Rwiki.TreePanel.Menu.superclass.constructor.apply(this, arguments);
 
     // define events
     this.addEvents(

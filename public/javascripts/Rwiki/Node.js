@@ -1,8 +1,7 @@
 Ext.ns('Rwiki');
 
 Rwiki.Node = Ext.extend(Ext.util.Observable, {
-  constructor: function(config){
-    Ext.apply(this, config);
+  constructor: function() {
     this.initEvents();
   },
 

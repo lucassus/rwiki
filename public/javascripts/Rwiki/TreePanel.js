@@ -1,5 +1,5 @@
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
-  constructor: function(config) {
+  constructor: function() {
     var self = this;
 
     // setup TreeFilter
@@ -11,7 +11,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     var toolBar = new Rwiki.TreePanel.Toolbar();
 
-    var defaultConfig = {
+    Ext.apply(this, {
       id: 'tree',
       rootVisible: true,
       useArrows: true,
@@ -25,9 +25,9 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       },
 
       tbar: toolBar
-    };
+    });
 
-    Rwiki.TreePanel.superclass.constructor.call(this, Ext.apply(defaultConfig, config));
+    Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
 
     // setup root node
     var root = {

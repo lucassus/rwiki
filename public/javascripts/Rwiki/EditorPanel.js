@@ -1,8 +1,8 @@
 Ext.ns('Rwiki');
 
 Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
-  constructor: function(config) {
-    config = Ext.apply({
+  constructor: function() {
+    Ext.apply(this, {
       region: 'south',
       contentEl: 'editor-container',
       title: 'Page editor',
@@ -21,9 +21,9 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
           $('#editor').height(height - editorOffset);
         }
       }
-    }, config);
+    })
 
-    Rwiki.EditorPanel.superclass.constructor.call(this, config);
+    Rwiki.EditorPanel.superclass.constructor.apply(this, arguments);
     this.editor = new Rwiki.EditorPanel.Editor($('textarea#editor'));
     this.initEventHandlers();
   },

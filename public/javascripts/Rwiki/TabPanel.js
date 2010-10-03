@@ -1,8 +1,8 @@
 Ext.ns('Rwiki');
 
 Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
-  constructor: function(config) {
-    config = Ext.apply({
+  constructor: function() {
+    Ext.apply(this, {
       region: 'center',
       deferredRender: false,
       activeTab: 0,
@@ -11,9 +11,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         autoScroll: true
       },
       plugins: new Ext.ux.TabCloseMenu()
-    }, config);
+    });
 
-    Rwiki.TabPanel.superclass.constructor.call(this, config);
+    Rwiki.TabPanel.superclass.constructor.apply(this, arguments);
     this.initEventHandlers();
   },
 
