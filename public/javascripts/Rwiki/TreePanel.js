@@ -71,11 +71,11 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('folderCreated', function(data) {
       var parentPath = data.parentPath;
       var path = data.path;
-      var name = data.text;
+      var title = Rwiki.nodeManager.pageTitle(path);
 
       var node = new Ext.tree.TreeNode({
         id: path,
-        text: name,
+        text: title,
         cls: 'folder',
         expandable: true,
         leaf: false
@@ -86,13 +86,13 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
 
     this.on('pageCreated', function(data) {
-      var name = data.text;
       var parentPath = data.parentPath;
       var path = data.path;
+      var title = Rwiki.nodeManager.pageTitle(path);
 
       var node = new Ext.tree.TreeNode({
         id: path,
-        text: name,
+        text: title,
         cls: 'page',
         expandable: false,
         leaf: true
