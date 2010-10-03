@@ -24,7 +24,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
     this.addEvents('deleteNode', 'nodeDeleted');
     this.on('deleteNode', this.deleteNode);
 
-    this.addEvents('moveNode', 'nodeMoved');
+    this.addEvents('moveNode');
     this.on('moveNode', this.moveNode);
   },
 
