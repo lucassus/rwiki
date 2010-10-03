@@ -23,6 +23,9 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
 
     this.addEvents('deleteNode', 'nodeDeleted');
     this.on('deleteNode', this.deleteNode);
+
+    this.addEvents('moveNode', 'nodeMoved');
+    this.on('moveNode', this.moveNode);
   },
 
   loadPage: function(path) {
@@ -122,6 +125,24 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         self.fireEvent('nodeDeleted', data);
       }
     });
+  },
+
+  moveNode: function(path, newParentPath) {
+    var self = this;
+
+    $.ajax({
+      type: 'PUT',
+      url: '/node/move',
+      dataType: 'json',
+      data: {
+        path: path,
+        newParentPath: newParentPath
+      },
+      success: function(data) {
+        self.fireEvent('nodeMoved', data);
+      }
+    });
+
   },
 
   isParent: function(parentPath, path) {

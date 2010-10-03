@@ -73,7 +73,14 @@ module Rwiki
     end
 
     put '/node/move' do
+      path = params[:path].strip
+      new_parent_path = params[:newParentPath].strip
 
+      node = Node.new_from_path(path)
+      new_parent = Node.new_from_path(new_parent_path)
+      node.move(new_parent)
+
+      { :success => true, :oldPath => path, :path => node.path }.to_json
     end
 
     delete '/node' do

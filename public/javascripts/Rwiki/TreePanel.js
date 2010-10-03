@@ -19,7 +19,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       border: false,
       loader: new Rwiki.TreePanel.Loader(),
 
-      enableDD: false,
+      enableDD: true,
       dropConfig: {
         appendOnly: true
       },
@@ -55,7 +55,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.addEvents('pageSelected');
     this.initEventHandlers();
     this.initContextMenu();
-    this.on('contextmenu', this.onContextMenu, this);
     
     this.root.expand();
   },
@@ -123,6 +122,15 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       var path = data.path;
       var node = this.findNodeByPagePath(path);
       node.remove();
+    });
+
+    this.on('beforemovenode', function(tree, node, oldParent, newParent, index) {
+      var path = node.id;
+      var newParentPath = newParent.id;
+
+//      Rwiki.nodeManager.moveNode(path, newParentPath);
+
+      return false;
     });
   },
 
@@ -233,9 +241,11 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     return result;
   },
 
+  // TODO this.contextmenu.on...
   initContextMenu: function() {
     this.contextMenu = new Rwiki.TreePanel.Menu();
     this.relayEvents(this.contextMenu, ['createFolder', 'createPage', 'renameNode', 'deleteNode']);
+    this.on('contextmenu', this.onContextMenu, this);
 
     this.on('createFolder', function(parentNode) {
       if (parentNode.cls == 'file') return;
