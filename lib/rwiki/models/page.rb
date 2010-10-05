@@ -39,15 +39,13 @@ module Rwiki::Models
     end
 
     def save
-      file = File.open(full_path, 'w')
-      file.write(@raw_content)
-      file.close
+      File.open(full_path, 'w:UTF-8') { |f| f.write(@raw_content) }
     end
 
     private
 
     def read_file
-      File.read(full_path) { |f| f.read }
+      File.open(full_path, 'r:UTF-8') { |f| f.read }
     end
 
     def parse_content

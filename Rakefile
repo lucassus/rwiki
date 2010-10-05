@@ -18,8 +18,14 @@ begin
     gem.add_dependency "coderay"
     gem.add_dependency "json_pure"
 
-    gem.add_development_dependency "ruby-debug19"
+    if RUBY_VERSION >= "1.9"
+      gem.add_development_dependency "ruby-debug19"
+    else
+      gem.add_development_dependency "ruby-debug"
+    end
+
     gem.add_development_dependency "rack-test"
+    gem.add_development_dependency "test-unit"
     gem.add_development_dependency "shoulda"
     gem.add_development_dependency "jasmine"
 
