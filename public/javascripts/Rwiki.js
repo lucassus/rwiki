@@ -15,6 +15,7 @@ Rwiki.captureEvents = function(observable) {
 };
 
 Rwiki.init = function() {
+  var toolbar = new Rwiki.Toolbar();
   var treePanel = new Rwiki.TreePanel();
   treePanel.relayEvents(Rwiki.nodeManager,
     ['folderCreated', 'pageCreated', 'nodeRenamed', 'nodeDeleted']);
@@ -27,6 +28,7 @@ Rwiki.init = function() {
   var editorPanel = new Rwiki.EditorPanel();
   editorPanel.relayEvents(Rwiki.nodeManager,
     ['pageLoaded', 'nodeRenamed', 'nodeDeleted']);
+   editorPanel.relayEvents(toolbar, ['editorToggled']);
 
   // Create layout
 
@@ -34,27 +36,7 @@ Rwiki.init = function() {
     items: [treePanel]
   });
 
-  var toggleTreePanelAction = new Ext.Action({
-    text: 'Toggle tree',
-    enableToggle: true,
-    pressed: true,
-    handler: function() {
-      sidePanel.toggleCollapse();
-    }
-  });
-
-  var toggleEditorAction = new Ext.Action({
-    text: 'Toggle editor',
-    enableToggle: true,
-    pressed: false,
-    handler: function() {
-      editorPanel.toggleCollapse();
-    }
-  });
-
-  var toolbar = new Rwiki.Toolbar({
-    items: [toggleTreePanelAction, toggleEditorAction]
-  });
+  sidePanel.relayEvents(toolbar, ['treeToggled']);
 
   var pageAndEditorPanel = new Ext.Panel({
     layout: 'border',

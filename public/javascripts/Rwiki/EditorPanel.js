@@ -5,8 +5,7 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     Ext.apply(this, {
       region: 'south',
       contentEl: 'editor-container',
-      title: 'Page editor',
-      titleCollapse: true,
+      header: false,
       collapseMode: 'mini',
       split: true,
       collapsible: true,
@@ -15,9 +14,9 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
 
       listeners: {
         resize: function(panel, width, height) {
-          var offset = 36;
+          var offset = 36 - 25;
           $('.markItUpContainer').height(height - offset);
-          var editorOffset = 73;
+          var editorOffset = 73 - 25;
           $('#editor').height(height - editorOffset);
         }
       }
@@ -57,5 +56,9 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
         this.editor.clearContent();
       }
     });
+
+    this.on('editorToggled', function() {
+      this.toggleCollapse();
+    })
   }
 });
