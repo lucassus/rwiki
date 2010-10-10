@@ -24,10 +24,11 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
 
     Rwiki.EditorPanel.superclass.constructor.apply(this, arguments);
     this.editor = new Rwiki.EditorPanel.Editor($('textarea#editor'));
-    this.initEventHandlers();
   },
 
-  initEventHandlers: function() {
+  initEvents: function() {
+    Rwiki.EditorPanel.superclass.initEvents.apply(this, arguments);
+
     this.on('pageLoaded', function(data) {
       this.editor.setPagePath(data.path);
       this.editor.setContent(data.raw);

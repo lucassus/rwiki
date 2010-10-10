@@ -10,11 +10,11 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
     // hack for FF, clear text area on load
     this.container.val('');
 
-    this.initEventHandlers();
     this.initMarkItUp();
   },
 
-  initEventHandlers: function() {
+  initEvents: function() {
+    Rwiki.EditorPanel.Editor.superclass.initEvents.apply(this, arguments);
     var self = this;
 
     this.container.bind('keydown', function() {

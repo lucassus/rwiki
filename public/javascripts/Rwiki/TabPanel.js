@@ -14,10 +14,15 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     });
 
     Rwiki.TabPanel.superclass.constructor.apply(this, arguments);
-    this.initEventHandlers();
   },
 
-  initEventHandlers: function() {
+  initEvents: function() {
+    Rwiki.TabPanel.superclass.initEvents.apply(this, arguments);
+    
+    this.body.on('click', function(e) {
+      // click on tab body
+    });
+
     this.on('pageSelected', function(path) {
       var tab = this.findOrCreatePageTab(path);
       tab.show();
@@ -56,7 +61,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       if (isPage) {
         tab = this.findTabByPagePath(oldPath);
         if (tab == null) return;
-        
+
         tab.setPagePath(path);
         var title = Rwiki.nodeManager.pageTitle(path);
         tab.setTitle(title);

@@ -54,13 +54,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     toolBar.on('filterFieldChanged', this.filterTree, this);
 
     this.addEvents('pageSelected');
-    this.initEventHandlers();
     this.initContextMenu();
     
     this.root.expand();
   },
 
-  initEventHandlers: function() {
+  initEvents: function() {
+    Rwiki.TreePanel.superclass.initEvents.apply(this, arguments);
+
     this.on('click', function(node) {
       if (!node.isLeaf()) return;
 

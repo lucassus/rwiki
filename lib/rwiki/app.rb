@@ -24,12 +24,10 @@ module Rwiki
 
     get '/node' do
       path = params[:path].strip
-      node = Page.new(path)
+      page = Page.new(path)
 
-      result = { :success => true, :path => node.path,
-        :raw => node.raw_content, :html => node.html_content }
-
-      result.to_json
+      { :success => true, :path => page.path,
+        :raw => page.raw_content, :html => page.html_content }.to_json
     end
 
     # update page content
@@ -37,11 +35,12 @@ module Rwiki
       path = params[:path].strip
       raw_content = params[:rawContent]
 
-      node = Page.new(path)
-      node.raw_content = raw_content
-      node.save
+      page = Page.new(path)
+      page.raw_content = raw_content
+      page.save
 
-      { :success => true, :path => path, :raw => node.raw_content, :html => node.html_content }.to_json
+      { :success => true, :path => page.path,
+        :raw => page.raw_content, :html => page.html_content }.to_json
     end
 
     # create a new node
