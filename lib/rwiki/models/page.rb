@@ -59,9 +59,9 @@ module Rwiki::Models
 
     def coderay!
       @raw_content = raw_content.gsub(CODE_REGEXP) do
-        code = $3.strip
-        lang = $2.strip
-        "<notextile>#{CodeRay.scan(code, lang).html(:line_numbers => :table).div(:css => :class)}</notextile>"
+        code = $3 || ''
+        lang = $2
+        "<notextile>#{CodeRay.scan(code.strip, lang).html(:line_numbers => :table).div(:css => :class)}</notextile>"
       end
     end
 
