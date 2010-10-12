@@ -33,7 +33,7 @@ module Rwiki
     # update page content
     put '/node' do
       path = params[:path].strip
-      raw_content = params[:rawContent]
+      raw_content = params[:rawContent].force_encoding("UTF-8")
 
       page = Page.new(path)
       page.raw_content = raw_content
