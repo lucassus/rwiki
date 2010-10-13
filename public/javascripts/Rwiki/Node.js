@@ -174,3 +174,13 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
   }
 
 });
+
+Rwiki.Node.__instance__ = null;
+
+Rwiki.Node.getInstance = function() {
+  if (this.__instance__ == null) {
+    this.__instance__ = new Rwiki.Node();
+  }
+
+  return this.__instance__;
+};

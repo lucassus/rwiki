@@ -2,7 +2,6 @@ Ext.ns('Rwiki');
 
 Rwiki.rootFolderPath = '.';
 Rwiki.rootFolderName = 'Home';
-Rwiki.nodeManager = new Rwiki.Node();
 
 /**
  * Log the event names to the console of any observable object.
@@ -17,16 +16,16 @@ Rwiki.captureEvents = function(observable) {
 Rwiki.init = function() {
   var toolbar = new Rwiki.Toolbar();
   var treePanel = new Rwiki.TreePanel();
-  treePanel.relayEvents(Rwiki.nodeManager,
+  treePanel.relayEvents(Rwiki.Node.getInstance(),
     ['folderCreated', 'pageCreated', 'nodeRenamed', 'nodeDeleted']);
 
   var tabPanel = new Rwiki.TabPanel();
-  tabPanel.relayEvents(Rwiki.nodeManager,
+  tabPanel.relayEvents(Rwiki.Node.getInstance(),
     ['pageLoaded', 'folderCreated', 'pageCreated', 'pageSaved', 'nodeRenamed', 'nodeDeleted']);
   tabPanel.relayEvents(treePanel, ['pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
-  editorPanel.relayEvents(Rwiki.nodeManager,
+  editorPanel.relayEvents(Rwiki.Node.getInstance(),
     ['pageLoaded', 'nodeRenamed', 'nodeDeleted']);
    editorPanel.relayEvents(toolbar, ['editorToggled']);
 

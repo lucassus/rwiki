@@ -30,7 +30,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     this.on('tabchange', function(panel, tab) {
       if (tab == null) return;
-      Rwiki.nodeManager.fireEvent('loadPage', tab.getPagePath());
+      Rwiki.Node.getInstance().fireEvent('loadPage', tab.getPagePath());
     });
 
     this.on('pageCreated', function(data) {
@@ -39,7 +39,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     });
 
     this.on('pageLoaded', function(data) {
-      var title = Rwiki.nodeManager.pageTitle(data.path);
+      var title = Rwiki.Node.getInstance().pageTitle(data.path);
       var tab = this.findOrCreatePageTab(data.path);
       tab.setTitle(title);
       tab.setContent(data.html);
@@ -63,7 +63,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         if (tab == null) return;
 
         tab.setPagePath(path);
-        var title = Rwiki.nodeManager.pageTitle(path);
+        var title = Rwiki.Node.getInstance().pageTitle(path);
         tab.setTitle(title);
       } else {
         var tabs = this.findTabsByParentPath(oldPath);
@@ -114,7 +114,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   findTabsByParentPath: function(parentPath) {
     return this.findBy(function() {
       var path = this.getPagePath();
-      return Rwiki.nodeManager.isParent(parentPath, path);
+      return Rwiki.Node.getInstance().isParent(parentPath, path);
     });
   }
 });

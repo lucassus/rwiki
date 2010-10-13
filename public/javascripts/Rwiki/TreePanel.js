@@ -72,7 +72,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('folderCreated', function(data) {
       var parentPath = data.parentPath;
       var path = data.path;
-      var title = Rwiki.nodeManager.pageTitle(path);
+      var title = Rwiki.Node.getInstance().pageTitle(path);
 
       var node = new Ext.tree.TreeNode({
         id: path,
@@ -89,7 +89,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('pageCreated', function(data) {
       var parentPath = data.parentPath;
       var path = data.path;
-      var title = Rwiki.nodeManager.pageTitle(path);
+      var title = Rwiki.Node.getInstance().pageTitle(path);
 
       var node = new Ext.tree.TreeNode({
         id: path,
@@ -108,7 +108,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('nodeRenamed', function(data) {
       var path = data.path;
       var oldPath = data.oldPath;
-      var title = Rwiki.nodeManager.pageTitle(path);
+      var title = Rwiki.Node.getInstance().pageTitle(path);
 
       var node = this.findNodeByPagePath(oldPath);
       node.setId(path);
@@ -130,7 +130,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       var path = node.id;
       var newParentPath = newParent.id;
 
-      var result = Rwiki.nodeManager.moveNode(path, newParentPath);
+      var result = Rwiki.Node.getInstance().moveNode(path, newParentPath);
       var success = result.success == true;
 
       return success;
@@ -257,7 +257,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         if (button != 'ok') return;
 
         var parentPath = parentNode.id;
-        Rwiki.nodeManager.fireEvent('createFolder', parentPath, name);
+        Rwiki.Node.getInstance().fireEvent('createFolder', parentPath, name);
       });
     });
 
@@ -269,7 +269,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         if (button != 'ok') return;
 
         var parentPath = parentNode.id;
-        Rwiki.nodeManager.fireEvent('createPage', parentPath, name);
+        Rwiki.Node.getInstance().fireEvent('createPage', parentPath, name);
       });
     });
 
@@ -279,7 +279,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
       var callback = function(button, newName) {
         if (button != 'ok') return;
-        Rwiki.nodeManager.fireEvent('renameNode', oldPath, newName);
+        Rwiki.Node.getInstance().fireEvent('renameNode', oldPath, newName);
       };
 
       Ext.MessageBox.prompt('Rename node', 'Enter a new name:', callback, this, false, oldName);
@@ -290,7 +290,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
       var callback = function(button) {
         if (button != 'yes') return;
-        Rwiki.nodeManager.fireEvent('deleteNode', path);
+        Rwiki.Node.getInstance().fireEvent('deleteNode', path);
       }
 
       var message = 'Delete "' + path + '"?';
