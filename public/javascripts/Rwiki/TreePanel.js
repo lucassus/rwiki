@@ -65,6 +65,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('click', function(node) {
       if (!node.isLeaf()) return;
 
+      // TODO use node.getPath()
       var path = node.id;
       this.fireEvent('pageSelected', path);
     });
@@ -261,7 +262,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       });
     });
 
-    // Event: context menu, create page
     this.on('createPage', function(parentNode) {
       if (parentNode.cls == 'file') return;
 

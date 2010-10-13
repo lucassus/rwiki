@@ -2,6 +2,10 @@ Ext.ns('Rwiki');
 
 Rwiki.Node = Ext.extend(Ext.util.Observable, {
   constructor: function() {
+    if (Rwiki.Node.caller != Rwiki.Node.getInstance) {
+      throw new Error("There is no public constructor for Rwiki.Node");
+    }
+
     this.initEvents();
   },
 
