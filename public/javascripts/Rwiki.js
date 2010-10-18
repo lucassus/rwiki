@@ -1,6 +1,5 @@
 Ext.ns('Rwiki');
 
-Rwiki.rootFolderPath = '.';
 Rwiki.rootFolderName = 'Home';
 
 /**

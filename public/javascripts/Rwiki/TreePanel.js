@@ -9,7 +9,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       autoClear: true
     });
 
-    var toolBar = new Rwiki.TreePanel.Toolbar();
+    var toolbar = new Rwiki.TreePanel.Toolbar();
 
     Ext.apply(this, {
       id: 'tree',
@@ -25,37 +25,39 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         appendOnly: true
       },
 
-      tbar: toolBar
+      tbar: toolbar
     });
 
     Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
 
-    // setup root node
-    var root = {
-      nodeType: 'async',
-      text: 'Home',
-      draggable: false,
-      id: Rwiki.rootFolderPath
-    };
+    this.initRootNode();
 
-    this.setRootNode(root);
-    
     new Ext.tree.TreeSorter(this, {
       folderSort: false
     });
 
     // toolbar events
-    toolBar.on('expandAll', function() {
+    toolbar.on('expandAll', function() {
       self.root.expandChildNodes(true);
     });
-    toolBar.on('collapseAll', function() {
+    toolbar.on('collapseAll', function() {
       self.root.collapseChildNodes(true);
     });
-    toolBar.on('filterFieldChanged', this.filterTree, this);
+    toolbar.on('filterFieldChanged', this.filterTree, this);
 
     this.addEvents('pageSelected');
     this.initContextMenu();
-    
+  },
+
+  initRootNode: function() {
+    var root = {
+      nodeType: 'async',
+      text: Rwiki.rootFolderName,
+      draggable: false,
+      id: '.'
+    };
+
+    this.setRootNode(root);
     this.root.expand();
   },
 
