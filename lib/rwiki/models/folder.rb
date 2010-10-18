@@ -42,7 +42,7 @@ module Rwiki::Models
         next if node_base_name.match(/^\./) # skip hidden files
 
         path = File.join(root_path, node_base_name)
-        tree_node = { :id => path }
+        tree_node = { :id => node_base_name }
 
         if File.directory?(path)
           children = make_nodes(path)

@@ -2,10 +2,17 @@
 # encoding: utf-8
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+require 'thin'
 require 'rwiki'
 
-working_path = (ARGV[0] ? File.expand_path(ARGV[0]) : Dir.pwd).freeze
-p "Working path is: #{working_path}"
-Rwiki::Models::Node.working_path = working_path
+config = Rwiki::Configuration.instance
+p "Working path is: #{config[:working_path]}"
+Rwiki::Models::Node.working_path = config[:working_path]
 
-Rwiki::App.run!
+argv = ARGV
+rackup_file = "#{File.dirname(__FILE__)}/../lib/rwiki/config.ru"
+argv << ["-R", rackup_file] unless ARGV.include?("-R")
+argv << ["-p", "2003"] unless ARGV.include?("-p")
+argv << ["-e", "production"] unless ARGV.include?("-e")
+
+Thin::Runner.new(argv.flatten).run!

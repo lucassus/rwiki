@@ -17,6 +17,7 @@ begin
     gem.add_dependency "RedCloth"
     gem.add_dependency "coderay"
     gem.add_dependency "json_pure"
+    gem.add_dependency "thin"
 
     if RUBY_VERSION >= "1.9"
       gem.add_development_dependency "ruby-debug19"
