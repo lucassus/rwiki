@@ -1,26 +1,8 @@
+Ext.ns('Rwiki');
+
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function() {
-    var self = this;
-
-    // setup TreeFilter
-    // TODO promote to class
-    this.hiddenNodes = [];
-    this.filter = new Ext.tree.TreeFilter(self, {
-      clearBlank: true,
-      autoClear: true
-    });
-
     var toolbar = new Rwiki.TreePanel.Toolbar();
-
-    toolbar.on('expandAll', function() {
-      self.root.expandChildNodes(true);
-    });
-
-    toolbar.on('collapseAll', function() {
-      self.root.collapseChildNodes(true);
-    });
-    
-    toolbar.on('filterFieldChanged', this.filterTree, this);
 
     Ext.apply(this, {
       id: 'tree',
@@ -48,10 +30,25 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
 
+    this.filter = new Rwiki.TreePanel.Filter(this);
     this.root.expand();
 
     new Ext.tree.TreeSorter(this, {
       folderSort: false
+    });
+
+    var self = this;
+
+    toolbar.on('expandAll', function() {
+      self.root.expandChildNodes(true);
+    });
+
+    toolbar.on('collapseAll', function() {
+      self.root.collapseChildNodes(true);
+    });
+
+    toolbar.on('filterFieldChanged', function(text) {
+      self.filter.filterTree(text);
     });
 
     this.addEvents('pageSelected');
@@ -67,58 +64,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('rwiki:nodeRenamed', this.onNodeRenamed);
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
     this.on('beforemovenode', this.onBefoneMoveNode);
-  },
-
-  filterTree: function(text) {
-    var self = this;
-    
-    Ext.each(this.hiddenNodes, function(node) {
-      node.ui.show();
-    });
-
-    if (!text) {
-      this.filter.clear();
-      return;
-    }
-    this.expandAll();
-
-    this.markCount  = [];
-    this.hiddenNodes = [];
-
-    if (text.trim().length > 0) {
-      this.expandAll();
-
-      var re = new RegExp(Ext.escapeRe(text), 'i');
-      this.root.cascade(function(node) {
-        if (re.test(node.text)) {
-          self.markToRoot(node, self.root);
-
-          if (!node.isLeaf()) {
-            node.cascade(function(child) {
-              self.markToRoot(child, node);
-            });
-          }
-        }
-      });
-
-      // hide empty packages that weren't filtered
-      this.root.cascade(function(node) {
-        if (!self.markCount[node.id] && node != self.root) {
-          node.ui.hide();
-          self.hiddenNodes.push(node);
-        }
-      });
-    }
-  },
-
-  markToRoot: function(node, root) {
-    if (this.markCount[node.id]) return;
-
-    this.markCount[node.id] = true;
-
-    if (node.parentNode != null) {
-      this.markToRoot(node.parentNode, root);
-    }
   },
 
   setContextMenu: function(contextMenu) {
