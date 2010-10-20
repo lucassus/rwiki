@@ -25,7 +25,7 @@ module Rwiki::Models
     end
 
     def title
-      super.gsub(/#{PAGE_FILE_EXTENSION}$/, '')
+      base_name.gsub(/#{PAGE_FILE_EXTENSION}$/, '')
     end
 
     def rename(new_name)
@@ -40,6 +40,10 @@ module Rwiki::Models
 
     def save
       File.open(full_path, 'w:UTF-8') { |f| f.write(@raw_content) }
+    end
+
+    def to_hash
+      super.merge({ :rawContent => raw_content, :htmlContent => html_content })
     end
 
     private

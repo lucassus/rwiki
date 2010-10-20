@@ -49,10 +49,10 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
     context ':title method' do
       should 'return valid title' do
         folder = Folder.new('./folder')
-        assert_equal 'folder', folder.title
+        assert_equal 'folder', folder.base_name
 
         folder = Folder.new('./folder/subfolder')
-        assert_equal 'subfolder', folder.title
+        assert_equal 'subfolder', folder.base_name
       end
     end
 
@@ -65,16 +65,16 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
       should 'return valid tree' do
         # TODO cls is redundant
         expected_nodes = [
-          {:text => 'empty_folder', :id => './empty_folder', :cls => 'folder', :children => []},
-          {:text => 'folder', :id => './folder', :cls => 'folder', :children => [
-              {:text => 'subfolder', :id => './folder/subfolder', :cls => 'folder', :children => [
-                  {:text => 'ruby', :id => './folder/subfolder/ruby.txt', :cls => 'page', :leaf => true}]},
-              {:text => 'test 1', :id => './folder/test 1.txt', :cls => 'page', :leaf => true},
-              {:text => 'test 2', :id => './folder/test 2.txt', :cls => 'page', :leaf => true},
-              {:text => 'test', :id => './folder/test.txt', :cls => 'page', :leaf => true}]},
-          {:text => 'home', :id => './home.txt', :cls => 'page', :leaf => true},
-          {:text => 'subfolder', :id => './subfolder', :cls => 'folder', :children => []},
-          {:text => 'test', :id => './test.txt', :cls => 'page', :leaf => true}
+          {:text => 'empty_folder', :id => 'empty_folder', :cls => 'folder', :children => []},
+          {:text => 'folder', :id => 'folder', :cls => 'folder', :children => [
+              {:text => 'subfolder', :id => 'subfolder', :cls => 'folder', :children => [
+                  {:text => 'ruby', :id => 'ruby.txt', :cls => 'page', :leaf => true}]},
+              {:text => 'test 1', :id => 'test 1.txt', :cls => 'page', :leaf => true},
+              {:text => 'test 2', :id => 'test 2.txt', :cls => 'page', :leaf => true},
+              {:text => 'test', :id => 'test.txt', :cls => 'page', :leaf => true}]},
+          {:text => 'home', :id => 'home.txt', :cls => 'page', :leaf => true},
+          {:text => 'subfolder', :id => 'subfolder', :cls => 'folder', :children => []},
+          {:text => 'test', :id => 'test.txt', :cls => 'page', :leaf => true}
         ]
 
         nodes = @folder.nodes
@@ -196,9 +196,9 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
           assert File.exist?(new_full_path), "#{new_full_path} is not exist"
         end
 
-        should 'set valid path and title' do
+        should 'set valid path and base_name' do
           assert_equal "./folder_with_new_name", @folder.path
-          assert_equal "folder_with_new_name", @folder.title
+          assert_equal "folder_with_new_name", @folder.base_name
         end
       end
     end

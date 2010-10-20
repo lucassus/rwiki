@@ -39,10 +39,6 @@ module Rwiki::Models
       FileUtils.rm_rf(full_path)
     end
 
-    def title
-      File.basename(full_path)
-    end
-
     def move(new_parent)
       new_path = File.join(new_parent.path, base_name)
       new_full_path = self.class.full_path_for(new_path)
@@ -60,6 +56,14 @@ module Rwiki::Models
 
       FileUtils.mv(full_path, new_full_path)
       @path = new_path
+    end
+
+    def to_hash
+      { :path => path, :baseName => base_name }
+    end
+
+    def to_json
+      to_hash.to_json
     end
 
     private

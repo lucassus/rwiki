@@ -9,7 +9,7 @@ module Rwiki::Models
 
     def nodes
       Dir.chdir(working_path) do
-        self.class.make_nodes(@path)
+        self.class.make_tree(@path)
       end
     end
 
@@ -34,24 +34,24 @@ module Rwiki::Models
 
     private
 
-    def self.make_nodes(root_path)
+    def self.make_tree(root_path)
       tree_nodes = []
 
       nodes = Dir.entries(root_path).sort
-      nodes.each do |node_base_name|
-        next if node_base_name.match(/^\./) # skip hidden files
+      nodes.each do |base_name|
+        next if base_name.match(/^\./) # skip hidden files
 
-        path = File.join(root_path, node_base_name)
-        tree_node = { :id => node_base_name }
+        path = File.join(root_path, base_name)
+        tree_node = { :baseName => base_name }
 
         if File.directory?(path)
-          children = make_nodes(path)
-          tree_nodes << tree_node.merge(:text => node_base_name,
-            :cls => 'folder', :children => children)
+          children = make_tree(path)
+          tree_nodes << tree_node.merge(:text => base_name, :cls => 'folder', :children => children)
         else
-          next unless node_base_name.match(/#{PAGE_FILE_EXTENSION}$/)
-          tree_nodes << tree_node.merge(:text => node_base_name.gsub(/#{PAGE_FILE_EXTENSION}$/, ''),
-            :cls => 'page', :leaf => true)
+          next unless base_name.match(/#{PAGE_FILE_EXTENSION}$/) # skip non *.txt files
+
+          page_name = base_name.gsub(/#{PAGE_FILE_EXTENSION}$/, '')
+          tree_nodes << tree_node.merge(:text => page_name, :cls => 'page', :leaf => true)
         end
       end
 

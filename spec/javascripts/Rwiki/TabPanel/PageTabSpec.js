@@ -21,18 +21,18 @@ describe("Rwiki.TabPanel.PageTab", function() {
   });
 
   describe("relayed events", function() {
-    var observable = new Ext.util.Observable();
-    observable.addEvents('pageContentLoaded');
+    var eventSource = new Ext.util.Observable();
+    eventSource.addEvents('pageContentLoaded');
 
     xdescribe("on 'pageContentLoaded'", function() {
       beforeEach(function() {
-        tab.relayEvents(observable, ['pageContentLoaded']);
+        tab.relayEvents(eventSource, ['pageContentLoaded']);
         tab.setContent = jasmine.createSpy();
       });
 
       describe("with same page path", function() {
         it("should set content", function() {
-          observable.fireEvent('pageContentLoaded', {
+          eventSource.fireEvent('pageContentLoaded', {
             path: pagePath,
             html: 'Some content'
           });
@@ -43,7 +43,7 @@ describe("Rwiki.TabPanel.PageTab", function() {
 
       describe("with another page path", function() {
         it("should not set content", function() {
-          observable.fireEvent('pageContentLoaded', {
+          eventSource.fireEvent('pageContentLoaded', {
             path: './another.txt',
             html: 'Some content'
           });

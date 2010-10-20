@@ -13,20 +13,25 @@ Rwiki.captureEvents = function(observable) {
 };
 
 Rwiki.init = function() {
+
   var toolbar = new Rwiki.Toolbar();
   var treePanel = new Rwiki.TreePanel();
-  treePanel.relayEvents(Rwiki.Node.getInstance(),
+  var treePanelContextMenu = new Rwiki.TreePanel.Menu();
+  treePanel.setContextMenu(treePanelContextMenu);
+  var nodeManager = Rwiki.Node.getInstance();
+
+  treePanel.relayEvents(nodeManager,
     ['folderCreated', 'pageCreated', 'nodeRenamed', 'nodeDeleted']);
 
   var tabPanel = new Rwiki.TabPanel();
-  tabPanel.relayEvents(Rwiki.Node.getInstance(),
+  tabPanel.relayEvents(nodeManager,
     ['pageLoaded', 'folderCreated', 'pageCreated', 'pageSaved', 'nodeRenamed', 'nodeDeleted']);
   tabPanel.relayEvents(treePanel, ['pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
-  editorPanel.relayEvents(Rwiki.Node.getInstance(),
-    ['pageLoaded', 'nodeRenamed', 'nodeDeleted']);
-   editorPanel.relayEvents(toolbar, ['editorToggled']);
+  editorPanel.relayEvents(nodeManager,
+    ['pageLoaded', 'nodeRenamed', 'nodeDeleted', 'lastPageClosed']);
+  editorPanel.relayEvents(toolbar, ['editorToggled']);
 
   // Create layout
 

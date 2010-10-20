@@ -18,16 +18,15 @@ module Rwiki
     get '/nodes' do
       path = params[:path].strip
 
-      folder = Folder.new(path)
-      folder.nodes.to_json
+      root_folder = Folder.new(path)
+      root_folder.nodes.to_json
     end
 
     get '/node' do
       path = params[:path].strip
       page = Page.new(path)
 
-      { :success => true, :path => page.path,
-        :raw => page.raw_content, :html => page.html_content }.to_json
+      page.to_json
     end
 
     # update page content
@@ -39,8 +38,7 @@ module Rwiki
       page.raw_content = raw_content
       page.save
 
-      { :success => true, :path => page.path,
-        :raw => page.raw_content, :html => page.html_content }.to_json
+      page.to_json
     end
 
     # create a new node
@@ -49,16 +47,15 @@ module Rwiki
       name = params[:name].strip
 
       parent_folder = Folder.new(parent_path)
-      is_folder = params[:isFolder] == 'true'
-      if is_folder
+      if params[:isFolder] == 'true'
         node = parent_folder.create_sub_folder(name)
       else
         node = parent_folder.create_sub_page(name)
       end
 
-      { :success => true,
-        :parentPath => parent_folder.path, :isFolder => is_folder,
-        :path => node.path }.to_json
+      result = node.to_hash
+      result[:parentPath] = parent_folder.path
+      result.to_json
     end
 
     post '/node/rename' do
@@ -68,7 +65,9 @@ module Rwiki
       node = Node.new_from_path(path)
       node.rename(new_name)
 
-      { :success => true, :oldPath => path, :path => node.path }.to_json
+      result = node.to_hash
+      result[:oldPath] = path
+      result.to_json
     end
 
     put '/node/move' do
@@ -79,7 +78,10 @@ module Rwiki
       new_parent = Node.new_from_path(new_parent_path)
       node.move(new_parent)
 
-      { :success => true, :oldPath => path, :path => node.path }.to_json
+      result = node.to_hash
+      result[:oldPath] = path
+      result[:success] = true
+      result.to_json
     end
 
     delete '/node' do
@@ -87,7 +89,7 @@ module Rwiki
       node = Node.new_from_path(path)
       node.delete
 
-      { :success => true, :path => node.path }.to_json
+      { :path => node.path }.to_json
     end
   end
 end

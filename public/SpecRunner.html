@@ -29,6 +29,7 @@
     <script type="text/javascript" src="resources/markitup/sets/textile/set.js"></script>
 
     <!-- ** Rwiki ** -->
+    <script type="text/javascript" src="javascripts/Rwiki/Extensions.js"></script>
     <script type="text/javascript" src="javascripts/Rwiki/EditorPanel.js"></script>
     <script type="text/javascript" src="javascripts/Rwiki/EditorPanel/Editor.js"></script>
     <script type="text/javascript" src="javascripts/Rwiki/Node.js"></script>
@@ -47,6 +48,7 @@
     <script type="text/javascript" src="../spec/javascripts/Rwiki/NodeSpec.js"></script>
     <script type="text/javascript" src="../spec/javascripts/Rwiki/TabPanelSpec.js"></script>
     <script type="text/javascript" src="../spec/javascripts/Rwiki/TabPanel/PageTabSpec.js"></script>
+    <script type="text/javascript" src="../spec/javascripts/Rwiki/TreePanelSpec.js"></script>
     <script type="text/javascript" src="../spec/javascripts/Rwiki/TreePanel/MenuSpec.js"></script>
 
   </head>
@@ -55,6 +57,9 @@
       jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
       jasmine.getEnv().execute();
     </script>
+
+    <div id="tree-div" style="display: none;"></div>
+    <div id="tab-div" style="display: none;"></div>
 
   </body>
 </html>

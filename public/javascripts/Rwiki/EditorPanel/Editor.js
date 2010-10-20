@@ -11,10 +11,10 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
     this.container.val('');
 
     this.initMarkItUp();
+    this.initEvents();
   },
 
   initEvents: function() {
-    Rwiki.EditorPanel.Editor.superclass.initEvents.apply(this, arguments);
     var self = this;
 
     this.container.bind('keydown', function() {

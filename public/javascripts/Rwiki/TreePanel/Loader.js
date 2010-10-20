@@ -4,7 +4,8 @@ Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
   constructor: function() {
     Ext.apply(this, {
       requestMethod: 'GET',
-      dataUrl: '/nodes'
+      dataUrl: '/nodes',
+      preloadChildren: true
     });
 
     Rwiki.TreePanel.Loader.superclass.constructor.apply(this, arguments);
@@ -12,7 +13,7 @@ Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
     // pass extra parameters
     this.on('beforeload', function(loader, node) {
       loader.baseParams = {
-        path: node.id
+        path: node.getPath('baseName')
       }
     });
   }

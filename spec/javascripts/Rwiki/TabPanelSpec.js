@@ -2,20 +2,22 @@ describe("Rwiki.TabPanel", function() {
   var tabPanel;
 
   beforeEach(function() {
-    tabPanel = new Rwiki.TabPanel();
+    tabPanel = new Rwiki.TabPanel({
+      renderTo: 'tab-div'
+    });
   });
 
   describe(":findTabsByParentPath method", function() {
     beforeEach(function() {
       var pages = [
-      './foo/bar/test.txt',
-      './foo/bar/test/test 1.txt',
-      './foo/bar/test/test 2.txt',
-      './foo/bar.txt',
-      './foo/test',
-      './foo/test/bar 1.txt',
-      './foo/test/bar 2.txt',
-      './foo/testbar.txt'
+        './foo/bar/test.txt',
+        './foo/bar/test/test 1.txt',
+        './foo/bar/test/test 2.txt',
+        './foo/bar.txt',
+        './foo/test',
+        './foo/test/bar 1.txt',
+        './foo/test/bar 2.txt',
+        './foo/testbar.txt'
       ];
 
       for (var i = 0; i < pages.length; i++) {
@@ -58,18 +60,19 @@ describe("Rwiki.TabPanel", function() {
   });
 
   describe("relayed events", function() {
-    var observable = new Ext.util.Observable();
-    observable.addEvents('pageCreated');
+    var eventSource = new Ext.util.Observable();
+    eventSource.addEvents('pageCreated');
     
     describe("on 'pageCreated'", function() {
       var tab = {};
       
       beforeEach(function() {
-        tabPanel.relayEvents(observable, ['pageCreated']);
+        tabPanel.relayEvents(eventSource, ['pageCreated']);
+        
         spyOn(tabPanel, 'createPageTab').andReturn(tab);
         tab.show = jasmine.createSpy('tab.show');
 
-        observable.fireEvent('pageCreated', {
+        eventSource.fireEvent('pageCreated', {
           path: './page.txt',
           text: 'page'
         });

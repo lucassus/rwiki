@@ -10,7 +10,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
   },
 
   initEvents: function() {
-    this.addEvents('loadPage', 'pageLoaded');
+    this.addEvents('loadPage', 'pageLoaded', 'lastPageClosed');
     this.on('loadPage', this.loadPage);
 
     this.addEvents('createFolder', 'folderCreated');
@@ -165,26 +165,15 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
     }
 
     return result;
-  },
-
-  pageTitle: function(path) {
-    if (path == Rwiki.rootFolderName) {
-      return Rwiki.rootFolderName;
-    }
-
-    var pathParts = path.split('/');
-    var name = pathParts[pathParts.length - 1];
-    return name.replace(new RegExp('\.txt$'), '');
   }
-
 });
 
-Rwiki.Node.__instance__ = null;
+Rwiki.Node._instance = null;
 
 Rwiki.Node.getInstance = function() {
-  if (this.__instance__ == null) {
-    this.__instance__ = new Rwiki.Node();
+  if (this._instance == null) {
+    this._instance = new Rwiki.Node();
   }
 
-  return this.__instance__;
+  return this._instance;
 };

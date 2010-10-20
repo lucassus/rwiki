@@ -29,37 +29,46 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
   initEvents: function() {
     Rwiki.EditorPanel.superclass.initEvents.apply(this, arguments);
 
-    this.on('pageLoaded', function(data) {
+    this.on('pageLoaded', this.onPageLoaded);
+    this.on('nodeRenamed', this.onNodeRenamed);
+    this.on('nodeDeleted', this.onNodeDeleted);
+    this.on('lastPageClosed', this.onLastPageClosed);
+    this.on('editorToggled', this.onEditorToggled);
+  },
+
+  onPageLoaded: function(data) {
+    this.editor.setPagePath(data.path);
+    this.editor.setContent(data.rawContent);
+  },
+
+  onNodeRenamed: function(data) {
+    var oldPath = data.oldPath;
+    var currentPagePath = this.editor.getPagePath();
+    if (currentPagePath == null) return;
+
+    var isPage = oldPath.match(new RegExp('\.txt$'));
+    var currentPageWasChanged = isPage && oldPath == currentPagePath;
+    var parentPathWasChanged = Rwiki.Node.getInstance().isParent(oldPath, currentPagePath);
+
+    if (currentPageWasChanged) {
       this.editor.setPagePath(data.path);
-      this.editor.setContent(data.raw);
-    });
+    } else if (parentPathWasChanged) {
+      var newPath = currentPagePath.replace(oldPath, data.path);
+      this.editor.setPagePath(newPath);
+    }
+  },
 
-    this.on('nodeRenamed', function(data) {
-      var oldPath = data.oldPath;
-      var path = data.path;
-      var currentPagePath = this.editor.getPagePath();
-      if (currentPagePath == null) return;
+  onNodeDeleted: function(data) {
+    if (data.path == this.editor.getPagePath()) {
+      this.editor.clearContent();
+    }
+  },
 
-      var isPage = oldPath.match(new RegExp('\.txt$'));
-      var currentPageWasChanged = isPage && oldPath == currentPagePath;
-      var parentPathWasChanged = Rwiki.Node.getInstance().isParent(oldPath, currentPagePath);
-      
-      if (currentPageWasChanged) {
-        this.editor.setPagePath(path);
-      } else if (parentPathWasChanged) {
-        var newPath = currentPagePath.replace(oldPath, path);
-        this.editor.setPagePath(newPath);
-      }
-    });
+  onLastPageClosed: function() {
+    this.editor.clearContent();
+  },
 
-    this.on('nodeDeleted', function(data) {
-      if (data.path == this.editor.getPagePath()) {
-        this.editor.clearContent();
-      }
-    });
-
-    this.on('editorToggled', function() {
-      this.toggleCollapse();
-    })
+  onEditorToggled: function() {
+    this.toggleCollapse();
   }
 });

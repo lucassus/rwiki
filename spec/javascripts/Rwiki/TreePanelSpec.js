@@ -1,22 +1,117 @@
 describe("Rwiki.TreePanel", function() {
   var treePanel;
+  var root;
 
   beforeEach(function() {
-    treePanel = new Rwiki.TreePanel();
+    root = new Ext.tree.AsyncTreeNode({
+      baseName: '.',
+      text: 'Home',
+      children: [{
+        baseName: 'test.txt',
+        text: 'test.txt',
+        leaf: true
+      }, {
+        baseName: 'Develop',
+        text: 'Develop',
+        children: [{
+          baseName: 'Ruby.txt',
+          text: 'Ruby',
+          leaf: true
+        }]
+      }]
+    });
+
+    treePanel = new Rwiki.TreePanel({
+      renderTo: 'tree-div',
+      loader: new Ext.tree.TreeLoader({preloadChildren: true}),
+      root: root
+    });
   });
 
-  describe("relayed events", function() {
-    var node = {};
-    var observable = new Ext.util.Observable();
-    observable.addEvents('createFolder');
+  describe(":findNodeByPath function", function() {
+    it("should find root node", function() {
+      var node = treePanel.findNodeByPath('./');
 
-    describe("on 'createFolder'", function() {
-      beforeEach(function() {
-        treePanel.relayEvents(observable, ['createFolder']);
+      expect(node).not.toBeNull();
+    }),
 
-        observable.fireEvent('createFolder', node);
-      });
+    it("should find ./test.txt node", function() {
+      var node = treePanel.findNodeByPath('./test.txt');
+
+      expect(node).not.toBeNull();
+      expect(node.attributes.baseName).toEqual('test.txt');
+      expect(node.getPath('baseName')).toEqual('./test.txt');
+    });
+
+    it("should find ./Develop/Ruby.txt node", function() {
+      var node = treePanel.findNodeByPath('./Develop/Ruby.txt');
       
+      expect(node).not.toBeNull();
+      expect(node.attributes.baseName).toEqual('Ruby.txt');
+      expect(node.getPath('baseName')).toEqual('./Develop/Ruby.txt');
+    });
+
+    it("should not find ./Develop/Non-existing.txt", function() {
+      var node = treePanel.findNodeByPath('./Develop/Non-existing.txt');
+      expect(node).toBeNull();
+    });
+  });
+
+  describe(":onClick method", function() {
+    var node = {};
+
+    describe("for leaf node", function() {
+      beforeEach(function() {
+        node.isLeaf = jasmine.createSpy('node.isLeaf').andReturn(true);
+        node.getPath = jasmine.createSpy('node.getPath').andReturn('./path');
+
+        spyOn(treePanel, 'fireEvent');
+        treePanel.onClick(node);
+      });
+
+      it("should fire event", function() {
+        expect(treePanel.fireEvent).toHaveBeenCalledWith('pageSelected', './path');
+      });
+    });
+  });
+
+  describe(":onFolderCreated method", function() {
+    beforeEach(function() {
+      var data = {
+        parentPath: './Develop',
+        baseName: 'New folder'
+      }
+
+      treePanel.onFolderCreated(data);
+    });
+
+    it("should create and append a valid node", function() {
+      var node = treePanel.findNodeByPath('./Develop/New folder');
+
+      expect(node).not.toBeNull();
+      expect(node.attributes.baseName).toEqual('New folder');
+      expect(node.attributes.text).toEqual('New folder');
+      expect(node.isLeaf()).toBeFalsy();
+    });
+  });
+
+  describe(":onPageCreated method", function() {
+    beforeEach(function() {
+      var data = {
+        parentPath: './Develop',
+        baseName: 'New page.txt'
+      }
+      
+      treePanel.onPageCreated(data);
+    });
+
+    it("should create and append a valid node", function() {
+      var node = treePanel.findNodeByPath('./Develop/New page.txt');
+
+      expect(node).not.toBeNull();
+      expect(node.attributes.baseName).toEqual('New page.txt');
+      expect(node.attributes.text).toEqual('New page');
+      expect(node.isLeaf()).toBeTruthy();
     });
   });
 });

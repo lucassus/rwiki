@@ -5,24 +5,6 @@ describe("Rwiki.TreePanel.Menu", function() {
     menu = new Rwiki.TreePanel.Menu();
   });
 
-  describe("events list", function() {
-    it("should contain createFolder event", function() {
-      expect(menu.events.createFolder).toBeDefined();
-    });
-
-    it("should contain createPage event", function() {
-      expect(menu.events.createPage).toBeDefined();
-    });
-
-    it("should contain renameNode event", function() {
-      expect(menu.events.renameNode).toBeDefined();
-    });
-
-    it("should contain deleteNode event", function() {
-      expect(menu.events.deleteNode).toBeDefined();
-    });
-  });
-
   describe(":show method", function() {
     var node = {};
     var xy = {};
@@ -143,13 +125,6 @@ describe("Rwiki.TreePanel.Menu", function() {
       });
     });
 
-    var itShouldFireEvent = function(eventName) {
-      it("should fire '" + eventName + "' event", function() {
-        item.fireEvent('click');
-        expect(menu.fireEvent).toHaveBeenCalledWith(eventName, currentNode);
-      });
-    };
-
     describe("'Create folder' option", function() {
       beforeEach(function() {
         item = menu.findById('create-folder');
@@ -157,14 +132,6 @@ describe("Rwiki.TreePanel.Menu", function() {
 
       it("should have 'Create folder' title", function() {
         expect(item).toBeTitledAs("Create folder");
-      });
-
-      describe("on click", function() {
-        beforeEach(function() {
-          item.fireEvent('click');
-        });
-
-        itShouldFireEvent('createFolder');
       });
     });
 
@@ -176,14 +143,6 @@ describe("Rwiki.TreePanel.Menu", function() {
       it("should have 'Create page' title", function() {
         expect(item).toBeTitledAs("Create page");
       });
-
-      describe("on click", function() {
-        beforeEach(function() {
-          item.fireEvent('click');
-        });
-
-        itShouldFireEvent('createPage');
-      });
     });
 
     describe("'Rename node' option", function() {
@@ -194,14 +153,6 @@ describe("Rwiki.TreePanel.Menu", function() {
       it("should have 'Rename node' title", function() {
         expect(item).toBeTitledAs("Rename node");
       });
-
-      describe("on click", function() {
-        beforeEach(function() {
-          item.fireEvent('click');
-        });
-
-        itShouldFireEvent('renameNode');
-      });
     });
 
     describe("'Delete node' option", function() {
@@ -211,14 +162,6 @@ describe("Rwiki.TreePanel.Menu", function() {
 
       it("should have 'Delete node' title", function() {
         expect(item).toBeTitledAs("Delete node");
-      });
-      
-      describe("on click", function() {
-        beforeEach(function() {
-          item.fireEvent('click');
-        });
-
-        itShouldFireEvent('deleteNode');
       });
     });
   });
