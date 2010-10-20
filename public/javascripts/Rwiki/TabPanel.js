@@ -22,11 +22,11 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     this.on('pageSelected', this.onPageSelected),
     this.on('tabchange', this.onTabChange);
 
-    this.on('pageCreated', this.onPageCreated);
-    this.on('pageLoaded', this.onPageLoaded);
-    this.on('pageSaved', this.onPageSaved);
-    this.on('nodeRenamed', this.onNodeRanamed);
-    this.on('nodeDeleted', this.onNodeDeleted);
+    this.on('rwiki:pageCreated', this.onPageCreated);
+    this.on('rwiki:pageLoaded', this.onPageLoaded);
+    this.on('rwiki:pageSaved', this.onPageSaved);
+    this.on('rwiki:nodeRenamed', this.onNodeRanamed);
+    this.on('rwiki:nodeDeleted', this.onNodeDeleted);
   },
 
   findOrCreatePageTab: function(path) {
@@ -70,9 +70,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   onTabChange: function(panel, tab) {
     if (tab) {
-      Rwiki.Node.getInstance().fireEvent('loadPage', tab.getPagePath());
+      Rwiki.Node.getInstance().loadPage(tab.getPagePath());
     } else {
-      Rwiki.Node.getInstance().fireEvent('lastPageClosed');
+      Rwiki.Node.getInstance().fireEvent('rwiki:lastPageClosed');
     }
   },
 

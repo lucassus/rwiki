@@ -21,16 +21,16 @@ Rwiki.init = function() {
   var nodeManager = Rwiki.Node.getInstance();
 
   treePanel.relayEvents(nodeManager,
-    ['folderCreated', 'pageCreated', 'nodeRenamed', 'nodeDeleted']);
+    ['rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
 
   var tabPanel = new Rwiki.TabPanel();
   tabPanel.relayEvents(nodeManager,
-    ['pageLoaded', 'folderCreated', 'pageCreated', 'pageSaved', 'nodeRenamed', 'nodeDeleted']);
+    ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:pageSaved', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
   tabPanel.relayEvents(treePanel, ['pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
   editorPanel.relayEvents(nodeManager,
-    ['pageLoaded', 'nodeRenamed', 'nodeDeleted', 'lastPageClosed']);
+    ['rwiki:pageLoaded', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted', 'rwiki:lastPageClosed']);
   editorPanel.relayEvents(toolbar, ['editorToggled']);
 
   // Create layout

@@ -10,26 +10,15 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
   },
 
   initEvents: function() {
-    this.addEvents('loadPage', 'pageLoaded', 'lastPageClosed');
-    this.on('loadPage', this.loadPage);
-
-    this.addEvents('createFolder', 'folderCreated');
-    this.on('createFolder', this.createFolder);
-
-    this.addEvents('createPage', 'pageCreated');
-    this.on('createPage', this.createPage);
-
-    this.addEvents('savePage', 'pageSaved');
-    this.on('savePage', this.savePage);
-
-    this.addEvents('renameNode', 'nodeRenamed');
-    this.on('renameNode', this.renameNode);
-
-    this.addEvents('deleteNode', 'nodeDeleted');
-    this.on('deleteNode', this.deleteNode);
-
-    this.addEvents('moveNode');
-    this.on('moveNode', this.moveNode);
+    this.addEvents(
+      'rwiki:pageLoaded',
+      'rwiki:nodeDeleted',
+      'rwiki:folderCreated',
+      'rwiki:pageCreated',
+      'rwiki:pageSaved',
+      'rwiki:nodeRenamed',
+      'rwiki:lastPageClosed'
+    );
   },
 
   loadPage: function(path) {
@@ -43,7 +32,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         path: path
       },
       success: function(data) {
-        self.fireEvent('pageLoaded', data);
+        self.fireEvent('rwiki:pageLoaded', data);
       }
     });
   },
@@ -61,7 +50,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         isFolder: true
       },
       success: function(data) {
-        self.fireEvent('folderCreated', data);
+        self.fireEvent('rwiki:folderCreated', data);
       }
     });
   },
@@ -79,7 +68,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         isFolder: false
       },
       success: function(data) {
-        self.fireEvent('pageCreated', data);
+        self.fireEvent('rwiki:pageCreated', data);
       }
     });
   },
@@ -96,7 +85,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         rawContent: rawContent
       },
       success: function(data) {
-        self.fireEvent('pageSaved', data);
+        self.fireEvent('rwiki:pageSaved', data);
       }
     });
   },
@@ -113,7 +102,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         newName: newName
       },
       success: function(data) {
-        self.fireEvent('nodeRenamed', data);
+        self.fireEvent('rwiki:nodeRenamed', data);
       }
     });
   },
@@ -126,7 +115,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
       url: '/node?path=' + path,
       dataType: 'json',
       success: function(data) {
-        self.fireEvent('nodeDeleted', data);
+        self.fireEvent('rwiki:nodeDeleted', data);
       }
     });
   },
@@ -144,7 +133,7 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
         newParentPath: newParentPath
       },
       success: function(data) {
-        self.fireEvent('nodeRenamed', data);
+        self.fireEvent('rwiki:nodeRenamed', data);
       }
     });
 

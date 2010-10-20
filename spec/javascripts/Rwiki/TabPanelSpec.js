@@ -61,18 +61,18 @@ describe("Rwiki.TabPanel", function() {
 
   describe("relayed events", function() {
     var eventSource = new Ext.util.Observable();
-    eventSource.addEvents('pageCreated');
+    eventSource.addEvents('rwiki:pageCreated');
     
-    describe("on 'pageCreated'", function() {
+    describe("on 'rwiki:pageCreated'", function() {
       var tab = {};
       
       beforeEach(function() {
-        tabPanel.relayEvents(eventSource, ['pageCreated']);
+        tabPanel.relayEvents(eventSource, ['rwiki:pageCreated']);
         
         spyOn(tabPanel, 'createPageTab').andReturn(tab);
         tab.show = jasmine.createSpy('tab.show');
 
-        eventSource.fireEvent('pageCreated', {
+        eventSource.fireEvent('rwiki:pageCreated', {
           path: './page.txt',
           text: 'page'
         });

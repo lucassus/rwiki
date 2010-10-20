@@ -29,10 +29,10 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
   initEvents: function() {
     Rwiki.EditorPanel.superclass.initEvents.apply(this, arguments);
 
-    this.on('pageLoaded', this.onPageLoaded);
-    this.on('nodeRenamed', this.onNodeRenamed);
-    this.on('nodeDeleted', this.onNodeDeleted);
-    this.on('lastPageClosed', this.onLastPageClosed);
+    this.on('rwiki:pageLoaded', this.onPageLoaded);
+    this.on('rwiki:nodeRenamed', this.onNodeRenamed);
+    this.on('rwiki:nodeDeleted', this.onNodeDeleted);
+    this.on('rwiki:lastPageClosed', this.onLastPageClosed);
     this.on('editorToggled', this.onEditorToggled);
   },
 
