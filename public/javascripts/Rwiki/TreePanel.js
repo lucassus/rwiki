@@ -190,9 +190,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     var newParentPath = newParent.getPath();
 
     var result = Rwiki.Node.getInstance().moveNode(path, newParentPath);
-    var success = result.success == true;
 
-    return success;
+    return result.success;
   },
 
   findNodeByPath: function(path) {

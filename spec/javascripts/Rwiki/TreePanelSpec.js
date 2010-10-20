@@ -57,7 +57,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onClick method", function() {
+  describe(":onClick function", function() {
     var node = {};
 
     describe("for leaf node", function() {
@@ -75,7 +75,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onFolderCreated method", function() {
+  describe(":onFolderCreated function", function() {
     beforeEach(function() {
       var data = {
         parentPath: './Develop',
@@ -95,7 +95,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onPageCreated method", function() {
+  describe(":onPageCreated function", function() {
     beforeEach(function() {
       var data = {
         parentPath: './Develop',
@@ -112,6 +112,43 @@ describe("Rwiki.TreePanel", function() {
       expect(node.attributes.baseName).toEqual('New page.txt');
       expect(node.attributes.text).toEqual('New page');
       expect(node.isLeaf()).toBeTruthy();
+    });
+  });
+
+  describe(":onNodeRenamed function", function() {
+    beforeEach(function() {
+      var data = {
+        oldPath: './Develop/Ruby.txt',
+        baseName: 'Python.txt'
+      };
+
+      treePanel.onNodeRenamed(data);
+    });
+
+    it("should rename node", function() {
+      var oldNode = treePanel.findNodeByPath('./Develop/Ruby.txt');
+      expect(oldNode).toBeNull();
+
+      var node = treePanel.findNodeByPath('./Develop/Python.txt');
+      expect(node).not.toBeNull();
+      expect(node.attributes.baseName).toEqual('Python.txt');
+      expect(node.attributes.text).toEqual('Python');
+      expect(node.isLeaf()).toBeTruthy();
+    });
+  });
+
+  describe(":onNodeDeleted function", function() {
+    beforeEach(function() {
+      var data = {
+        path: './Develop/Ruby.txt'
+      };
+
+      treePanel.onNodeDeleted(data);
+    });
+
+    it("should delete node", function() {
+      var node = treePanel.findNodeByPath('./Develop/Ruby.txt');
+      expect(node).toBeNull();
     });
   });
 });
