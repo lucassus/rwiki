@@ -59,7 +59,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   findTabsByParentPath: function(parentPath) {
     return this.findBy(function() {
       var path = this.getPagePath();
-      return Rwiki.Node.getInstance().isParent(parentPath, path);
+      return Rwiki.NodeManager.getInstance().isParent(parentPath, path);
     });
   },
 
@@ -70,9 +70,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   onTabChange: function(panel, tab) {
     if (tab) {
-      Rwiki.Node.getInstance().loadPage(tab.getPagePath());
+      Rwiki.NodeManager.getInstance().loadPage(tab.getPagePath());
     } else {
-      Rwiki.Node.getInstance().fireEvent('rwiki:lastPageClosed');
+      Rwiki.NodeManager.getInstance().fireEvent('rwiki:lastPageClosed');
     }
   },
 

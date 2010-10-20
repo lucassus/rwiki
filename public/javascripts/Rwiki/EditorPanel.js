@@ -48,7 +48,7 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
 
     var isPage = oldPath.match(new RegExp('\.txt$'));
     var currentPageWasChanged = isPage && oldPath == currentPagePath;
-    var parentPathWasChanged = Rwiki.Node.getInstance().isParent(oldPath, currentPagePath);
+    var parentPathWasChanged = Rwiki.NodeManager.getInstance().isParent(oldPath, currentPagePath);
 
     if (currentPageWasChanged) {
       this.editor.setPagePath(data.path);

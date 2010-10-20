@@ -1,9 +1,9 @@
 Ext.ns('Rwiki');
 
-Rwiki.Node = Ext.extend(Ext.util.Observable, {
+Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
   constructor: function() {
-    if (Rwiki.Node.caller != Rwiki.Node.getInstance) {
-      throw new Error("There is no public constructor for Rwiki.Node");
+    if (Rwiki.NodeManager.caller != Rwiki.NodeManager.getInstance) {
+      throw new Error("There is no public constructor for Rwiki.NodeManager");
     }
 
     this.initEvents();
@@ -157,11 +157,11 @@ Rwiki.Node = Ext.extend(Ext.util.Observable, {
   }
 });
 
-Rwiki.Node._instance = null;
+Rwiki.NodeManager._instance = null;
 
-Rwiki.Node.getInstance = function() {
+Rwiki.NodeManager.getInstance = function() {
   if (this._instance == null) {
-    this._instance = new Rwiki.Node();
+    this._instance = new Rwiki.NodeManager();
   }
 
   return this._instance;

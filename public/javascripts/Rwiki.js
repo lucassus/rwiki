@@ -18,7 +18,7 @@ Rwiki.init = function() {
   var treePanel = new Rwiki.TreePanel();
   var treePanelContextMenu = new Rwiki.TreePanel.Menu();
   treePanel.setContextMenu(treePanelContextMenu);
-  var nodeManager = Rwiki.Node.getInstance();
+  var nodeManager = Rwiki.NodeManager.getInstance();
 
   treePanel.relayEvents(nodeManager,
     ['rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);

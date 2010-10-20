@@ -79,7 +79,7 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
     var path = this.getPagePath();
     var rawContent = this.getContent();
 
-    Rwiki.Node.getInstance().savePage(path, rawContent);
+    Rwiki.NodeManager.getInstance().savePage(path, rawContent);
   },
 
   clearContent: function() {
