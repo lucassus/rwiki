@@ -59,32 +59,29 @@ describe("Rwiki.TabPanel", function() {
     });
   });
 
-  describe("relayed events", function() {
+  describe("onPageCreated handler", function() {
+    var tab = {};
     var eventSource = new Ext.util.Observable();
     eventSource.addEvents('rwiki:pageCreated');
-    
-    describe("on 'rwiki:pageCreated'", function() {
-      var tab = {};
-      
-      beforeEach(function() {
-        tabPanel.relayEvents(eventSource, ['rwiki:pageCreated']);
-        
-        spyOn(tabPanel, 'createPageTab').andReturn(tab);
-        tab.show = jasmine.createSpy('tab.show');
 
-        eventSource.fireEvent('rwiki:pageCreated', {
-          path: './page.txt',
-          text: 'page'
-        });
-      });
+    beforeEach(function() {
+      tabPanel.relayEvents(eventSource, ['rwiki:pageCreated']);
 
-      it("should create a new tab", function() {
-        expect(tabPanel.createPageTab).toHaveBeenCalledWith('./page.txt', 'page');
-      });
+      spyOn(tabPanel, 'createPageTab').andReturn(tab);
+      tab.show = jasmine.createSpy('tab.show');
 
-      it("should open a new tab", function() {
-        expect(tab.show).toHaveBeenCalled();
+      eventSource.fireEvent('rwiki:pageCreated', {
+        path: './page.txt',
+        text: 'page'
       });
+    });
+
+    it("should create a new tab", function() {
+      expect(tabPanel.createPageTab).toHaveBeenCalledWith('./page.txt', 'page');
+    });
+
+    it("should open a new tab", function() {
+      expect(tab.show).toHaveBeenCalled();
     });
   });
 });

@@ -18,7 +18,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         appendOnly: true
       },
 
-      root: new Ext.tree.AsyncTreeNode({
+      root: new Rwiki.TreePanel.Node({
         nodeType: 'async',
         text: Rwiki.rootFolderName,
         draggable: false,

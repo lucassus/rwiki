@@ -57,7 +57,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onClick function", function() {
+  describe(":onClick handler", function() {
     var node = {};
 
     describe("for leaf node", function() {
@@ -75,7 +75,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onFolderCreated function", function() {
+  describe(":onFolderCreated handler", function() {
     beforeEach(function() {
       var data = {
         parentPath: './Develop',
@@ -95,7 +95,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onPageCreated function", function() {
+  describe(":onPageCreated handler", function() {
     beforeEach(function() {
       var data = {
         parentPath: './Develop',
@@ -115,7 +115,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onNodeRenamed function", function() {
+  describe(":onNodeRenamed handler", function() {
     beforeEach(function() {
       var data = {
         oldPath: './Develop/Ruby.txt',
@@ -137,7 +137,7 @@ describe("Rwiki.TreePanel", function() {
     });
   });
 
-  describe(":onNodeDeleted function", function() {
+  describe(":onNodeDeleted handler", function() {
     beforeEach(function() {
       var data = {
         path: './Develop/Ruby.txt'
