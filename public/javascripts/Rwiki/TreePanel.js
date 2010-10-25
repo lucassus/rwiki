@@ -103,12 +103,11 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   onPageCreated: function(data) {
     var node = new Ext.tree.TreeNode({
-      baseName: data.baseName,
-      text: data.baseName.replace(new RegExp('\.txt$'), ''),
       cls: 'page',
       expandable: false,
       leaf: true
     });
+    node.setBaseName(data.baseName);
 
     var parentNode = this.findNodeByPath(data.parentPath);
     parentNode.expand();
@@ -118,10 +117,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   onNodeRenamed: function(data) {
     var node = this.findNodeByPath(data.oldPath);
-    node.attributes.baseName = data.baseName;
-
-    var title = data.baseName.replace(new RegExp('\.txt$'), '');
-    node.setText(title);
+    node.setBaseName(data.baseName);
   },
 
   onNodeDeleted: function(data) {
