@@ -71,5 +71,9 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-require 'jasmine'
-load 'jasmine/tasks/jasmine.rake'
+begin
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+resque LoadError
+  puts "Jasmine not available. Install it with: gem install jasmine"
+end
