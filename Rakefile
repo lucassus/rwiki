@@ -74,6 +74,6 @@ end
 begin
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'
-resque LoadError
+rescue LoadError
   puts "Jasmine not available. Install it with: gem install jasmine"
 end
