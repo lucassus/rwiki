@@ -30,6 +30,15 @@ begin
     gem.add_development_dependency "shoulda"
     gem.add_development_dependency "jasmine"
 
+    gem.add_development_dependency "cucumber"
+    gem.add_development_dependency "capybara"
+    gem.add_development_dependency "rspec"
+    gem.add_development_dependency "rspec-core"
+    gem.add_development_dependency "rspec-expectations"
+
+    gem.add_development_dependency "Selenium"
+    gem.add_development_dependency "selenium-client"
+
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
