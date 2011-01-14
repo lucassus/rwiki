@@ -62,7 +62,7 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
         @folder = Folder.new(@path)
       end
 
-      should 'return valid tree' do
+      should_eventually 'return valid tree' do
         # TODO cls is redundant
         expected_nodes = [
           {:text => 'empty_folder', :id => 'empty_folder', :cls => 'folder', :children => []},
