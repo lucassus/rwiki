@@ -4,3 +4,5 @@ Feature: view pages
   Scenario: Home page
     Given I go to the home page
     Then I should see "Rwiki"
+
+    When I click node "./public"

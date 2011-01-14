@@ -16,6 +16,7 @@ Rwiki.init = function() {
 
   var toolbar = new Rwiki.Toolbar();
   var treePanel = new Rwiki.TreePanel();
+  Rwiki.treePanel = treePanel;
   var treePanelContextMenu = new Rwiki.TreePanel.Menu();
   treePanel.setContextMenu(treePanelContextMenu);
   var nodeManager = Rwiki.NodeManager.getInstance();
