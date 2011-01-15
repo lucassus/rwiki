@@ -59,3 +59,17 @@ Feature: view pages
     Then I should have the following open tabs:
       | home |
       | test |
+
+  @javascript
+  Scenario: Create a new page
+    When I right click node "./folder"
+    And I follow "Create page"
+
+    Then I should see dialog box titled "Create page"
+
+    When I fill in the dialog input with "The new page"
+    And press "OK"
+
+    When I reload the page
+    And I double click node "./folder"
+    Then I should see "The new page"
