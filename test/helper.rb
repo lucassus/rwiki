@@ -17,7 +17,7 @@ class Test::Unit::TestCase
 
   def create_tmpdir!
     FileUtils.mkdir_p(tmp_dir)
-    pages_dir = File.expand_path('../fixtures/pages', __FILE__)
+    pages_dir = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures', 'pages'), __FILE__)
     FileUtils.cp_r(pages_dir, tmp_dir)
 
     # change working directory to the wiki root

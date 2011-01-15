@@ -21,11 +21,18 @@ describe("Rwiki.TreePanel", function() {
       }]
     });
 
+    var treeContent = $('<div />').attr('id', 'tree-div');
+    $('#jasmine_content').append(treeContent);
+
     treePanel = new Rwiki.TreePanel({
       renderTo: 'tree-div',
       loader: new Ext.tree.TreeLoader({preloadChildren: true}),
       root: root
     });
+  });
+
+  afterEach(function() {
+    $('#jasmine_content').empty();
   });
 
   describe(":findNodeByPath function", function() {
@@ -40,7 +47,7 @@ describe("Rwiki.TreePanel", function() {
 
       expect(node).not.toBeNull();
       expect(node.attributes.baseName).toEqual('test.txt');
-      expect(node.getPath('baseName')).toEqual('./test.txt');
+      expect(node.getPath('baseName')).toEqual('/./test.txt');
     });
 
     it("should find ./Develop/Ruby.txt node", function() {
@@ -48,7 +55,7 @@ describe("Rwiki.TreePanel", function() {
       
       expect(node).not.toBeNull();
       expect(node.attributes.baseName).toEqual('Ruby.txt');
-      expect(node.getPath('baseName')).toEqual('./Develop/Ruby.txt');
+      expect(node.getPath('baseName')).toEqual('/./Develop/Ruby.txt');
     });
 
     it("should not find ./Develop/Non-existing.txt", function() {

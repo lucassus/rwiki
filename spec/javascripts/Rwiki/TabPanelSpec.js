@@ -2,9 +2,16 @@ describe("Rwiki.TabPanel", function() {
   var tabPanel;
 
   beforeEach(function() {
+    var tabContent = $('<div />').attr('id', 'tabpanel-div');
+    $('#jasmine_content').append(tabContent);
+
     tabPanel = new Rwiki.TabPanel({
-      renderTo: 'tab-div'
+      renderTo: 'tabpanel-div'
     });
+  });
+
+  afterEach(function() {
+    $('#jasmine_content').empty();
   });
 
   describe(":findTabsByParentPath method", function() {
