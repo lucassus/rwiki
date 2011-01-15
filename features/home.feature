@@ -80,4 +80,31 @@ Feature: view pages
 
     When I press "Yes"
     And I reload the page
-    Then I should not see "home.txt"
+    Then I should not see "home"
+
+  @javascript
+  Scenario: Create a folder
+    When I right click node "./folder"
+    And I follow "Create folder"
+    Then I should see dialog box titled "Create folder"
+
+    When I fill in the dialog box input with "The new folder"
+    And press "OK"
+    And I reload the page
+    And I double click node "./folder"
+
+  @javascript
+  Scenario: Rename a page
+    When I right click node "./home.txt"
+    And I follow "Rename node"
+    Then I should see dialog box titled "Rename node"
+
+    When I fill in the dialog box input with "The new home"
+    And press "OK"
+    And I reload the page
+    #And I should not see "home"
+    And I should see "The new home"
+
+    When I click node "./The new home.txt"
+    And I wait for ajax call complete
+    Then I should see "Sample page" within "h1"
