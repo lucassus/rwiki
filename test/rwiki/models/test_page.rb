@@ -47,7 +47,7 @@ class Rwiki::Models::TestPage < Test::Unit::TestCase
     context ':raw_content method' do
       should 'return valid raw_content' do
         assert @page.raw_content
-        assert_equal 'h1. Sample page', @page.raw_content
+        assert_match 'h1. Sample page', @page.raw_content
       end
     end
 
