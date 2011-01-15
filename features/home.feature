@@ -83,6 +83,18 @@ Feature: view pages
     Then I should not see "home"
 
   @javascript
+  Scenario: Delete a page when tab is open
+    When I click node "./home.txt"
+    And I click node "./test.txt"
+    And I right click node "./home.txt"
+    And I follow "Delete node"
+    Then I should see dialog box titled "Confirm"
+
+    When I press "Yes"
+    Then I should have the following open tabs:
+      | test         |
+
+  @javascript
   Scenario: Create a folder
     When I right click node "./folder"
     And I follow "Create folder"
@@ -108,3 +120,17 @@ Feature: view pages
     When I click node "./The new home.txt"
     And I wait for ajax call complete
     Then I should see "Sample page" within "h1"
+
+  @javascript
+  Scenario: Rename a page when tab is open
+    When I click node "./home.txt"
+    And I click node "./test.txt"
+    And I right click node "./home.txt"
+    And I follow "Rename node"
+    Then I should see dialog box titled "Rename node"
+
+    When I fill in the dialog box input with "The new home"
+    And press "OK"
+    Then I should have the following open tabs:
+      | The new home |
+      | test         |
