@@ -31,6 +31,8 @@ begin
     gem.add_development_dependency "jasmine"
 
     gem.add_development_dependency "cucumber"
+    gem.add_development_dependency "cucumber-rails"
+    gem.add_development_dependency "webrat"
     gem.add_development_dependency "capybara"
     gem.add_development_dependency "rspec"
     gem.add_development_dependency "rspec-core"

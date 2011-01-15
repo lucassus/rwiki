@@ -27,7 +27,9 @@ Feature: view pages
   Scenario: Display the home.txt page
     When I click node "./home.txt"
 
-    Then I should see "Sample page" within "h1"
+    Then I should have the following open tabs:
+      | home |
+    And I should see "Sample page" within "h1"
     And I should see "Lorem ipsum.."
     And I should see "Sample section" within "h2"
 
@@ -36,8 +38,20 @@ Feature: view pages
     When I double click node "./folder"
     And I click node "./folder/test.txt"
 
-    Then I should see "Test 1" within "h3"
+    Then I should have the following open tabs:
+      | test |
+    And I should see "Test 1" within "h3"
     And I should see "Item one"
     And I should see "Item two"
     And I should see "Item three"
     And I should see "Last item"
+
+  @javascript
+  Scenario: Display the several page
+    When I click node "./home.txt"
+    And I double click node "./folder"
+    And I click node "./folder/test.txt"
+
+    Then I should have the following open tabs:
+      | home |
+      | test |

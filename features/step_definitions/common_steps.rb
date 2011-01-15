@@ -21,3 +21,8 @@ When /^I click node "([^"]*)"$/ do |path|
     $("div[ext\\\\:tree-node-id='#{node_id}']").trigger("click")
   JS
 end
+
+Then /^I should have the following open tabs:$/ do |table|
+  actual_table = table(tableish("div.x-tab-panel ul li[@class!='x-tab-edge']", "a.x-tab-right"))
+  table.diff!(actual_table)
+end

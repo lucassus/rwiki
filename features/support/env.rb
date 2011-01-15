@@ -1,8 +1,17 @@
 require File.join(File.dirname(__FILE__), '..', '..', 'lib/rwiki')
 
+require 'rspec'
+require 'cucumber/web/tableish'
 require 'capybara'
 require 'capybara/cucumber'
-require 'rspec'
+
+Capybara.register_driver :selenium do |app|
+  Capybara::Driver::Selenium
+  profile = Selenium::WebDriver::Firefox::Profile.new
+#  profile.add_extension(File.expand_path("features/support/firebug-1.6.1-fx.xpi"))
+
+  Capybara::Driver::Selenium.new(app, { :browser => :firefox, :profile => profile })
+end
 
 Rwiki::App.set(:environment, :test)
 
