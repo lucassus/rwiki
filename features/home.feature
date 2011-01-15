@@ -64,12 +64,20 @@ Feature: view pages
   Scenario: Create a new page
     When I right click node "./folder"
     And I follow "Create page"
-
     Then I should see dialog box titled "Create page"
 
-    When I fill in the dialog input with "The new page"
+    When I fill in the dialog box input with "The new page"
     And press "OK"
-
-    When I reload the page
+    And I reload the page
     And I double click node "./folder"
     Then I should see "The new page"
+
+  @javascript
+  Scenario: Delete a page
+    When I right click node "./home.txt"
+    And I follow "Delete node"
+    Then I should see dialog box titled "Confirm"
+
+    When I press "Yes"
+    And I reload the page
+    Then I should not see "home.txt"
