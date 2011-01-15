@@ -14,6 +14,14 @@ Rwiki.captureEvents = function(observable) {
 
 Rwiki.init = function() {
 
+  // TODO find better solution
+  Rwiki.ajaxCallInProgress = false;
+  $(document).ajaxStart(function() {
+    Rwiki.ajaxCallInProgress = true;
+  }).ajaxStop(function() {
+    Rwiki.ajaxCallInProgress = false;
+  });
+
   var toolbar = new Rwiki.Toolbar();
   var treePanel = new Rwiki.TreePanel();
   Rwiki.treePanel = treePanel;

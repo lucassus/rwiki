@@ -2,6 +2,7 @@ Feature: view pages
 
   Background:
     Given I go to the home page
+    And I wait for ajax call complete
 
   @javascript
   Scenario: Browsing a tree
@@ -26,6 +27,7 @@ Feature: view pages
   @javascript
   Scenario: Display the home.txt page
     When I click node "./home.txt"
+    And I wait for ajax call complete
 
     Then I should have the following open tabs:
       | home |
@@ -37,6 +39,7 @@ Feature: view pages
   Scenario: Display the ./folder/test.txt page
     When I double click node "./folder"
     And I click node "./folder/test.txt"
+    And I wait for ajax call complete
 
     Then I should have the following open tabs:
       | test |
@@ -51,6 +54,7 @@ Feature: view pages
     When I click node "./home.txt"
     And I double click node "./folder"
     And I click node "./folder/test.txt"
+    And I wait for ajax call complete
 
     Then I should have the following open tabs:
       | home |
