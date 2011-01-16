@@ -33,6 +33,7 @@ Rwiki.init = function() {
     ['rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
 
   var tabPanel = new Rwiki.TabPanel();
+  Rwiki.tabPanel = tabPanel;
   tabPanel.relayEvents(nodeManager,
     ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:pageSaved', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
   tabPanel.relayEvents(treePanel, ['pageSelected']);
