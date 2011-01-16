@@ -16,6 +16,23 @@ Feature: Create page
     And I double click node "./folder"
     Then I should see "The new page"
 
+    When I click node "./folder/The new page.txt"
+    Then I should have the following open tabs:
+      | The new page |
+
+  @javascript
+  Scenario: Create an existing page
+    When I right click node "./folder"
+    And I follow "Create page"
+    Then I should see dialog box titled "Create page"
+
+    When I fill in the dialog box input with "test"
+    And press "OK"
+    And I reload the page
+    And I double click node "./folder"
+    And I click node "./folder/test.txt"
+    Then I should see "Test 1" within "h3"
+
   @javascript
   Scenario: Create a folder
     When I right click node "./folder"

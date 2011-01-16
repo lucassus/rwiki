@@ -1,4 +1,4 @@
-Feature: Rename
+Feature: Rename a node
 
   Background:
     Given I go to the home page
@@ -18,6 +18,29 @@ Feature: Rename
     When I click node "./The new home.txt"
     And I wait for ajax call complete
     Then I should see "Sample page" within "h1"
+
+  @javascript
+  Scenario: Rename a page to existing name
+    When I right click node "./home.txt"
+    And I follow "Rename node"
+    Then I should see dialog box titled "Rename node"
+
+    When I fill in the dialog box input with "test"
+    And press "OK"
+    And I reload the page
+    And I should see "home"
+    And I should see "test"
+
+    When I click node "./home.txt"
+    And I wait for ajax call complete
+    Then I should see "Sample page" within "h1"
+
+    When I click node "./test.txt"
+    And I wait for ajax call complete
+    Then I should see "This is a test"
+    And I should have the following open tabs:
+      | home |
+      | test |
 
   @javascript
   Scenario: Rename a page when tab is open
@@ -47,4 +70,12 @@ Feature: Rename
     And I click node "./The new folder name/test.txt"
     And I wait for ajax call complete
     Then I should see "Test 1" within "h3"
+
+    When I reload the page
+    And I wait for ajax call complete
+    And I double click node "./The new folder name"
+    And I click node "./The new folder name/test.txt"
+    And I wait for ajax call complete
+    Then I should see "Test 1" within "h3"
+
     
