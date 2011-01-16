@@ -12,8 +12,10 @@ Feature: Rename a node
 
     When I fill in the dialog box input with "The new home"
     And press "OK"
-    And I reload the page
-    And I should see "The new home"
+    Then I should see node "The new home"
+
+    When I reload the page
+    Then I should see node "The new home"
 
     When I click node "./The new home.txt"
     And I wait for ajax call complete
@@ -52,7 +54,8 @@ Feature: Rename a node
 
     When I fill in the dialog box input with "The new home"
     And press "OK"
-    Then I should have the following open tabs:
+    Then I should see node "The new home"
+    And I should have the following open tabs:
       | The new home |
       | test         |
 
@@ -64,7 +67,7 @@ Feature: Rename a node
 
     When I fill in the dialog box input with "The new folder name"
     And press "OK"
-    Then I should see "The new folder name"
+    Then I should see node "The new folder name"
 
     When I double click node "./The new folder name"
     And I click node "./The new folder name/test.txt"
@@ -72,10 +75,9 @@ Feature: Rename a node
     Then I should see "Test 1" within "h3"
 
     When I reload the page
-    And I wait for ajax call complete
+    Then I should see node "The new folder name"
     And I double click node "./The new folder name"
     And I click node "./The new folder name/test.txt"
     And I wait for ajax call complete
     Then I should see "Test 1" within "h3"
-
     

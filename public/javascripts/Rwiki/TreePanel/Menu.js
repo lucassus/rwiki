@@ -93,7 +93,7 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
     var callback = function(button) {
       if (button != 'yes') return;
       Rwiki.NodeManager.getInstance().deleteNode(path);
-    }
+    };
 
     var message = 'Delete "' + path + '"?';
     Ext.MessageBox.confirm('Confirm', message, callback);

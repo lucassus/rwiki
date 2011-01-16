@@ -2,6 +2,14 @@ When /^I wait for (\d+) second$/ do |n|
   sleep(n.to_i)
 end
 
+Then /^I should see node "([^"]*)"$/ do |title|
+  Then %{I should see "#{title}" within "div#tree"}
+end
+
+Then /^I should not see node "([^"]*)"$/ do |title|
+  Then %{I should not see "#{title}" within "div#tree"}
+end
+
 When /^I reload the page$/ do
   When %Q{I go to the home page}
   And %Q{I wait for ajax call complete}

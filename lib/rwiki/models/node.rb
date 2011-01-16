@@ -32,7 +32,7 @@ module Rwiki::Models
     end
 
     def parent_folder
-      return Folder.new(File.dirname(@path))
+      Folder.new(File.dirname(@path))
     end
 
     def delete

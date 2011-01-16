@@ -12,9 +12,12 @@ Feature: Create page
 
     When I fill in the dialog box input with "The new page"
     And press "OK"
-    And I reload the page
+    And I wait for ajax call complete
+    Then I should see node "The new page"
+
+    When I reload the page
     And I double click node "./folder"
-    Then I should see "The new page"
+    Then I should see node "The new page"
 
     When I click node "./folder/The new page.txt"
     Then I should have the following open tabs:
@@ -28,9 +31,14 @@ Feature: Create page
 
     When I fill in the dialog box input with "test"
     And press "OK"
-    And I reload the page
+    And I wait for ajax call complete
+    Then I should see node "test"
+
+    When I reload the page
     And I double click node "./folder"
-    And I click node "./folder/test.txt"
+    Then I should see node "test"
+
+    When I click node "./folder/test.txt"
     Then I should see "Test 1" within "h3"
 
   @javascript
@@ -41,5 +49,9 @@ Feature: Create page
 
     When I fill in the dialog box input with "The new folder"
     And press "OK"
-    And I reload the page
+    And I wait for ajax call complete
+    Then I should see node "The new folder"
+
+    When I reload the page
     And I double click node "./folder"
+    Then I should see node "The new folder"

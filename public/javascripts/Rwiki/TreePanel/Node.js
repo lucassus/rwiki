@@ -8,6 +8,10 @@ Rwiki.TreePanel.Node = Ext.extend(Ext.tree.AsyncTreeNode, {
     return path.replace(/^\//, '');
   },
 
+  setBaseName: function(baseName) {
+    this.attributes.baseName = baseName;
+  },
+
   getBaseName: function() {
     return this.attributes.baseName;
   }
