@@ -13,7 +13,6 @@ gem "thin"
 # Include everything needed to run rake, tests, features, etc.
 group :development do
   gem "jeweler"
-  gem "ruby-debug19"
 
   gem "rack-test"
   gem "test-unit"
