@@ -31,18 +31,8 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
-begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
-    test.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install spicycode-rcov"
-  end
-end
+require 'cucumber/rake/task'
+Cucumber::Rake::Task.new(:features)
 
 task :default => :test
 
@@ -54,11 +44,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title    = "rwiki #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
-end
-
-begin
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
-rescue LoadError
-  puts "Jasmine not available. Install it with: gem install jasmine"
 end
