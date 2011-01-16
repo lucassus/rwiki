@@ -26,4 +26,11 @@ Feature: Delete a page
     When I press "Yes"
     Then I should have the following open tabs:
       | test |
+
+
+    When I right click node "./test.txt"
+    And I follow "Delete node"
+    Then I should see dialog box titled "Confirm"
+    When I press "Yes"
+    Then I should have no open tabs
     

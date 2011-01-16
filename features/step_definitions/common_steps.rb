@@ -39,7 +39,7 @@ When /^I click node "([^"]*)"$/ do |path|
 end
 
 When /^I right click node "([^"]*)"$/ do |path|
-  node_id = Capybara.current_session.execute_script <<-JS
+  Capybara.current_session.execute_script <<-JS
     var node = Rwiki.treePanel.findNodeByPath('#{path}')
     Rwiki.treePanel.fireEvent('contextmenu', node, { getXY: function() { return [0,0] } })
   JS
@@ -48,6 +48,10 @@ end
 Then /^I should have the following open tabs:$/ do |table|
   actual_table = table(tableish("div.x-tab-panel ul li[@class!='x-tab-edge']", "a.x-tab-right"))
   table.diff!(actual_table)
+end
+
+Then /^I should have no open tabs$/ do
+  page.all("div.x-tab-panel ul li[class!='x-tab-edge']").size.should == 0
 end
 
 Then /^I should see dialog box titled "([^"]*)"$/ do |title|
