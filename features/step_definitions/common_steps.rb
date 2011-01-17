@@ -49,7 +49,7 @@ end
 When /^I right click node "([^"]*)"$/ do |path|
   Capybara.current_session.execute_script <<-JS
     var node = Rwiki.treePanel.findNodeByPath('#{path}')
-    Rwiki.treePanel.fireEvent('contextmenu', node, { getXY: function() { return [0,0] } });
+    Rwiki.treePanel.fireEvent('contextmenu', node, { getXY: function() { return [0, 0] } });
   JS
 end
 
