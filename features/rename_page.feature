@@ -6,24 +6,24 @@ Feature: Rename a node
 
   @javascript
   Scenario: Rename a page
-    When I right click node "./home.txt"
+    When I right click the node with path "./home.txt"
     And I follow "Rename node"
     Then I should see dialog box titled "Rename node"
 
     When I fill in the dialog box input with "The new home"
     And press "OK"
-    Then I should see node "The new home"
+    Then I should see the node titled "The new home"
 
     When I reload the page
-    Then I should see node "The new home"
+    Then I should see the node titled "The new home"
 
-    When I click node "./The new home.txt"
+    When I click the node with path "./The new home.txt"
     And I wait for ajax call complete
     Then I should see "Sample page" within "h1"
 
   @javascript
   Scenario: Rename a page to existing name
-    When I right click node "./home.txt"
+    When I right click the node with path "./home.txt"
     And I follow "Rename node"
     Then I should see dialog box titled "Rename node"
 
@@ -33,11 +33,11 @@ Feature: Rename a node
     And I should see "home"
     And I should see "test"
 
-    When I click node "./home.txt"
+    When I click the node with path "./home.txt"
     And I wait for ajax call complete
     Then I should see "Sample page" within "h1"
 
-    When I click node "./test.txt"
+    When I click the node with path "./test.txt"
     And I wait for ajax call complete
     Then I should see "This is a test"
     And I should have the following open tabs:
@@ -46,38 +46,38 @@ Feature: Rename a node
 
   @javascript
   Scenario: Rename a page when tab is open
-    When I click node "./home.txt"
-    And I click node "./test.txt"
-    And I right click node "./home.txt"
+    When I click the node with path "./home.txt"
+    And I click the node with path "./test.txt"
+    And I right click the node with path "./home.txt"
     And I follow "Rename node"
     Then I should see dialog box titled "Rename node"
 
     When I fill in the dialog box input with "The new home"
     And press "OK"
-    Then I should see node "The new home"
+    Then I should see the node titled "The new home"
     And I should have the following open tabs:
       | The new home |
       | test         |
 
   @javascript
   Scenario: Rename a folder
-    When I right click node "./folder"
+    When I right click the node with path "./folder"
     And I follow "Rename node"
     Then I should see dialog box titled "Rename node"
 
     When I fill in the dialog box input with "The new folder name"
     And press "OK"
-    Then I should see node "The new folder name"
+    Then I should see the node titled "The new folder name"
 
-    When I double click node "./The new folder name"
-    And I click node "./The new folder name/test.txt"
+    When I double click the node with path "./The new folder name"
+    And I click the node with path "./The new folder name/test.txt"
     And I wait for ajax call complete
     Then I should see "Test 1" within "h3"
 
     When I reload the page
-    Then I should see node "The new folder name"
-    And I double click node "./The new folder name"
-    And I click node "./The new folder name/test.txt"
+    Then I should see the node titled "The new folder name"
+    And I double click the node with path "./The new folder name"
+    And I click the node with path "./The new folder name/test.txt"
     And I wait for ajax call complete
     Then I should see "Test 1" within "h3"
     

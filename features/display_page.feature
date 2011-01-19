@@ -6,7 +6,7 @@ Feature: Display a page
 
   @javascript
   Scenario: Display the home.txt page
-    When I click node "./home.txt"
+    When I click the node with path "./home.txt"
     And I wait for ajax call complete
 
     Then I should have the following open tabs:
@@ -17,8 +17,8 @@ Feature: Display a page
 
   @javascript
   Scenario: Display the ./folder/test.txt page
-    When I double click node "./folder"
-    And I click node "./folder/test.txt"
+    When I double click the node with path "./folder"
+    And I click the node with path "./folder/test.txt"
     And I wait for ajax call complete
 
     Then I should have the following open tabs:
@@ -31,9 +31,9 @@ Feature: Display a page
 
   @javascript
   Scenario: Display the several page
-    When I click node "./home.txt"
-    And I double click node "./folder"
-    And I click node "./folder/test.txt"
+    When I click the node with path "./home.txt"
+    And I double click the node with path "./folder"
+    And I click the node with path "./folder/test.txt"
     And I wait for ajax call complete
 
     Then I should have the following open tabs:
