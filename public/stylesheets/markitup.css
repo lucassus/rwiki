@@ -1,0 +1,19 @@
+.markItUp .insert-code a {
+    background-image: url(/resources/markitup/sets/textile/images/code.png);
+}
+
+.markItUp .insert-code.ruby a {
+    background-image: url(/images/ruby.png);
+}
+
+.markItUp .insert-code.javascript a {
+    background-image: url(/images/javascript.png);
+}
+
+.markItUp .insert-code.html a {
+    background-image: url(/images/html.png);
+}
+
+.markItUp .insert-code.css a {
+    background-image: url(/images/stylesheet.png);
+}
