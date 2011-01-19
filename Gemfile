@@ -21,12 +21,9 @@ group :development do
 
   gem "cucumber"
   gem "cucumber-rails"
-  gem "webrat"
   gem "capybara"
   gem "rspec"
   gem "rspec-core"
   gem "rspec-expectations"
-
-  gem "Selenium"
-  gem "selenium-client"
 end
+
