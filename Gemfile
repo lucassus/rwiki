@@ -1,7 +1,4 @@
 source "http://rubygems.org"
-# Add dependencies required to use your gem here.
-# Example:
-#   gem "activesupport", ">= 2.3.5"
 
 gem "sinatra"
 gem "RedCloth"
@@ -21,12 +18,9 @@ group :development do
 
   gem "cucumber"
   gem "cucumber-rails"
-  gem "webrat"
   gem "capybara"
   gem "rspec"
   gem "rspec-core"
   gem "rspec-expectations"
-
-  gem "Selenium"
-  gem "selenium-client"
 end
+
