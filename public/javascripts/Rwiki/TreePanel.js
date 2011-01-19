@@ -59,6 +59,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     this.on('click', this.onClick);
 
+    this.on('rwiki:pageLoaded', this.onPageLoaded);
     this.on('rwiki:folderCreated', this.onFolderCreated);
     this.on('rwiki:pageCreated', this.onPageCreated);
     this.on('rwiki:nodeRenamed', this.onNodeRenamed);
@@ -86,6 +87,11 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     var path = node.getPath();
     this.fireEvent('pageSelected', path);
+  },
+
+  onPageLoaded: function(data) {
+    var node = this.findNodeByPath(data.path);
+    node.select();
   },
 
   onFolderCreated: function(data) {

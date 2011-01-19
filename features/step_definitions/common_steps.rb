@@ -89,3 +89,21 @@ When /^I click tab for page "([^"]*)"$/ do |path|
   tab = find("li##{tab_id}")
   tab.click
 end
+
+Then /^the node "([^"]*)" should be selected$/ do |path|
+  div_id = Capybara.current_session.execute_script <<-JS
+    var id = Rwiki.treePanel.findNodeByPath('#{path}').id;
+    return $('div[ext\\\\:tree-node-id="' + id + '"]').attr('id');
+  JS
+
+  page.has_css? "div##{div_id}.x-tree-selected"
+end
+
+Then /^the node "([^"]*)" should not be selected$/ do |path|
+  div_id = Capybara.current_session.execute_script <<-JS
+    var id = Rwiki.treePanel.findNodeByPath('#{path}').id;
+    return $('div[ext\\\\:tree-node-id="' + id + '"]').attr('id');
+  JS
+
+  page.has_no_css? "div##{div_id}.x-tree-selected"
+end
