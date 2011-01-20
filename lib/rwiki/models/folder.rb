@@ -28,7 +28,7 @@ module Rwiki::Models
       new_page_full_path = self.class.full_path_for(new_page_path)
       raise Rwiki::NodeError.new("#{new_page_path} already exists") if File.exists?(new_page_full_path)
 
-      FileUtils.touch(new_page_full_path)
+      File.open(new_page_full_path, 'w') { |f| f.write("h1. #{name.gsub(/\.txt$/, '')}\n\n") }
       return Page.new(new_page_path)
     end
 

@@ -30,7 +30,7 @@ Rwiki.init = function() {
   var nodeManager = Rwiki.NodeManager.getInstance();
 
   treePanel.relayEvents(nodeManager,
-    ['rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
+    ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
 
   var tabPanel = new Rwiki.TabPanel();
   Rwiki.tabPanel = tabPanel;

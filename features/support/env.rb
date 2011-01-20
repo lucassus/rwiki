@@ -8,6 +8,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '../../test/tmpdir_he
 
 Rwiki::App.set(:environment, :test)
 
+Capybara.default_selector = :css
 Capybara.register_driver :selenium do |app|
   Capybara::Driver::Selenium
   profile = Selenium::WebDriver::Firefox::Profile.new

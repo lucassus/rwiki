@@ -60,11 +60,11 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
         {separator:'---------------' },
         {name:'Quotes', openWith:'bq(!(([![Class]!]))!). '},
         {separator:'---------------' },
-        {name:'Code', openWith:'<code>\n', closeWith:'\n</code>'},
-        {name:'Ruby Code', openWith:'<code lang="ruby">\n', closeWith:'\n</code>'},
-        {name:'JavaScript Code', openWith:'<code lang="javascript">\n', closeWith:'\n</code>'},
-        {name:'HTML Code', openWith:'<code lang="html">\n', closeWith:'\n</code>'},
-        {name:'Css Code', openWith:'<code lang="css">\n', closeWith:'\n</code>'}
+        {name:'Code', openWith:'<code>\n', closeWith:'\n</code>', className: 'insert-code'},
+        {name:'Ruby Code', openWith:'<code lang="ruby">\n', closeWith:'\n</code>', className: 'insert-code ruby'},
+        {name:'JavaScript Code', openWith:'<code lang="javascript">\n', closeWith:'\n</code>', className: 'insert-code javascript'},
+        {name:'HTML Code', openWith:'<code lang="html">\n', closeWith:'\n</code>', className: 'insert-code html'},
+        {name:'Css Code', openWith:'<code lang="css">\n', closeWith:'\n</code>', className: 'insert-code css'}
       ],
       resizeHandle: false,
       afterInsert: function() {

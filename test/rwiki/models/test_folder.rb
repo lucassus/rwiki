@@ -140,7 +140,7 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
 
       context 'for non-existing page' do
         setup do
-          @new_page_name = 'new_page.txt'
+          @new_page_name = 'The new page.txt'
 
           assert_nothing_raised do
             @new_page = @parent.create_sub_page(@new_page_name)
@@ -149,9 +149,9 @@ class Rwiki::Models::TestFolder < Test::Unit::TestCase
 
         should 'return a new page instance' do
           assert @new_page
-          assert_equal './new_page.txt', @new_page.path
-          assert_equal '', @new_page.raw_content
-          assert_equal '', @new_page.html_content
+          assert_equal './The new page.txt', @new_page.path
+          assert_equal "h1. The new page\n\n", @new_page.raw_content
+          assert_match /The new page/, @new_page.html_content
         end
 
         should 'create a file' do
