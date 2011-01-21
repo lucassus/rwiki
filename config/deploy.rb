@@ -1,3 +1,8 @@
+$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+require "rvm/capistrano"
+
+set :rvm_type, :system
+
 set :application, "rwiki"
 set :deploy_to, "/home/projects/rwiki"
 
@@ -18,13 +23,9 @@ namespace :deploy do
     run "rm -rf #{release_path}/config/config.yml"
     run "ln -s #{shared_path}/config/config.yml #{release_path}/config/config.yml"
 
-    # Symlink notes
-    run "rm -rf #{release_path}/notes"
-    run "ln -s #{shared_path}/notes #{release_path}/notes"
-
     # Symlink gems
     run "rm -rf #{release_path}/vendor/bundle"
-    run "ln -s #{shared_path}/vendor/bundle #{release_path}/vendor/bundle"
+    run "ln -s #{shared_path}/bundle #{release_path}/vendor/bundle"
   end
 
   task :bundle_install, :roles => :app do
