@@ -14,8 +14,6 @@ Rwiki.captureEvents = function(observable) {
 
 Rwiki.init = function() {
 
-  alert('ok!');
-
   // TabPanel history
   Ext.History.init();
 
