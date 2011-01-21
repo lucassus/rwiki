@@ -28,11 +28,13 @@ Feature: Delete a page
     Then I should not see the node titled "home"
     And I should have the following open tabs:
       | test |
+    And I should see page title "Rwiki ./test.txt"
 
     When I right click the node with path "./test.txt"
     And I follow "Delete node"
     Then I should see dialog box titled "Confirm"
+
     When I press "Yes"
     Then I should not see the node titled "test"
     And I should have no open tabs
-    
+    And I should see page title "Rwiki"

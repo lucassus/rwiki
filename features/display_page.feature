@@ -11,6 +11,7 @@ Feature: Display a page
 
     Then I should have the following open tabs:
       | home |
+    And I should see page title "Rwiki ./home.txt"
     And I should see "Sample page" within "h1"
     And I should see "Lorem ipsum.."
     And I should see "Sample section" within "h2"
@@ -23,6 +24,7 @@ Feature: Display a page
 
     Then I should have the following open tabs:
       | test |
+    And I should see page title "Rwiki ./folder/test.txt"
     And I should see "Test 1" within "h3"
     And I should see "Item one"
     And I should see "Item two"
@@ -39,3 +41,4 @@ Feature: Display a page
     Then I should have the following open tabs:
       | home |
       | test |
+    And I should see page title "Rwiki ./folder/test.txt"

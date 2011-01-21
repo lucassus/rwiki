@@ -23,6 +23,7 @@ Feature: Create page
     And I wait for ajax call complete
     Then I should have the following open tabs:
       | The new page |
+    And I should see page title "Rwiki ./folder/The new page.txt"
     And I should see "The new page" within "h1"
 
   @javascript

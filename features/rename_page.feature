@@ -40,14 +40,17 @@ Feature: Rename a node
     When I click the node with path "./test.txt"
     And I wait for ajax call complete
     Then I should see "This is a test"
+    And I should see page title "Rwiki ./test.txt"
     And I should have the following open tabs:
       | home |
       | test |
 
   @javascript
   Scenario: Rename a page when tab is open
-    When I click the node with path "./home.txt"
-    And I click the node with path "./test.txt"
+    When I click the node with path "./test.txt"
+    And I click the node with path "./home.txt"
+    Then I should see page title "Rwiki ./home.txt"
+
     And I right click the node with path "./home.txt"
     And I follow "Rename node"
     Then I should see dialog box titled "Rename node"
@@ -56,8 +59,9 @@ Feature: Rename a node
     And press "OK"
     Then I should see the node titled "The new home"
     And I should have the following open tabs:
-      | The new home |
       | test         |
+      | The new home |
+    And I should see page title "Rwiki ./The new home.txt"
 
   @javascript
   Scenario: Rename a folder

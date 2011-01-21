@@ -74,6 +74,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       document.title = 'Rwiki ' + tab.getPagePath();
       Rwiki.NodeManager.getInstance().loadPage(tab.getPagePath());
     } else {
+      document.title = 'Rwiki';
       Rwiki.NodeManager.getInstance().fireEvent('rwiki:lastPageClosed');
     }
   },
