@@ -23,5 +23,7 @@ group :development do
   gem "rspec"
   gem "rspec-core"
   gem "rspec-expectations"
+
+  gem "capistrano"
 end
 
