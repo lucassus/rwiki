@@ -91,7 +91,9 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   onPageLoaded: function(data) {
     var node = this.findNodeByPath(data.path);
-    node.select();
+    if (node) {
+      node.select();
+    }
   },
 
   onFolderCreated: function(data) {
@@ -147,20 +149,25 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   findNodeByPath: function(path) {
-    var keys = path.split('/');
-    var node = this.root;
-
-    if (node.getBaseName() != keys[0]) {
-      return null;
-    }
-
-    for (var i = 1, n = keys.length; i < n; i++) {
-      var baseName = keys[i];
-      if (baseName == '') continue;
-      
-      node = node.findChild('baseName', baseName);
-    }
+    var node = null;
+    this.root.cascadeAll(function(curretNode) {
+      if (curretNode.getPath() == path) {
+        node = curretNode;
+        return false;
+      }
+    });
 
     return node;
+  },
+
+  openNodeFromLocationHash: function() {
+    if (!location.hash) return;
+
+    var path = location.hash.replace(new RegExp('^#'), '');
+    var node = this.findNodeByPath(path);
+    if (node) {
+      node.expandAll();
+      this.onClick(node);
+    }
   }
 });

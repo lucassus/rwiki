@@ -17,22 +17,21 @@ Rwiki.init = function() {
   // TabPanel history
   Ext.History.init();
 
-  // Handle this change event in order to restore the UI to the appropriate history state
-  Ext.History.on('change', function(path) {
-    if (path) {
-      var node = Rwiki.treePanel.findNodeByPath(path);
-      if (node) {
-        Rwiki.treePanel.onClick(node);
-      }
-    }
-  });
+  var firstLoad = true;
 
   // TODO find better solution
-  Rwiki.ajaxCallInProgress = false;
+  Rwiki.ajaxCallCompleted = false;
+  Rwiki.treeLoaded = false;
+
   $(document).ajaxStart(function() {
-    Rwiki.ajaxCallInProgress = true;
+    Rwiki.ajaxCallCompleted = false;
   }).ajaxStop(function() {
-    Rwiki.ajaxCallInProgress = false;
+    Rwiki.ajaxCallCompleted = true;
+
+    if (firstLoad) {
+      Rwiki.treePanel.openNodeFromLocationHash();
+      firstLoad = false;
+    }
   });
 
   var toolbar = new Rwiki.Toolbar();
@@ -55,6 +54,11 @@ Rwiki.init = function() {
   editorPanel.relayEvents(nodeManager,
     ['rwiki:pageLoaded', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted', 'rwiki:lastPageClosed']);
   editorPanel.relayEvents(toolbar, ['editorToggled']);
+
+  // Handle this change event in order to restore the UI to the appropriate history state
+  Ext.History.on('change', function() {
+    Rwiki.treePanel.openNodeFromLocationHash();
+  });
 
   // Create layout
 
