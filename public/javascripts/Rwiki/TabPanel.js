@@ -70,6 +70,8 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   onTabChange: function(panel, tab) {
     if (tab) {
+      Ext.History.add(tab.getPagePath());
+      document.title = 'Rwiki ' + tab.getPagePath();
       Rwiki.NodeManager.getInstance().loadPage(tab.getPagePath());
     } else {
       Rwiki.NodeManager.getInstance().fireEvent('rwiki:lastPageClosed');

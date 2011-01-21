@@ -14,6 +14,19 @@ Rwiki.captureEvents = function(observable) {
 
 Rwiki.init = function() {
 
+  // TabPanel history
+  Ext.History.init();
+
+  // Handle this change event in order to restore the UI to the appropriate history state
+  Ext.History.on('change', function(path) {
+    if (path) {
+      var node = Rwiki.treePanel.findNodeByPath(path);
+      if (node) {
+        Rwiki.treePanel.onClick(node);
+      }
+    }
+  });
+
   // TODO find better solution
   Rwiki.ajaxCallInProgress = false;
   $(document).ajaxStart(function() {
