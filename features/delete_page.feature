@@ -1,8 +1,7 @@
 Feature: Delete a page
 
   Background:
-    Given I go to the home page
-    And I wait for ajax call complete
+    Given I open the application
 
   @javascript
   Scenario: Delete a page
@@ -13,7 +12,7 @@ Feature: Delete a page
     When I press "Yes"
     Then I should not see the node titled "home"
 
-    When I reload the page
+    When I reload the application
     Then I should not see the node titled "home"
 
   @javascript

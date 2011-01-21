@@ -1,10 +1,14 @@
-When /^I wait for (\d+) second$/ do |n|
-  sleep(n.to_i)
+When /^I open the application$/ do
+  When %Q{I open the application}
+  And %Q{I wait for ajax call complete}
 end
 
-When /^I reload the page$/ do
-  When %Q{I go to the home page}
-  And %Q{I wait for ajax call complete}
+When /^I reload the application$/ do
+  When %Q{I open the application}
+end
+
+When /^I wait for (\d+) second$/ do |n|
+  sleep(n.to_i)
 end
 
 Given /^I wait for ajax call complete$/ do

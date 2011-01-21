@@ -1,8 +1,7 @@
 Feature: Create page
 
   Background:
-    Given I go to the home page
-    And I wait for ajax call complete
+    Given I open the application
 
   @javascript
   Scenario: Create a new page
@@ -14,7 +13,7 @@ Feature: Create page
     And I press "OK" within the dialog box
     Then I should see the node titled "The new page"
 
-    When I reload the page
+    When I reload the application
     And I double click the node with path "./folder"
     Then I should see the node titled "The new page"
 
@@ -34,7 +33,7 @@ Feature: Create page
     And I press "OK" within the dialog box
     Then I should see the node titled "test"
 
-    When I reload the page
+    When I reload the application
     And I double click the node with path "./folder"
     Then I should see the node titled "test"
 
@@ -51,6 +50,6 @@ Feature: Create page
     And I press "OK" within the dialog box
     Then I should see the node titled "The new folder"
 
-    When I reload the page
+    When I reload the application
     And I double click the node with path "./folder"
     Then I should see the node titled "The new folder"

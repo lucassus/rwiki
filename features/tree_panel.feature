@@ -1,8 +1,7 @@
 Feature: Tree Panel
 
   Background:
-    Given I go to the home page
-    And I wait for ajax call complete
+    Given I open the application
 
   @javascript
   Scenario: Browsing a tree

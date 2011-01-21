@@ -1,8 +1,7 @@
 Feature: Rename a node
 
   Background:
-    Given I go to the home page
-    And I wait for ajax call complete
+    Given I open the application
 
   @javascript
   Scenario: Rename a page
@@ -14,7 +13,7 @@ Feature: Rename a node
     And I press "OK" within the dialog box
     Then I should see the node titled "The new home"
 
-    When I reload the page
+    When I reload the application
     Then I should see the node titled "The new home"
 
     When I click the node with path "./The new home.txt"
@@ -28,7 +27,7 @@ Feature: Rename a node
 
     When I fill in the input with "test" within the dialog box
     And I press "OK" within the dialog box
-    And I reload the page
+    And I reload the application
     And I should see "home"
     And I should see "test"
 
@@ -79,7 +78,7 @@ Feature: Rename a node
     And I click the node with path "./The new folder name/test.txt"
     Then I should see "Test 1" within "h3"
 
-    When I reload the page
+    When I reload the application
     Then I should see the node titled "The new folder name"
     And I double click the node with path "./The new folder name"
     And I click the node with path "./The new folder name/test.txt"
