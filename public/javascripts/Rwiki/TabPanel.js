@@ -104,6 +104,8 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     var oldPath = data.oldPath;
     var path = data.path;
 
+    var currentTab = this.getActiveTab();
+
     var tab = null;
     var isPage = oldPath.match(new RegExp('\.txt$'));
     if (isPage) {
@@ -113,12 +115,20 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       tab.setPagePath(path);
       var title = data.baseName.replace(new RegExp('\.txt$'), '');
       tab.setTitle(title);
+
+      if (tab == currentTab) {
+        document.title = 'Rwiki ' + path;
+      }
     } else {
       var tabs = this.findTabsByParentPath(oldPath);
       for (var i = 0; i < tabs.length; i++) {
         tab = tabs[i];
         var newPath = tab.getPagePath().replace(oldPath, path);
         tab.setPagePath(newPath);
+
+        if (tab == currentTab) {
+          document.title = 'Rwiki ' + newPath;
+        }
       }
     }
   },

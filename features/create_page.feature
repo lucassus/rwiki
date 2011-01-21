@@ -10,9 +10,8 @@ Feature: Create page
     And I follow "Create page"
     Then I should see dialog box titled "Create page"
 
-    When I fill in the dialog box input with "The new page"
-    And press "OK"
-    And I wait for ajax call complete
+    When I fill in the input with "The new page" within the dialog box
+    And I press "OK" within the dialog box
     Then I should see the node titled "The new page"
 
     When I reload the page
@@ -20,7 +19,6 @@ Feature: Create page
     Then I should see the node titled "The new page"
 
     When I click the node with path "./folder/The new page.txt"
-    And I wait for ajax call complete
     Then I should have the following open tabs:
       | The new page |
     And I should see page title "Rwiki ./folder/The new page.txt"
@@ -32,9 +30,8 @@ Feature: Create page
     And I follow "Create page"
     Then I should see dialog box titled "Create page"
 
-    When I fill in the dialog box input with "test"
-    And press "OK"
-    And I wait for ajax call complete
+    When I fill in the input with "test" within the dialog box
+    And I press "OK" within the dialog box
     Then I should see the node titled "test"
 
     When I reload the page
@@ -50,9 +47,8 @@ Feature: Create page
     And I follow "Create folder"
     Then I should see dialog box titled "Create folder"
 
-    When I fill in the dialog box input with "The new folder"
-    And press "OK"
-    And I wait for ajax call complete
+    When I fill in the input with "The new folder" within the dialog box
+    And I press "OK" within the dialog box
     Then I should see the node titled "The new folder"
 
     When I reload the page

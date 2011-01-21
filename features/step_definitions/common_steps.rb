@@ -22,11 +22,6 @@ Then /^I should see dialog box titled "([^"]*)"$/ do |title|
   %Q{Then I should see "#{title}" within "span.x-window-header-text"}
 end
 
-When /^I fill in the dialog box input with "([^"]*)"$/ do |text|
-  field = find("div.x-window-dlg input")
-  field.set(text)
-end
-
 Then /^I should see page title "([^"]*)"$/ do |title|
   find("title").text.should == title
 end

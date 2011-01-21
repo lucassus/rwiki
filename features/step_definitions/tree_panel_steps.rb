@@ -16,6 +16,8 @@ When /^I click (the node with path "(?:[^"]*)")$/ do |tree_node_id|
   Capybara.current_session.execute_script <<-JS
     $("div[ext\\\\:tree-node-id='#{tree_node_id}']").trigger("click");
   JS
+
+  And %{I wait for ajax call complete}
 end
 
 When /^I right click the node with path "([^"]*)"$/ do |path|
