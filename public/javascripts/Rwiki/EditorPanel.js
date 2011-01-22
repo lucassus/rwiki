@@ -3,13 +3,8 @@ Ext.ns('Rwiki');
 Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
   constructor: function() {
     Ext.apply(this, {
-      region: 'east',
       contentEl: 'editor-container',
       header: false,
-      collapseMode: 'mini',
-      split: true,
-      collapsible: true,
-      collapsed: true,
       height: 400,
 
       listeners: {

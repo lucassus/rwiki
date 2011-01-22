@@ -10,7 +10,12 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       defaults: {
         autoScroll: true
       },
-      plugins: new Ext.ux.TabCloseMenu()
+      plugins: new Ext.ux.TabCloseMenu(),
+      tbar: [{
+        text: 'Edit the page',
+        handler: this.onEditPage,
+        iconCls: 'icon-edit'
+      }]
     });
 
     Rwiki.TabPanel.superclass.initComponent.apply(this, arguments);
@@ -139,5 +144,37 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       var tab = tabs[i];
       this.remove(tab);
     }
+  },
+
+  onEditPage: function() {
+    var window = new Ext.Window({
+      title: 'Compose message',
+      maximizable: true,
+      modal: true,
+      width: 750,
+      height: 500,
+      minWidth: 300,
+      minHeight: 200,
+      layout: 'fit',
+      plain: true,
+      bodyStyle: 'padding: 5px;',
+      buttonAlign: 'center',
+      items: new Rwiki.EditorPanel(),
+      buttons: [{
+        text: 'Save',
+        handler: function() {
+          window.hide();
+        }
+      }, {
+        text: 'Save and continue'
+      }, {
+        text: 'Cancel',
+        handler: function() {
+          window.hide();
+        }
+      }]
+    });
+    
+    window.show();
   }
 });

@@ -23,7 +23,6 @@ Rwiki.init = function() {
   Rwiki.ajaxCallCompleted = true;
   Rwiki.treeLoaded = false;
 
-  var toolbar = new Rwiki.Toolbar();
   var treePanel = new Rwiki.TreePanel();
   Rwiki.treePanel = treePanel;
   var nodeManager = Rwiki.NodeManager.getInstance();
@@ -50,10 +49,9 @@ Rwiki.init = function() {
     ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:pageSaved', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
   tabPanel.relayEvents(treePanel, ['pageSelected']);
 
-  var editorPanel = new Rwiki.EditorPanel();
-  editorPanel.relayEvents(nodeManager,
-    ['rwiki:pageLoaded', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted', 'rwiki:lastPageClosed']);
-  editorPanel.relayEvents(toolbar, ['editorToggled']);
+//  var editorPanel = new Rwiki.EditorPanel();
+//  editorPanel.relayEvents(nodeManager,
+//    ['rwiki:pageLoaded', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted', 'rwiki:lastPageClosed']);
 
   // Handle this change event in order to restore the UI to the appropriate history state
   Ext.History.on('change', function() {
@@ -62,27 +60,10 @@ Rwiki.init = function() {
 
   // Create layout
 
-  var sidePanel = new Rwiki.SidePanel({
-    items: [treePanel]
-  });
-
-  sidePanel.relayEvents(toolbar, ['treeToggled']);
-
-  var pageAndEditorPanel = new Ext.Panel({
+  var app = new Ext.Viewport({
     layout: 'border',
-    region: 'center',
-    items: [tabPanel, editorPanel]
-  });
-
-  var mainPanel = new Ext.Panel({
-    layout: 'border',
-    region: 'center',
-    tbar: toolbar,
-    items: [sidePanel, pageAndEditorPanel]
-  });
-
-  var app = new Rwiki.Viewport({
-    items: [mainPanel]
+    renderTo: Ext.getBody(),
+    items: [treePanel, tabPanel]
   });
 
   app.show();

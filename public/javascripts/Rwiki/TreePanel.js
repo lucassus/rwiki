@@ -6,11 +6,23 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     Ext.apply(this, {
       id: 'tree',
-      rootVisible: true,
-      useArrows: true,
+      region: 'west',
+
+      header: true,
+      title: 'Tree panel',
+      
       animate: true,
-      border: false,
-      collapsible: false,
+      border: true,
+      split: true,
+      collapsible: true,
+      width: 255,
+      minSize: 255,
+      maxSize: 500,
+      margins:'3 0 3 3',
+      cmargins:'3 3 3 3',
+      
+      useArrows: true,
+      rootVisible: true,
       loader: new Rwiki.TreePanel.Loader(),
 
       enableDD: true,
