@@ -5,4 +5,5 @@ end
 
 When /^I press "([^"]*)" within the dialog box$/ do |button|
   When %{I press "#{button}" within "div.x-window-dlg"}
+  And %Q{I wait for load an ajax call complete}
 end

@@ -9,7 +9,7 @@ Feature: Delete a page
     And I follow "Delete node"
     Then I should see dialog box titled "Confirm"
 
-    When I press "Yes"
+    When I press "Yes" within the dialog box
     Then I should not see the node titled "home"
 
     When I reload the application
@@ -25,7 +25,7 @@ Feature: Delete a page
     And I follow "Delete node"
     Then I should see dialog box titled "Confirm"
 
-    When I press "Yes"
+    When I press "Yes" within the dialog box
     Then I should not see the node titled "home"
     And I should have the following open tabs:
       | ruby |
@@ -35,7 +35,7 @@ Feature: Delete a page
     And I follow "Delete node"
     Then I should see dialog box titled "Confirm"
 
-    When I press "Yes"
+    When I press "Yes" within the dialog box
     Then I should not see the node titled "ruby"
     And I should have no open tabs
     And I should see page title "Rwiki"

@@ -55,6 +55,7 @@ module Rwiki
 
       result = node.to_hash
       result[:parentPath] = parent_folder.path
+
       result.to_json
     end
 
@@ -67,6 +68,7 @@ module Rwiki
 
       result = node.to_hash
       result[:oldPath] = path
+
       result.to_json
     end
 
@@ -81,6 +83,7 @@ module Rwiki
       result = node.to_hash
       result[:oldPath] = path
       result[:success] = true
+
       result.to_json
     end
 

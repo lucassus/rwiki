@@ -13,7 +13,7 @@ end
 When /^I open the application for page with path "([^"]*)"$/ do |path|
   visit('/#' + path)
   And %Q{I wait for load the tree}
-  And %Q{I wait for load the page}
+  And %Q{I wait for load an ajax call complete}
 end
 
 When /^I wait for (\d+) second$/ do |n|
@@ -29,7 +29,7 @@ Given /^I wait for load the tree$/ do
   end
 end
 
-Given /^I wait for load the page$/ do
+Given /^I wait for load an ajax call complete$/ do
   timeout = 10
   wait_until(timeout) do
     Capybara.current_session.evaluate_script <<-JS
@@ -53,5 +53,6 @@ When /^I create a new page title "([^"]*)" for the node with path "([^"]*)"$/ do
 
   When %{I fill in the input with "#{title}" within the dialog box}
   And %{I press "OK" within the dialog box}
+  And %Q{I wait for load an ajax call complete}
   Then %{I should see the node titled "#{title}"}
 end

@@ -17,7 +17,7 @@ When /^I click (the node with path "(?:[^"]*)")$/ do |tree_node_id|
     $("div[ext\\\\:tree-node-id='#{tree_node_id}']").trigger("click");
   JS
 
-  And %{I wait for load the page}
+  And %{I wait for load an ajax call complete}
 end
 
 When /^I right click the node with path "([^"]*)"$/ do |path|
