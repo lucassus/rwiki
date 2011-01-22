@@ -93,6 +93,21 @@ Rwiki.init = function() {
     fn: function() {
       tabPanel.onEditPage();
     }
+  }, {
+    key: "t",
+    ctrl: true,
+    stopEvent: true,
+    fn: function() {
+      tabPanel.onFuzzyFinder();
+    }
+  }, {
+    key: "w",
+    ctrl: true,
+    stopEvent: true,
+    fn: function() {
+      var tab = tabPanel.getActiveTab();
+      tabPanel.remove(tab);
+    }
   }]);
   
 };

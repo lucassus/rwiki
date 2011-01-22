@@ -15,6 +15,16 @@ module Rwiki::Models
       def working_path=(path)
         @@working_path = path
       end
+
+      def fuzzy_finder(query)
+        @finder ||= FuzzyFileFinder.new(full_path_for('.'))
+        matches = @finder.find(query).sort_by { |m| [-m[:score], m[:path]] }
+        matches.each do |m|
+          m[:path] = '.' + m[:path].gsub(full_path_for('.'), '') 
+        end
+
+        return matches
+      end
     end
 
     def self.new_from_path(path)

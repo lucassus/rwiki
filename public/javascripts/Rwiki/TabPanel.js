@@ -16,6 +16,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         scope: this,
         handler: this.onEditPage,
         iconCls: 'icon-edit'
+      }, {
+        text: 'Find page',
+        scope: this,
+        handler: this.onFuzzyFinder
       }]
     });
 
@@ -154,5 +158,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     if (currentTab) {
       this.fireEvent('rwiki:editPage', currentTab.getPagePath());
     }
+  },
+
+  onFuzzyFinder: function() {
+    var fuzzyFinder = new Rwiki.FuzzyFinderDialog(this.dataStore);
+    fuzzyFinder.show();
   }
 });

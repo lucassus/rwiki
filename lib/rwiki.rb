@@ -6,6 +6,7 @@ require 'json/pure'
 require 'redcloth'
 require 'sinatra'
 require 'sinatra/base'
+require 'fuzzy_file_finder'
 
 module Rwiki
 

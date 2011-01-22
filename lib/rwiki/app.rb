@@ -96,5 +96,12 @@ module Rwiki
 
       { :path => node.path }.to_json
     end
+
+    get '/fuzzy_finder' do
+      query = params[:query]
+      matches = Node.fuzzy_finder(query)
+
+      { :results => matches, :count => matches.size }.to_json
+    end
   end
 end
