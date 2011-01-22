@@ -16,10 +16,6 @@ Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
         path: node.getPath('baseName')
       }
     });
-
-    this.on('load', function() {
-      Rwiki.treeLoaded = true;
-    });
   },
 
   createNode: function(attr) {

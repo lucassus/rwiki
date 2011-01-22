@@ -20,26 +20,26 @@ Rwiki.init = function() {
   var firstLoad = true;
 
   // TODO find better solution
-  Rwiki.ajaxCallCompleted = false;
+  Rwiki.ajaxCallCompleted = true;
   Rwiki.treeLoaded = false;
-
-  $(document).ajaxStart(function() {
-    Rwiki.ajaxCallCompleted = false;
-  }).ajaxStop(function() {
-    Rwiki.ajaxCallCompleted = true;
-
-    if (firstLoad) {
-      Rwiki.treePanel.openNodeFromLocationHash();
-      firstLoad = false;
-    }
-  });
 
   var toolbar = new Rwiki.Toolbar();
   var treePanel = new Rwiki.TreePanel();
   Rwiki.treePanel = treePanel;
-  var treePanelContextMenu = new Rwiki.TreePanel.Menu();
-  treePanel.setContextMenu(treePanelContextMenu);
   var nodeManager = Rwiki.NodeManager.getInstance();
+
+  nodeManager.on('rwiki:beforePageLoad', function() {
+    Rwiki.ajaxCallCompleted = false;
+  });
+
+  nodeManager.on('rwiki:pageLoaded', function() {
+    Rwiki.ajaxCallCompleted = true;
+  });
+
+  treePanel.getLoader().on('load', function() {
+    Rwiki.treeLoaded = true;
+    Rwiki.treePanel.openNodeFromLocationHash();
+  });
 
   treePanel.relayEvents(nodeManager,
     ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);

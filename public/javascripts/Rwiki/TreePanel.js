@@ -30,6 +30,9 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
 
+    this.contextMenu = new Rwiki.TreePanel.Menu();
+    this.on('contextmenu', this.onContextMenu, this);
+
     this.filter = new Rwiki.TreePanel.Filter(this);
     this.root.expand();
 
@@ -65,11 +68,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('rwiki:nodeRenamed', this.onNodeRenamed);
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
     this.on('beforemovenode', this.onBeforeMoveNode);
-  },
-
-  setContextMenu: function(contextMenu) {
-    this.contextMenu = contextMenu;
-    this.on('contextmenu', this.onContextMenu, this);
   },
 
   onContextMenu: function(node, e) {

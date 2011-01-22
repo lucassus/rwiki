@@ -11,6 +11,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
 
   initEvents: function() {
     this.addEvents(
+      'rwiki:beforePageLoad',
       'rwiki:pageLoaded',
       'rwiki:nodeDeleted',
       'rwiki:folderCreated',
@@ -23,6 +24,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
 
   loadPage: function(path) {
     var self = this;
+    self.fireEvent('rwiki:beforePageLoad', path);
     
     $.ajax({
       type: 'GET',

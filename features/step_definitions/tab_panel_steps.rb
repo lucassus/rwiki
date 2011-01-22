@@ -15,8 +15,6 @@ When /^I click tab for page "([^"]*)"$/ do |path|
 
   tab = find("li##{tab_id}")
   tab.click
-
-  And %{I wait for load an ajax call complete}
 end
 
 Then /^I should have the following open tabs:$/ do |table|
