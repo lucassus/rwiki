@@ -1,3 +1,8 @@
+Then /^I enter the break point$/ do
+  debugger
+  p 'debugger'
+end
+
 When /^I open the application$/ do
   When %Q{I go to the home page}
 end

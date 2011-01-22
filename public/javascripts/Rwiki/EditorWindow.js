@@ -3,7 +3,6 @@ Ext.ns('Rwiki');
 Rwiki.EditorWindow = Ext.extend(Ext.Window, {
   constructor: function(editorPanel) {
     Ext.apply(this, {
-      title: 'Edititing page',
       maximizable: true,
       modal: true,
       width: 750,
@@ -40,6 +39,7 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
 
   setPagePath: function(path) {
     this.pagePath = path;
+    this.setTitle('Editing page ' + path);
   },
 
   show: function() {

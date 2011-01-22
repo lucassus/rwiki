@@ -2,9 +2,11 @@ module Rwiki
   class App < Sinatra::Base
     include Models
 
-    set :raise_errors, false
-    set :show_exceptions, false
     set :root, File.join(File.dirname(__FILE__), '../..')
+
+    disable :raise_errors
+    disable :show_exceptions
+    disable :logging
 
     error NodeNotFoundError do
       message = request.env['sinatra.error'].message
