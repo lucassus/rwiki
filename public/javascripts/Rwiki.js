@@ -49,9 +49,14 @@ Rwiki.init = function() {
     ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:pageSaved', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
   tabPanel.relayEvents(treePanel, ['pageSelected']);
 
-//  var editorPanel = new Rwiki.EditorPanel();
+  var editorPanel = new Rwiki.EditorPanel();
 //  editorPanel.relayEvents(nodeManager,
 //    ['rwiki:pageLoaded', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted', 'rwiki:lastPageClosed']);
+
+  tabPanel.on('rwiki:editPage', function(path) {
+    var window = new Rwiki.EditorWindow(editorPanel);
+    window.show();
+  });
 
   // Handle this change event in order to restore the UI to the appropriate history state
   Ext.History.on('change', function() {

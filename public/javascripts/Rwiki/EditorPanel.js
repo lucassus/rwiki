@@ -25,45 +25,45 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     Rwiki.EditorPanel.superclass.initEvents.apply(this, arguments);
 
     this.on('rwiki:pageLoaded', this.onPageLoaded);
-    this.on('rwiki:nodeRenamed', this.onNodeRenamed);
-    this.on('rwiki:nodeDeleted', this.onNodeDeleted);
-    this.on('rwiki:lastPageClosed', this.onLastPageClosed);
-    this.on('editorToggled', this.onEditorToggled);
+//    this.on('rwiki:nodeRenamed', this.onNodeRenamed);
+//    this.on('rwiki:nodeDeleted', this.onNodeDeleted);
+//    this.on('rwiki:lastPageClosed', this.onLastPageClosed);
+//    this.on('editorToggled', this.onEditorToggled);
   },
 
   onPageLoaded: function(data) {
     this.editor.setPagePath(data.path);
     this.editor.setContent(data.rawContent);
-  },
-
-  onNodeRenamed: function(data) {
-    var oldPath = data.oldPath;
-    var currentPagePath = this.editor.getPagePath();
-    if (currentPagePath == null) return;
-
-    var isPage = oldPath.match(new RegExp('\.txt$'));
-    var currentPageWasChanged = isPage && oldPath == currentPagePath;
-    var parentPathWasChanged = Rwiki.NodeManager.getInstance().isParent(oldPath, currentPagePath);
-
-    if (currentPageWasChanged) {
-      this.editor.setPagePath(data.path);
-    } else if (parentPathWasChanged) {
-      var newPath = currentPagePath.replace(oldPath, data.path);
-      this.editor.setPagePath(newPath);
-    }
-  },
-
-  onNodeDeleted: function(data) {
-    if (data.path == this.editor.getPagePath()) {
-      this.editor.clearContent();
-    }
-  },
-
-  onLastPageClosed: function() {
-    this.editor.clearContent();
-  },
-
-  onEditorToggled: function() {
-    this.toggleCollapse();
   }
+
+//  onNodeRenamed: function(data) {
+//    var oldPath = data.oldPath;
+//    var currentPagePath = this.editor.getPagePath();
+//    if (currentPagePath == null) return;
+//
+//    var isPage = oldPath.match(new RegExp('\.txt$'));
+//    var currentPageWasChanged = isPage && oldPath == currentPagePath;
+//    var parentPathWasChanged = Rwiki.NodeManager.getInstance().isParent(oldPath, currentPagePath);
+//
+//    if (currentPageWasChanged) {
+//      this.editor.setPagePath(data.path);
+//    } else if (parentPathWasChanged) {
+//      var newPath = currentPagePath.replace(oldPath, data.path);
+//      this.editor.setPagePath(newPath);
+//    }
+//  },
+
+//  onNodeDeleted: function(data) {
+//    if (data.path == this.editor.getPagePath()) {
+//      this.editor.clearContent();
+//    }
+//  },
+
+//  onLastPageClosed: function() {
+//    this.editor.clearContent();
+//  },
+
+//  onEditorToggled: function() {
+//    this.toggleCollapse();
+//  }
 });

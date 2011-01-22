@@ -43,7 +43,7 @@
   background-image: url(../images/icons/collapse-all.gif) !important;
 }
 
-.icon-page {
+.icon-page, .icon-edit {
   background-image: url(../images/icons/page.png) !important;
 }
 

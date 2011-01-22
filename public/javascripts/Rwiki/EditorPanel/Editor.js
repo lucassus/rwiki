@@ -5,33 +5,33 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
     Rwiki.EditorPanel.Editor.superclass.constructor.apply(this, arguments);
 
     this.container = container;
-    this.enabled = false;
+//    this.enabled = false;
 
     // hack for FF, clear text area on load
-    this.container.val('');
+//    this.container.val('');
 
     this.initMarkItUp();
-    this.initEvents();
+//    this.initEvents();
   },
 
-  initEvents: function() {
-    var self = this;
+//  initEvents: function() {
+//    var self = this;
 
-    this.container.bind('keydown', function() {
-      return self.enabled;
-    });
+//    this.container.bind('keydown', function() {
+//      return self.enabled;
+//    });
 
-    var timeout = null;
-    this.container.bind('keyup', function() {
-      if (!self.enabled) return;
-
-      clearTimeout(timeout);
-      var callback = function() {
-        self.savePage();
-      };
-      timeout = setTimeout(callback, 500);
-    });
-  },
+//    var timeout = null;
+//    this.container.bind('keyup', function() {
+//      if (!self.enabled) return;
+//
+//      clearTimeout(timeout);
+//      var callback = function() {
+//        self.savePage();
+//      };
+//      timeout = setTimeout(callback, 500);
+//    });
+//  },
 
   initMarkItUp: function() {
     var self = this;

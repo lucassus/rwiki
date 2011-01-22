@@ -13,6 +13,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       plugins: new Ext.ux.TabCloseMenu(),
       tbar: [{
         text: 'Edit the page',
+        scope: this,
         handler: this.onEditPage,
         iconCls: 'icon-edit'
       }]
@@ -23,7 +24,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   initEvents: function() {
     Rwiki.TabPanel.superclass.initEvents.apply(this, arguments);
-    
+
+    this.addEvents('rwiki:editPage');
+
     this.on('pageSelected', this.onPageSelected),
     this.on('tabchange', this.onTabChange);
 
@@ -147,34 +150,9 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   onEditPage: function() {
-    var window = new Ext.Window({
-      title: 'Compose message',
-      maximizable: true,
-      modal: true,
-      width: 750,
-      height: 500,
-      minWidth: 300,
-      minHeight: 200,
-      layout: 'fit',
-      plain: true,
-      bodyStyle: 'padding: 5px;',
-      buttonAlign: 'center',
-      items: new Rwiki.EditorPanel(),
-      buttons: [{
-        text: 'Save',
-        handler: function() {
-          window.hide();
-        }
-      }, {
-        text: 'Save and continue'
-      }, {
-        text: 'Cancel',
-        handler: function() {
-          window.hide();
-        }
-      }]
-    });
-    
-    window.show();
+    var currentTab = this.getActiveTab();
+    if (currentTab) {
+      this.fireEvent('rwiki:editPage', currentTab.getPagePath());
+    }
   }
 });
