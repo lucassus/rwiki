@@ -5,6 +5,7 @@ Rwiki.NavigationPanel = Ext.extend(Ext.Panel, {
 
     Ext.apply(this, {
       region: 'west',
+      layout: 'border',
 
       header: true,
       title: 'Navigation panel',

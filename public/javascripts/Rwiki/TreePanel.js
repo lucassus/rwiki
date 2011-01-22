@@ -6,6 +6,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     Ext.apply(this, {
       id: 'tree',
+      region: 'center',
+      autoScroll: true,
 
       animate: true,
       useArrows: true,
