@@ -65,11 +65,15 @@ Rwiki.init = function() {
 
   // Create layout
 
+  var navigationPanel = new Rwiki.NavigationPanel({
+    items: [treePanel]
+  });
+
   var app = new Ext.Viewport({
     layout: 'border',
     plain: true,
     renderTo: Ext.getBody(),
-    items: [treePanel, tabPanel]
+    items: [navigationPanel, tabPanel]
   });
 
   app.show();
