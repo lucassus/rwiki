@@ -7,6 +7,7 @@ When /^I reload the application$/ do
   Capybara.current_session.execute_script <<-JS
     window.location.reload();
   JS
+  And %Q{I wait for load the tree}
 end
 
 When /^I open the application for page with path "([^"]*)"$/ do |path|
