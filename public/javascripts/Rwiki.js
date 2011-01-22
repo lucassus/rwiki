@@ -67,6 +67,7 @@ Rwiki.init = function() {
 
   var app = new Ext.Viewport({
     layout: 'border',
+    plain: true,
     renderTo: Ext.getBody(),
     items: [treePanel, tabPanel]
   });
