@@ -52,10 +52,17 @@ Rwiki.init = function() {
   var editorPanel = new Rwiki.EditorPanel();
   editorPanel.relayEvents(Rwiki.NodeManager.getInstance(), ['rwiki:pageLoaded']);
 
+  var window = new Rwiki.EditorWindow(editorPanel);
+
+  function showEditor(path) {
+    if (!window.isVisible()) {
+      window.setPagePath(path);
+      window.show();
+    }
+  }
+
   tabPanel.on('rwiki:editPage', function(path) {
-    var window = new Rwiki.EditorWindow(editorPanel);
-    window.setPagePath(path);
-    window.show();
+    showEditor(path);
   });
 
   // Handle this change event in order to restore the UI to the appropriate history state
@@ -77,4 +84,15 @@ Rwiki.init = function() {
   });
 
   app.show();
+
+  // map one key by key code
+  var map = new Ext.KeyMap(document, [{
+    key: "e",
+    alt: true,
+    stopEvent: true,
+    fn: function() {
+      tabPanel.onEditPage();
+    }
+  }]);
+  
 };

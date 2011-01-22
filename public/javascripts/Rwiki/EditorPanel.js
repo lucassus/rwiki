@@ -18,7 +18,7 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     });
 
     Rwiki.EditorPanel.superclass.constructor.apply(this, arguments);
-    this.editor = new Rwiki.EditorPanel.Editor($('textarea#editor'));
+    this.editor = new Rwiki.EditorPanel.Editor();
   },
 
   initEvents: function() {

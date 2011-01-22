@@ -1,9 +1,9 @@
 Ext.ns('Rwiki.EditorPanel');
 
 Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
-  constructor: function(container) {
+  constructor: function() {
     Rwiki.EditorPanel.Editor.superclass.constructor.apply(this, arguments);
-    this.container = container;
+    this.container = $('textarea#editor');
     this.initMarkItUp();
   },
 
