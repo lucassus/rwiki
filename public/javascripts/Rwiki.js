@@ -50,11 +50,11 @@ Rwiki.init = function() {
   tabPanel.relayEvents(treePanel, ['pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
-//  editorPanel.relayEvents(nodeManager,
-//    ['rwiki:pageLoaded', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted', 'rwiki:lastPageClosed']);
+  editorPanel.relayEvents(Rwiki.NodeManager.getInstance(), ['rwiki:pageLoaded']);
 
   tabPanel.on('rwiki:editPage', function(path) {
     var window = new Rwiki.EditorWindow(editorPanel);
+    window.setPagePath(path);
     window.show();
   });
 

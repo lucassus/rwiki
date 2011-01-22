@@ -3,35 +3,9 @@ Ext.ns('Rwiki.EditorPanel');
 Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
   constructor: function(container) {
     Rwiki.EditorPanel.Editor.superclass.constructor.apply(this, arguments);
-
     this.container = container;
-//    this.enabled = false;
-
-    // hack for FF, clear text area on load
-//    this.container.val('');
-
     this.initMarkItUp();
-//    this.initEvents();
   },
-
-//  initEvents: function() {
-//    var self = this;
-
-//    this.container.bind('keydown', function() {
-//      return self.enabled;
-//    });
-
-//    var timeout = null;
-//    this.container.bind('keyup', function() {
-//      if (!self.enabled) return;
-//
-//      clearTimeout(timeout);
-//      var callback = function() {
-//        self.savePage();
-//      };
-//      timeout = setTimeout(callback, 500);
-//    });
-//  },
 
   initMarkItUp: function() {
     var self = this;
@@ -66,20 +40,10 @@ Rwiki.EditorPanel.Editor = Ext.extend(Ext.util.Observable, {
         {name:'HTML Code', openWith:'<code lang="html">\n', closeWith:'\n</code>', className: 'insert-code html'},
         {name:'Css Code', openWith:'<code lang="css">\n', closeWith:'\n</code>', className: 'insert-code css'}
       ],
-      resizeHandle: false,
-      afterInsert: function() {
-        self.savePage();
-      }
+      resizeHandle: false
     };
 
     this.container.markItUp(textileSettings);
-  },
-
-  savePage: function() {
-    var path = this.getPagePath();
-    var rawContent = this.getContent();
-
-    Rwiki.NodeManager.getInstance().savePage(path, rawContent);
   },
 
   clearContent: function() {
