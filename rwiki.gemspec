@@ -5,25 +5,25 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rwiki}
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Łukasz Bandzarewicz"]
-  s.date = %q{2011-01-22}
+  s.date = %q{2011-01-23}
   s.default_executable = %q{rwiki}
   s.description = %q{Personal wiki based on ExtJS}
   s.email = %q{lucassus@gmail.com}
   s.executables = ["rwiki"]
   s.extra_rdoc_files = [
     "LICENSE",
-    "README.rdoc"
+    "README.textile"
   ]
   s.files = [
     ".document",
     "Capfile",
     "Gemfile",
     "LICENSE",
-    "README.rdoc",
+    "README.textile",
     "Rakefile",
     "VERSION",
     "bin/rwiki",
@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
     "features/delete_page.feature",
     "features/display_page.feature",
     "features/editor.feature",
+    "features/fuzzy_finder.feature",
     "features/history.feature",
     "features/rename_page.feature",
     "features/step_definitions/common_steps.rb",
