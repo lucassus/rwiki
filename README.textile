@@ -1,20 +1,38 @@
-= rwiki
+h1. rwiki
 
-Yet another personal wiki.
+Personal wiki inspired by Zim http://zim-wiki.org/
 
-== Installation
+h2. Installation
 
-* 
+Currently Rwiki works only on ruby 1.9.2
 
-ruby bin/rwiki.rb /path/to/your/wiki-files
+Install the gem
 
-== Screenshots
+<code>
+gem install riwiki
+</code>
 
-!http://img809.imageshack.us/img809/2969/snapshot1rc.png(test)!
-!http://img685.imageshack.us/img685/6840/snapshot2vs.png(test)!
-!http://img409.imageshack.us/img409/8832/snapshot3v.png(test)!
+Run the application
 
-== Note on Patches/Pull Requests
+<code>
+rwiki /path/to/your/wiki-files
+</code>
+
+h2. Screenshots
+
+h3. Browsing pages
+
+!http://img809.imageshack.us/img809/5460/snapshot6.png(test)!
+
+h3. Editing a page
+
+!http://img703.imageshack.us/img703/9992/snapshot7h.png(test)!
+
+h3. FuzzyFinder
+
+!http://img404.imageshack.us/img404/2449/snapshot8w.png(test)!
+
+h2. Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -24,6 +42,7 @@ ruby bin/rwiki.rb /path/to/your/wiki-files
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-== Copyright
+h2. Copyright
 
 Copyright (c) 2010 Łukasz Bandzarewicz. See LICENSE for details.
+
