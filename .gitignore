@@ -21,3 +21,8 @@ pkg
 ## PROJECT::SPECIFIC
 .idea
 nbproject
+
+.bundle
+Gemfile.lock
+vendor
+log
