@@ -2,15 +2,17 @@
 
 Yet another personal wiki.
 
-== Usage
+== Installation
+
+* 
 
 ruby bin/rwiki.rb /path/to/your/wiki-files
 
 == Screenshots
 
-![Sample 1](http://img809.imageshack.us/img809/2969/snapshot1rc.png)
-![Sample 2](http://img685.imageshack.us/img685/6840/snapshot2vs.png)
-![Sample 3](http://img409.imageshack.us/img409/8832/snapshot3v.png)
+!http://img809.imageshack.us/img809/2969/snapshot1rc.png(test)!
+!http://img685.imageshack.us/img685/6840/snapshot2vs.png(test)!
+!http://img409.imageshack.us/img409/8832/snapshot3v.png(test)!
 
 == Note on Patches/Pull Requests
  
