@@ -13,11 +13,12 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       plugins: new Ext.ux.TabCloseMenu(),
       tbar: [{
         text: 'Edit the page',
+        iconCls: 'icon-edit',
         scope: this,
-        handler: this.onEditPage,
-        iconCls: 'icon-edit'
+        handler: this.onEditPage
       }, {
         text: 'Find page',
+        iconCls: 'icon-search',
         scope: this,
         handler: this.onFuzzyFinder
       }]
@@ -161,7 +162,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   onFuzzyFinder: function() {
-    var fuzzyFinder = new Rwiki.FuzzyFinderDialog(this.dataStore);
+    var fuzzyFinder = new Rwiki.FuzzyFinderDialog();
     fuzzyFinder.show();
   }
 });

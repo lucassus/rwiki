@@ -18,17 +18,20 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
         {
           text: 'Save',
           scope: this,
-          handler: this.onSaveButton
+          handler: this.onSaveButton,
+          iconCls: 'icon-save'
         },
         {
           text: 'Save and continue',
           scope: this,
-          handler: this.onSaveAndContinueButton
+          handler: this.onSaveAndContinueButton,
+          iconCls: 'icon-save'
         },
         {
           text: 'Cancel',
           scope: this,
-          handler: this.onCancelButton
+          handler: this.onCancelButton,
+          iconCls: 'icon-cancel'
         }
       ]
     });

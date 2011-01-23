@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rwiki}
-  s.version = "0.1.3"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Łukasz Bandzarewicz"]
-  s.date = %q{2011-01-16}
+  s.date = %q{2011-01-22}
   s.default_executable = %q{rwiki}
   s.description = %q{Personal wiki based on ExtJS}
   s.email = %q{lucassus@gmail.com}
@@ -20,22 +20,34 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
-    ".idea/projectCodeStyle.xml",
-    ".rvmrc",
+    "Capfile",
+    "Gemfile",
     "LICENSE",
     "README.rdoc",
     "Rakefile",
     "VERSION",
     "bin/rwiki",
+    "config.ru",
+    "config/config.yml.example",
+    "config/deploy.rb",
     "features/create_page.feature",
     "features/delete_page.feature",
     "features/display_page.feature",
+    "features/editor.feature",
+    "features/history.feature",
     "features/rename_page.feature",
     "features/step_definitions/common_steps.rb",
+    "features/step_definitions/common_transforms.rb",
+    "features/step_definitions/dialog_box_steps.rb",
+    "features/step_definitions/history_steps.rb",
+    "features/step_definitions/tab_panel_steps.rb",
+    "features/step_definitions/tree_panel_steps.rb",
+    "features/step_definitions/wait_steps.rb",
     "features/step_definitions/web_steps.rb",
     "features/support/env.rb",
     "features/support/firebug-1.6.1-fx.xpi",
     "features/support/paths.rb",
+    "features/tab_panel.feature",
     "features/tree_panel.feature",
     "lib/rwiki.rb",
     "lib/rwiki/app.rb",
@@ -45,6 +57,12 @@ Gem::Specification.new do |s|
     "lib/rwiki/models/node.rb",
     "lib/rwiki/models/page.rb",
     "public/SpecRunner.html",
+    "public/favicon.ico",
+    "public/images/compressed.png",
+    "public/images/css.png",
+    "public/images/file.png",
+    "public/images/html.png",
+    "public/images/icon_word.png",
     "public/images/icons/accept.png",
     "public/images/icons/add.png",
     "public/images/icons/anchor.png",
@@ -1047,6 +1065,16 @@ Gem::Specification.new do |s|
     "public/images/icons/zoom.png",
     "public/images/icons/zoom_in.png",
     "public/images/icons/zoom_out.png",
+    "public/images/image.png",
+    "public/images/javascript.png",
+    "public/images/pdf.png",
+    "public/images/php.png",
+    "public/images/presentation.png",
+    "public/images/ruby.png",
+    "public/images/shellscript.png",
+    "public/images/stylesheet.png",
+    "public/images/text.png",
+    "public/images/wordprocessing.png",
     "public/jasmine/jasmine-html.js",
     "public/jasmine/jasmine.css",
     "public/jasmine/jasmine.js",
@@ -1054,18 +1082,18 @@ Gem::Specification.new do |s|
     "public/javascripts/Rwiki.js",
     "public/javascripts/Rwiki/EditorPanel.js",
     "public/javascripts/Rwiki/EditorPanel/Editor.js",
+    "public/javascripts/Rwiki/EditorWindow.js",
+    "public/javascripts/Rwiki/FuzzyFinderDialog.js",
+    "public/javascripts/Rwiki/NavigationPanel.js",
     "public/javascripts/Rwiki/NodeManager.js",
-    "public/javascripts/Rwiki/SidePanel.js",
     "public/javascripts/Rwiki/TabPanel.js",
     "public/javascripts/Rwiki/TabPanel/PageTab.js",
-    "public/javascripts/Rwiki/Toolbar.js",
     "public/javascripts/Rwiki/TreePanel.js",
     "public/javascripts/Rwiki/TreePanel/Filter.js",
     "public/javascripts/Rwiki/TreePanel/Loader.js",
     "public/javascripts/Rwiki/TreePanel/Menu.js",
     "public/javascripts/Rwiki/TreePanel/Node.js",
     "public/javascripts/Rwiki/TreePanel/Toolbar.js",
-    "public/javascripts/Rwiki/Viewport.js",
     "public/javascripts/vendor/ext/adapter/ext/ext-base-debug-w-comments.js",
     "public/javascripts/vendor/ext/adapter/ext/ext-base-debug.js",
     "public/javascripts/vendor/ext/adapter/ext/ext-base.js",
@@ -1078,6 +1106,7 @@ Gem::Specification.new do |s|
     "public/javascripts/vendor/ext/ext-all-debug-w-comments.js",
     "public/javascripts/vendor/ext/ext-all-debug.js",
     "public/javascripts/vendor/ext/ext-all.js",
+    "public/javascripts/vendor/ext/ux/StatusBar.js",
     "public/javascripts/vendor/ext/ux/TabCloseMenu.js",
     "public/javascripts/vendor/jquery/jquery-1.4.2.js",
     "public/javascripts/vendor/jquery/jquery-1.4.2.min.js",
@@ -1105,6 +1134,7 @@ Gem::Specification.new do |s|
     "public/resources/ext/css/structure/menu.css",
     "public/resources/ext/css/structure/panel-reset.css",
     "public/resources/ext/css/structure/panel.css",
+    "public/resources/ext/css/structure/pivotgrid.css",
     "public/resources/ext/css/structure/progress.css",
     "public/resources/ext/css/structure/qtips.css",
     "public/resources/ext/css/structure/reset.css",
@@ -1154,6 +1184,7 @@ Gem::Specification.new do |s|
     "public/resources/ext/css/theme-gray/list-view.css",
     "public/resources/ext/css/theme-gray/menu.css",
     "public/resources/ext/css/theme-gray/panel.css",
+    "public/resources/ext/css/theme-gray/pivotgrid.css",
     "public/resources/ext/css/theme-gray/progress.css",
     "public/resources/ext/css/theme-gray/qtips.css",
     "public/resources/ext/css/theme-gray/resizable.css",
@@ -1178,6 +1209,7 @@ Gem::Specification.new do |s|
     "public/resources/ext/css/visual/list-view.css",
     "public/resources/ext/css/visual/menu.css",
     "public/resources/ext/css/visual/panel.css",
+    "public/resources/ext/css/visual/pivotgrid.css",
     "public/resources/ext/css/visual/progress.css",
     "public/resources/ext/css/visual/qtips.css",
     "public/resources/ext/css/visual/resizable.css",
@@ -1430,6 +1462,7 @@ Gem::Specification.new do |s|
     "public/resources/ext/images/default/grid/grid3-hd-btn.gif",
     "public/resources/ext/images/default/grid/grid3-hrow-over.gif",
     "public/resources/ext/images/default/grid/grid3-hrow.gif",
+    "public/resources/ext/images/default/grid/grid3-rowheader.gif",
     "public/resources/ext/images/default/grid/grid3-special-col-bg.gif",
     "public/resources/ext/images/default/grid/grid3-special-col-sel-bg.gif",
     "public/resources/ext/images/default/grid/group-by.gif",
@@ -1456,6 +1489,7 @@ Gem::Specification.new do |s|
     "public/resources/ext/images/default/grid/page-prev-disabled.gif",
     "public/resources/ext/images/default/grid/page-prev.gif",
     "public/resources/ext/images/default/grid/pick-button.gif",
+    "public/resources/ext/images/default/grid/refresh-disabled.gif",
     "public/resources/ext/images/default/grid/refresh.gif",
     "public/resources/ext/images/default/grid/row-check-sprite.gif",
     "public/resources/ext/images/default/grid/row-expand-sprite.gif",
@@ -1625,6 +1659,7 @@ Gem::Specification.new do |s|
     "public/resources/ext/images/gray/grid/page-prev.gif",
     "public/resources/ext/images/gray/grid/refresh.gif",
     "public/resources/ext/images/gray/grid/row-expand-sprite.gif",
+    "public/resources/ext/images/gray/grid/sort-hd.gif",
     "public/resources/ext/images/gray/grid/sort_asc.gif",
     "public/resources/ext/images/gray/grid/sort_desc.gif",
     "public/resources/ext/images/gray/menu/group-checked.gif",
@@ -2022,8 +2057,10 @@ Gem::Specification.new do |s|
     "public/resources/markitup/templates/preview.css",
     "public/resources/markitup/templates/preview.html",
     "public/stylesheets/coderay.css",
+    "public/stylesheets/markitup.css",
     "public/stylesheets/page.css",
     "public/stylesheets/style.css",
+    "run_tests.sh",
     "rwiki.gemspec",
     "script/server",
     "script/xvfb",
@@ -2035,6 +2072,7 @@ Gem::Specification.new do |s|
     "spec/javascripts/helpers/SpecHelper.js",
     "spec/javascripts/support/jasmine.yml",
     "spec/javascripts/support/jasmine_runner.rb",
+    "test/fixtures/pages/Info/dummy",
     "test/fixtures/pages/empty_folder/dummy",
     "test/fixtures/pages/folder/subfolder/ruby.txt",
     "test/fixtures/pages/folder/test 1.txt",
@@ -2049,29 +2087,13 @@ Gem::Specification.new do |s|
     "test/rwiki/models/test_page.rb",
     "test/rwiki/test_app.rb",
     "test/tmpdir_helper.rb",
-    "tmp/ExtDesigner/MyViewport.js",
-    "tmp/ExtDesigner/MyViewport.ui.js",
-    "tmp/ExtDesigner/Rwiki.EditorPanel.js",
-    "tmp/ExtDesigner/Rwiki.EditorPanel.ui.js",
-    "tmp/ExtDesigner/Rwiki.MainPanel.js",
-    "tmp/ExtDesigner/Rwiki.MainPanel.ui.js",
-    "tmp/ExtDesigner/Rwiki.TabPane.PageTab.js",
-    "tmp/ExtDesigner/Rwiki.TabPane.PageTab.ui.js",
-    "tmp/ExtDesigner/Rwiki.TabPanel.js",
-    "tmp/ExtDesigner/Rwiki.TabPanel.ui.js",
-    "tmp/ExtDesigner/Rwiki.TreePanel.js",
-    "tmp/ExtDesigner/Rwiki.TreePanel.ui.js",
-    "tmp/ExtDesigner/Rwiki.Viewport.js",
-    "tmp/ExtDesigner/Rwiki.Viewport.ui.js",
-    "tmp/ExtDesigner/rwiki.xds",
-    "tmp/ExtDesigner/xds_includeOrder.txt",
-    "tmp/ExtDesigner/xds_index.html",
-    "tmp/ExtDesigner/xds_index.js",
     "tmp/fssm_test.rb",
+    "vendor/.gitkeep",
     "views/index.erb",
     "views/layout.erb"
   ]
   s.homepage = %q{http://github.com/lucassus/rwiki}
+  s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
   s.summary = %q{Yet another personal wiki}
@@ -2095,40 +2117,38 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<coderay>, [">= 0"])
       s.add_runtime_dependency(%q<json_pure>, [">= 0"])
       s.add_runtime_dependency(%q<thin>, [">= 0"])
-      s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_runtime_dependency(%q<fuzzy_file_finder>, [">= 0"])
+      s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<rack-test>, [">= 0"])
       s.add_development_dependency(%q<test-unit>, [">= 0"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<jasmine>, [">= 0"])
       s.add_development_dependency(%q<cucumber>, [">= 0"])
       s.add_development_dependency(%q<cucumber-rails>, [">= 0"])
-      s.add_development_dependency(%q<webrat>, [">= 0"])
       s.add_development_dependency(%q<capybara>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<rspec-core>, [">= 0"])
       s.add_development_dependency(%q<rspec-expectations>, [">= 0"])
-      s.add_development_dependency(%q<Selenium>, [">= 0"])
-      s.add_development_dependency(%q<selenium-client>, [">= 0"])
+      s.add_development_dependency(%q<capistrano>, [">= 0"])
     else
       s.add_dependency(%q<sinatra>, [">= 0"])
       s.add_dependency(%q<RedCloth>, [">= 0"])
       s.add_dependency(%q<coderay>, [">= 0"])
       s.add_dependency(%q<json_pure>, [">= 0"])
       s.add_dependency(%q<thin>, [">= 0"])
-      s.add_dependency(%q<ruby-debug19>, [">= 0"])
+      s.add_dependency(%q<fuzzy_file_finder>, [">= 0"])
+      s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<rack-test>, [">= 0"])
       s.add_dependency(%q<test-unit>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<jasmine>, [">= 0"])
       s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<cucumber-rails>, [">= 0"])
-      s.add_dependency(%q<webrat>, [">= 0"])
       s.add_dependency(%q<capybara>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_dependency(%q<rspec-core>, [">= 0"])
       s.add_dependency(%q<rspec-expectations>, [">= 0"])
-      s.add_dependency(%q<Selenium>, [">= 0"])
-      s.add_dependency(%q<selenium-client>, [">= 0"])
+      s.add_dependency(%q<capistrano>, [">= 0"])
     end
   else
     s.add_dependency(%q<sinatra>, [">= 0"])
@@ -2136,20 +2156,19 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<coderay>, [">= 0"])
     s.add_dependency(%q<json_pure>, [">= 0"])
     s.add_dependency(%q<thin>, [">= 0"])
-    s.add_dependency(%q<ruby-debug19>, [">= 0"])
+    s.add_dependency(%q<fuzzy_file_finder>, [">= 0"])
+    s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<rack-test>, [">= 0"])
     s.add_dependency(%q<test-unit>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<jasmine>, [">= 0"])
     s.add_dependency(%q<cucumber>, [">= 0"])
     s.add_dependency(%q<cucumber-rails>, [">= 0"])
-    s.add_dependency(%q<webrat>, [">= 0"])
     s.add_dependency(%q<capybara>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_dependency(%q<rspec-core>, [">= 0"])
     s.add_dependency(%q<rspec-expectations>, [">= 0"])
-    s.add_dependency(%q<Selenium>, [">= 0"])
-    s.add_dependency(%q<selenium-client>, [">= 0"])
+    s.add_dependency(%q<capistrano>, [">= 0"])
   end
 end
 

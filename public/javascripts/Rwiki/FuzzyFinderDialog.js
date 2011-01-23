@@ -30,10 +30,10 @@ Rwiki.FuzzyFinderDialog = Ext.extend(Ext.Window, {
 
     var search = new Ext.form.ComboBox({
       store: dataStore,
+      minChars: 2,
       displayField: 'title',
       typeAhead: false,
       loadingText: 'Searching...',
-      pageSize: 10,
       hideTrigger: true,
       tpl: resultTpl,
       itemSelector: 'div.search-item',
@@ -48,7 +48,7 @@ Rwiki.FuzzyFinderDialog = Ext.extend(Ext.Window, {
       title: 'FuzzyFinder',
       maximizable: false,
       modal: true,
-      width: 400,
+      width: 600,
       layout: 'fit',
       plain: true,
       bodyStyle: 'padding: 5px;',

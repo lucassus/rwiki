@@ -43,8 +43,11 @@
   background-image: url(../images/icons/collapse-all.gif) !important;
 }
 
-.icon-page, .icon-edit {
+.icon-page {
   background-image: url(../images/icons/page.png) !important;
+}
+.icon-edit {
+  background-image: url(../images/icons/page_edit.png) !important;
 }
 
 .icon-create-folder {
@@ -61,4 +64,20 @@
 
 .icon-delete-node {
   background-image: url(../images/icons/delete.png) !important;
+}
+
+.icon-search {
+  background-image: url(../images/icons/page_find.png) !important;
+}
+
+.icon-save {
+  background-image: url(../images/icons/page_save.png) !important;
+}
+
+.icon-accept {
+  background-image: url(../images/icons/cancel.png) !important;
+}
+
+.icon-cancel {
+  background-image: url(../images/icons/cancel.png) !important;
 }
