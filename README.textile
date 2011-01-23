@@ -22,15 +22,15 @@ h2. Screenshots
 
 h3. Browsing pages
 
-!http://img809.imageshack.us/img809/5460/snapshot6.png(test)!
+!http://img534.imageshack.us/img534/9779/rwikishowpage.png(test)!
 
 h3. Editing a page
 
-!http://img703.imageshack.us/img703/9992/snapshot7h.png(test)!
+!http://img255.imageshack.us/img255/5865/rwikieditingpage.png(test)!
 
 h3. FuzzyFinder
 
-!http://img404.imageshack.us/img404/2449/snapshot8w.png(test)!
+!http://img197.imageshack.us/img197/107/rwikifuzzyfinder.png(test)!
 
 h2. Note on Patches/Pull Requests
  
