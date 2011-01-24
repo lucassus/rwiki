@@ -18,6 +18,7 @@ Feature: Rename a node
 
     When I click the node with path "./The new home.txt"
     Then I should see "Sample page" within "h1"
+    And I should see generated content for the node with path "./The new home.txt"
 
   @javascript
   Scenario: Rename a page to existing name
@@ -33,9 +34,10 @@ Feature: Rename a node
 
     When I click the node with path "./home.txt"
     Then I should see "Sample page" within "h1"
+    And I should see generated content for the node with path "./home.txt"
 
     When I click the node with path "./test.txt"
-    Then I should see "This is a test"
+    Then I should see generated content for the node with path "./test.txt"
     And I should see page title "Rwiki ./test.txt"
     And I should have the following open tabs:
       | home |
@@ -58,6 +60,7 @@ Feature: Rename a node
       | test         |
       | The new home |
     And I should see page title "Rwiki ./The new home.txt"
+    And I should see generated content for the node with path "./The new home.txt"
 
   @javascript
   Scenario: Rename a folder
@@ -76,11 +79,12 @@ Feature: Rename a node
 
     When I double click the node with path "./The new folder name"
     And I click the node with path "./The new folder name/test.txt"
-    Then I should see "Test 1" within "h3"
+    And I should see generated content for the node with path "./The new folder name/test.txt"
 
     When I reload the application
     Then I should see the node titled "The new folder name"
     And I double click the node with path "./The new folder name"
     And I click the node with path "./The new folder name/test.txt"
-    Then I should see "Test 1" within "h3"
+    And I should see generated content for the node with path "./The new folder name/test.txt"
+
     

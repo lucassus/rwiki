@@ -34,3 +34,11 @@ When /^I create a new page title "([^"]*)" for the node with path "([^"]*)"$/ do
   And %{I press "OK" within the dialog box}
   Then %{I should see the node titled "#{title}"}
 end
+
+Then /^I should see generated content for the node with path "([^"]*)"$/ do |path|
+  # TODO refactor this code
+  wiki_page_html = Rwiki::Models::Page.new(path).to_html.gsub(/([^>]*)(?=<[^>]*?>)/im, '')
+  page_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html.gsub(/([^>]*)(?=<[^>]*?>)/im, '')
+
+  page_html.should == wiki_page_html
+end

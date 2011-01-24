@@ -10,9 +10,7 @@ Feature: Display a page
     Then I should have the following open tabs:
       | home |
     And I should see page title "Rwiki ./home.txt"
-    And I should see "Sample page" within "h1"
-    And I should see "Lorem ipsum.."
-    And I should see "Sample section" within "h2"
+    And I should see generated content for the node with path "./home.txt"
 
   @javascript
   Scenario: Display the ./folder/test.txt page
@@ -22,11 +20,7 @@ Feature: Display a page
     Then I should have the following open tabs:
       | test |
     And I should see page title "Rwiki ./folder/test.txt"
-    And I should see "Test 1" within "h3"
-    And I should see "Item one"
-    And I should see "Item two"
-    And I should see "Item three"
-    And I should see "Last item"
+    And I should see generated content for the node with path "./folder/test.txt"
 
   @javascript
   Scenario: Display the several page
@@ -38,3 +32,4 @@ Feature: Display a page
       | home |
       | test |
     And I should see page title "Rwiki ./folder/test.txt"
+    And I should see generated content for the node with path "./folder/test.txt"
