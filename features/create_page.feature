@@ -22,7 +22,7 @@ Feature: Create page
       | The new page |
     And I should see page title "Rwiki ./folder/The new page.txt"
     And I should see "The new page" within "h1"
-    And I should see generated content for the node with path "./folder/Thew new page.txt"
+    And I should see generated content for the node with path "./folder/The new page.txt"
 
   @javascript
   Scenario: Create an existing page
