@@ -26,7 +26,7 @@ h3. Browsing pages
 
 h3. Editing a page
 
-!http://img255.imageshack.us/img255/5865/rwikieditingpage.png(test)!
+!http://img17.imageshack.us/img17/5865/rwikieditingpage.png(test)!
 
 h3. FuzzyFinder
 
