@@ -31,6 +31,14 @@ module Rwiki
       page.to_json
     end
 
+    get '/node/print' do
+      path = params[:path].strip
+      page = Page.new(path)
+      @html = page.to_html
+
+      erb :print, :layout => false
+    end
+
     # update page content
     put '/node' do
       path = params[:path].strip

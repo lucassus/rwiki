@@ -17,6 +17,11 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         scope: this,
         handler: this.onEditPage
       }, {
+        text: 'Print page',
+        iconCls: 'icon-print',
+        scope: this,
+        handler: this.onPrint
+      }, {
         text: 'Find page',
         iconCls: 'icon-search',
         scope: this,
@@ -164,5 +169,13 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   onFuzzyFinder: function() {
     var fuzzyFinder = new Rwiki.FuzzyFinderDialog();
     fuzzyFinder.show();
+  },
+
+  onPrint: function() {
+    var currentTab = this.getActiveTab();
+    if (currentTab) {
+      var path = currentTab.getPagePath();
+      window.open('/node/print?path=' + path, 'mywindow', 'width=800,height=600')
+    }
   }
 });

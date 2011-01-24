@@ -14,6 +14,7 @@ module Rwiki::Models
     def raw_content
       @raw_content ||= read_file
     end
+    alias :to_textile :raw_content
 
     def raw_content=(raw)
       @raw_content = raw
@@ -23,6 +24,7 @@ module Rwiki::Models
     def html_content
       @html_content ||= parse_content
     end
+    alias :to_html :html_content
 
     def title
       base_name.gsub(/#{PAGE_FILE_EXTENSION}$/, '')
@@ -43,7 +45,7 @@ module Rwiki::Models
     end
 
     def to_hash
-      super.merge({ :rawContent => raw_content, :htmlContent => html_content })
+      super.merge({ :rawContent => to_textile, :htmlContent => to_html })
     end
 
     private
