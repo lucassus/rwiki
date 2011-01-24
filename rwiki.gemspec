@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rwiki}
-  s.version = "0.2.2"
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Łukasz Bandzarewicz"]
-  s.date = %q{2011-01-23}
+  s.date = %q{2011-01-24}
   s.default_executable = %q{rwiki}
   s.description = %q{Personal wiki based on ExtJS}
   s.email = %q{lucassus@gmail.com}
@@ -2091,7 +2091,8 @@ Gem::Specification.new do |s|
     "tmp/fssm_test.rb",
     "vendor/.gitkeep",
     "views/index.erb",
-    "views/layout.erb"
+    "views/layout.erb",
+    "views/print.erb"
   ]
   s.homepage = %q{http://github.com/lucassus/rwiki}
   s.licenses = ["MIT"]
