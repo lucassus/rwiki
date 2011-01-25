@@ -22,7 +22,7 @@ Feature: Tab Panel
     Then I should have no open tabs
 
   @javascript
-  Scenario: Switching a tabs
+  Scenario: Switching the tabs
     When I click the node with path "./home.txt"
     And I click the node with path "./test.txt"
     Then I should see "This is a test"

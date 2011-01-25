@@ -1,3 +1,26 @@
+When /^I expand the parent for the node with path "([^"]*)"$/ do |path|
+  parts = path.split('/')[0..-2]
+  parts.each_index do |i|
+    partial_path = parts[0..i].join('/')
+
+    # check if node is expanded
+    is_expanded = Capybara.current_session.evaluate_script <<-JS
+      node = Rwiki.treePanel.findNodeByPath('#{partial_path}').isExpanded();
+    JS
+
+    unless is_expanded
+      Then %{I double click the node with path "#{partial_path}"}
+    end
+  end
+end
+
+When /^I open the page for the tree node with path "([^"]*)"$/ do |path|
+  When %{I expand the parent for the node with path "#{path}"}
+  And %{I click the node with path "#{path}"}
+  And %{I should see page title "Rwiki #{path}"}
+  And %{I should see generated content for the node with path "#{path}"}
+end
+
 Then /^I should see the node titled "([^"]*)"$/ do |title|
   Then %{I should see "#{title}" within "div#tree"}
 end

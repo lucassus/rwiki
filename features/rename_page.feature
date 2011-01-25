@@ -86,5 +86,3 @@ Feature: Rename a node
     And I double click the node with path "./The new folder name"
     And I click the node with path "./The new folder name/test.txt"
     And I should see generated content for the node with path "./The new folder name/test.txt"
-
-    

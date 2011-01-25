@@ -17,6 +17,10 @@ When /^I click tab for page "([^"]*)"$/ do |path|
   tab.click
 end
 
+Then /^I should see active tab titled "([^"]*)"$/ do |title|
+  page.find('li.x-tab-strip-active').text.should == title
+end
+
 Then /^I should have the following open tabs:$/ do |table|
   actual_table = table(tableish("div.x-tab-panel ul li[@class!='x-tab-edge']", "a.x-tab-right"))
   table.diff!(actual_table)

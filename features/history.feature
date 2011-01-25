@@ -14,38 +14,49 @@ Feature: History
     And I should see generated content for the node with path "./home.txt"
 
   @javascript
-  Scenario: After reload the application last opened page should be loaded
-    When I double click the node with path "./folder"
-    And I click the node with path "./folder/test.txt"
+  Scenario Outline: After reload the application last opened page should be loaded
+    When I open the page for the tree node with path "<path>"
     And I reload the application
 
-    Then I should have the following open tabs:
-      | test |
-    And I should see page title "Rwiki ./folder/test.txt"
-    And I should see generated content for the node with path "./folder/test.txt"
-    And the node with path "./folder/test.txt" should be selected
+    Then I should see active tab titled "<title>"
+    And I should see page title "Rwiki <path>"
+    And I should see generated content for the node with path "<path>"
+    And the node with path "<path>" should be selected
+
+  Examples:
+    | path                        | title  |
+    | ./home.txt                  | home   |
+    | ./test.txt                  | test   |
+    | ./folder/test.txt           | test   |
+    | ./folder/test 1.txt         | test 1 |
+    | ./folder/test 2.txt         | test 2 |
+    | ./folder/subfolder/ruby.txt | ruby   |
 
   @javascript
   Scenario: Browser history
-    When I double click the node with path "./folder"
-    And I click the node with path "./folder/test.txt"
-    And I click the node with path "./test.txt"
-    And I click the node with path "./home.txt"
+    When I open the page for the tree node with path "./folder/test.txt"
+    And I open the page for the tree node with path "./test.txt"
+    And I open the page for the tree node with path "./home.txt"
+    Then I should see active tab titled "home"
 
-    When I press the browser back button
+    And I press the browser back button
     Then the node with path "./test.txt" should be selected
     And I should see generated content for the node with path "./test.txt"
+    And I should see active tab titled "test"
 
     When I press the browser back button
     Then the node with path "./folder/test.txt" should be selected
     And I should see generated content for the node with path "./folder/test.txt"
+    And I should see active tab titled "test"
 
     When I press the browser forward button
     Then the node with path "./test.txt" should be selected
     And I should see generated content for the node with path "./test.txt"
+    And I should see active tab titled "test"
 
     When I create a new page title "A new page" for the node with path "./Info"
     And I press the browser back button
     And I press the browser forward button
     Then the node with path "./Info/A new page.txt" should be selected
     And I should see generated content for the node with path "./Info/A new page.txt"
+    And I should see active tab titled "A new page"
