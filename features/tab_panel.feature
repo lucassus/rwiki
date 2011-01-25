@@ -5,8 +5,8 @@ Feature: Tab Panel
 
   @javascript
   Scenario: Close a tab
-    When I click the node with path "./home.txt"
-    And I click the node with path "./test.txt"
+    When I open the page for the tree node with path "./home.txt"
+    And I open the page for the tree node with path "./test.txt"
 
     Then I should have the following open tabs:
       | home |
@@ -23,8 +23,8 @@ Feature: Tab Panel
 
   @javascript
   Scenario: Switching the tabs
-    When I click the node with path "./home.txt"
-    And I click the node with path "./test.txt"
+    When I open the page for the tree node with path "./home.txt"
+    And I open the page for the tree node with path "./test.txt"
     Then I should see "This is a test"
 
     When I click tab for page "./home.txt"
