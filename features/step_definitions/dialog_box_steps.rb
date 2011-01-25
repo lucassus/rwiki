@@ -1,6 +1,13 @@
 When /^I fill in the input with "([^"]*)" within the dialog box$/ do |text|
-  field = find('div.x-window input')
+  input_selector = 'div.x-window input'
+
+  field = find(input_selector)
   field.set(text)
+
+  # fire keyup event for trigger the autocomplete
+  Capybara.current_session.execute_script <<-JS
+    $("#{input_selector}").focus().trigger($.Event('keyup'));
+  JS
 end
 
 When /^I press "([^"]*)" within the dialog box$/ do |button|

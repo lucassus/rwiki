@@ -9,12 +9,11 @@ require File.expand_path(File.join(File.dirname(__FILE__), '../../test/tmpdir_he
 Rwiki::App.set(:environment, :test)
 
 Capybara.default_selector = :css
-Capybara.register_driver :selenium do |app|
-  Capybara::Driver::Selenium
-  profile = Selenium::WebDriver::Firefox::Profile.new
-#  profile.add_extension(File.expand_path("features/support/firebug-1.6.1-fx.xpi"))
 
-  Capybara::Driver::Selenium.new(app, { :browser => :firefox, :profile => profile })
+require 'selenium/webdriver'
+Capybara.register_driver :selenium do |app|
+  profile = Selenium::WebDriver::Firefox::Profile.new
+  Capybara::Driver::Selenium.new(app, :profile => profile)
 end
 
 World do
