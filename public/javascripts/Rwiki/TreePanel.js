@@ -38,7 +38,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.root.expand();
 
     new Ext.tree.TreeSorter(this, {
-      folderSort: false
+      folderSort: true
     });
 
     var self = this;
