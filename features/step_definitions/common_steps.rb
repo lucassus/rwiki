@@ -3,6 +3,10 @@ Then /^I enter the break point$/ do
   p 'debugger'
 end
 
+Given /^this scenario is pending$/ do
+  pending # always
+end
+
 When /^I open the application$/ do
   When %Q{I go to the home page}
 end

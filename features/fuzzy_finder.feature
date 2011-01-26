@@ -5,6 +5,8 @@ Feature: Tree Panel
 
   @javascript
   Scenario: Find a page
+    Given this scenario is pending
+
     When I press "Find page"
     And I fill in the input with "test" within the dialog box
     And I select the first search result
