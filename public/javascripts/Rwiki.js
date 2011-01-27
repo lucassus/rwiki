@@ -23,8 +23,7 @@ Rwiki.init = function() {
   Rwiki.ajaxCallCompleted = true;
   Rwiki.treeLoaded = false;
 
-  var treePanel = new Rwiki.TreePanel();
-  Rwiki.treePanel = treePanel;
+  Rwiki.treePanel = new Rwiki.TreePanel();
   var nodeManager = Rwiki.NodeManager.getInstance();
 
   nodeManager.on('rwiki:beforePageLoad', function() {
@@ -35,33 +34,25 @@ Rwiki.init = function() {
     Rwiki.ajaxCallCompleted = true;
   });
 
-  treePanel.getLoader().on('load', function() {
+  Rwiki.treePanel.getLoader().on('load', function() {
     Rwiki.treeLoaded = true;
     Rwiki.treePanel.openNodeFromLocationHash();
   });
 
-  treePanel.relayEvents(nodeManager,
-    ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
-
-  var tabPanel = new Rwiki.TabPanel();
-  Rwiki.tabPanel = tabPanel;
-  tabPanel.relayEvents(nodeManager,
-    ['rwiki:pageLoaded', 'rwiki:folderCreated', 'rwiki:pageCreated', 'rwiki:pageSaved', 'rwiki:nodeRenamed', 'rwiki:nodeDeleted']);
-  tabPanel.relayEvents(treePanel, ['pageSelected']);
+  Rwiki.tabPanel = new Rwiki.TabPanel();
+  Rwiki.tabPanel.relayEvents(Rwiki.treePanel, ['pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
-  editorPanel.relayEvents(Rwiki.NodeManager.getInstance(), ['rwiki:pageLoaded']);
-
-  var window = new Rwiki.EditorWindow(editorPanel);
+  var editorWindow = new Rwiki.EditorWindow(editorPanel);
 
   function showEditor(path) {
-    if (!window.isVisible()) {
-      window.setPagePath(path);
-      window.show();
+    if (!editorWindow.isVisible()) {
+      editorWindow.setPagePath(path);
+      editorWindow.show();
     }
   }
 
-  tabPanel.on('rwiki:editPage', function(path) {
+  Rwiki.tabPanel.on('rwiki:editPage', function(path) {
     showEditor(path);
   });
 
@@ -73,14 +64,14 @@ Rwiki.init = function() {
   // Create layout
 
   var navigationPanel = new Rwiki.NavigationPanel({
-    items: [treePanel]
+    items: [Rwiki.treePanel]
   });
 
   var app = new Ext.Viewport({
     layout: 'border',
     plain: true,
     renderTo: Ext.getBody(),
-    items: [navigationPanel, tabPanel]
+    items: [navigationPanel, Rwiki.tabPanel]
   });
 
   app.show();
@@ -91,22 +82,22 @@ Rwiki.init = function() {
     alt: true,
     stopEvent: true,
     fn: function() {
-      tabPanel.onEditPage();
+      Rwiki.tabPanel.onEditPage();
     }
   }, {
     key: "t",
     ctrl: true,
     stopEvent: true,
     fn: function() {
-      tabPanel.onFuzzyFinder();
+      Rwiki.tabPanel.onFuzzyFinder();
     }
   }, {
     key: "w",
     ctrl: true,
     stopEvent: true,
     fn: function() {
-      var tab = tabPanel.getActiveTab();
-      tabPanel.remove(tab);
+      var tab = Rwiki.tabPanel.getActiveTab();
+      Rwiki.tabPanel.remove(tab);
     }
   }]);
   

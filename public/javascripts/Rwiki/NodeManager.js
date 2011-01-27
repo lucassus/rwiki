@@ -23,20 +23,24 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
   },
 
   loadPage: function(path) {
-    var self = this;
-    self.fireEvent('rwiki:beforePageLoad', path);
-    
-    $.ajax({
-      type: 'GET',
+    this.fireEvent('rwiki:beforePageLoad', path);
+
+    var pages = new Ext.data.JsonStore({
+      restful: true,
       url: '/node',
-      dataType: 'json',
-      data: {
-        path: path
-      },
-      success: function(data) {
-        self.fireEvent('rwiki:pageLoaded', data);
-      }
+      root: 'pages',
+      fields: [
+        'path', 'baseName', 'rawContent', 'htmlContent'
+      ]
     });
+
+    var self = this;
+
+    pages.on('load', function(store, records) {
+      self.fireEvent('rwiki:pageLoaded', records[0].data);
+    });
+
+    pages.load({params: {path: path}});
   },
 
   createFolder: function(parentPath, name) {

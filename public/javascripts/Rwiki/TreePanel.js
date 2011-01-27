@@ -69,6 +69,13 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('rwiki:nodeRenamed', this.onNodeRenamed);
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
     this.on('beforemovenode', this.onBeforeMoveNode);
+
+    this.relayEvents(Rwiki.NodeManager.getInstance(), [
+      'rwiki:pageLoaded',
+      'rwiki:folderCreated',
+      'rwiki:pageCreated',
+      'rwiki:nodeRenamed',
+      'rwiki:nodeDeleted']);
   },
 
   onContextMenu: function(node, e) {

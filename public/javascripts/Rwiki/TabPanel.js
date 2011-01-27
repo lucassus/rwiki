@@ -45,6 +45,14 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     this.on('rwiki:pageSaved', this.onPageSaved);
     this.on('rwiki:nodeRenamed', this.onNodeRanamed);
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
+
+    this.relayEvents(Rwiki.NodeManager.getInstance(), [
+      'rwiki:pageLoaded',
+      'rwiki:folderCreated',
+      'rwiki:pageCreated',
+      'rwiki:pageSaved',
+      'rwiki:nodeRenamed',
+      'rwiki:nodeDeleted']);
   },
 
   findOrCreatePageTab: function(path) {

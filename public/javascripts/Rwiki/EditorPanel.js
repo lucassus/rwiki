@@ -25,6 +25,8 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
     Rwiki.EditorPanel.superclass.initEvents.apply(this, arguments);
 
     this.on('rwiki:pageLoaded', this.onPageLoaded);
+
+    this.relayEvents(Rwiki.NodeManager.getInstance(), ['rwiki:pageLoaded'])
   },
 
   onPageLoaded: function(data) {
