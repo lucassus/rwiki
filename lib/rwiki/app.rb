@@ -28,7 +28,7 @@ module Rwiki
       path = params[:path].strip
       page = Page.new(path)
 
-      { :pages => [page.to_hash] }.to_json
+      page.to_json
     end
 
     get '/node/print' do
