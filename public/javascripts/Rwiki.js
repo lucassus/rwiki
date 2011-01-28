@@ -28,10 +28,18 @@ Rwiki.init = function() {
 
   nodeManager.on('rwiki:beforePageLoad', function() {
     Rwiki.ajaxCallCompleted = false;
+    Rwiki.statusBar.showBusy();
   });
 
   nodeManager.on('rwiki:pageLoaded', function() {
     Rwiki.ajaxCallCompleted = true;
+    Rwiki.statusBar.clearStatus({useDefaults: true});
+  });
+
+  Rwiki.statusBar = new Ext.ux.StatusBar({
+    statusAlign: 'right',
+    defaultText: 'Ready',
+    iconCls: 'x-status-valid'
   });
 
   Rwiki.treePanel.getLoader().on('load', function() {
@@ -39,7 +47,9 @@ Rwiki.init = function() {
     Rwiki.treePanel.openNodeFromLocationHash();
   });
 
-  Rwiki.tabPanel = new Rwiki.TabPanel();
+  Rwiki.tabPanel = new Rwiki.TabPanel({
+    bbar: Rwiki.statusBar
+  });
   Rwiki.tabPanel.relayEvents(Rwiki.treePanel, ['pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
