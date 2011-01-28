@@ -6,19 +6,6 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       throw new Error("There is no public constructor for Rwiki.NodeManager");
     }
 
-    this.store = new Ext.data.JsonStore({
-      restful: true,
-      url: '/node',
-      root: 'pages',
-      idProperty: 'path',
-      fields: ['path', 'baseName', 'rawContent', 'htmlContent']
-    });
-
-    var self = this;
-    this.store.on('load', function(store, records) {
-      self.fireEvent('rwiki:pageLoaded', records[0].data);
-    });
-
     this.initEvents();
   },
 
@@ -36,8 +23,20 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
   },
 
   loadPage: function(path) {
-    this.fireEvent('rwiki:beforePageLoad', path);
-    this.store.load({params: {path: path}});
+    var self = this;
+    self.fireEvent('rwiki:beforePageLoad', path);
+        
+    $.ajax({
+      type: 'GET',
+      url: '/node',
+      dataType: 'json',
+      data: {
+        path: path
+      },
+      success: function(data) {
+        self.fireEvent('rwiki:pageLoaded', data);
+      }
+    });
   },
 
   createFolder: function(parentPath, name) {
