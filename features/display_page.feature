@@ -7,6 +7,7 @@ Feature: Display a page
   Scenario Outline: Display the page
     When I open the page for the tree node with path "<path>"
     Then I should see active tab titled "<title>"
+    And I should see generated content for the node with path "<path>"
 
   Examples:
     | path                        | title  |
