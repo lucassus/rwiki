@@ -11,7 +11,7 @@ Given /^I wait for load the tree$/ do
   end
 end
 
-Given /^I wait for load an ajax call complete$/ do
+Given /^I wait for an ajax call complete$/ do
   timeout = 10
   wait_until(timeout) do
     Capybara.current_session.evaluate_script <<-JS
