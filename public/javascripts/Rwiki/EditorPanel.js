@@ -24,14 +24,15 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
   initEvents: function() {
     Rwiki.EditorPanel.superclass.initEvents.apply(this, arguments);
 
+    this.relayEvents(Rwiki.NodeManager.getInstance(), ['rwiki:pageLoaded']);
     this.on('rwiki:pageLoaded', this.onPageLoaded);
-
-    this.relayEvents(Rwiki.NodeManager.getInstance(), ['rwiki:pageLoaded'])
   },
 
-  onPageLoaded: function(data) {
-    this.editor.setPagePath(data.path);
-    this.editor.setContent(data.rawContent);
+  onPageLoaded: function(page) {
+    this.editor.setPagePath(page.getPath());
+    this.editor.setContent(page.getRawContent());
+
+    Ext.get('editor-container').unmask();
   },
 
   getPagePath: function() {

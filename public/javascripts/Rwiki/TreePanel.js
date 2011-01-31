@@ -90,13 +90,12 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   onClick: function(node) {
     if (!node.isLeaf()) return;
-
-    var path = node.getPath();
-    this.fireEvent('rwiki:pageSelected', path);
+    var page = new Rwiki.Node({ path: node.getPath() });
+    this.fireEvent('rwiki:pageSelected', page);
   },
 
-  onPageLoaded: function(data) {
-    var node = this.findNodeByPath(data.path);
+  onPageLoaded: function(page) {
+    var node = this.findNodeByPath(page.getPath());
     if (node) {
       node.select();
     }
@@ -116,27 +115,25 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     parentNode.appendChild(node);
   },
 
-  onPageCreated: function(data) {
-    var node = new Rwiki.TreePanel.Node({
-      baseName: data.baseName,
-      text: data.baseName.replace(new RegExp('\.txt$'), ''),
+  onPageCreated: function(page) {
+    var treeNode = new Rwiki.TreePanel.Node({
+      baseName: page.getBaseName(),
+      text: page.getTitle(),
       cls: 'page',
       expandable: false,
       leaf: true
     });
 
-    var parentNode = this.findNodeByPath(data.parentPath);
+    var parentNode = this.findNodeByPath(page.getParentPath());
     parentNode.expand();
-    parentNode.appendChild(node);
-    node.select();
+    parentNode.appendChild(treeNode);
+    treeNode.select();
   },
 
-  onNodeRenamed: function(data) {
-    var node = this.findNodeByPath(data.oldPath);
-    node.setBaseName(data.baseName);
-
-    var title = data.baseName.replace(new RegExp('\.txt$'), '');
-    node.setText(title);
+  onNodeRenamed: function(page) {
+    var treeNode = this.findNodeByPath(page.getData().oldPath);
+    treeNode.setBaseName(page.getBaseName());
+    treeNode.setText(page.getTitle());
   },
 
   onNodeDeleted: function(data) {

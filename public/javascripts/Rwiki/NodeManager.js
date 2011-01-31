@@ -22,9 +22,11 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
     );
   },
 
-  loadPage: function(path) {
+loadPage: function(path) {
     var self = this;
-    self.fireEvent('rwiki:beforePageLoad', path);
+
+    var page = new Rwiki.Node({ path: path });
+    self.fireEvent('rwiki:beforePageLoad', page);
         
     $.ajax({
       type: 'GET',
@@ -34,7 +36,8 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         path: path
       },
       success: function(data) {
-        self.fireEvent('rwiki:pageLoaded', data);
+        page = new Rwiki.Node(data);
+        self.fireEvent('rwiki:pageLoaded', page);
       }
     });
   },
@@ -70,7 +73,8 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         isFolder: false
       },
       success: function(data) {
-        self.fireEvent('rwiki:pageCreated', data);
+        var page = new Rwiki.Node(data);
+        self.fireEvent('rwiki:pageCreated', page);
       }
     });
   },
@@ -87,7 +91,8 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         rawContent: rawContent
       },
       success: function(data) {
-        self.fireEvent('rwiki:pageSaved', data);
+        var page = new Rwiki.Node(data);
+        self.fireEvent('rwiki:pageSaved', page);
       }
     });
   },
@@ -104,7 +109,8 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         newName: newName
       },
       success: function(data) {
-        self.fireEvent('rwiki:nodeRenamed', data);
+        var page = new Rwiki.Node(data);
+        self.fireEvent('rwiki:nodeRenamed', page);
       }
     });
   },
@@ -135,7 +141,8 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         newParentPath: newParentPath
       },
       success: function(data) {
-        self.fireEvent('rwiki:nodeRenamed', data);
+        var page = new Rwiki.Node(data);
+        self.fireEvent('rwiki:nodeRenamed', page);
       }
     });
 

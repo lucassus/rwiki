@@ -18,7 +18,7 @@ module Rwiki::Models
 
       def fuzzy_finder(query)
         @finder ||= FuzzyFileFinder.new(full_path_for('.'))
-        @finder.reload!
+        @finder.rescan!
 
         matches = @finder.find(query).sort_by { |m| [-m[:score], m[:path]] }
         matches.each do |m|

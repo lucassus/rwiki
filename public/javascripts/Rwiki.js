@@ -52,18 +52,12 @@ Rwiki.init = function() {
   });
   Rwiki.tabPanel.relayEvents(Rwiki.treePanel, ['rwiki:pageSelected']);
 
-  var editorPanel = new Rwiki.EditorPanel();
-  var editorWindow = new Rwiki.EditorWindow(editorPanel);
-
-  function showEditor(path) {
+  var editorWindow = new Rwiki.EditorWindow();
+  Rwiki.tabPanel.on('rwiki:editPage', function(path) {
     if (!editorWindow.isVisible()) {
       editorWindow.setPagePath(path);
       editorWindow.show();
     }
-  }
-
-  Rwiki.tabPanel.on('rwiki:editPage', function(path) {
-    showEditor(path);
   });
 
   // Handle this change event in order to restore the UI to the appropriate history state

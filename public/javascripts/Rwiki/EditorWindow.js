@@ -1,7 +1,9 @@
 Ext.ns('Rwiki');
 
 Rwiki.EditorWindow = Ext.extend(Ext.Window, {
-  constructor: function(editorPanel) {
+  constructor: function() {
+    this.editorPanel = new Rwiki.EditorPanel();
+
     Ext.apply(this, {
       maximizable: true,
       modal: true,
@@ -13,7 +15,7 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
       plain: true,
       bodyStyle: 'padding: 5px;',
       buttonAlign: 'center',
-      items: editorPanel,
+      items: this.editorPanel,
       buttons: [
         {
           text: 'Save',
@@ -37,7 +39,6 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
     });
 
     Rwiki.EditorWindow.superclass.constructor.apply(this, arguments);
-    this.editorPanel = editorPanel;
   },
 
   setPagePath: function(path) {
@@ -48,15 +49,21 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
   show: function() {
     Rwiki.NodeManager.getInstance().loadPage(this.pagePath);
     Rwiki.EditorWindow.superclass.show.apply(this, arguments);
+
+    Ext.get('editor-container').mask('Loading the page...');
+  },
+
+  savePage: function() {
+    Rwiki.NodeManager.getInstance().savePage(this.pagePath, this.editorPanel.getRawContent());
   },
 
   onSaveButton: function() {
-    Rwiki.NodeManager.getInstance().savePage(this.pagePath, this.editorPanel.getRawContent());
+    this.savePage();
     this.hide();
   },
 
   onSaveAndContinueButton: function() {
-    Rwiki.NodeManager.getInstance().savePage(this.pagePath, this.editorPanel.getRawContent());
+    this.savePage();
   },
 
   onCancelButton: function() {

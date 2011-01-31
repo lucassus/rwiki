@@ -43,7 +43,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     this.on('rwiki:pageCreated', this.onPageCreated);
     this.on('rwiki:pageLoaded', this.onPageLoaded);
     this.on('rwiki:pageSaved', this.onPageSaved);
-    this.on('rwiki:nodeRenamed', this.onNodeRanamed);
+    this.on('rwiki:nodeRenamed', this.onNodeRenamed);
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
 
     this.relayEvents(Rwiki.NodeManager.getInstance(), [
@@ -55,22 +55,22 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       'rwiki:nodeDeleted']);
   },
 
-  findOrCreatePageTab: function(path) {
-    var tab = this.findTabByPagePath(path);
+  findOrCreatePageTab: function(page) {
+    var tab = this.findTabByPagePath(page.getPath());
     
     if (!tab) {
-      tab = this.createPageTab(path);
+      tab = this.createPageTab(page);
     } 
 
     return tab;
   },
 
-  createPageTab: function(path, title) {
+  createPageTab: function(page) {
     var tab = new Rwiki.TabPanel.PageTab({
-      title: title
+      title: page.getTitle()
     });
 
-    tab.setPagePath(path);
+    tab.setPagePath(page.getPath());
     this.add(tab);
     
     return tab;
@@ -89,8 +89,8 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     });
   },
 
-  onPageSelected: function(path) {
-    var tab = this.findOrCreatePageTab(path);
+  onPageSelected: function(page) {
+    var tab = this.findOrCreatePageTab(page);
     tab.show();
   },
 
@@ -110,33 +110,30 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     }
   },
 
-  onPageCreated: function(data) {
-    var tab = this.createPageTab(data.path, data.text);
+  onPageCreated: function(page) {
+    var tab = this.createPageTab(page);
     tab.show();
   },
 
-  onPageLoaded: function(data) {
-    var tab = this.findOrCreatePageTab(data.path);
-    var title = data.baseName.replace(new RegExp('\.txt$'), '');
-    
-    tab.setTitle(title);
-    tab.setContent(data.htmlContent);
+  onPageLoaded: function(page) {
+    var tab = this.findOrCreatePageTab(page);
+
+    tab.setTitle(page.getTitle());
+    tab.setContent(page.getHtmlContent());
     tab.show();
 
     tab.setIsLoading(false);
   },
 
-  onPageSaved: function(data) {
-    var tab = this.findTabByPagePath(data.path);
+  onPageSaved: function(page) {
+    var tab = this.findTabByPagePath(page.getPath());
     if (tab == null) return;
 
-    tab.setContent(data.htmlContent);
+    tab.setContent(page.getHtmlContent());
   },
 
-  onNodeRanamed: function(data) {
-    var oldPath = data.oldPath;
-    var path = data.path;
-
+  onNodeRenamed: function(page) {
+    var oldPath = page.getData().oldPath;
     var currentTab = this.getActiveTab();
 
     var tab = null;
@@ -145,18 +142,17 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       tab = this.findTabByPagePath(oldPath);
       if (tab == null) return;
 
-      tab.setPagePath(path);
-      var title = data.baseName.replace(new RegExp('\.txt$'), '');
-      tab.setTitle(title);
+      tab.setPagePath(page.getPath());
+      tab.setTitle(page.getTitle());
 
       if (tab == currentTab) {
-        document.title = 'Rwiki ' + path;
+        document.title = 'Rwiki ' + page.getPath();
       }
     } else {
       var tabs = this.findTabsByParentPath(oldPath);
       for (var i = 0; i < tabs.length; i++) {
         tab = tabs[i];
-        var newPath = tab.getPagePath().replace(oldPath, path);
+        var newPath = tab.getPagePath().replace(oldPath, page.getPath());
         tab.setPagePath(newPath);
 
         if (tab == currentTab) {
