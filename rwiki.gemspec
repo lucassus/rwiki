@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rwiki}
-  s.version = "0.2.3"
+  s.version = "0.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Łukasz Bandzarewicz"]
-  s.date = %q{2011-01-24}
+  s.date = %q{2011-01-31}
   s.default_executable = %q{rwiki}
   s.description = %q{Personal wiki based on ExtJS}
   s.email = %q{lucassus@gmail.com}
@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
     "features/step_definitions/common_steps.rb",
     "features/step_definitions/common_transforms.rb",
     "features/step_definitions/dialog_box_steps.rb",
+    "features/step_definitions/fuzzy_finder_steps.rb",
     "features/step_definitions/history_steps.rb",
     "features/step_definitions/tab_panel_steps.rb",
     "features/step_definitions/tree_panel_steps.rb",
@@ -1086,6 +1087,7 @@ Gem::Specification.new do |s|
     "public/javascripts/Rwiki/EditorWindow.js",
     "public/javascripts/Rwiki/FuzzyFinderDialog.js",
     "public/javascripts/Rwiki/NavigationPanel.js",
+    "public/javascripts/Rwiki/Node.js",
     "public/javascripts/Rwiki/NodeManager.js",
     "public/javascripts/Rwiki/TabPanel.js",
     "public/javascripts/Rwiki/TabPanel/PageTab.js",
