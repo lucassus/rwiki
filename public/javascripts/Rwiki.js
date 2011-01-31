@@ -50,7 +50,7 @@ Rwiki.init = function() {
   Rwiki.tabPanel = new Rwiki.TabPanel({
     bbar: Rwiki.statusBar
   });
-  Rwiki.tabPanel.relayEvents(Rwiki.treePanel, ['pageSelected']);
+  Rwiki.tabPanel.relayEvents(Rwiki.treePanel, ['rwiki:pageSelected']);
 
   var editorPanel = new Rwiki.EditorPanel();
   var editorWindow = new Rwiki.EditorWindow(editorPanel);

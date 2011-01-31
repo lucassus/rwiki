@@ -55,7 +55,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       self.filter.filterTree(text);
     });
 
-    this.addEvents('pageSelected');
+    this.addEvents('rwiki:pageSelected');
   },
 
   initEvents: function() {
@@ -92,7 +92,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     if (!node.isLeaf()) return;
 
     var path = node.getPath();
-    this.fireEvent('pageSelected', path);
+    this.fireEvent('rwiki:pageSelected', path);
   },
 
   onPageLoaded: function(data) {

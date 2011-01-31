@@ -11,6 +11,14 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
     Rwiki.TabPanel.PageTab.superclass.constructor.apply(this, arguments);
   },
 
+  isLoading: function() {
+    return this._isLoading;
+  },
+
+  setIsLoading: function(isLoading) {
+    this._isLoading = isLoading;
+  },
+
   getPagePath: function() {
     return this.path;
   },
@@ -23,7 +31,7 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
    * Update the page content.
    */
   setContent: function(htmlContent) {
-    pageContainer = this.getPageContainer();
+    var pageContainer = this.getPageContainer();
     pageContainer.html(htmlContent);
   },
 
