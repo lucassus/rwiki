@@ -20,6 +20,9 @@ When /^I open the page for the tree node with path "([^"]*)"$/ do |path|
   And %{I click the node with path "#{path}"}
   And %{I should see generated content for the node with path "#{path}"}
   And %{I should see page title "Rwiki #{path}"}
+
+  And %{I should see enabled "Edit page" toolbar button}
+  And %{I should see enabled "Print page" toolbar button}
 end
 
 Then /^I should see the node titled "([^"]*)"$/ do |title|
@@ -28,12 +31,6 @@ end
 
 Then /^I should not see the node titled "([^"]*)"$/ do |title|
   Then %{I should not see "#{title}" within "div#tree"}
-end
-
-When /^I double click (the node with path "(?:[^"]*)")$/ do |el_node_id|
-  Capybara.current_session.execute_script <<-JS
-    $("div##{el_node_id}").trigger("dblclick")
-  JS
 end
 
 When /^I click (the node with path "(?:[^"]*)")$/ do |el_node_id|

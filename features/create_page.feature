@@ -13,7 +13,7 @@ Feature: Create page
     Then I should see the node titled "The new page"
 
     When I reload the application
-    And I double click the node with path "./folder"
+    And I expand the node with path "./folder"
     Then I should see the node titled "The new page"
 
     When I click the node with path "./folder/The new page.txt"
@@ -33,7 +33,7 @@ Feature: Create page
     Then I should see the node titled "test"
 
     When I reload the application
-    And I double click the node with path "./folder"
+    And I expand the node with path "./folder"
     Then I should see the node titled "test"
 
     When I click the node with path "./folder/test.txt"
@@ -49,5 +49,5 @@ Feature: Create page
     Then I should see the node titled "The new folder"
 
     When I reload the application
-    And I double click the node with path "./folder"
+    And I expand the node with path "./folder"
     Then I should see the node titled "The new folder"

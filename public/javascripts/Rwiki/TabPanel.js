@@ -2,6 +2,29 @@ Ext.ns('Rwiki');
 
 Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   initComponent: function() {
+    this.editPageButton = new Ext.Button({
+      text: 'Edit page',
+      iconCls: 'icon-edit',
+      scope: this,
+      handler: this.onEditPage,
+      disabled: true
+    });
+
+    this.printPageButton = new Ext.Button({
+      text: 'Print page',
+      iconCls: 'icon-print',
+      scope: this,
+      handler: this.onPrint,
+      disabled: true
+    });
+
+    this.findPageButton = new Ext.Button({
+      text: 'Find page',
+      iconCls: 'icon-search',
+      scope: this,
+      handler: this.onFuzzyFinder
+    });
+
     Ext.applyIf(this, {
       region: 'center',
       deferredRender: false,
@@ -11,22 +34,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         autoScroll: true
       },
       plugins: new Ext.ux.TabCloseMenu(),
-      tbar: [{
-        text: 'Edit the page',
-        iconCls: 'icon-edit',
-        scope: this,
-        handler: this.onEditPage
-      }, {
-        text: 'Print page',
-        iconCls: 'icon-print',
-        scope: this,
-        handler: this.onPrint
-      }, {
-        text: 'Find page',
-        iconCls: 'icon-search',
-        scope: this,
-        handler: this.onFuzzyFinder
-      }]
+      tbar: [this.editPageButton, this.printPageButton, this.findPageButton]
     });
 
     Rwiki.TabPanel.superclass.initComponent.apply(this, arguments);
@@ -42,13 +50,15 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     this.on('rwiki:pageCreated', this.onPageCreated);
     this.on('rwiki:pageLoaded', this.onPageLoaded);
+    this.on('rwiki:lastPageClosed', this.onLastPageClosed);
     this.on('rwiki:pageSaved', this.onPageSaved);
     this.on('rwiki:nodeRenamed', this.onNodeRenamed);
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
 
-    this.relayEvents(Rwiki.nodeManager, [
+    this.relayEvents(Rwiki.NodeManager.getInstance(), [
       'rwiki:pageLoaded',
       'rwiki:folderCreated',
+      'rwiki:lastPageClosed',
       'rwiki:pageCreated',
       'rwiki:pageSaved',
       'rwiki:nodeRenamed',
@@ -85,7 +95,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   findTabsByParentPath: function(parentPath) {
     return this.findBy(function() {
       var path = this.getPagePath();
-      return Rwiki.nodeManager.isParent(parentPath, path);
+      return Rwiki.NodeManager.getInstance().isParent(parentPath, path);
     });
   },
 
@@ -96,15 +106,17 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   onTabChange: function(panel, tab) {
     if (tab) {
-      if (tab.isLoading()) return;
+      if (tab.isLoading()) {
+        return;
+      }
 
       Ext.History.add(tab.getPagePath());
       document.title = 'Rwiki ' + tab.getPagePath();
-      Rwiki.nodeManager.loadPage(tab.getPagePath());
+      Rwiki.NodeManager.getInstance().loadPage(tab.getPagePath());
       tab.setIsLoading(true);
     } else {
       document.title = 'Rwiki';
-      Rwiki.nodeManager.fireEvent('rwiki:lastPageClosed');
+      Rwiki.NodeManager.getInstance().fireEvent('rwiki:lastPageClosed');
     }
   },
 
@@ -121,6 +133,14 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     tab.show();
 
     tab.setIsLoading(false);
+    
+    this.editPageButton.setDisabled(false);
+    this.printPageButton.setDisabled(false);
+  },
+
+  onLastPageClosed: function() {
+    this.editPageButton.setDisabled(true);
+    this.printPageButton.setDisabled(true);
   },
 
   onPageSaved: function(page) {
