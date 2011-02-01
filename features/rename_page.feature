@@ -60,9 +60,8 @@ Feature: Rename a node
     And I should see generated content for the node with path "./The new home.txt"
 
   Scenario: Rename a folder
-    When I double click the node with path "./folder"
-    And I click the node with path "./folder/test.txt"
-    Then I should see page title "Rwiki ./folder/test.txt"
+    When I expand the node with path "./folder"
+    And I open the page for the tree node with path "./folder/test.txt"
 
     When I right click the node with path "./folder"
     And I follow "Rename node"
@@ -72,13 +71,8 @@ Feature: Rename a node
     And I press "OK" within the dialog box
     Then I should see the node titled "The new folder name"
     Then I should see page title "Rwiki ./The new folder name/test.txt"
-
-    When I double click the node with path "./The new folder name"
-    And I click the node with path "./The new folder name/test.txt"
-    And I should see generated content for the node with path "./The new folder name/test.txt"
+    And I open the page for the tree node with path "./The new folder name/test.txt"
 
     When I reload the application
     Then I should see the node titled "The new folder name"
-    And I double click the node with path "./The new folder name"
-    And I click the node with path "./The new folder name/test.txt"
-    And I should see generated content for the node with path "./The new folder name/test.txt"
+    And I open the page for the tree node with path "./The new folder name/test.txt"

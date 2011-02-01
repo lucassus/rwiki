@@ -29,7 +29,7 @@ Then /^I should see page title "([^"]*)"$/ do |title|
   find("title").text.should == title
 end
 
-When /^I create a new page title "([^"]*)" for the node with path "([^"]*)"$/ do |title, path|
+When /^I create a new page titled "([^"]*)" for the node with path "([^"]*)"$/ do |title, path|
   When %{I right click the node with path "#{path}"}
   And %{I follow "Create page"}
   Then %{I should see dialog box titled "Create page"}

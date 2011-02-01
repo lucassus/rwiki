@@ -51,7 +51,7 @@ Feature: History
     And I should see generated content for the node with path "./test.txt"
     And I should see active tab titled "test"
 
-    When I create a new page title "A new page" for the node with path "./Info"
+    When I create a new page titled "A new page" for the node with path "./Info"
     And I press the browser back button
     And I press the browser forward button
     Then the node with path "./Info/A new page.txt" should be selected
