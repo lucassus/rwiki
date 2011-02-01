@@ -96,9 +96,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   onTabChange: function(panel, tab) {
     if (tab) {
-      if (tab.isLoading()) {
-        return;
-      }
+      if (tab.isLoading()) return;
 
       Ext.History.add(tab.getPagePath());
       document.title = 'Rwiki ' + tab.getPagePath();

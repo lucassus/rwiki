@@ -22,115 +22,102 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
     );
   },
 
-loadPage: function(path) {
-    var self = this;
-
+  loadPage: function(path) {
     var page = new Rwiki.Node({ path: path });
-    self.fireEvent('rwiki:beforePageLoad', page);
-        
-    $.ajax({
-      type: 'GET',
+    this.fireEvent('rwiki:beforePageLoad', page);
+
+    Ext.Ajax.request({
       url: '/node',
-      dataType: 'json',
-      data: {
-        path: path
-      },
-      success: function(data) {
-        page = new Rwiki.Node(data);
-        self.fireEvent('rwiki:pageLoaded', page);
+      method: 'GET',
+      params: { path: path },
+      scope: this,
+      success: function(response) {
+        var data = Ext.decode(response.responseText);
+        var page = new Rwiki.Node(data);
+        this.fireEvent('rwiki:pageLoaded', page);
       }
     });
   },
 
   createFolder: function(parentPath, name) {
-    var self = this;
-
-    $.ajax({
-      type: 'POST',
-      url: '/node',
-      dataType: 'json',
-      data: {
-        parentPath: parentPath,
-        name: name,
-        isFolder: true
-      },
-      success: function(data) {
-        self.fireEvent('rwiki:folderCreated', data);
-      }
-    });
+    this._createNode(parentPath, name, true);
   },
   
   createPage: function(parentPath, name) {
-    var self = this;
-    
-    $.ajax({
-      type: 'POST',
+    this._createNode(parentPath, name, false);
+  },
+
+  _createNode: function(parentPath, name, isFolder) {
+    Ext.Ajax.request({
       url: '/node',
-      dataType: 'json',
-      data: {
+      type: 'POST',
+      params: {
         parentPath: parentPath,
         name: name,
-        isFolder: false
+        isFolder: isFolder
       },
-      success: function(data) {
-        var page = new Rwiki.Node(data);
-        self.fireEvent('rwiki:pageCreated', page);
+      scope: this,
+      success: function(response) {
+        var data = Ext.decode(response.responseText);
+
+        if (isFolder) {
+          this.fireEvent('rwiki:pageCreated', data);
+        } else {
+          this.fireEvent('rwiki:folderCreated', data);
+        }
       }
     });
   },
 
   savePage: function(path, rawContent) {
-    var self = this;
-
-    $.ajax({
-      type: 'PUT',
+    Ext.Ajax.request({
       url: '/node',
-      dataType: 'json',
-      data: {
+      method: 'PUT',
+      params: {
         path: path,
         rawContent: rawContent
       },
-      success: function(data) {
+      scope: this,
+      success: function(response) {
+        var data = Ext.decode(response.responseText);
         var page = new Rwiki.Node(data);
-        self.fireEvent('rwiki:pageSaved', page);
+        this.fireEvent('rwiki:pageSaved', page);
       }
     });
   },
 
   renameNode: function(oldPath, newName) {
-    var self = this;
-
-    $.ajax({
-      type: 'POST',
+    Ext.Ajax.request({
       url: '/node/rename',
-      dataType: 'json',
-      data: {
+      method: 'POST',
+      params: {
         path: oldPath,
         newName: newName
       },
-      success: function(data) {
+      scope: this,
+      success: function(response) {
+        var data = Ext.decode(response.responseText);
         var page = new Rwiki.Node(data);
-        self.fireEvent('rwiki:nodeRenamed', page);
+        this.fireEvent('rwiki:nodeRenamed', page);
       }
     });
   },
 
   deleteNode: function(path) {
-    var self = this;
-    
-    $.ajax({
-      type: 'DELETE',
-      url: '/node?path=' + path,
-      dataType: 'json',
-      success: function(data) {
-        self.fireEvent('rwiki:nodeDeleted', data);
+    Ext.Ajax.request({
+      url: '/node',
+      method: 'DELETE',
+      params: { path: path },
+      scope: this,
+      success: function(response) {
+        var data = Ext.decode(response.responseText);
+        this.fireEvent('rwiki:nodeDeleted', data);
       }
     });
   },
 
   moveNode: function(path, newParentPath) {
     var self = this;
-
     var result = $.ajax({
       type: 'PUT',
       url: '/node/move',

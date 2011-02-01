@@ -6,8 +6,10 @@ Rwiki.rootFolderName = 'Home';
  * Log the event names to the console of any observable object.
  */
 Rwiki.captureEvents = function(observable) {
-  Ext.util.Observable.capture(observable, function(eventName) {
-    if (console === undefined) return;
+  Ext.util.Observable.capture(observable, function(eventName, data) {
+    if (!window.console) return;
+
+    console.log(data);
     console.log(eventName);
   });
 };
@@ -25,6 +27,7 @@ Rwiki.init = function() {
 
   Rwiki.treePanel = new Rwiki.TreePanel();
   Rwiki.nodeManager = Rwiki.NodeManager.getInstance();
+  Rwiki.captureEvents(Rwiki.nodeManager);
 
   Rwiki.nodeManager.on('rwiki:beforePageLoad', function() {
     Rwiki.ajaxCallCompleted = false;
