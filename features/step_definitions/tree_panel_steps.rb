@@ -8,7 +8,10 @@ When /^I expand the parent for the node with path "([^"]*)"$/ do |path|
 end
 
 When /^I expand (the node with path "(?:[^"]*)")$/ do |el_node_id|
-  expand_node_icon = (page.all("div##{el_node_id} img.x-tree-ec-icon.x-tree-elbow-plus") | page.all("div##{el_node_id} img.x-tree-ec-icon.x-tree-elbow-end-plus")).first
+  ec_selector = "div##{el_node_id} img.x-tree-ec-icon.x-tree-elbow-plus"
+  ec_last_selector = "div##{el_node_id} img.x-tree-ec-icon.x-tree-elbow-end-plus"
+  
+  expand_node_icon = (page.all(ec_selector) | page.all(ec_last_selector)).first
   expand_node_icon.click if expand_node_icon
 end
 

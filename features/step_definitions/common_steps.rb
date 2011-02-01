@@ -40,9 +40,10 @@ When /^I create a new page title "([^"]*)" for the node with path "([^"]*)"$/ do
 end
 
 Then /^I should see generated content for the node with path "([^"]*)"$/ do |path|
-  # TODO refactor this code
-  wiki_page_html = Rwiki::Models::Page.new(path).to_html.gsub(/([^>]*)(?=<[^>]*?>)/im, '')
-  page_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html.gsub(/([^>]*)(?=<[^>]*?>)/im, '')
+  sanitize = lambda { |html| html.gsub(/([^>]*)(?=<[^>]*?>)/im, '') }
+
+  wiki_page_html = sanitize.call Rwiki::Models::Page.new(path).to_html
+  page_html = sanitize.call Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
 
   page_html.should == wiki_page_html
 end
