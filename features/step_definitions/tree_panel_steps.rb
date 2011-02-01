@@ -63,3 +63,12 @@ Then /^(the node with path "(?:[^"]*)") should not be selected$/ do |tree_node_i
 
   page.has_no_css? "div##{div_id}.x-tree-selected"
 end
+
+When /^I move the node with path "([^"]*)" to "([^"]*)"$/ do |path, parent_path|
+  Capybara.current_session.execute_script <<-JS
+    var node = Rwiki.treePanel.findNodeByPath('#{path}');
+    var parentNode = Rwiki.treePanel.findNodeByPath('#{parent_path}');
+
+    parentNode.appendChild(node);
+  JS
+end
