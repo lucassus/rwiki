@@ -59,11 +59,12 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       scope: this,
       success: function(response) {
         var data = Ext.decode(response.responseText);
+        var page = new Rwiki.Node(data);
 
         if (isFolder) {
-          this.fireEvent('rwiki:pageCreated', data);
+          this.fireEvent('rwiki:folderCreated', page);
         } else {
-          this.fireEvent('rwiki:folderCreated', data);
+          this.fireEvent('rwiki:pageCreated', page);
         }
       }
     });
