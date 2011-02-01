@@ -12,6 +12,7 @@ Rwiki::App.set(:environment, :test)
 require 'selenium/webdriver'
 Capybara.register_driver :selenium do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
+  # profile.add_extension File.expand_path(File.join(File.dirname(__FILE__), 'firebug-1.6.1-fx.xpi'))
   Capybara::Driver::Selenium.new(app, :profile => profile)
 end
 Capybara.default_driver = :selenium
