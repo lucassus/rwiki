@@ -3,13 +3,11 @@ Feature: Editing a page
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Invoke the editor window
     When I click the node with path "./home.txt"
     And I press "Edit the page"
     Then I should see the window titled "Editing page ./home.txt"
 
-  @javascript
   Scenario: Edit and save the page
     When I click the node with path "./home.txt"
     And I press "Edit the page"
@@ -25,7 +23,6 @@ Feature: Editing a page
     Then I should see "A new page header" within "h1"
     And I should see generated content for the node with path "./home.txt"
 
-  @javascript
   Scenario: Edit and Save and continue
     When I click the node with path "./home.txt"
     And I press "Edit the page"
@@ -37,7 +34,6 @@ Feature: Editing a page
     And I should see "A new page header" within "h1"
     And I should see generated content for the node with path "./home.txt"
 
-  @javascript
     Scenario: Edit and Cancel
     When I click the node with path "./home.txt"
     And I press "Edit the page"

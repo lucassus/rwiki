@@ -3,7 +3,6 @@ Feature: Rename a node
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Rename a page
     When I right click the node with path "./home.txt"
     And I follow "Rename node"
@@ -20,7 +19,6 @@ Feature: Rename a node
     Then I should see "Sample page" within "h1"
     And I should see generated content for the node with path "./The new home.txt"
 
-  @javascript
   Scenario: Rename a page to existing name
     When I right click the node with path "./home.txt"
     And I follow "Rename node"
@@ -43,7 +41,6 @@ Feature: Rename a node
       | home |
       | test |
 
-  @javascript
   Scenario: Rename a page when tab is open
     When I click the node with path "./test.txt"
     And I click the node with path "./home.txt"
@@ -62,7 +59,6 @@ Feature: Rename a node
     And I should see page title "Rwiki ./The new home.txt"
     And I should see generated content for the node with path "./The new home.txt"
 
-  @javascript
   Scenario: Rename a folder
     When I double click the node with path "./folder"
     And I click the node with path "./folder/test.txt"

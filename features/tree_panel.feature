@@ -3,7 +3,6 @@ Feature: Tree Panel
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Browsing a tree
     Then I should see "empty_folder"
     And I should see the node titled "folder"
@@ -23,7 +22,6 @@ Feature: Tree Panel
     When I double click the node with path "./folder/subfolder"
     Then I should see the node titled "ruby"
 
-  @javascript
   Scenario Outline: Move a page
     When I move the node with path "<path>" to "<parent_path>"
     And I reload the application

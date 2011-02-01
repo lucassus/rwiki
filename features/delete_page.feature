@@ -3,7 +3,6 @@ Feature: Delete a page
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Delete a page
     When I right click the node with path "./home.txt"
     And I follow "Delete node"
@@ -15,7 +14,6 @@ Feature: Delete a page
     When I reload the application
     Then I should not see the node titled "home"
 
-  @javascript
   Scenario: Delete a page when a tab is open
     When I open the page for the tree node with path "./home.txt"
     And I open the page for the tree node with path "./folder/subfolder/ruby.txt"

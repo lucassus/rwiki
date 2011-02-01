@@ -3,7 +3,6 @@ Feature: Tree Panel
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Find a page
     Given this scenario is pending
 

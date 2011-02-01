@@ -3,7 +3,6 @@ Feature: Create page
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Create a new page
     When I right click the node with path "./folder"
     And I follow "Create page"
@@ -24,7 +23,6 @@ Feature: Create page
     And I should see "The new page" within "h1"
     And I should see generated content for the node with path "./folder/The new page.txt"
 
-  @javascript
   Scenario: Create an existing page
     When I right click the node with path "./folder"
     And I follow "Create page"
@@ -41,7 +39,6 @@ Feature: Create page
     When I click the node with path "./folder/test.txt"
     Then I should see generated content for the node with path "./folder/test.txt"
 
-  @javascript
   Scenario: Create a folder
     When I right click the node with path "./folder"
     And I follow "Create folder"

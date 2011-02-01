@@ -3,7 +3,6 @@ Feature: Display a page
   Background:
     Given I open the application
 
-  @javascript
   Scenario Outline: Display the page
     When I open the page for the tree node with path "<path>"
     Then I should see active tab titled "<title>"
@@ -18,7 +17,6 @@ Feature: Display a page
     | ./folder/test 2.txt         | test 2 |
     | ./folder/subfolder/ruby.txt | ruby   |
 
-  @javascript
   Scenario: Display the several pages
     When I open the page for the tree node with path "./home.txt"
     And I open the page for the tree node with path "./folder/test.txt"

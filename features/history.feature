@@ -3,7 +3,6 @@ Feature: History
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Open page with path given in the url
     When I open the application for page with path "./home.txt"
 
@@ -13,7 +12,6 @@ Feature: History
     Then I should see "Sample page" within "h1"
     And I should see generated content for the node with path "./home.txt"
 
-  @javascript
   Scenario Outline: After reload the application last opened page should be loaded
     When I open the page for the tree node with path "<path>"
     And I reload the application
@@ -32,7 +30,6 @@ Feature: History
     | ./folder/test 2.txt         | test 2 |
     | ./folder/subfolder/ruby.txt | ruby   |
 
-  @javascript
   Scenario: Browser history
     When I open the page for the tree node with path "./folder/test.txt"
     And I open the page for the tree node with path "./test.txt"

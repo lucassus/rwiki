@@ -3,7 +3,6 @@ Feature: Tab Panel
   Background:
     Given I open the application
 
-  @javascript
   Scenario: Close a tab
     When I open the page for the tree node with path "./home.txt"
     And I open the page for the tree node with path "./test.txt"
@@ -21,7 +20,6 @@ Feature: Tab Panel
     When I close tab for page "./home.txt"
     Then I should have no open tabs
 
-  @javascript
   Scenario: Switching the tabs
     When I open the page for the tree node with path "./home.txt"
     And I open the page for the tree node with path "./test.txt"
@@ -37,11 +35,8 @@ Feature: Tab Panel
     And the node with path "./test.txt" should be selected
     And the node with path "./home.txt" should not be selected
 
-  @javascript
   Scenario: Close tab from context menu
 
-  @javascript
   Scenario: Close other tabs from context menu
 
-  @javascript
   Scenario: Close all tabs from context menu
