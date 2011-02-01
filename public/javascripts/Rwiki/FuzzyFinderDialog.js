@@ -39,7 +39,7 @@ Rwiki.FuzzyFinderDialog = Ext.extend(Ext.Window, {
       itemSelector: 'div.search-item',
       onSelect: function(record) { 
         var path = record.data.path;
-        Rwiki.NodeManager.getInstance().loadPage(path);
+        Rwiki.nodeManager.loadPage(path);
         self.close();
       }
     });

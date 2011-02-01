@@ -24,14 +24,14 @@ Rwiki.init = function() {
   Rwiki.treeLoaded = false;
 
   Rwiki.treePanel = new Rwiki.TreePanel();
-  var nodeManager = Rwiki.NodeManager.getInstance();
+  Rwiki.nodeManager = Rwiki.NodeManager.getInstance();
 
-  nodeManager.on('rwiki:beforePageLoad', function() {
+  Rwiki.nodeManager.on('rwiki:beforePageLoad', function() {
     Rwiki.ajaxCallCompleted = false;
     Rwiki.statusBar.showBusy();
   });
 
-  nodeManager.on('rwiki:pageLoaded', function() {
+  Rwiki.nodeManager.on('rwiki:pageLoaded', function() {
     Rwiki.ajaxCallCompleted = true;
     Rwiki.statusBar.clearStatus({useDefaults: true});
   });

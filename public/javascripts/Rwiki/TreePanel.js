@@ -70,7 +70,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
     this.on('beforemovenode', this.onBeforeMoveNode);
 
-    this.relayEvents(Rwiki.NodeManager.getInstance(), [
+    this.relayEvents(Rwiki.nodeManager, [
       'rwiki:pageLoaded',
       'rwiki:folderCreated',
       'rwiki:pageCreated',
@@ -146,8 +146,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     var path = node.getPath();
     var newParentPath = newParent.getPath();
 
-    var result = Rwiki.NodeManager.getInstance().moveNode(path, newParentPath);
-
+    var result = Rwiki.nodeManager.moveNode(path, newParentPath);
     return result.success;
   },
 
