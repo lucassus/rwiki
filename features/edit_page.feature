@@ -5,12 +5,12 @@ Feature: Editing a page
 
   Scenario: Invoke the editor window
     When I click the node with path "./home.txt"
-    And I press "Edit the page"
+    And I press "Edit page"
     Then I should see the window titled "Editing page ./home.txt"
 
   Scenario: Edit and save the page
     When I click the node with path "./home.txt"
-    And I press "Edit the page"
+    And I press "Edit page"
     Then I should see the window titled "Editing page ./home.txt"
 
     When I fill in "editor" with "h1. A new page header"
@@ -25,7 +25,7 @@ Feature: Editing a page
 
   Scenario: Edit and Save and continue
     When I click the node with path "./home.txt"
-    And I press "Edit the page"
+    And I press "Edit page"
     Then I should see the window titled "Editing page ./home.txt"
 
     When I fill in "editor" with "h1. A new page header"
@@ -36,7 +36,7 @@ Feature: Editing a page
 
     Scenario: Edit and Cancel
     When I click the node with path "./home.txt"
-    And I press "Edit the page"
+    And I press "Edit page"
     Then I should see the window titled "Editing page ./home.txt"
 
     When I fill in "editor" with "h1. A new page header"
