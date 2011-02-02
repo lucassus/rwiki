@@ -6,7 +6,14 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       throw new Error("There is no public constructor for Rwiki.NodeManager");
     }
 
+    this.timeout = 5000;
+
     this.initEvents();
+    Ext.Ajax.on('requestexception', this.onAjaxException);
+  },
+
+  onAjaxException: function() {
+    alert('Something went wrong...');
   },
 
   initEvents: function() {
@@ -31,13 +38,11 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       method: 'GET',
       params: { path: path },
       scope: this,
+      timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Node(data);
         this.fireEvent('rwiki:pageLoaded', page);
-      },
-      failure: function() {
-        alert('!!');
       }
     });
   },
@@ -60,6 +65,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         isFolder: isFolder
       },
       scope: this,
+      timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Node(data);
@@ -82,6 +88,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         rawContent: rawContent
       },
       scope: this,
+      timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Node(data);
@@ -99,6 +106,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         newName: newName
       },
       scope: this,
+      timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Node(data);
@@ -113,6 +121,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       method: 'DELETE',
       params: { path: path },
       scope: this,
+      timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
         this.fireEvent('rwiki:nodeDeleted', data);
@@ -131,6 +140,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         path: path,
         newParentPath: newParentPath
       },
+      timeout: this.timeout,
       success: function(data) {
         var page = new Rwiki.Node(data);
         self.fireEvent('rwiki:nodeRenamed', page);
