@@ -1,4 +1,12 @@
 js:
+  jquery:
+    - vendor/jquery/jquery-1.5.js
+    
+  extjs:
+    - vendor/ext/adapter/jquery/ext-jquery-adapter-debug.js
+    - vendor/ext/ext-all-debug.js
+    - vendor/ext/ux/*.js
+
   rwiki:
     - Rwiki/**/*.js
     - Rwiki.js
