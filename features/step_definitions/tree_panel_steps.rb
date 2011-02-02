@@ -60,3 +60,9 @@ When /^I move the node with path "([^"]*)" to "([^"]*)"$/ do |path, parent_path|
     parentNode.appendChild(node);
   JS
 end
+
+Then /^for (the node with path "(?:[^"]*)") I should see following nodes:$/ do |el_node_id, table|
+  sleep 0.5 # wait for node the expanding animation finish
+  actual_table = table(tableish("div##{el_node_id} + ul.x-tree-node-ct a", "span"))
+  table.diff!(actual_table)
+end

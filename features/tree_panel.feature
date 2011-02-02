@@ -3,25 +3,31 @@ Feature: Tree Panel
   Background:
     Given I open the application
 
-  Scenario: Browsing a tree
-    Then I should see "empty_folder"
-    And I should see the node titled "folder"
-    And I should see the node titled "subfolder"
-    And I should see the node titled "home"
-    And I should see the node titled "test"
-
+  Scenario: Browsing the root node
+    Then for the node with path "." I should see following nodes:
+      | empty_folder |
+      | folder       |
+      | Info         |
+      | subfolder    |
+      | home         |
+      | test         |
     And I should not see the node titled "ruby"
     And I should not see the node titled "test 1"
     And I should not see the node titled "test 2"
 
-  Scenario: Expand a node
+  Scenario: Expand the "./folder" node
     When I expand the node with path "./folder"
-    Then I should see the node titled "test"
-    And I should see the node titled "test 1"
-    And I should see the node titled "test 2"
+    Then for the node with path "./folder" I should see following nodes:
+      | subfolder |
+      | test      |
+      | test 1    |
+      | test 2    |
 
-    When I expand the node with path "./folder/subfolder"
-    Then I should see the node titled "ruby"
+  Scenario: Expand the "./folder/subfolder" node
+    When I expand the node with path "./folder"
+    And I expand the node with path "./folder/subfolder"
+    Then for the node with path "./folder/subfolder" I should see following nodes:
+      | ruby |
 
   Scenario Outline: Move a page
     When I move the node with path "<path>" to "<parent_path>"

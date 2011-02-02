@@ -6,13 +6,15 @@ require 'capybara'
 require 'capybara/cucumber'
 require File.expand_path(File.join(File.dirname(__FILE__), '../../test/tmpdir_helper'))
 
-Rwiki::App.set(:environment, :test)
+Rwiki::App.set(:environment, :production) # will run on minified assets
+Rwiki::App.set(:logging, false) # do not output logs on the STDOUT
 
 # Selenium setup
 require 'selenium/webdriver'
 Capybara.register_driver :selenium do |app|
   profile = Selenium::WebDriver::Firefox::Profile.new
-  # profile.add_extension File.expand_path(File.join(File.dirname(__FILE__), 'firebug-1.6.1-fx.xpi'))
+  load_firebug_extension = false
+  profile.add_extension File.expand_path(File.join(File.dirname(__FILE__), 'firebug-1.6.1-fx.xpi')) if load_firebug_extension
   Capybara::Driver::Selenium.new(app, :profile => profile)
 end
 Capybara.default_driver = :selenium
