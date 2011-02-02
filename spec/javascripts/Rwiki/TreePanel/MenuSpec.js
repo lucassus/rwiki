@@ -1,4 +1,4 @@
-describe("Rwiki.TreePanel.Menu", function() {
+describe("Rwiki.Tree.Menu", function() {
   var menu;
 
   beforeEach(function() {

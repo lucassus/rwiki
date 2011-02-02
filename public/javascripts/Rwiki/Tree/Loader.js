@@ -1,6 +1,6 @@
-Ext.ns('Rwiki.TreePanel');
+Ext.ns('Rwiki.Tree');
 
-Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
+Rwiki.Tree.Loader = Ext.extend(Ext.tree.TreeLoader, {
   constructor: function() {
     Ext.apply(this, {
       requestMethod: 'GET',
@@ -8,7 +8,7 @@ Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
       preloadChildren: true
     });
 
-    Rwiki.TreePanel.Loader.superclass.constructor.apply(this, arguments);
+    Rwiki.Tree.Loader.superclass.constructor.apply(this, arguments);
 
     // pass extra parameters
     this.on('beforeload', function(loader, node) {
@@ -19,6 +19,6 @@ Rwiki.TreePanel.Loader = Ext.extend(Ext.tree.TreeLoader, {
   },
 
   createNode: function(attr) {
-    return new Rwiki.TreePanel.Node(attr);
+    return new Rwiki.Tree.Node(attr);
   }
 });

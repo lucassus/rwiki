@@ -76,7 +76,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   createPageTab: function(page) {
-    var tab = new Rwiki.TabPanel.PageTab({
+    var tab = new Rwiki.Tabs.PageTab({
       title: page.getTitle()
     });
 

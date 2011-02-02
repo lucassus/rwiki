@@ -1,6 +1,6 @@
-Ext.ns('Rwiki.TabPanel');
+Ext.ns('Rwiki.Tabs');
 
-Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
+Rwiki.Tabs.PageTab = Ext.extend(Ext.Container, {
   constructor: function() {
     Ext.apply(this, {
       closable: true,
@@ -8,7 +8,7 @@ Rwiki.TabPanel.PageTab = Ext.extend(Ext.Container, {
       iconCls: 'icon-page'
     });
 
-    Rwiki.TabPanel.PageTab.superclass.constructor.apply(this, arguments);
+    Rwiki.Tabs.PageTab.superclass.constructor.apply(this, arguments);
   },
 
   isLoading: function() {

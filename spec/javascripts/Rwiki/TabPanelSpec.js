@@ -1,4 +1,4 @@
-describe("Rwiki.TabPanel", function() {
+describe("Rwiki.Tabs", function() {
   var tabPanel;
 
   beforeEach(function() {

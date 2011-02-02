@@ -1,4 +1,4 @@
-describe("Rwiki.TreePanel", function() {
+describe("Rwiki.Tree", function() {
   var treePanel;
   var root;
 

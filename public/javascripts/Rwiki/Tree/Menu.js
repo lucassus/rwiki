@@ -1,6 +1,6 @@
-Ext.ns('Rwiki.TreePanel');
+Ext.ns('Rwiki.Tree');
 
-Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
+Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
   constructor: function() {
     Ext.apply(this, {
       id: 'feeds-ctx',
@@ -31,7 +31,7 @@ Rwiki.TreePanel.Menu = Ext.extend(Ext.menu.Menu, {
       }]
     });
 
-    Rwiki.TreePanel.Menu.superclass.constructor.apply(this, arguments);
+    Rwiki.Tree.Menu.superclass.constructor.apply(this, arguments);
   },
 
   show: function(node, xy) {

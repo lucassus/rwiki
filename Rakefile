@@ -1,7 +1,9 @@
 # encoding: utf-8
 
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
 require 'rubygems'
 require 'bundler'
+require 'rwiki'
 
 begin
   Bundler.setup(:default, :development)
@@ -44,4 +46,13 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title    = "rwiki #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+desc "Builds the minified CSS and JS assets."
+task :minify do
+  puts "Building..."
+
+  files = Sinatra::Minify::Package.build(Rwiki::App)
+  files.each { |f| puts " * #{File.basename f}" }
+  puts "Construction complete!"
 end

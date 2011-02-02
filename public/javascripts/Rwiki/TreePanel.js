@@ -2,7 +2,7 @@ Ext.ns('Rwiki');
 
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function() {
-    var toolbar = new Rwiki.TreePanel.Toolbar();
+    var toolbar = new Rwiki.Tree.Toolbar();
 
     Ext.apply(this, {
       id: 'tree',
@@ -12,14 +12,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       animate: true,
       useArrows: true,
       rootVisible: true,
-      loader: new Rwiki.TreePanel.Loader(),
+      loader: new Rwiki.Tree.Loader(),
 
       enableDD: true,
       dropConfig: {
         appendOnly: true
       },
 
-      root: new Rwiki.TreePanel.Node({
+      root: new Rwiki.Tree.Node({
         nodeType: 'async',
         text: Rwiki.rootFolderName,
         draggable: false,
@@ -31,10 +31,10 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
 
-    this.contextMenu = new Rwiki.TreePanel.Menu();
+    this.contextMenu = new Rwiki.Tree.Menu();
     this.on('contextmenu', this.onContextMenu, this);
 
-    this.filter = new Rwiki.TreePanel.Filter(this);
+    this.filter = new Rwiki.Tree.Filter(this);
     this.root.expand();
 
     new Ext.tree.TreeSorter(this, {
@@ -102,7 +102,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onFolderCreated: function(page) {
-    var node = new Rwiki.TreePanel.Node({
+    var node = new Rwiki.Tree.Node({
       baseName: page.getBaseName(),
       text: page.getTitle(),
       cls: 'folder',
@@ -116,7 +116,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onPageCreated: function(page) {
-    var treeNode = new Rwiki.TreePanel.Node({
+    var treeNode = new Rwiki.Tree.Node({
       baseName: page.getBaseName(),
       text: page.getTitle(),
       cls: 'page',

@@ -2,3 +2,7 @@ js:
   rwiki:
     - Rwiki/**/*.js
     - Rwiki.js
+
+css:
+  core:
+    - *.css

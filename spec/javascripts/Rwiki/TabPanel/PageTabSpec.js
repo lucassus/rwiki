@@ -1,4 +1,4 @@
-describe("Rwiki.TabPanel.PageTab", function() {
+describe("Rwiki.Tabs.PageTab", function() {
   var tab;
   var pagePath = './page.txt';
 

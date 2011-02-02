@@ -1,6 +1,6 @@
-Ext.ns('Rwiki.TreePanel');
+Ext.ns('Rwiki.Tree');
 
-Rwiki.TreePanel.Filter = Ext.extend(Ext.tree.TreeFilter, {
+Rwiki.Tree.Filter = Ext.extend(Ext.tree.TreeFilter, {
   constructor: function() {
     this.hiddenNodes = [];
 
@@ -9,7 +9,7 @@ Rwiki.TreePanel.Filter = Ext.extend(Ext.tree.TreeFilter, {
       autoClear: true
     });
 
-    Rwiki.TreePanel.Filter.superclass.constructor.apply(this, arguments);
+    Rwiki.Tree.Filter.superclass.constructor.apply(this, arguments);
   },
 
   filterTree: function(text) {
