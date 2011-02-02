@@ -13,9 +13,9 @@ module Rwiki
     set :css_path, 'public/stylesheets'
     set :css_url,  '/stylesheets'
 
-    disable :raise_errors
-    disable :show_exceptions
-    disable :logging
+    enable :raise_errors
+    enable :show_exceptions
+    enable :logging
 
     error NodeNotFoundError do
       message = request.env['sinatra.error'].message
