@@ -7,6 +7,7 @@ require 'redcloth'
 require 'sinatra'
 require 'sinatra/base'
 require 'fuzzy_file_finder'
+require 'sinatra/minify'
 
 module Rwiki
 

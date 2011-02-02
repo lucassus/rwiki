@@ -1,0 +1,4 @@
+js:
+  rwiki:
+    - Rwiki/**/*.js
+    - Rwiki.js

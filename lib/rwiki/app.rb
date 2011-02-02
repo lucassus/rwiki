@@ -1,8 +1,17 @@
 module Rwiki
   class App < Sinatra::Base
     include Models
+    
+    register Sinatra::Minify
 
     set :root, File.join(File.dirname(__FILE__), '../..')
+    set :app_file, File.join(File.dirname(__FILE__), '../../..')
+
+    set :js_path, 'public/javascripts'
+    set :js_url,  '/javascripts'
+
+    set :css_path, 'public/stylesheets'
+    set :css_url,  '/stylesheets'
 
     disable :raise_errors
     disable :show_exceptions
