@@ -35,6 +35,9 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Node(data);
         this.fireEvent('rwiki:pageLoaded', page);
+      },
+      failure: function() {
+        alert('!!');
       }
     });
   },

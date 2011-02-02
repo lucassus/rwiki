@@ -23,4 +23,5 @@ css:
     - vendor/markitup/sets/textile/style.css
 
   rwiki:
-    - *.css
+    - Rwiki/**/*.css
+    - style.css

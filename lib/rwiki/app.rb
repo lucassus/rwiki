@@ -13,8 +13,8 @@ module Rwiki
     set :css_path, 'public/stylesheets'
     set :css_url,  '/stylesheets'
 
+    disable :show_exceptions
     enable :raise_errors
-    enable :show_exceptions
     enable :logging
 
     error NodeNotFoundError do
