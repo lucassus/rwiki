@@ -1,9 +1,9 @@
-Ext.ns('Rwiki');
+Ext.ns('Rwiki.Data');
 
-Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
+Rwiki.Data.NodeManager = Ext.extend(Ext.util.Observable, {
   constructor: function() {
-    if (Rwiki.NodeManager.caller != Rwiki.NodeManager.getInstance) {
-      throw new Error("There is no public constructor for Rwiki.NodeManager");
+    if (Rwiki.Data.NodeManager.caller != Rwiki.Data.NodeManager.getInstance) {
+      throw new Error("There is no public constructor for Rwiki.Data.NodeManager");
     }
 
     this.timeout = 5000;
@@ -30,7 +30,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
   },
 
   loadPage: function(path) {
-    var page = new Rwiki.Node({ path: path });
+    var page = new Rwiki.Data.Node({ path: path });
     this.fireEvent('rwiki:beforePageLoad', page);
 
     Ext.Ajax.request({
@@ -41,7 +41,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
-        var page = new Rwiki.Node(data);
+        var page = new Rwiki.Data.Node(data);
         this.fireEvent('rwiki:pageLoaded', page);
       }
     });
@@ -68,7 +68,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
-        var page = new Rwiki.Node(data);
+        var page = new Rwiki.Data.Node(data);
 
         if (isFolder) {
           this.fireEvent('rwiki:folderCreated', page);
@@ -91,7 +91,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
-        var page = new Rwiki.Node(data);
+        var page = new Rwiki.Data.Node(data);
         this.fireEvent('rwiki:pageSaved', page);
       }
     });
@@ -109,7 +109,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
-        var page = new Rwiki.Node(data);
+        var page = new Rwiki.Data.Node(data);
         this.fireEvent('rwiki:nodeRenamed', page);
       }
     });
@@ -142,7 +142,7 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
       },
       timeout: this.timeout,
       success: function(data) {
-        var page = new Rwiki.Node(data);
+        var page = new Rwiki.Data.Node(data);
         self.fireEvent('rwiki:nodeRenamed', page);
       }
     });
@@ -167,11 +167,11 @@ Rwiki.NodeManager = Ext.extend(Ext.util.Observable, {
   }
 });
 
-Rwiki.NodeManager._instance = null;
+Rwiki.Data.NodeManager._instance = null;
 
-Rwiki.NodeManager.getInstance = function() {
+Rwiki.Data.NodeManager.getInstance = function() {
   if (this._instance == null) {
-    this._instance = new Rwiki.NodeManager();
+    this._instance = new Rwiki.Data.NodeManager();
   }
 
   return this._instance;

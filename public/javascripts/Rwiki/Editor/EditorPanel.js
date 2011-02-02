@@ -1,6 +1,6 @@
-Ext.ns('Rwiki');
+Ext.ns('Rwiki.Editor');
 
-Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
+Rwiki.Editor.Panel = Ext.extend(Ext.Panel, {
   constructor: function() {
     Ext.apply(this, {
       contentEl: 'editor-container',
@@ -17,7 +17,7 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
       }
     });
 
-    Rwiki.EditorPanel.superclass.constructor.apply(this, arguments);
+    Rwiki.Editor.Panel.superclass.constructor.apply(this, arguments);
 
     this.editorContainer = $('textarea#editor');
     this.initMarkItUp();
@@ -61,9 +61,9 @@ Rwiki.EditorPanel = Ext.extend(Ext.Panel, {
   },
 
   initEvents: function() {
-    Rwiki.EditorPanel.superclass.initEvents.apply(this, arguments);
+    Rwiki.Editor.Panel.superclass.initEvents.apply(this, arguments);
 
-    this.relayEvents(Rwiki.NodeManager.getInstance(), ['rwiki:pageLoaded']);
+    this.relayEvents(Rwiki.Data.NodeManager.getInstance(), ['rwiki:pageLoaded']);
     this.on('rwiki:pageLoaded', this.onPageLoaded);
   },
 

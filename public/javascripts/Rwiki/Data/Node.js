@@ -1,10 +1,10 @@
-Ext.ns('Rwiki');
+Ext.ns('Rwiki.Data');
 
-Rwiki.Node = function(data) {
+Rwiki.Data.Node = function(data) {
   this._data = data;
 };
 
-Rwiki.Node.prototype = {
+Rwiki.Data.Node.prototype = {
 
   getData: function() {
     return this._data;
