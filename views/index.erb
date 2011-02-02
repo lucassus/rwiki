@@ -5,20 +5,14 @@
     <title>Rwiki</title>
 
     <!-- ** CSS ** -->
-    <link rel="stylesheet" type="text/css" href="/resources/ext/css/ext-all.css" />
-    <link rel="stylesheet" type="text/css" href="/resources/markitup/skins/markitup/style.css" />
-    <link rel="stylesheet" type="text/css" href="/resources/markitup/sets/textile/style.css" />
-
-    <%= css_assets :core %>
+    <%= css_assets :extjs %>
+    <%= css_assets :markitup %>
+    <%= css_assets :rwiki %>
 
     <!-- ** Javascript ** -->
     <%= js_assets :jquery %>
     <%= js_assets :extjs %>
-
-    <!-- ** MarkItUp editor ** -->
-    <script type="text/javascript" src="/javascripts/vendor/markitup/jquery.markitup.js"></script>
-    <script type="text/javascript" src="/resources/markitup/sets/textile/set.js"></script>
-
+    <%= js_assets :markitup %>
     <%= js_assets :rwiki %>
 
     <script type="text/javascript">

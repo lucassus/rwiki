@@ -7,10 +7,20 @@ js:
     - vendor/ext/ext-all.js
     - vendor/ext/ux/*.js
 
+  markitup:
+    - vendor/markitup/jquery.markitup.js
+
   rwiki:
     - Rwiki/**/*.js
     - Rwiki.js
 
 css:
-  core:
+  extjs:
+    - vendor/ext/css/ext-all.css
+
+  markitup:
+    - vendor/markitup/skins/markitup/style.css
+    - vendor/markitup/sets/textile/style.css
+
+  rwiki:
     - *.css
