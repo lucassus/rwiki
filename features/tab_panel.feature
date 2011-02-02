@@ -34,9 +34,3 @@ Feature: Tab Panel
     Then I should see "This is a test"
     And the node with path "./test.txt" should be selected
     And the node with path "./home.txt" should not be selected
-
-  Scenario: Close tab from context menu
-
-  Scenario: Close other tabs from context menu
-
-  Scenario: Close all tabs from context menu

@@ -29,3 +29,12 @@ end
 Then /^I should have no open tabs$/ do
   page.all("div.x-tab-panel ul li[class!='x-tab-edge']").size.should == 0
 end
+
+When /^I right click the tab with path "([^"]*)"$/ do |path|
+  Capybara.current_session.execute_script <<-JS
+    var tab = Rwiki.tabPanel.findTabByPagePath('#{path}');
+    var eventStub = { stopEvent: function() {}, getPoint: function() { return [0, 0] } };
+    Rwiki.tabPanel.fireEvent('contextmenu', Rwiki.tabPanel, tab, eventStub)
+  JS
+end
+
