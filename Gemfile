@@ -26,6 +26,7 @@ group :development do
   gem "cucumber"
   gem "cucumber-rails"
   gem "capybara"
+  gem "selenium-webdriver", "~> 0.1.3.dev"
   gem "rspec"
   gem "rspec-core"
   gem "rspec-expectations"
