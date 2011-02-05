@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
     "features/step_definitions/history_steps.rb",
     "features/step_definitions/tab_panel_steps.rb",
     "features/step_definitions/tree_panel_steps.rb",
-    "features/step_definitions/wait_steps.rb",
+    "features/step_definitions/waiting_steps.rb",
     "features/step_definitions/web_steps.rb",
     "features/support/env.rb",
     "features/support/firebug-1.6.1-fx.xpi",

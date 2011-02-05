@@ -4,6 +4,10 @@ module Rwiki
     
     register Sinatra::Minify
 
+    def self.minify?
+      production? or test?
+    end
+
     set :root, File.join(File.dirname(__FILE__), '../..')
     set :app_file, File.join(File.dirname(__FILE__), '../../..')
 
