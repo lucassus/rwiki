@@ -75,3 +75,10 @@ Then /^for (the node with path "(?:[^"]*)") I should see following nodes:$/ do |
   actual_table = table(tableish("div##{el_node_id} + ul.x-tree-node-ct a", "span"))
   table.diff!(actual_table)
 end
+
+When /^I fill in the tree filter with "([^"]*)"$/ do |text|
+  input_selector = 'td.x-toolbar-left input'
+
+  field = find(input_selector)
+  field.set(text)
+end

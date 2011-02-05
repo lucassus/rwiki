@@ -1085,7 +1085,7 @@ Gem::Specification.new do |s|
     "public/javascripts/Rwiki/EditorPanel.js",
     "public/javascripts/Rwiki/EditorPanel/Editor.js",
     "public/javascripts/Rwiki/EditorWindow.js",
-    "public/javascripts/Rwiki/FuzzyFinderDialog.js",
+    "public/javascripts/Rwiki/FuzzyFinderWindow.js",
     "public/javascripts/Rwiki/NavigationPanel.js",
     "public/javascripts/Rwiki/Node.js",
     "public/javascripts/Rwiki/NodeManager.js",

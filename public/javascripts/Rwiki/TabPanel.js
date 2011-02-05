@@ -196,7 +196,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   onFuzzyFinder: function() {
-    var fuzzyFinder = new Rwiki.FuzzyFinderDialog();
+    var fuzzyFinder = new Rwiki.FuzzyFinderWindow();
     fuzzyFinder.show();
   },
 

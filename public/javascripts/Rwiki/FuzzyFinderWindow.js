@@ -1,6 +1,6 @@
 Ext.ns('Rwiki');
 
-Rwiki.FuzzyFinderDialog = Ext.extend(Ext.Window, {
+Rwiki.FuzzyFinderWindow = Ext.extend(Ext.Window, {
   constructor: function() {
     var self = this;
 
@@ -56,6 +56,6 @@ Rwiki.FuzzyFinderDialog = Ext.extend(Ext.Window, {
       defaultButton: search
     });
 
-    Rwiki.FuzzyFinderDialog.superclass.constructor.apply(this, arguments);
+    Rwiki.FuzzyFinderWindow.superclass.constructor.apply(this, arguments);
   }
 });
