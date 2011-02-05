@@ -24,6 +24,7 @@ module Rwiki::Models
     def html_content
       @html_content ||= parse_content
     end
+    
     alias :to_html :html_content
 
     def title
@@ -103,7 +104,7 @@ module Rwiki::Models
     end
 
     def sanitize_header_name(name)
-      return name.gsub(/\s/, "+")
+      name.gsub(/\s/, "+")
     end
 
   end

@@ -15,7 +15,6 @@ module Rwiki
   class NodeNotFoundError < NodeError; end
 
   autoload :App, 'rwiki/app'
-  autoload :Configuration, 'rwiki/configuration'
   autoload :Models, 'rwiki/models'
 
   def self.debug

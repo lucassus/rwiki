@@ -4,10 +4,6 @@ require 'rspec'
 require 'cucumber/web/tableish'
 require 'capybara'
 require 'capybara/cucumber'
-require File.expand_path(File.join(File.dirname(__FILE__), '../../test/tmpdir_helper'))
-
-Rwiki::App.set(:environment, :production) # will run on minified assets
-Rwiki::App.set(:logging, false) # do not output logs on the STDOUT
 
 # Selenium setup
 require 'selenium/webdriver'
@@ -20,11 +16,15 @@ end
 Capybara.default_driver = :selenium
 
 World do
+  Rwiki::App.set(:environment, :test) # will run on minified assets
+  Rwiki::App.set(:logging, false) # do not output logs on the STDOUT
+
   Capybara.app = Rwiki::App
 
   include RSpec::Expectations
   include RSpec::Matchers
 
+  require File.expand_path(File.join(File.dirname(__FILE__), '../../test/tmpdir_helper'))
   include TmpdirHelper
 
   AfterStep do
