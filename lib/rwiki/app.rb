@@ -1,25 +1,27 @@
 module Rwiki
   class App < Sinatra::Base
-    include Models
-    
-    register Sinatra::Minify
-
-    def self.minify?
-      production? or test?
-    end
 
     set :root, File.join(File.dirname(__FILE__), '../..')
     set :app_file, File.join(File.dirname(__FILE__), '../../..')
 
-    set :js_path, 'public/javascripts'
-    set :js_url,  '/javascripts'
-
-    set :css_path, 'public/stylesheets'
-    set :css_url,  '/stylesheets'
-
+    include SmartAsset::Adapters::Sinatra
+    include Models
+    
     disable :show_exceptions
     enable :raise_errors
     enable :logging
+
+    configure do
+      Dir.mkdir('log') unless File.exists?('log')
+    end
+
+    configure :test do
+      use Rack::CommonLogger, File.new('log/test.log', 'w')
+    end
+
+    configure :development do
+      use Rack::CommonLogger, File.new('log/development.log', 'w')
+    end
 
     error NodeNotFoundError do
       message = request.env['sinatra.error'].message

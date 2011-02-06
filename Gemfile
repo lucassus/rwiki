@@ -6,7 +6,7 @@ gem "coderay"
 gem "json_pure"
 gem "thin"
 gem "fuzzy_file_finder"
-gem "sinatra-minify"
+gem "smart_asset"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
