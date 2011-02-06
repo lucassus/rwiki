@@ -58,6 +58,10 @@ module Rwiki
       base_name
     end
 
+    def parent
+      @parent ||= Rwiki::Node.new(File.dirname(full_path))
+    end
+
     def children
       @children ||= fetch_children
     end

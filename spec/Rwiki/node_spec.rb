@@ -160,6 +160,17 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#parent method" do
+    it "should be defined" do
+      subject.should respond_to(:parent)
+    end
+
+    it "should return valid parent" do
+      parent_node = subject.parent
+      parent_node.path.should == 'folder'
+    end
+  end
+
   describe "#children method" do
     it "should be defined" do
       subject.should respond_to(:children)
@@ -251,7 +262,7 @@ describe Rwiki::Node do
 
       Dir.exist?(full_path).should be_false
       children.each do |child|
-        Dir.exist?(children.full_path).should be_false  
+        Dir.exist?(child.full_path).should be_false  
       end
     end
   end
