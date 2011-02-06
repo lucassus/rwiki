@@ -16,7 +16,9 @@ bundle install --path vendor/bundle
 # start cucumber on Xvfb
 export DISPLAY=:91
 script/xvfb start
+
 bundle exec cucumber features --format Cucumber::Formatter::Junit --out features/reports --format pretty
 RESULT=$?
+
 script/xvfb stop
 exit $RESULT
