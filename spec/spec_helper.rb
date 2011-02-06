@@ -3,15 +3,20 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'rwiki'
 
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'test', 'tmpdir_helper'))
+include TmpdirHelper
+
 RSpec.configure do |config|
 
   # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
   config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
-  # config.mock_with :rspec
+
+  config.before(:each) do
+    create_tmpdir!
+  end
+
+  config.after(:each) do
+    remove_tmpdir!
+  end
 
 end

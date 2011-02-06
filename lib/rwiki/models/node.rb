@@ -30,7 +30,7 @@ module Rwiki::Models
     end
 
     def self.new_from_path(path)
-      full_path = File.join(rwiki_path, path)
+      full_path = full_path_for(path)
       klass = File.directory?(full_path) ? Folder : Page
       return klass.new(path)
     end
