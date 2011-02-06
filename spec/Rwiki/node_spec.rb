@@ -243,6 +243,12 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#rename method" do
+    it "should be defined" do
+      subject.should respond_to(:rename)
+    end
+  end
+
   describe "#delete method" do
     it "should be defined" do
       subject.should respond_to(:delete)
