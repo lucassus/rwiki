@@ -16,6 +16,7 @@ module Rwiki
 
   autoload :App, 'rwiki/app'
   autoload :Models, 'rwiki/models'
+  autoload :Node, 'rwiki/node'
 
   def self.debug
     require 'ruby-debug'
