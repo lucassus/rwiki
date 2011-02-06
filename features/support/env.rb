@@ -36,7 +36,15 @@ World do
     create_tmpdir!
   end
 
-  After do
+  After do |scenario|
     remove_tmpdir!
+
+    if scenario.failed?
+      screenshots_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'reports', 'screenshots'))
+      FileUtils.mkdir_p(screenshots_dir) unless Dir.exists?(screenshots_dir)
+
+      file_name =  scenario.name.gsub!(' ', '').gsub!(/[\?\.\&=\-\/\\\(\),\'\"\|]/, '')
+      page.driver.browser.save_screenshot(File.join(screenshots_dir, "#{file_name}.png"))
+    end
   end
 end
