@@ -141,6 +141,27 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#tree method" do
+    subject { Rwiki::Node.new('/') } # the root node
+
+    it "should be defined" do
+      subject.should respond_to(:tree)
+    end
+
+    describe "result" do
+      let(:result) { subject.tree }
+
+      it "should be an array" do
+        result.should be_instance_of(Array)
+      end
+
+      it "should contain three items" do
+        result.size.should == 3
+        puts result
+      end
+    end
+  end
+
   describe "#to_hash method" do
     it "should be defined" do
       subject.should respond_to(:to_hash)
