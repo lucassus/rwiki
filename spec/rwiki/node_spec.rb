@@ -246,9 +246,13 @@ describe Rwiki::Node do
 
     it "should remove subpages" do
       full_path = subject.full_path
+      children = subject.children
       subject.delete
 
       Dir.exist?(full_path).should be_false
+      children.each do |child|
+        Dir.exist?(children.full_path).should be_false  
+      end
     end
   end
 
