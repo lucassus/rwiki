@@ -32,6 +32,14 @@ module Rwiki
       erb :index
     end
 
+    get '/node/print' do
+      path = params[:path].strip
+      page = Page.new(path)
+      @html = page.to_html
+
+      erb :print, :layout => false
+    end
+
     get '/nodes' do
       path = params[:path].strip
 
@@ -44,14 +52,6 @@ module Rwiki
       page = Page.new(path)
 
       page.to_json
-    end
-
-    get '/node/print' do
-      path = params[:path].strip
-      page = Page.new(path)
-      @html = page.to_html
-
-      erb :print, :layout => false
     end
 
     # update page content
@@ -78,10 +78,7 @@ module Rwiki
         node = parent_folder.create_sub_page(name)
       end
 
-      result = node.to_hash
-      result[:parentPath] = parent_folder.path
-
-      result.to_json
+      node.to_json
     end
 
     post '/node/rename' do

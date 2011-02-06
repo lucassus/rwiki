@@ -3,8 +3,6 @@ javascripts:
     - vendor/jquery/jquery-1.5
     
   extjs:
-    - vendor/ext/adapter/jquery/ext-jquery-adapter-debug
-    - vendor/ext/ext-all-debug-w-comments
     - vendor/ext/ux/StatusBar
     - vendor/ext/ux/TabCloseMenu
 

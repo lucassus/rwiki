@@ -77,7 +77,7 @@ describe("Rwiki.Tree.Menu", function() {
 
       it("should show the menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
-      })
+      });
 
       itShouldEnable('delete-node');
       itShouldEnable('rename-node');
@@ -101,7 +101,7 @@ describe("Rwiki.Tree.Menu", function() {
 
       it("should show the menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
-      })
+      });
 
       itShouldEnable('delete-node');
       itShouldEnable('rename-node');
