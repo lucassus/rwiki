@@ -5,15 +5,15 @@ module Rwiki::Models
 
     attr_accessor :path
 
-    @@working_path = '.'
+    @@rwiki_path = '.'
 
     class << self
-      def working_path
-        @@working_path
+      def rwiki_path
+        @@rwiki_path
       end
 
-      def working_path=(path)
-        @@working_path = path
+      def rwiki_path=(path)
+        @@rwiki_path = path
       end
 
       def fuzzy_finder(query)
@@ -30,7 +30,7 @@ module Rwiki::Models
     end
 
     def self.new_from_path(path)
-      full_path = File.join(working_path, path)
+      full_path = File.join(rwiki_path, path)
       klass = File.directory?(full_path) ? Folder : Page
       return klass.new(path)
     end
@@ -84,12 +84,12 @@ module Rwiki::Models
       @path = path
     end
 
-    def working_path
-      self.class.working_path
+    def rwiki_path
+      self.class.rwiki_path
     end
 
     def self.full_path_for(path)
-      File.expand_path(File.join(working_path, path))
+      File.expand_path(File.join(rwiki_path, path))
     end
 
   end

@@ -2,13 +2,13 @@ module Rwiki::Models
   class Folder < Node
 
     def initialize(path)
-      full_path = File.join(@@working_path, path)
+      full_path = File.join(@@rwiki_path, path)
       raise Rwiki::NodeNotFoundError.new("cannot find #{path}") if !File.exist?(full_path) || ! File.directory?(full_path)
       super(path)
     end
 
     def nodes
-      Dir.chdir(working_path) do
+      Dir.chdir(rwiki_path) do
         self.class.make_tree(@path)
       end
     end
