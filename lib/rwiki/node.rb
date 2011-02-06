@@ -23,6 +23,35 @@ module Rwiki
 
         return sanitized_path
       end
+
+      def fetch_children(full_path)
+        children = []
+        if Dir.exists?(full_path)
+          files = Dir.glob("#{full_path}/*.txt").sort
+          files.each do |file|
+            children << Rwiki::Node.new(file)
+          end
+        end
+
+        return children
+      end
+
+      def tree(path = rwiki_path)
+        children = fetch_children(path)
+        result = children.map { |n| n.to_extjs_hash }
+
+        i = 0
+        result.each do |tree_node|
+          child = children[i]
+          if child.has_children?
+            tree_node[:children] = tree(child.full_path)
+          end
+
+          i += 1
+        end
+
+        return result
+      end
     end
 
     def initialize(path)
@@ -83,18 +112,12 @@ module Rwiki
       { :path => path }
     end
 
+    alias :to_extjs_hash :to_hash
+
     protected
 
     def fetch_children
-      children = []
-      if Dir.exists?(full_path)
-        files = Dir.glob("#{full_path}/*.txt").sort
-        files.each do |file|
-          children << Rwiki::Node.new(file)
-        end
-      end
-
-      return children
+      self.class.fetch_children(full_path)
     end
 
   end
