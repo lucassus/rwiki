@@ -1,0 +1,10 @@
+export SELENIUM_SERVER_PORT=4444
+process_id=$(lsof -i tcp:$SELENIUM_SERVER_PORT -Fp|tr -d p)
+if [ $process_id ] ; then
+  echo "Selenium server is already running"
+else
+  java -jar "/home/lucassus/Projects/rwiki/vendor/bundle/ruby/1.9.1/gems/selenium-rc-2.2.4/vendor/selenium-server.jar" -port $SELENIUM_SERVER_PORT > /dev/null &
+  echo "New Selenium server started"
+fi
+
+bundle exec rake jasmine:ci --trace
