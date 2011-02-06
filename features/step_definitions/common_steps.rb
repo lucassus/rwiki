@@ -45,10 +45,9 @@ Then /^I should see generated content for the node with path "([^"]*)"$/ do |pat
   require 'lorax'
 
   wiki_page_html = Rwiki::Models::Page.new(path).to_html
-  wiki_page = Nokogiri::HTML(wiki_page_html)
-
+  wiki_page_html = "<div>#{wiki_page_html}</div>"
   page_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
-  page = Nokogiri::HTML(page_html)
+  page_html = "<div>#{page_html}</div>"
 
   result = Lorax.diff(wiki_page_html, page_html)
   result.deltas.should be_empty
