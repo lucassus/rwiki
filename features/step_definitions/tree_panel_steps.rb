@@ -27,7 +27,11 @@ end
 When /^I open the page for the tree node with path "([^"]*)"$/ do |path|
   When %{I expand the parent for the node with path "#{path}"}
   And %{I click the node with path "#{path}"}
-  And %{I should see generated content for the node with path "#{path}"}
+  Then %{I should see the page "#{path}"}
+end
+
+Then /^I should see the page "([^"]*)"$/ do |path|
+  Then %{I should see generated content for the node with path "#{path}"}
   And %{I should see page title "Rwiki #{path}"}
 
   And %{I should see enabled "Edit page" toolbar button}

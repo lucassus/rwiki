@@ -6,6 +6,7 @@ git gc
 # delete old coverage reports
 rm -rf coverage
 rm -f features/reports/*.xml
+rm -f features/reports/screenshots/*.png
 
 rvm use 1.9.2
 bundle install --path vendor/bundle
