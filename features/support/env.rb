@@ -43,8 +43,14 @@ World do
       screenshots_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'reports', 'screenshots'))
       FileUtils.mkdir_p(screenshots_dir) unless Dir.exists?(screenshots_dir)
 
-      file_name =  scenario.name.gsub!(' ', '').gsub!(/[\?\.\&=\-\/\\\(\),\'\"\|]/, '')
-      page.driver.browser.save_screenshot(File.join(screenshots_dir, "#{file_name}.png"))
+      feature_file = if scenario.is_a?(Cucumber::Ast::OutlineTable::ExampleRow)
+        scenario.scenario_outline.feature.file
+       else
+        scenario.feature.file
+       end
+
+      file_name = "#{feature_file.split('/').last}:#{scenario.line}.png"
+      page.driver.browser.save_screenshot(File.join(screenshots_dir, file_name))
     end
   end
 end
