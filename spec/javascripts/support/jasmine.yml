@@ -11,11 +11,9 @@
 #   - dist/**/*.js
 #
 src_files:
-    - public/javascripts/vendor/jquery/jquery-1.4.2.js
-    - public/javascripts/vendor/ext/adapter/jquery/ext-jquery-adapter-debug.js
-    - public/javascripts/vendor/ext/ext-all-debug.js
-    - public/javascripts/vendor/ext/ux/TabCloseMenu.js
+    - public/javascripts/vendor/jquery/jquery-1.5.js
     - public/javascripts/vendor/markitup/jquery.markitup.js
+    - public/javascripts/vendor/ext/**/*.js
 
     - public/javascripts/Rwiki.js
     - public/javascripts/Rwiki/**/*.js

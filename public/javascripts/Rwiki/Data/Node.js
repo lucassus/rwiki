@@ -22,6 +22,7 @@ Rwiki.Data.Node.prototype = {
     return this._data.path;
   },
 
+  // TODO get parent path from the path
   getParentPath: function() {
     return this._data.parentPath;
   },

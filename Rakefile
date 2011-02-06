@@ -12,7 +12,6 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
@@ -46,4 +45,10 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title    = "rwiki #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+end
+
+begin
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+rescue cant_load_jasmine
 end

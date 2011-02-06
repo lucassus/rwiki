@@ -2,7 +2,7 @@ describe("Rwiki.Tree.Menu", function() {
   var menu;
 
   beforeEach(function() {
-    menu = new Rwiki.TreePanel.Menu();
+    menu = new Rwiki.Tree.Menu();
   });
 
   describe(":show method", function() {
