@@ -16,7 +16,7 @@ end
 Capybara.default_driver = :selenium
 
 World do
-  Rwiki::App.set(:environment, :test) # will run on minified assets
+  Rwiki::App.set(:environment, :test)
   Rwiki::App.set(:logging, false) # do not output logs on the STDOUT
 
   Capybara.app = Rwiki::App
