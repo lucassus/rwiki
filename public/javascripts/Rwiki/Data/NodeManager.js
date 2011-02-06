@@ -9,7 +9,7 @@ Rwiki.Data.NodeManager = Ext.extend(Ext.util.Observable, {
     this.timeout = 10000;
 
     this.initEvents();
-    Ext.Ajax.on('requestexception', this.onAjaxException);
+//    Ext.Ajax.on('requestexception', this.onAjaxException);
   },
 
   onAjaxException: function() {
