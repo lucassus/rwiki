@@ -4,7 +4,7 @@ javascripts:
     
   extjs:
     - vendor/ext/adapter/jquery/ext-jquery-adapter-debug
-    - vendor/ext/ext-all
+    - vendor/ext/ext-all-debug-w-comments
     - vendor/ext/ux/StatusBar
     - vendor/ext/ux/TabCloseMenu
 
@@ -30,7 +30,7 @@ javascripts:
 
 stylesheets:
   extjs:
-    - vendor/ext/css/ext-all
+    - vendor/ext/ext-all
 
   markitup:
     - vendor/markitup/skins/markitup/style

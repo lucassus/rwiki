@@ -1,8 +1,8 @@
 /*!
- * Ext JS Library 3.3.1
- * Copyright(c) 2006-2010 Sencha Inc.
- * licensing@sencha.com
- * http://www.sencha.com/license
+ * Ext JS Library 3.3.0
+ * Copyright(c) 2006-2010 Ext JS, Inc.
+ * licensing@extjs.com
+ * http://www.extjs.com/license
  */
 // for old browsers
 window.undefined = window.undefined;
@@ -18,11 +18,11 @@ Ext = {
      * The version of the framework
      * @type String
      */
-    version : '3.3.1',
+    version : '3.3.0',
     versionDetail : {
         major : 3,
         minor : 3,
-        patch : 1
+        patch : 0
     }
 };
 
