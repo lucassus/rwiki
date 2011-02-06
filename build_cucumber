@@ -1,5 +1,4 @@
 #!/bin/bash
-
 source ~/.bashrc
 
 git remote prune origin
