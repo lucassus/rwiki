@@ -37,10 +37,14 @@ When /^I click (the node with path "(?:[^"]*)")$/ do |el_node_id|
   page.find("div##{el_node_id}").click
 end
 
-When /^I right click the node with path "([^"]*)"$/ do |path|
+When /^I right click (the node with path "([^"]*)")$/ do |el_node_id, path|
+  element = page.find("div##{el_node_id}")
+  location = element.native.location
+  
   Capybara.current_session.execute_script <<-JS
     var node = Rwiki.treePanel.findNodeByPath('#{path}')
-    Rwiki.treePanel.fireEvent('contextmenu', node, { getXY: function() { return [0, 0] } });
+    var eventStub = { getXY: function() { return [#{location.x}, #{location.y}] } };
+    Rwiki.treePanel.fireEvent('contextmenu', node, eventStub);
   JS
 end
 
