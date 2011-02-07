@@ -50,6 +50,16 @@ Rwiki.init = function() {
     Rwiki.treePanel.openNodeFromLocationHash();
   });
 
+  $('a.internal-link').live('click', function() {
+    var path = $(this).attr('href');
+    var node = Rwiki.treePanel.findNodeByPath(path);
+    if (node) {
+      Rwiki.treePanel.onClick(node);
+    }
+    
+    return false;
+  });
+
   Rwiki.tabPanel = new Rwiki.TabPanel({
     bbar: Rwiki.statusBar
   });

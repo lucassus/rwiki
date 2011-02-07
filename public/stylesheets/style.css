@@ -36,52 +36,52 @@
 }
 
 .icon-expand-all {
-  background-image: url(../images/icons/expand-all.gif) !important;
+  background-image: url(/images/icons/expand-all.gif) !important;
 }
 
 .icon-collapse-all {
-  background-image: url(../images/icons/collapse-all.gif) !important;
+  background-image: url(/images/icons/collapse-all.gif) !important;
 }
 
 .icon-page {
-  background-image: url(../images/icons/page.png) !important;
+  background-image: url(/images/icons/page.png) !important;
 }
 .icon-edit {
-  background-image: url(../images/icons/page_edit.png) !important;
+  background-image: url(/images/icons/page_edit.png) !important;
 }
 
 .icon-create-folder {
-  background-image: url(../images/icons/folder_add.png) !important;
+  background-image: url(/images/icons/folder_add.png) !important;
 }
 
 .icon-create-page {
-  background-image: url(../images/icons/page_add.png) !important;
+  background-image: url(/images/icons/page_add.png) !important;
 }
 
 .icon-rename-node {
-  background-image: url(../images/icons/folder_edit.png) !important;
+  background-image: url(/images/icons/folder_edit.png) !important;
 }
 
 .icon-delete-node {
-  background-image: url(../images/icons/delete.png) !important;
+  background-image: url(/images/icons/delete.png) !important;
 }
 
 .icon-search {
-  background-image: url(../images/icons/page_find.png) !important;
+  background-image: url(/images/icons/page_find.png) !important;
 }
 
 .icon-save {
-  background-image: url(../images/icons/page_save.png) !important;
+  background-image: url(/images/icons/page_save.png) !important;
 }
 
 .icon-accept {
-  background-image: url(../images/icons/cancel.png) !important;
+  background-image: url(/images/icons/cancel.png) !important;
 }
 
 .icon-cancel {
-  background-image: url(../images/icons/cancel.png) !important;
+  background-image: url(/images/icons/cancel.png) !important;
 }
 
 .icon-print {
-  background-image: url(../images/icons/printer.png) !important;
+  background-image: url(/images/icons/printer.png) !important;
 }

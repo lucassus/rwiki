@@ -6,7 +6,7 @@ gem "coderay"
 gem "json_pure"
 gem "thin"
 gem "fuzzy_file_finder"
-gem "sinatra-minify"
+gem "smart_asset"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
@@ -30,6 +30,7 @@ group :development do
   gem "rspec"
   gem "rspec-core"
   gem "rspec-expectations"
+  gem "lorax"
 
   gem "awesome_print"
   gem "capistrano"

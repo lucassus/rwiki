@@ -42,10 +42,13 @@ When /^I create a new page titled "([^"]*)" for the node with path "([^"]*)"$/ d
 end
 
 Then /^I should see generated content for the node with path "([^"]*)"$/ do |path|
-  sanitize = lambda { |html| html.gsub(/([^>]*)(?=<[^>]*?>)/im, '') }
+  require 'lorax'
 
-  wiki_page_html = sanitize.call Rwiki::Models::Page.new(path).to_html
-  page_html = sanitize.call Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
+  wiki_page_html = Rwiki::Models::Page.new(path).to_html
+  wiki_page_html = "<div>#{wiki_page_html}</div>"
+  page_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
+  page_html = "<div>#{page_html}</div>"
 
-  page_html.should == wiki_page_html
+  result = Lorax.diff(wiki_page_html, page_html)
+  result.deltas.should be_empty
 end

@@ -1,21 +1,27 @@
 module Rwiki
   class App < Sinatra::Base
-    include Models
-    
-    register Sinatra::Minify
 
     set :root, File.join(File.dirname(__FILE__), '../..')
     set :app_file, File.join(File.dirname(__FILE__), '../../..')
 
-    set :js_path, 'public/javascripts'
-    set :js_url,  '/javascripts'
-
-    set :css_path, 'public/stylesheets'
-    set :css_url,  '/stylesheets'
-
+    include SmartAsset::Adapters::Sinatra
+    include Models
+    
     disable :show_exceptions
     enable :raise_errors
     enable :logging
+
+    configure do
+      Dir.mkdir('log') unless File.exists?('log')
+    end
+
+    configure :test do
+      use Rack::CommonLogger, File.new('log/test.log', 'w')
+    end
+
+    configure :development do
+      use Rack::CommonLogger, File.new('log/development.log', 'w')
+    end
 
     error NodeNotFoundError do
       message = request.env['sinatra.error'].message
@@ -24,6 +30,14 @@ module Rwiki
 
     get '/' do
       erb :index
+    end
+
+    get '/node/print' do
+      path = params[:path].strip
+      page = Page.new(path)
+      @html = page.to_html
+
+      erb :print, :layout => false
     end
 
     get '/nodes' do
@@ -38,14 +52,6 @@ module Rwiki
       page = Page.new(path)
 
       page.to_json
-    end
-
-    get '/node/print' do
-      path = params[:path].strip
-      page = Page.new(path)
-      @html = page.to_html
-
-      erb :print, :layout => false
     end
 
     # update page content
@@ -72,10 +78,7 @@ module Rwiki
         node = parent_folder.create_sub_page(name)
       end
 
-      result = node.to_hash
-      result[:parentPath] = parent_folder.path
-
-      result.to_json
+      node.to_json
     end
 
     post '/node/rename' do

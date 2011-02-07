@@ -1,4 +1,4 @@
-Feature: Display a page
+Feature: Display the page
 
   Background:
     Given I open the application

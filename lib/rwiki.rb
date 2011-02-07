@@ -7,7 +7,7 @@ require 'redcloth'
 require 'sinatra'
 require 'sinatra/base'
 require 'fuzzy_file_finder'
-require 'sinatra/minify'
+require 'smart_asset'
 
 module Rwiki
 
@@ -15,7 +15,6 @@ module Rwiki
   class NodeNotFoundError < NodeError; end
 
   autoload :App, 'rwiki/app'
-  autoload :Configuration, 'rwiki/configuration'
   autoload :Models, 'rwiki/models'
 
   def self.debug

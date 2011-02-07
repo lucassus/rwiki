@@ -6,10 +6,10 @@ Rwiki.Data.NodeManager = Ext.extend(Ext.util.Observable, {
       throw new Error("There is no public constructor for Rwiki.Data.NodeManager");
     }
 
-    this.timeout = 5000;
+    this.timeout = 10000;
 
     this.initEvents();
-    Ext.Ajax.on('requestexception', this.onAjaxException);
+//    Ext.Ajax.on('requestexception', this.onAjaxException);
   },
 
   onAjaxException: function() {

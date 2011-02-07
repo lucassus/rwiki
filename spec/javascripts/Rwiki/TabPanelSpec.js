@@ -1,4 +1,4 @@
-describe("Rwiki.Tabs", function() {
+describe("Rwiki.TabPanel", function() {
   var tabPanel;
 
   beforeEach(function() {
@@ -30,7 +30,8 @@ describe("Rwiki.Tabs", function() {
       for (var i = 0; i < pages.length; i++) {
         var path = pages[i];
         if (path.match(new RegExp('\.txt$'))) {
-          tabPanel.createPageTab(path);
+          var page = new Rwiki.Data.Node({path: path});
+          tabPanel.createPageTab(page);
         }
       }
 
@@ -67,24 +68,25 @@ describe("Rwiki.Tabs", function() {
   });
 
   describe("onPageCreated handler", function() {
+    var page = new Rwiki.Data.Node({
+      path: './page.txt',
+      text: 'page'
+    });
     var tab = {};
-    var eventSource = new Ext.util.Observable();
-    eventSource.addEvents('rwiki:pageCreated');
 
     beforeEach(function() {
-      tabPanel.relayEvents(eventSource, ['rwiki:pageCreated']);
+      var eventSource = new Ext.util.Observable();
+      eventSource.addEvents('rwiki:pageCreated');
 
+      tabPanel.relayEvents(eventSource, ['rwiki:pageCreated']);
       spyOn(tabPanel, 'createPageTab').andReturn(tab);
       tab.show = jasmine.createSpy('tab.show');
 
-      eventSource.fireEvent('rwiki:pageCreated', {
-        path: './page.txt',
-        text: 'page'
-      });
+      eventSource.fireEvent('rwiki:pageCreated', page);
     });
 
     it("should create a new tab", function() {
-      expect(tabPanel.createPageTab).toHaveBeenCalledWith('./page.txt', 'page');
+      expect(tabPanel.createPageTab).toHaveBeenCalledWith(page);
     });
 
     it("should open a new tab", function() {

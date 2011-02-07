@@ -12,7 +12,6 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
@@ -48,11 +47,8 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-desc "Builds the minified CSS and JS assets."
-task :minify do
-  puts "Building..."
-
-  files = Sinatra::Minify::Package.build(Rwiki::App)
-  files.each { |f| puts " * #{File.basename f}" }
-  puts "Construction complete!"
+begin
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+rescue cant_load_jasmine
 end

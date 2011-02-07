@@ -1,3 +1,12 @@
+Transform /^the node with path "([^"]*)"$/ do |path|
+  Capybara.current_session.execute_script <<-JS
+    // get the ExtJS internal tree node id
+    var node = Rwiki.treePanel.findNodeByPath('#{path}');
+    // get the corresponding div id
+    return node.ui.elNode.id;
+  JS
+end
+
 When /^I expand the parent for the node with path "([^"]*)"$/ do |path|
   parts = path.split('/')[0..-2]
   parts.each_index do |i|
@@ -18,7 +27,11 @@ end
 When /^I open the page for the tree node with path "([^"]*)"$/ do |path|
   When %{I expand the parent for the node with path "#{path}"}
   And %{I click the node with path "#{path}"}
-  And %{I should see generated content for the node with path "#{path}"}
+  Then %{I should see the page "#{path}"}
+end
+
+Then /^I should see the page "([^"]*)"$/ do |path|
+  Then %{I should see generated content for the node with path "#{path}"}
   And %{I should see page title "Rwiki #{path}"}
 
   And %{I should see enabled "Edit page" toolbar button}
@@ -69,4 +82,11 @@ Then /^for (the node with path "(?:[^"]*)") I should see following nodes:$/ do |
   sleep 0.5 # wait for node the expanding animation finish
   actual_table = table(tableish("div##{el_node_id} + ul.x-tree-node-ct a", "span"))
   table.diff!(actual_table)
+end
+
+When /^I fill in the tree filter with "([^"]*)"$/ do |text|
+  input_selector = 'td.x-toolbar-left input'
+
+  field = find(input_selector)
+  field.set(text)
 end

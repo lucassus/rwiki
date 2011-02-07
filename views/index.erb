@@ -5,15 +5,17 @@
     <title>Rwiki</title>
 
     <!-- ** CSS ** -->
-    <%= css_assets :extjs %>
-    <%= css_assets :markitup %>
-    <%= css_assets :rwiki %>
+    <%= stylesheet_link_merged :extjs %>
+    <%= stylesheet_link_merged :markitup %>
+    <%= stylesheet_link_merged :rwiki %>
 
     <!-- ** Javascript ** -->
-    <%= js_assets :jquery %>
-    <%= js_assets :extjs %>
-    <%= js_assets :markitup %>
-    <%= js_assets :rwiki %>
+    <%= javascript_include_merged :jquery %>
+    <script src="/javascripts/vendor/ext/adapter/jquery/ext-jquery-adapter.js" type="text/javascript"></script>
+    <script src="/javascripts/vendor/ext/ext-all.js" type="text/javascript"></script>
+    <%= javascript_include_merged :extjs %>
+    <%= javascript_include_merged :markitup %>
+    <%= javascript_include_merged :rwiki %>
 
     <script type="text/javascript">
       Ext.onReady(function() {
