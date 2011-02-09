@@ -9,10 +9,6 @@ describe Rwiki::Node do
   subject { Rwiki::Node.new('folder/subfolder') }
 
   describe "FILE_EXTENSION constant" do
-    it "should be defined" do
-      Rwiki::Node.const_defined?(:"FILE_EXTENSION").should be_true
-    end
-
     it "should be equal to 'txt'" do
       Rwiki::Node::FILE_EXTENSION.should == 'txt'
     end
@@ -43,22 +39,15 @@ describe Rwiki::Node do
 
   describe ".tree method" do
     subject { Rwiki::Node }
-    
-    it "should be defined" do
-      subject.should respond_to(:tree)
+    let(:result) { subject.tree }
+
+    it "result should be an array" do
+      result.should be_instance_of(Array)
     end
 
-    describe "result" do
-      let(:result) { subject.tree }
-
-      it "should be an array" do
-        result.should be_instance_of(Array)
-      end
-
-      it "should contain three items" do
-        ap result
-        result.size.should == 4
-      end
+    it "result should contain three items" do
+      ap result
+      result.size.should == 4
     end
   end
 
@@ -77,39 +66,25 @@ describe Rwiki::Node do
   end
 
   describe "#title method" do
-    it "should be defined" do
-      subject.should respond_to(:title)
-    end
-
     it "should return valid title" do
       subject.title.should == "subfolder"
     end
   end
 
   describe "#to_hash method" do
-    it "should be defined" do
-      subject.should respond_to(:to_hash)
+    let(:result) { subject.to_hash }
+
+    it "result should be a hash" do
+      result.should be_instance_of(Hash)
     end
 
-    describe "result" do
-      let(:result) { subject.to_hash }
-
-      it "should be a hash" do
-        result.should be_instance_of(Hash)
-      end
-
-      it "should contain the node path" do
-        result[:path].should_not be_nil
-        result[:path].should == subject.path
-      end
+    it "result should contain the node path" do
+      result[:path].should_not be_nil
+      result[:path].should == subject.path
     end
   end
 
   describe "#parent method" do
-    it "should be defined" do
-      subject.should respond_to(:parent)
-    end
-
     it "should return valid parent" do
       parent_node = subject.parent
       parent_node.path.should == 'folder'
@@ -117,67 +92,55 @@ describe Rwiki::Node do
   end
 
   describe "#children method" do
-    it "should be defined" do
-      subject.should respond_to(:children)
-    end
+    context "for the node with subpages" do
+      let(:result) { subject.children }
 
-    describe "result" do
-      context "for the node with subpages" do
-        let(:result) { subject.children }
+      it "result should be an array" do
+        result.should be_instance_of(Array)
+      end
 
-        it "should be an array" do
-          result.should be_instance_of(Array)
-        end
+      it "result should contain four items" do
+        result.size.should == 4
+      end
 
-        it "should contain four items" do
-          result.size.should == 4
-        end
-
-        it "should contain Rwiki::Node objects" do
-          result.each do |node|
-            node.should be_instance_of(Rwiki::Node)
-          end
-        end
-
-        it "should contain valid items" do
-          result[0].title.should == "JavaScript"
-          result[1].title.should == "java"
-          result[2].title.should == "python"
-          result[3].title.should == "ruby"
+      it "result should contain Rwiki::Node objects" do
+        result.each do |node|
+          node.should be_instance_of(Rwiki::Node)
         end
       end
 
-      context "for the node without subpages" do
-        subject { Rwiki::Node.new('folder/subfolder/java') }
-        let(:result) { subject.children }
+      it "result should contain valid items" do
+        result[0].title.should == "JavaScript"
+        result[1].title.should == "java"
+        result[2].title.should == "python"
+        result[3].title.should == "ruby"
+      end
+    end
 
-        it "should return an empty array" do
-          result.should be_empty
-        end
+    context "for the node without subpages" do
+      subject { Rwiki::Node.new('folder/subfolder/java') }
+      let(:result) { subject.children }
+
+      it "result should return an empty array" do
+        result.should be_empty
       end
     end
   end
 
   describe "#has_children? method" do
-    it "should be defined" do
-      subject.should respond_to(:has_children?)
+    context "for node with subpages" do
+      let(:result) { subject.has_children? }
+      it "result should return true" do
+        result.should be_true
+      end
     end
 
-    describe "result" do
-      context "for node with subpages" do
-        let(:result) { subject.has_children? }
-        it "should return true" do
-          result.should be_true
-        end
-      end
+    context "for node without subpages" do
+      subject { Rwiki::Node.new('folder/subfolder/java') }
+      let(:result) { subject.has_children? }
 
-      context "for node without subpages" do
-        subject { Rwiki::Node.new('folder/subfolder/java') }
-        let(:result) { subject.has_children? }
-
-        it "should return false" do
-          result.should be_false
-        end
+      it "result should return false" do
+        result.should be_false
       end
     end
   end
