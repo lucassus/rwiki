@@ -3,7 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 describe Rwiki::Node do
 
   before :all do
-    Rwiki::FileUtils.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
+    Rwiki.configuration.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
   end
 
   subject { Rwiki::Node.new('folder/subfolder') }

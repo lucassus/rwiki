@@ -1,14 +1,6 @@
 module Rwiki
   class FileUtils
 
-    def self.rwiki_path
-      @@rwiki_path
-    end
-
-    def self.rwiki_path=(path)
-      @@rwiki_path = path
-    end
-
     def initialize(path)
       @path = path
     end
@@ -21,20 +13,20 @@ module Rwiki
       @path
     end
 
-    def rwiki_path
-      self.class.rwiki_path
-    end
-    
     def file_path
       [path, Rwiki::Node::FILE_EXTENSION].join('.')
     end
 
     def full_path
-      File.join(rwiki_path, path)
+      File.join(Rwiki.configuration.rwiki_path, path)
     end
 
     def full_file_path
       [full_path, Rwiki::Node::FILE_EXTENSION].join('.')
+    end
+
+    def full_parent_path
+      File.dirname(full_path)
     end
 
     def base_name

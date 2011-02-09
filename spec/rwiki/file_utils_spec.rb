@@ -3,31 +3,10 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 describe Rwiki::FileUtils do
 
   before :each do
-    Rwiki::FileUtils.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
+    Rwiki.configuration.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
   end
 
   subject { Rwiki::FileUtils.new('folder/subfolder') }
-
-  describe ".rwiki_path method" do
-    it "should be defined" do
-      Rwiki::FileUtils.should respond_to(:rwiki_path)
-    end
-
-    it "should return valid path" do
-      Rwiki::FileUtils.rwiki_path.should == '/tmp/rwiki_test/pages'
-    end
-  end
-
-  describe ".rwiki_path= method" do
-    it "should be defined" do
-      Rwiki::FileUtils.should respond_to(:rwiki_path=)
-    end
-
-    it "should set the path" do
-      Rwiki::FileUtils.rwiki_path = '/some/path'
-      Rwiki::FileUtils.rwiki_path.should == '/some/path'
-    end
-  end
 
   describe "#path method" do
     it "should be defined" do
@@ -96,6 +75,12 @@ describe Rwiki::FileUtils do
       subject.delete
 
       Dir.exist?(full_path).should be_false
+    end
+  end
+
+  describe "#full_parent_path" do
+    it "should return valid full parent path" do
+      subject.full_parent_path.should == '/tmp/rwiki_test/pages/folder'
     end
   end
 

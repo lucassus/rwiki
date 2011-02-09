@@ -5,47 +5,8 @@ module Rwiki
 
     FILE_EXTENSION = 'txt'.freeze
 
-    class << self
-
-      def sanitize_path(path)
-        sanitized_path = path.clone
-        sanitized_path.sub!(Rwiki::FileUtils.rwiki_path, '') if path.start_with?(Rwiki::FileUtils.rwiki_path)
-        sanitized_path.gsub!(/^\//, '')
-        sanitized_path.gsub!(/\/$/, '')
-        sanitized_path.gsub!(/\.#{FILE_EXTENSION}$/, '')
-
-        return sanitized_path
-      end
-
-      def fetch_children(full_path)
-        children = []
-        if Dir.exists?(full_path)
-          files = Dir.glob("#{full_path}/*.txt").sort
-          files.each do |file|
-            children << Rwiki::Node.new(file)
-          end
-        end
-
-        return children
-      end
-
-      def tree(path = Rwiki::FileUtils.rwiki_path)
-        children = fetch_children(path)
-        result = children.map { |n| n.to_extjs_hash }
-
-        i = 0
-        result.each do |tree_node|
-          child = children[i]
-          if child.has_children?
-            tree_node[:children] = tree(child.full_path)
-          end
-
-          i += 1
-        end
-
-        return result
-      end
-    end
+    attr_reader :path
+    attr_reader :file_utils
 
     def initialize(path)
       @path = self.class.sanitize_path(path)
@@ -53,16 +14,12 @@ module Rwiki
       raise Rwiki::Node::Error.new("can't find the #{path} page") unless @file_utils.exists?
     end
 
-    def path
-      @path
-    end
-
     def title
-      base_name
+      @file_utils.base_name
     end
 
     def parent
-      @parent ||= Rwiki::Node.new(@file_utils.full_path)
+      @parent ||= Rwiki::Node.new(@file_utils.full_parent_path)
     end
 
     def children
@@ -86,6 +43,48 @@ module Rwiki
     end
 
     alias :to_extjs_hash :to_hash
+
+    class << self
+      def sanitize_path(path)
+        sanitized_path = path.clone
+        
+        sanitized_path.sub!(Rwiki.configuration.rwiki_path, '') if path.start_with?(Rwiki.configuration.rwiki_path)
+        sanitized_path.gsub!(/^\//, '')
+        sanitized_path.gsub!(/\/$/, '')
+        sanitized_path.gsub!(/\.#{FILE_EXTENSION}$/, '')
+
+        return sanitized_path
+      end
+
+      def fetch_children(full_path)
+        children = []
+        if Dir.exists?(full_path)
+          files = Dir.glob("#{full_path}/*.txt").sort
+          files.each do |file|
+            children << Rwiki::Node.new(file)
+          end
+        end
+
+        return children
+      end
+
+      def tree(path = Rwiki.configuration.rwiki_path)
+        children = fetch_children(path)
+        result = children.map { |n| n.to_extjs_hash }
+
+        i = 0
+        result.each do |tree_node|
+          child = children[i]
+          if child.has_children?
+            tree_node[:children] = tree(child.file_utils.full_path)
+          end
+
+          i += 1
+        end
+
+        return result
+      end
+    end
 
     protected
 
