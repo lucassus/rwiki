@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem "sinatra"
-gem "RedCloth"
+gem "RedCloth", :require => 'redcloth'
 gem "coderay"
 gem "json_pure"
 gem "thin"

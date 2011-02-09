@@ -3,7 +3,7 @@ require 'rubygems' if RUBY_VERSION < "1.9"
 require 'coderay'
 require 'erb'
 require 'json/pure'
-require 'redcloth'
+#require 'redcloth'
 require 'sinatra'
 require 'sinatra/base'
 require 'fuzzy_file_finder'
