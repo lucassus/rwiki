@@ -28,6 +28,7 @@ group :development do
   gem "cucumber"
   gem "cucumber-rails"
   gem "capybara"
+  gem "selenium-webdriver"
   gem "rspec"
   gem "rspec-core"
   gem "rspec-expectations"
@@ -36,4 +37,3 @@ group :development do
   gem "awesome_print"
   gem "capistrano"
 end
-
