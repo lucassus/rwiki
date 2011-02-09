@@ -3,7 +3,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 describe Rwiki::Node do
 
   before :all do
-    Rwiki::Node.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
+    Rwiki::FileUtils.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
   end
 
   subject { Rwiki::Node.new('folder/subfolder') }
@@ -15,22 +15,6 @@ describe Rwiki::Node do
 
     it "should be equal to 'txt'" do
       Rwiki::Node::FILE_EXTENSION.should == 'txt'
-    end
-  end
-
-  describe ".rwiki_path method" do
-    it "should be defined" do
-      Rwiki::Node.should respond_to(:rwiki_path)
-    end
-
-    it "should return valid path" do
-      Rwiki::Node.rwiki_path.should == '/tmp/rwiki_test/pages'
-    end
-  end
-
-  describe ".rwiki_path= method" do
-    it "should be defined" do
-      Rwiki::Node.should respond_to(:rwiki_path=)
     end
   end
 
@@ -59,6 +43,7 @@ describe Rwiki::Node do
 
   describe ".tree method" do
     subject { Rwiki::Node }
+    
     it "should be defined" do
       subject.should respond_to(:tree)
     end
@@ -88,66 +73,6 @@ describe Rwiki::Node do
       it "should raise an exception" do
         lambda { Rwiki::Node.new('non-existing') }.should raise_error(Rwiki::Node::Error, "can't find the non-existing page")
       end
-    end
-  end
-
-  describe "#rwiki_path method" do
-    it "should be defined" do
-      subject.should respond_to(:rwiki_path)
-    end
-
-    it "should return valid rwiki path" do
-      subject.rwiki_path.should == '/tmp/rwiki_test/pages'
-    end
-  end
-
-  describe "#path method" do
-    it "should be defined" do
-      subject.should respond_to(:path)
-    end
-
-    it "should return valid node path" do
-      subject.path.should == 'folder/subfolder'
-    end
-  end
-
-  describe "#file_path method" do
-    it "should be defined" do
-      subject.should respond_to(:file_path)
-    end
-
-    it "should return valid file path" do
-      subject.file_path.should == 'folder/subfolder.txt'
-    end
-  end
-
-  describe "#full_path method" do
-    it "should be defined" do
-      subject.should respond_to(:full_path)
-    end
-
-    it "should return valid full path" do
-      subject.full_path.should == '/tmp/rwiki_test/pages/folder/subfolder'
-    end
-  end
-
-  describe "#full_file_path method" do
-    it "should be defined" do
-      subject.should respond_to(:full_file_path)
-    end
-
-    it "should return valid file path" do
-      subject.full_file_path.should == '/tmp/rwiki_test/pages/folder/subfolder.txt'
-    end
-  end
-
-  describe "#base_name method" do
-    it "should be defined" do
-      subject.should respond_to(:base_name)
-    end
-
-    it "should return valid base name" do
-      subject.base_name.should == "subfolder"
     end
   end
 
@@ -256,41 +181,4 @@ describe Rwiki::Node do
       end
     end
   end
-
-  describe "#leaf? method" do
-    it "should be defined" do
-      subject.should respond_to(:leaf?)
-    end
-  end
-
-  describe "#rename method" do
-    it "should be defined" do
-      subject.should respond_to(:rename)
-    end
-  end
-
-  describe "#delete method" do
-    it "should be defined" do
-      subject.should respond_to(:delete)
-    end
-
-    it "should remove page file" do
-      full_file_path = subject.full_file_path
-      subject.delete
-
-      File.exists?(full_file_path).should be_false
-    end
-
-    it "should remove subpages" do
-      full_path = subject.full_path
-      children = subject.children
-      subject.delete
-
-      Dir.exist?(full_path).should be_false
-      children.each do |child|
-        Dir.exist?(child.full_path).should be_false  
-      end
-    end
-  end
-
 end

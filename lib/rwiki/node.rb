@@ -6,17 +6,10 @@ module Rwiki
     FILE_EXTENSION = 'txt'.freeze
 
     class << self
-      def rwiki_path
-        @@rwiki_path
-      end
-
-      def rwiki_path=(path)
-        @@rwiki_path = path
-      end
 
       def sanitize_path(path)
         sanitized_path = path.clone
-        sanitized_path.sub!(rwiki_path, '') if path.start_with?(rwiki_path)
+        sanitized_path.sub!(Rwiki::FileUtils.rwiki_path, '') if path.start_with?(Rwiki::FileUtils.rwiki_path)
         sanitized_path.gsub!(/^\//, '')
         sanitized_path.gsub!(/\/$/, '')
         sanitized_path.gsub!(/\.#{FILE_EXTENSION}$/, '')
@@ -36,7 +29,7 @@ module Rwiki
         return children
       end
 
-      def tree(path = rwiki_path)
+      def tree(path = Rwiki::FileUtils.rwiki_path)
         children = fetch_children(path)
         result = children.map { |n| n.to_extjs_hash }
 
@@ -56,31 +49,12 @@ module Rwiki
 
     def initialize(path)
       @path = self.class.sanitize_path(path)
-      raise Rwiki::Node::Error.new("can't find the #{path} page") unless File.exists?("#{full_path}.txt")
-    end
-
-    def rwiki_path
-      self.class.rwiki_path
+      @file_utils = Rwiki::FileUtils.new(@path)
+      raise Rwiki::Node::Error.new("can't find the #{path} page") unless @file_utils.exists?
     end
 
     def path
       @path
-    end
-
-    def file_path
-      [path, FILE_EXTENSION].join('.')
-    end
-
-    def full_path
-      File.join(rwiki_path, path)
-    end
-
-    def full_file_path
-      [full_path, FILE_EXTENSION].join('.')
-    end
-
-    def base_name
-      path.split('/').last
     end
 
     def title
@@ -88,7 +62,7 @@ module Rwiki
     end
 
     def parent
-      @parent ||= Rwiki::Node.new(File.dirname(full_path))
+      @parent ||= Rwiki::Node.new(@file_utils.full_path)
     end
 
     def children
@@ -104,8 +78,7 @@ module Rwiki
     end
 
     def delete
-      FileUtils.rm_rf(full_path)
-      FileUtils.rm_rf("#{full_path}.txt")
+      @file_utils.delete
     end
 
     def to_hash
@@ -117,7 +90,7 @@ module Rwiki
     protected
 
     def fetch_children
-      self.class.fetch_children(full_path)
+      self.class.fetch_children(@file_utils.full_path)
     end
 
   end
