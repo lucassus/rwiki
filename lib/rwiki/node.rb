@@ -3,13 +3,11 @@ module Rwiki
 
     class Error < StandardError; end 
 
-    FILE_EXTENSION = 'txt'.freeze
-
     attr_reader :path
     attr_reader :file_utils
 
     def initialize(path)
-      @path = self.class.sanitize_path(path)
+      @path = Rwiki::FileUtils.sanitize_path(path)
       @file_utils = Rwiki::FileUtils.new(@path)
       raise Rwiki::Node::Error.new("can't find the #{path} page") unless @file_utils.exists?
     end
@@ -45,17 +43,6 @@ module Rwiki
     alias :to_extjs_hash :to_hash
 
     class << self
-      def sanitize_path(path)
-        sanitized_path = path.clone
-        
-        sanitized_path.sub!(Rwiki.configuration.rwiki_path, '') if path.start_with?(Rwiki.configuration.rwiki_path)
-        sanitized_path.gsub!(/^\//, '')
-        sanitized_path.gsub!(/\/$/, '')
-        sanitized_path.gsub!(/\.#{FILE_EXTENSION}$/, '')
-
-        return sanitized_path
-      end
-
       def fetch_children(full_path)
         children = []
         if Dir.exists?(full_path)

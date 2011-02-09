@@ -1,6 +1,8 @@
 module Rwiki
   class FileUtils
 
+    attr_reader :path
+
     def initialize(path)
       @path = path
     end
@@ -9,12 +11,8 @@ module Rwiki
       File.exists?(full_file_path)
     end
 
-    def path
-      @path
-    end
-
     def file_path
-      [path, Rwiki::Node::FILE_EXTENSION].join('.')
+      [path, Rwiki.configuration.page_file_extension].join('.')
     end
 
     def full_path
@@ -22,7 +20,7 @@ module Rwiki
     end
 
     def full_file_path
-      [full_path, Rwiki::Node::FILE_EXTENSION].join('.')
+      [full_path, Rwiki.configuration.page_file_extension].join('.')
     end
 
     def full_parent_path
@@ -38,5 +36,16 @@ module Rwiki
       ::FileUtils.rm_rf("#{full_path}.txt")
     end
 
+    def self.sanitize_path(path)
+      sanitized_path = path.clone
+
+      sanitized_path.sub!(Rwiki.configuration.rwiki_path, '') if path.start_with?(Rwiki.configuration.rwiki_path)
+      sanitized_path.gsub!(/^\//, '')
+      sanitized_path.gsub!(/\/$/, '')
+      sanitized_path.gsub!(/\.#{Rwiki.configuration.page_file_extension}$/, '')
+
+      return sanitized_path
+    end
+    
   end
 end

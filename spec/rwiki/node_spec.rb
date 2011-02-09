@@ -4,38 +4,10 @@ describe Rwiki::Node do
 
   before :all do
     Rwiki.configuration.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
+    Rwiki.configuration.page_file_extension = 'txt'
   end
 
-  subject { Rwiki::Node.new('folder/subfolder') }
-
-  describe "FILE_EXTENSION constant" do
-    it "should be equal to 'txt'" do
-      Rwiki::Node::FILE_EXTENSION.should == 'txt'
-    end
-  end
-
-  describe ".sanitize_path method" do
-    context "for path with trailing slashes" do
-      let(:result) { Rwiki::Node.sanitize_path('/folder/subfolder/JavaScript/') }
-      it "should strip the slashes" do
-        result.should == "folder/subfolder/JavaScript"
-      end
-    end
-
-    context "for path with extension" do
-      let(:result) { Rwiki::Node.sanitize_path('folder/subfolder/JavaScript.txt') }
-      it "should strip file extension" do
-        result.should == "folder/subfolder/JavaScript"
-      end
-    end
-
-    context "for full node path" do
-      let(:result) { Rwiki::Node.sanitize_path('/tmp/rwiki_test/pages/folder/subfolder/JavaScript.txt') }
-      it "should strip rwiki_path and file extension" do
-        result.should == "folder/subfolder/JavaScript"
-      end
-    end
-  end
+  subject { Rwiki::Node.new('Development/Programming Languages/Ruby') }
 
   describe ".tree method" do
     subject { Rwiki::Node }
@@ -54,7 +26,7 @@ describe Rwiki::Node do
   describe "#initialize method" do
     context "for existing path" do
       it "should not raise an exception" do
-        lambda { Rwiki::Node.new('folder/test 1') }.should_not raise_error
+        lambda { Rwiki::Node.new('Development/Programming Languages/Ruby') }.should_not raise_error
       end
     end
 
@@ -67,7 +39,7 @@ describe Rwiki::Node do
 
   describe "#title method" do
     it "should return valid title" do
-      subject.title.should == "subfolder"
+      subject.title.should == "Ruby"
     end
   end
 
@@ -87,12 +59,13 @@ describe Rwiki::Node do
   describe "#parent method" do
     it "should return valid parent" do
       parent_node = subject.parent
-      parent_node.path.should == 'folder'
+      parent_node.path.should == 'Development/Programming Languages'
     end
   end
 
   describe "#children method" do
     context "for the node with subpages" do
+      subject { Rwiki::Node.new('Development/Programming Languages') }
       let(:result) { subject.children }
 
       it "result should be an array" do
@@ -110,15 +83,15 @@ describe Rwiki::Node do
       end
 
       it "result should contain valid items" do
-        result[0].title.should == "JavaScript"
-        result[1].title.should == "java"
-        result[2].title.should == "python"
-        result[3].title.should == "ruby"
+        result[0].title.should == "Java"
+        result[1].title.should == "JavaScript"
+        result[2].title.should == "Python"
+        result[3].title.should == "Ruby"
       end
     end
 
     context "for the node without subpages" do
-      subject { Rwiki::Node.new('folder/subfolder/java') }
+      subject { Rwiki::Node.new('Development/Programming Languages/Java') }
       let(:result) { subject.children }
 
       it "result should return an empty array" do
@@ -129,14 +102,16 @@ describe Rwiki::Node do
 
   describe "#has_children? method" do
     context "for node with subpages" do
+      subject { Rwiki::Node.new('Development/Programming Languages') }
       let(:result) { subject.has_children? }
+      
       it "result should return true" do
         result.should be_true
       end
     end
 
     context "for node without subpages" do
-      subject { Rwiki::Node.new('folder/subfolder/java') }
+      subject { Rwiki::Node.new('Development/Programming Languages/Java') }
       let(:result) { subject.has_children? }
 
       it "result should return false" do
