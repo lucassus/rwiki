@@ -18,7 +18,6 @@ describe Rwiki::Node do
     end
 
     it "result should contain three items" do
-      ap result
       result.size.should == 4
     end
   end
@@ -119,4 +118,17 @@ describe Rwiki::Node do
       end
     end
   end
+
+  describe "#create_subpage" do
+    let(:result) { subject.create_subpage('Regular Expressions') }
+    
+    it "result should be a Node intance" do
+      result.should be_instance_of(Rwiki::Node)
+    end
+
+    it "result should have valid path" do
+      result.path.should == 'Development/Programming Languages/Ruby/Regular Expressions'
+    end
+  end
+
 end

@@ -25,14 +25,14 @@ module Rwiki::Models
           m[:path] = '.' + m[:path].gsub(full_path_for('.'), '') 
         end
 
-        return matches
+        matches
       end
     end
 
     def self.new_from_path(path)
       full_path = full_path_for(path)
       klass = File.directory?(full_path) ? Folder : Page
-      return klass.new(path)
+      klass.new(path)
     end
 
     def base_name

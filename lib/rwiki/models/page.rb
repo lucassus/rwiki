@@ -62,7 +62,7 @@ module Rwiki::Models
 #      add_anchors_to_headers!
       
 #      return toc + RedCloth.new(raw_content).to_html
-      return RedCloth.new(raw_content).to_html
+      RedCloth.new(raw_content).to_html
     end
 
     def coderay!
@@ -83,14 +83,14 @@ module Rwiki::Models
         toc << '#' * level + ' "' + name + '":#' + header_anchor + "\n"
       end
 
-      return toc
+      toc
     end
 
     def generate_toc
       raw_toc = generate_raw_toc
       toc = RedCloth.new(raw_toc).to_html
       toc = '<div class="toc-container"><div class="toc">' + toc + '</div></div>' unless toc == ''
-      return toc
+      toc
     end
 
     def add_anchors_to_headers!

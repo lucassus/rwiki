@@ -39,6 +39,18 @@ describe Rwiki::FileUtils do
     end
   end
 
+  describe "#create_subpage" do
+    it "should create corresponding page file" do
+      result = subject.create_subpage('Foo')
+      File.exists?(File.join(subject.full_path, 'Foo.txt')).should be_true
+    end
+
+    it "should return a new page full path" do
+      result = subject.create_subpage('Foo')
+      result.should == File.join(subject.full_path, 'Foo.txt')
+    end
+  end
+
   describe "#delete method" do
     it "should remove page file" do
       full_file_path = subject.full_file_path

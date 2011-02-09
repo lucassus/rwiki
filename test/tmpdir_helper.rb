@@ -11,8 +11,7 @@ module TmpdirHelper
     FileUtils.cp_r(pages_dir, tmp_dir)
 
     # change working directory to the wiki root
-    @rwiki_path = File.join(tmp_dir, 'pages')
-    Rwiki::Models::Node.rwiki_path = @rwiki_path
+    Rwiki.configuration.rwiki_path = File.join(tmp_dir, 'pages')
   end
 
   def remove_tmpdir!

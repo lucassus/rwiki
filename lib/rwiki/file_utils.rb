@@ -31,6 +31,15 @@ module Rwiki
       path.split('/').last
     end
 
+    def create_subpage(name)
+      new_file_full_path = File.join(full_path, name)
+      new_file_full_path += '.txt' unless name.end_with?('.txt')
+
+      ::FileUtils.mkdir_p(full_path) unless Dir.exists?(full_path)
+      File.open(new_file_full_path, 'w') { |f| f.write("h1. #{name}\n\n") }
+      new_file_full_path
+    end
+
     def delete
       ::FileUtils.rm_rf(full_path)
       ::FileUtils.rm_rf("#{full_path}.txt")
@@ -44,7 +53,7 @@ module Rwiki
       sanitized_path.gsub!(/\/$/, '')
       sanitized_path.gsub!(/\.#{Rwiki.configuration.page_file_extension}$/, '')
 
-      return sanitized_path
+      sanitized_path
     end
     
   end

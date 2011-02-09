@@ -17,7 +17,6 @@ module Rwiki
   autoload :App, 'rwiki/app'
   autoload :Configuration, 'rwiki/configuration'
   autoload :FileUtils, 'rwiki/file_utils'
-  autoload :Models, 'rwiki/models'
   autoload :Node, 'rwiki/node'
 
   def self.debug
