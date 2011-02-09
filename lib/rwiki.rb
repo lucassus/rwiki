@@ -15,11 +15,18 @@ module Rwiki
   class NodeNotFoundError < NodeError; end
 
   autoload :App, 'rwiki/app'
+  autoload :Configuration, 'rwiki/configuration'
+  autoload :FileUtils, 'rwiki/file_utils'
   autoload :Models, 'rwiki/models'
+  autoload :Node, 'rwiki/node'
 
   def self.debug
     require 'ruby-debug'
     debugger
   end
-  
+
+  def self.configuration
+    Configuration.instance
+  end
+
 end

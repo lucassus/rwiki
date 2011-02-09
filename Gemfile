@@ -22,6 +22,8 @@ group :development do
   gem "test-unit"
   gem "shoulda"
   gem "jasmine"
+  gem "rspec"
+  gem "mocha"
 
   gem "cucumber"
   gem "cucumber-rails"

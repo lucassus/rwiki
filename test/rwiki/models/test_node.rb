@@ -4,9 +4,9 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
   include Rwiki::Models
 
   context 'Node class' do
-    should 'respond to :working_path and :working_path=' do
-      assert Node.respond_to?(:working_path)
-      assert Node.respond_to?(:working_path=)
+    should 'respond to :rwiki_path and :rwiki_path=' do
+      assert Node.respond_to?(:rwiki_path)
+      assert Node.respond_to?(:rwiki_path=)
     end
 
     context ':new_from_path method' do
@@ -31,8 +31,8 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
 
     context ':full_path_for method' do
       should 'return valid path' do
-        assert_equal File.join(@working_path, 'empty_folder'), Node.full_path_for('empty_folder')
-        assert_equal File.join(@working_path, 'folder/test 1.txt'), Node.full_path_for('folder/test 1.txt')
+        assert_equal File.join(@rwiki_path, 'empty_folder'), Node.full_path_for('empty_folder')
+        assert_equal File.join(@rwiki_path, 'folder/test 1.txt'), Node.full_path_for('folder/test 1.txt')
       end
     end
   end
@@ -43,7 +43,7 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
 
       should 'return valid full path' do
         page = Page.new(@path)
-        assert_equal File.join(Rwiki::Models::Node.working_path, 'home.txt'), page.full_path
+        assert_equal File.join(Rwiki::Models::Node.rwiki_path, 'home.txt'), page.full_path
       end
     end
 
@@ -113,8 +113,8 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
         end
 
         should 'move a file' do
-          assert !File.exists?(File.join(Node.working_path, './test.txt'))
-          assert File.exists?(File.join(Node.working_path, './folder/subfolder/test.txt'))
+          assert !File.exists?(File.join(Node.rwiki_path, './test.txt'))
+          assert File.exists?(File.join(Node.rwiki_path, './folder/subfolder/test.txt'))
         end
       end
 
@@ -132,14 +132,14 @@ class Rwiki::Models::TestNode < Test::Unit::TestCase
         end
 
         should 'move a folder' do
-          assert !File.exists?(File.join(Node.working_path, './folder'))
-          assert File.exists?(File.join(Node.working_path, './empty_folder/folder'))
+          assert !File.exists?(File.join(Node.rwiki_path, './folder'))
+          assert File.exists?(File.join(Node.rwiki_path, './empty_folder/folder'))
         end
 
         should 'move all files' do
-          assert File.exists?(File.join(Node.working_path, './empty_folder/folder/subfolder/ruby.txt'))
-          assert File.exists?(File.join(Node.working_path, './empty_folder/folder/test 1.txt'))
-          assert File.exists?(File.join(Node.working_path, './empty_folder/folder/test 2.txt'))
+          assert File.exists?(File.join(Node.rwiki_path, './empty_folder/folder/subfolder/ruby.txt'))
+          assert File.exists?(File.join(Node.rwiki_path, './empty_folder/folder/test 1.txt'))
+          assert File.exists?(File.join(Node.rwiki_path, './empty_folder/folder/test 2.txt'))
         end
       end
     end
