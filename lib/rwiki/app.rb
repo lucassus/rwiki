@@ -5,7 +5,6 @@ module Rwiki
     set :app_file, File.join(File.dirname(__FILE__), '../../..')
 
     include SmartAsset::Adapters::Sinatra
-    include Models
     
     disable :show_exceptions
     enable :raise_errors
@@ -34,7 +33,7 @@ module Rwiki
 
     get '/node/print' do
       path = params[:path].strip
-      page = Page.new(path)
+      page = Node.new(path)
       @html = page.to_html
 
       erb :print, :layout => false
@@ -43,13 +42,13 @@ module Rwiki
     get '/nodes' do
       path = params[:path].strip
 
-      root_folder = Folder.new(path)
+      root_folder = Node.new(path)
       root_folder.nodes.to_json
     end
 
     get '/node' do
       path = params[:path].strip
-      page = Page.new(path)
+      page = Node.new(path)
 
       page.to_json
     end
@@ -59,7 +58,7 @@ module Rwiki
       path = params[:path].strip
       raw_content = params[:rawContent].force_encoding("UTF-8")
 
-      page = Page.new(path)
+      page = Node.new(path)
       page.raw_content = raw_content
       page.save
 
@@ -71,7 +70,7 @@ module Rwiki
       parent_path = params[:parentPath].strip
       name = params[:name].strip
 
-      parent_folder = Folder.new(parent_path)
+      parent_folder = Node.new(parent_path)
       if params[:isFolder] == 'true'
         node = parent_folder.create_sub_folder(name)
       else
