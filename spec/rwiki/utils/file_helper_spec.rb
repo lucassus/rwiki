@@ -2,11 +2,6 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec_hel
 
 describe Rwiki::Utils::FileHelper do
 
-  before :all do
-    Rwiki.configuration.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
-    Rwiki.configuration.page_file_extension = 'txt'
-  end
-
   subject { Rwiki::Utils::FileHelper.new('Development/Programming Languages') }
 
   describe "#path method" do

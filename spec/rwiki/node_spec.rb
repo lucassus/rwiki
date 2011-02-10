@@ -2,11 +2,6 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 
 describe Rwiki::Node do
 
-  before :all do
-    Rwiki.configuration.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
-    Rwiki.configuration.page_file_extension = 'txt'
-  end
-
   subject { Rwiki::Node.new('Development/Programming Languages/Ruby') }
 
   describe ".tree method" do
