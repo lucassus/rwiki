@@ -4,7 +4,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'rwiki'
 require 'ap'
 
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'test', 'tmpdir_helper'))
+require 'tmpdir_helper'
 include TmpdirHelper
 
 RSpec.configure do |config|

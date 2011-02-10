@@ -1,13 +1,13 @@
-require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
+require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec_helper'))
 
-describe Rwiki::FileUtils do
+describe Rwiki::Utils::FileHelper do
 
   before :all do
     Rwiki.configuration.rwiki_path = File.join(TmpdirHelper::TMP_DIR, 'pages')
     Rwiki.configuration.page_file_extension = 'txt'
   end
 
-  subject { Rwiki::FileUtils.new('Development/Programming Languages') }
+  subject { Rwiki::Utils::FileHelper.new('Development/Programming Languages') }
 
   describe "#path method" do
     it "should return valid node path" do
@@ -30,12 +30,6 @@ describe Rwiki::FileUtils do
   describe "#full_file_path method" do
     it "should return valid file path" do
       subject.full_file_path.should == '/tmp/rwiki_test/pages/Development/Programming Languages.txt'
-    end
-  end
-
-  describe "#base_name method" do
-    it "should return valid base name" do
-      subject.base_name.should == "Programming Languages"
     end
   end
 
@@ -75,21 +69,21 @@ describe Rwiki::FileUtils do
 
   describe ".sanitize_path method" do
     context "for path with trailing slashes" do
-      let(:result) { Rwiki::FileUtils.sanitize_path('/Development/Programming Languages/JavaScript/') }
+      let(:result) { Rwiki::Utils::FileHelper.sanitize_path('/Development/Programming Languages/JavaScript/') }
       it "should strip the slashes" do
         result.should == "Development/Programming Languages/JavaScript"
       end
     end
 
     context "for path with extension" do
-      let(:result) { Rwiki::FileUtils.sanitize_path('Development/Programming Languages/JavaScript.txt') }
+      let(:result) { Rwiki::Utils::FileHelper.sanitize_path('Development/Programming Languages/JavaScript.txt') }
       it "should strip file extension" do
         result.should == "Development/Programming Languages/JavaScript"
       end
     end
 
     context "for full node path" do
-      let(:result) { Rwiki::FileUtils.sanitize_path('/tmp/rwiki_test/pages/Development/Programming Languages/JavaScript.txt') }
+      let(:result) { Rwiki::Utils::FileHelper.sanitize_path('/tmp/rwiki_test/pages/Development/Programming Languages/JavaScript.txt') }
       it "should strip rwiki_path and file extension" do
         result.should == "Development/Programming Languages/JavaScript"
       end

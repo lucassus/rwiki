@@ -16,8 +16,8 @@ module Rwiki
 
   autoload :App, 'rwiki/app'
   autoload :Configuration, 'rwiki/configuration'
-  autoload :FileUtils, 'rwiki/file_utils'
   autoload :Node, 'rwiki/node'
+  autoload :Utils, 'rwiki/utils'
 
   def self.debug
     require 'ruby-debug'

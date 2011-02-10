@@ -1,23 +1,32 @@
 module Rwiki
   class Node
+    include Rwiki::Utils
 
     class Error < StandardError; end 
 
     attr_reader :path
-    attr_reader :file_utils
+    attr_reader :file_helper
 
     def initialize(path)
-      @path = Rwiki::FileUtils.sanitize_path(path)
-      @file_utils = Rwiki::FileUtils.new(@path)
-      raise Rwiki::Node::Error.new("can't find the #{path} page") unless @file_utils.exists?
+      @path = FileHelper.sanitize_path(path)
+      @file_helper = FileHelper.new(@path)
+      raise Error.new("can't find the #{path} page") unless exists?
+    end
+
+    def full_path
+      @file_helper.full_path
+    end
+
+    def exists?
+      @file_helper.exists?
     end
 
     def title
-      @file_utils.base_name
+      path.split('/').last
     end
 
     def parent
-      @parent ||= Rwiki::Node.new(@file_utils.full_parent_path)
+      @parent ||= Node.new(@file_helper.full_parent_path)
     end
 
     def children
@@ -33,11 +42,7 @@ module Rwiki
     end
 
     def create_subpage(name)
-      Rwiki::Node.new(@file_utils.create_subpage(name))
-    end
-
-    def delete
-      @file_utils.delete
+      Node.new(@file_helper.create_subpage(name))
     end
 
     def to_hash
@@ -57,7 +62,7 @@ module Rwiki
         tree_node = child.to_hash
 
         if child.has_children?
-          tree_node[:children] = tree(child.file_utils.full_path)
+          tree_node[:children] = tree(child.file_helper.full_path)
         end
 
         result << tree_node
@@ -69,7 +74,7 @@ module Rwiki
     protected
 
     def fetch_children
-      self.class.fetch_children(@file_utils.full_path)
+      self.class.fetch_children(full_path)
     end
 
     def self.fetch_children(full_path)
@@ -78,7 +83,7 @@ module Rwiki
       if Dir.exists?(full_path)
         files = Dir.glob("#{full_path}/*.txt").sort
         files.each do |file|
-          children << Rwiki::Node.new(file)
+          children << Node.new(file)
         end
       end
 

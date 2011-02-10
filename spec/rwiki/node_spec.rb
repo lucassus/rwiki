@@ -121,7 +121,7 @@ describe Rwiki::Node do
 
   describe "#create_subpage" do
     let(:result) { subject.create_subpage('Regular Expressions') }
-    
+
     it "result should be a Node intance" do
       result.should be_instance_of(Rwiki::Node)
     end
