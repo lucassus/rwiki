@@ -114,6 +114,34 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#file_content" do
+    subject { Rwiki::Node.new('Home') }
+    before :each do
+      subject.file_helper.expects(:read_file_content).returns('Lorem ipsum')
+    end
+    let(:result) { subject.file_content }
+
+    it "result should contain valid cotent" do
+      result.should == "Lorem ipsum"
+    end
+  end
+
+  describe "#html_content" do
+    subject { Rwiki::Node.new('About') }
+    before :each do
+      subject.file_helper.expects(:read_file_content).returns('h1. Lorem ipsum')
+    end
+    let(:result) { subject.html_content }
+
+    it "result should be a String instance" do
+      result.should be_instance_of(String)
+    end
+
+    it "result should contain valid html content" do
+      result.should == "<h1>Lorem ipsum</h1>"
+    end
+  end
+
   describe "#create_subpage" do
     let(:result) { subject.create_subpage('Regular Expressions') }
 

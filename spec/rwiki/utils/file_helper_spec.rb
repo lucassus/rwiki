@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'spec_helper'))
 
 describe Rwiki::Utils::FileHelper do
@@ -59,6 +61,19 @@ describe Rwiki::Utils::FileHelper do
   describe "#full_parent_path" do
     it "should return valid full parent path" do
       subject.full_parent_path.should == '/tmp/rwiki_test/pages/Development'
+    end
+  end
+
+  describe "#read_file_content" do
+    subject { Rwiki::Utils::FileHelper.new('About') }
+    let(:result) { subject.read_file_content }
+
+    it "result should be a String instance" do
+      result.should be_instance_of(String)
+    end
+
+    it "result should contain valid content" do
+      result.should == "h1. This is a sample page, zażółć gęsią jaźń"
     end
   end
 

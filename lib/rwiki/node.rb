@@ -10,15 +10,11 @@ module Rwiki
     def initialize(path)
       @path = FileHelper.sanitize_path(path)
       @file_helper = FileHelper.new(@path)
-      raise Error.new("can't find the #{path} page") unless exists?
+      raise Error.new("can't find the #{path} page") unless @file_helper.exists?
     end
 
     def full_path
       @file_helper.full_path
-    end
-
-    def exists?
-      @file_helper.exists?
     end
 
     def title
@@ -43,6 +39,14 @@ module Rwiki
 
     def create_subpage(name)
       Node.new(@file_helper.create_subpage(name))
+    end
+
+    def file_content
+      @file_content ||= @file_helper.read_file_content
+    end
+
+    def html_content
+      @html_content ||= RedCloth.new(file_content).to_html
     end
 
     def to_hash

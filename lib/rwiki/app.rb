@@ -31,14 +31,6 @@ module Rwiki
       erb :index
     end
 
-    get '/node/print' do
-      path = params[:path].strip
-      page = Node.new(path)
-      @html = page.to_html
-
-      erb :print, :layout => false
-    end
-
     get '/nodes' do
       path = params[:path].strip
 
@@ -121,6 +113,14 @@ module Rwiki
       matches = Node.fuzzy_finder(query)
 
       { :results => matches, :count => matches.size }.to_json
+    end
+
+    get '/node/print' do
+      path = params[:path].strip
+      page = Node.new(path)
+      @html = page.to_html
+
+      erb :print, :layout => false
     end
   end
 end
