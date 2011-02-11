@@ -6,29 +6,15 @@ describe Rwiki::Utils::FileHelper do
 
   subject { Rwiki::Utils::FileHelper.new('Development/Programming Languages') }
 
-  describe "#path method" do
-    it "should return valid node path" do
-      subject.path.should == 'Development/Programming Languages'
-    end
-  end
+  its(:path) { should == 'Development/Programming Languages' }
 
-  describe "#file_path method" do
-    it "should return valid file path" do
-      subject.file_path.should == 'Development/Programming Languages.txt'
-    end
-  end
+  its(:file_path) { should == 'Development/Programming Languages.txt' }
 
-  describe "#full_path method" do
-    it "should return valid full path" do
-      subject.full_path.should == '/tmp/rwiki_test/pages/Development/Programming Languages'
-    end
-  end
+  its(:full_path) { should == '/tmp/rwiki_test/pages/Development/Programming Languages' }
 
-  describe "#full_file_path method" do
-    it "should return valid file path" do
-      subject.full_file_path.should == '/tmp/rwiki_test/pages/Development/Programming Languages.txt'
-    end
-  end
+  its(:full_file_path) { should == '/tmp/rwiki_test/pages/Development/Programming Languages.txt' }
+
+  its(:full_parent_path) { should == '/tmp/rwiki_test/pages/Development' }
 
   describe "#create_subpage" do
     it "should create corresponding page file" do
@@ -58,23 +44,11 @@ describe Rwiki::Utils::FileHelper do
     end
   end
 
-  describe "#full_parent_path" do
-    it "should return valid full parent path" do
-      subject.full_parent_path.should == '/tmp/rwiki_test/pages/Development'
-    end
-  end
-
-  describe "#read_file_content" do
+  context do
     subject { Rwiki::Utils::FileHelper.new('About') }
-    let(:result) { subject.read_file_content }
-
-    it "result should be a String instance" do
-      result.should be_instance_of(String)
-    end
-
-    it "result should contain valid content" do
-      result.should == "h1. This is a sample page, zażółć gęsią jaźń"
-    end
+    
+    its(:read_file_content) { should be_instance_of(String) }
+    its(:read_file_content) { should == "h1. This is a sample page, zażółć gęsią jaźń" }
   end
 
   describe ".sanitize_path method" do

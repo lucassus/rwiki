@@ -31,94 +31,48 @@ describe Rwiki::Node do
     end
   end
 
-  describe "#title method" do
-    it "should return valid title" do
-      subject.title.should == "Ruby"
+  its(:title) { should == "Ruby" }
+
+  its(:to_hash) { should be_instance_of(Hash) }
+
+  its(:parent) { should be_instance_of(Rwiki::Node) }
+  its('parent.path') { should == 'Development/Programming Languages' }
+
+  its(:children) { should be_instance_of(Array) }
+  its(:children) { should be_empty }
+
+  context "for the node with subpages" do
+    subject { Rwiki::Node.new('Development/Programming Languages') }
+    let(:result) { subject.children }
+
+    its('children.size') { should == 4 }
+
+    it "children should contain Rwiki::Node objects" do
+      result.each do |node|
+        node.should be_instance_of(Rwiki::Node)
+      end
+    end
+
+    it "children should contain items with valid titles" do
+      result[0].title.should == "Java"
+      result[1].title.should == "JavaScript"
+      result[2].title.should == "Python"
+      result[3].title.should == "Ruby"
     end
   end
 
-  describe "#to_hash method" do
-    let(:result) { subject.to_hash }
-
-    it "result should be a hash" do
-      result.should be_instance_of(Hash)
-    end
-
-    it "result should contain the node path" do
-      result[:path].should_not be_nil
-      result[:path].should == subject.path
-    end
+  context "node with subpages" do
+    subject { Rwiki::Node.new('Development/Programming Languages') }
+    its(:has_children?) { should be_true }
   end
 
-  describe "#parent method" do
-    it "should return valid parent" do
-      parent_node = subject.parent
-      parent_node.path.should == 'Development/Programming Languages'
-    end
-  end
-
-  describe "#children method" do
-    context "for the node with subpages" do
-      subject { Rwiki::Node.new('Development/Programming Languages') }
-      let(:result) { subject.children }
-
-      it "result should be an array" do
-        result.should be_instance_of(Array)
-      end
-
-      it "result should contain four items" do
-        result.size.should == 4
-      end
-
-      it "result should contain Rwiki::Node objects" do
-        result.each do |node|
-          node.should be_instance_of(Rwiki::Node)
-        end
-      end
-
-      it "result should contain valid items" do
-        result[0].title.should == "Java"
-        result[1].title.should == "JavaScript"
-        result[2].title.should == "Python"
-        result[3].title.should == "Ruby"
-      end
-    end
-
-    context "for the node without subpages" do
-      subject { Rwiki::Node.new('Development/Programming Languages/Java') }
-      let(:result) { subject.children }
-
-      it "result should return an empty array" do
-        result.should be_empty
-      end
-    end
-  end
-
-  describe "#has_children? method" do
-    context "for node with subpages" do
-      subject { Rwiki::Node.new('Development/Programming Languages') }
-      let(:result) { subject.has_children? }
-      
-      it "result should return true" do
-        result.should be_true
-      end
-    end
-
-    context "for node without subpages" do
-      subject { Rwiki::Node.new('Development/Programming Languages/Java') }
-      let(:result) { subject.has_children? }
-
-      it "result should return false" do
-        result.should be_false
-      end
-    end
+  context "node without subpages" do
+    subject { Rwiki::Node.new('Development/Programming Languages/Java') }
+    its(:has_children?) { should be_false }
   end
 
   describe "#file_content" do
-    subject { Rwiki::Node.new('Home') }
-    before :each do
-      subject.file_helper.expects(:read_file_content).returns('Lorem ipsum')
-    end
+    before { subject.file_helper.expects(:read_file_content).returns('Lorem ipsum') }
     let(:result) { subject.file_content }
 
     it "result should contain valid cotent" do
@@ -127,10 +81,7 @@ describe Rwiki::Node do
   end
 
   describe "#html_content" do
-    subject { Rwiki::Node.new('About') }
-    before :each do
-      subject.file_helper.expects(:read_file_content).returns('h1. Lorem ipsum')
-    end
+    before { subject.file_helper.expects(:read_file_content).returns('h1. Lorem ipsum') }
     let(:result) { subject.html_content }
 
     it "result should be a String instance" do
