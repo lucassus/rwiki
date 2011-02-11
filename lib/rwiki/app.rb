@@ -32,10 +32,7 @@ module Rwiki
     end
 
     get '/nodes' do
-      path = params[:path].strip
-
-      root_folder = Node.new(path)
-      root_folder.nodes.to_json
+      Node.tree.to_json
     end
 
     get '/node' do

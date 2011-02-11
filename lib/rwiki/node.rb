@@ -51,10 +51,8 @@ module Rwiki
 
     def to_hash
       {
-        :path => path,
         :text => title,
-        :leaf => leaf?,
-        :cls => leaf? ? 'page' : 'folder'
+        :leaf => leaf?
       }
     end
 

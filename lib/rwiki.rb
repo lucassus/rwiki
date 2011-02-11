@@ -1,5 +1,6 @@
 require 'rubygems' if RUBY_VERSION < "1.9"
 
+require 'ap'
 require 'coderay'
 require 'erb'
 require 'json/pure'

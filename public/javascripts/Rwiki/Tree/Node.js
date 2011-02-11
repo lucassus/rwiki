@@ -2,10 +2,7 @@ Ext.ns('Rwiki.Tree');
 
 Rwiki.Tree.Node = Ext.extend(Ext.tree.AsyncTreeNode, {
   getPath: function() {
-    var path = Rwiki.Tree.Node.superclass.getPath.call(this, 'baseName');
-
-    // Remove fist '/' from path.
-    return path.replace(/^\//, '');
+    return Rwiki.Tree.Node.superclass.getPath.call(this, 'baseName');
   },
 
   setBaseName: function(baseName) {
