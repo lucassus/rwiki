@@ -3,7 +3,6 @@
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
 require 'rubygems'
 require 'bundler'
-require 'rwiki'
 
 begin
   Bundler.setup(:default, :development)
@@ -12,6 +11,8 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
+
+require 'rwiki'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
