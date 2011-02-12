@@ -29,7 +29,7 @@ describe Rwiki::App do
       before { get '/node', :path => 'Non-existing' }
 
       it 'should respond with error' do
-        last_response.status.should == 500
+        last_response.should be_ok
       end
     end
 

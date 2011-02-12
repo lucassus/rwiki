@@ -31,15 +31,21 @@ module Rwiki
       erb :index
     end
 
+    # get the nodes tree
     get '/nodes' do
       Node.tree.to_json
     end
 
+    # get the node's content
     get '/node' do
-      path = params[:path].strip
-      page = Node.new(path)
+      begin
+        path = params[:path].strip
+        page = Node.new(path)
 
-      page.to_json
+        page.to_json
+      rescue Rwiki::Node::Error => error
+        { :success => false, :message => error.message }.to_json
+      end
     end
 
     # update page content
