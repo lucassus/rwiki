@@ -62,7 +62,7 @@ describe Rwiki::Utils::FileHelper do
     end
 
     describe "to the existing new name" do
-      before { @result = subject.rename('Databases') }
+      before { @result = subject.rename('Databases.txt') }
 
       it "should return false" do
         @result.should be_false
