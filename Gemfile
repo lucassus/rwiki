@@ -12,11 +12,7 @@ gem "smart_asset"
 # Include everything needed to run rake, tests, features, etc.
 group :development do
   gem "jeweler"
-  if RUBY_VERSION < "1.9"
-    gem "ruby-debug"
-  else
-    gem "ruby-debug19"
-  end
+  gem "ruby-debug19"
 
   gem "rack-test"
   gem "test-unit"

@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
-require 'rubygems'
 require 'bundler'
 
 begin
@@ -32,8 +31,8 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   gem.name        = "rwiki"
   gem.license     = "GPLv3"
-  gem.summary     = %Q{Yet another personal wiki}
-  gem.description = %Q{Personal wiki based on ExtJS}
+  gem.summary     = %{Personal wiki based on ExtJS}
+  gem.description = %{Personal wiki based on ExtJS}
   gem.email       = "lucassus@gmail.com"
   gem.homepage    = "http://github.com/lucassus/rwiki"
   gem.authors     = ["Łukasz Bandzarewicz"]
