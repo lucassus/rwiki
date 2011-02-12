@@ -3,6 +3,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'rwiki'
 require 'ap'
+require 'rack/test'
 
 require 'tmpdir_helper'
 include TmpdirHelper

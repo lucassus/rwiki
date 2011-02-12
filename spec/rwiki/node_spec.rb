@@ -1,11 +1,12 @@
 require File.expand_path(File.join('..', 'spec_helper'), File.dirname(__FILE__))
 
 describe Rwiki::Node do
+  include Rwiki
 
-  subject { Rwiki::Node.new('Development/Programming Languages/Ruby') }
+  subject { Node.new('/Development/Programming Languages/Ruby') }
 
   describe ".tree" do
-    subject { Rwiki::Node }
+    subject { Node }
     let(:result) { subject.tree }
 
     it "result should be an array" do
@@ -20,13 +21,13 @@ describe Rwiki::Node do
   describe "#initialize" do
     context "for existing path" do
       it "should not raise an exception" do
-        lambda { Rwiki::Node.new('Development/Programming Languages/Ruby') }.should_not raise_error
+        lambda { Node.new('/Development/Programming Languages/Ruby') }.should_not raise_error
       end
     end
 
     context "for non-existing path" do
       it "should raise an exception" do
-        lambda { Rwiki::Node.new('non-existing') }.should raise_error(Rwiki::Node::Error, "can't find the non-existing page")
+        lambda { Node.new('non-existing') }.should raise_error(Node::Error, "can't find the non-existing page")
       end
     end
   end
@@ -35,21 +36,21 @@ describe Rwiki::Node do
 
   its(:to_hash) { should be_instance_of(Hash) }
 
-  its(:parent) { should be_instance_of(Rwiki::Node) }
+  its(:parent) { should be_instance_of(Node) }
   its('parent.path') { should == 'Development/Programming Languages' }
 
   its(:children) { should be_instance_of(Array) }
   its(:children) { should be_empty }
 
   context "for the node with subpages" do
-    subject { Rwiki::Node.new('Development/Programming Languages') }
+    subject { Node.new('Development/Programming Languages') }
     let(:result) { subject.children }
 
     its('children.size') { should == 4 }
 
-    it "children should contain Rwiki::Node objects" do
+    it "children should contain Node objects" do
       result.each do |node|
-        node.should be_instance_of(Rwiki::Node)
+        node.should be_instance_of(Node)
       end
     end
 
@@ -62,12 +63,12 @@ describe Rwiki::Node do
   end
 
   context "node with subpages" do
-    subject { Rwiki::Node.new('Development/Programming Languages') }
+    subject { Node.new('Development/Programming Languages') }
     its(:has_children?) { should be_true }
   end
 
   context "node without subpages" do
-    subject { Rwiki::Node.new('Development/Programming Languages/Java') }
+    subject { Node.new('Development/Programming Languages/Java') }
     its(:has_children?) { should be_false }
   end
 
@@ -97,7 +98,7 @@ describe Rwiki::Node do
     let(:result) { subject.create_subpage('Regular Expressions') }
 
     it "result should be a Node intance" do
-      result.should be_instance_of(Rwiki::Node)
+      result.should be_instance_of(Node)
     end
 
     it "result should have valid path" do

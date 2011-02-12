@@ -3,7 +3,6 @@
 require File.expand_path(File.join('..', '..', 'spec_helper'), File.dirname(__FILE__))
 
 describe Rwiki::Utils::FileHelper do
-
   include Rwiki::Utils
 
   subject { FileHelper.new('Development/Programming Languages') }
@@ -96,6 +95,27 @@ describe Rwiki::Utils::FileHelper do
 
         File.exists?(FileHelper.expand_node_file_path('Personal stuff/Programming Languages')).should be_true
         Dir.exists?(FileHelper.expand_node_path('Personal stuff/Programming Languages')).should be_true
+      end
+    end
+
+    describe "to the valid new parent (page)" do
+      before { @result = subject.move('Home') }
+
+      it "should return true" do
+        @result.should be_true
+      end
+
+      it "should set the new path" do
+        subject.path.should == 'Home/Programming Languages'
+      end
+
+      it "should move the file and the corresponding directory" do
+        File.exists?(FileHelper.expand_node_file_path('Development/Programming Languages')).should be_false
+        Dir.exists?(FileHelper.expand_node_path('Development/Programming Languages')).should be_false
+
+        File.exists?(FileHelper.expand_node_file_path('Home')).should be_true
+        File.exists?(FileHelper.expand_node_file_path('Home/Programming Languages')).should be_true
+        Dir.exists?(FileHelper.expand_node_path('Home/Programming Languages')).should be_true
       end
     end
 

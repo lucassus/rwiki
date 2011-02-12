@@ -89,7 +89,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onClick: function(node) {
-    if (!node.isLeaf()) return;
     var page = new Rwiki.Data.Node({ path: node.getPath() });
     this.fireEvent('rwiki:pageSelected', page);
   },

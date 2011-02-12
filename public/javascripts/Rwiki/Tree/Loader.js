@@ -13,7 +13,7 @@ Rwiki.Tree.Loader = Ext.extend(Ext.tree.TreeLoader, {
     // pass extra parameters
     this.on('beforeload', function(loader, node) {
       loader.baseParams = {
-        path: node.getPath('baseName')
+        path: node.getPath('text')
       }
     });
   },

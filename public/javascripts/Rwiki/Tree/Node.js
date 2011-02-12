@@ -2,15 +2,7 @@ Ext.ns('Rwiki.Tree');
 
 Rwiki.Tree.Node = Ext.extend(Ext.tree.AsyncTreeNode, {
   getPath: function() {
-    return Rwiki.Tree.Node.superclass.getPath.call(this, 'baseName');
-  },
-
-  setBaseName: function(baseName) {
-    this.attributes.baseName = baseName;
-  },
-
-  getBaseName: function() {
-    return this.attributes.baseName;
+    return Rwiki.Tree.Node.superclass.getPath.call(this, 'text');
   },
 
   expandAll: function() {
