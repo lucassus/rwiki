@@ -12,7 +12,7 @@ module Rwiki::Utils
     end
 
     def full_path
-      File.join(Rwiki.configuration.rwiki_path, path)
+      self.class.expand_node_path(path)
     end
 
     def full_file_path
@@ -21,6 +21,10 @@ module Rwiki::Utils
 
     def full_parent_path
       File.dirname(full_path)
+    end
+
+    def basename
+      File.basename(path)
     end
 
     def exists?
@@ -60,6 +64,21 @@ module Rwiki::Utils
       end
     end
 
+    def move(new_parent_path)
+      new_parent_full_path = self.class.expand_node_path(new_parent_path)
+      return false if new_parent_full_path == full_path
+
+      if File.exists?(new_parent_full_path)
+        FileUtils.mv(full_path, new_parent_full_path)
+        FileUtils.mv(full_file_path, new_parent_full_path)
+
+        @path = File.join(new_parent_path, basename)
+        true
+      else
+        false
+      end
+    end
+
     def self.sanitize_path(path)
       sanitized_path = path.clone
 
@@ -69,6 +88,14 @@ module Rwiki::Utils
       sanitized_path.gsub!(/\.#{Rwiki.configuration.page_file_extension}$/, '')
 
       sanitized_path
+    end
+
+    def self.expand_node_path(path)
+      File.join(Rwiki.configuration.rwiki_path, sanitize_path(path))
+    end
+
+    def self.expand_node_file_path(path)
+      "#{expand_node_path(path)}.#{Rwiki.configuration.page_file_extension}"
     end
     
   end

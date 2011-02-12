@@ -18,7 +18,7 @@ module Rwiki
     end
 
     def title
-      path.split('/').last
+      @file_helper.basename
     end
 
     def parent
