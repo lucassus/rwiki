@@ -12,7 +12,18 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+require "rspec/core/rake_task"
+require "rspec/core/version"
 require 'rwiki'
+
+task :default => :spec
+
+desc "Run all examples"
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_path = 'rspec'
+  t.rspec_opts = %w[--color]
+  t.verbose = false
+end
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
@@ -26,27 +37,8 @@ Jeweler::Tasks.new do |gem|
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-end
-
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features)
-
-task :default => :test
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version       = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = "rwiki #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
 
 begin
   require 'jasmine'
