@@ -34,7 +34,7 @@ describe Rwiki::App do
     end
 
     context 'for existing page' do
-      before { get '/node', :path => 'Development/Programming Languages/Ruby' }
+      before { get '/node', :path => '/Home/Development/Programming Languages/Ruby' }
 
       it 'should respond with success' do
         last_response.should be_ok

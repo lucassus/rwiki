@@ -33,7 +33,7 @@ module Rwiki
 
     # get the nodes tree
     get '/nodes' do
-      Node.tree.to_json
+      Node.new.tree.to_json
     end
 
     # get the node's content
@@ -65,16 +65,13 @@ module Rwiki
       parent_path = params[:parentPath].strip
       name = params[:name].strip
 
-      parent_folder = Node.new(parent_path)
-      if params[:isFolder] == 'true'
-        node = parent_folder.create_sub_folder(name)
-      else
-        node = parent_folder.create_sub_page(name)
-      end
+      parent_node = Node.new(parent_path)
+      node = parent_node.add_page(name)
 
       node.to_json
     end
 
+    # rename the node
     post '/node/rename' do
       path = params[:path].strip
       new_name = params[:newName].strip
@@ -88,21 +85,22 @@ module Rwiki
       result.to_json
     end
 
+    # move the node
     put '/node/move' do
       path = params[:path].strip
       new_parent_path = params[:newParentPath].strip
 
-      node = Node.new_from_path(path)
-      new_parent = Node.new_from_path(new_parent_path)
-      node.move(new_parent)
+      node = Node.new(path)
+      new_parent = Node.new(new_parent_path)
 
       result = node.to_hash
       result[:oldPath] = path
-      result[:success] = true
+      result[:success] = node.move(new_parent)
 
       result.to_json
     end
 
+    # delete the node
     delete '/node' do
       path = params[:path].strip
       node = Node.new_from_path(path)

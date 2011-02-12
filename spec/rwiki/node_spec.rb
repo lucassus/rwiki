@@ -3,25 +3,42 @@ require File.expand_path(File.join('..', 'spec_helper'), File.dirname(__FILE__))
 describe Rwiki::Node do
   include Rwiki
 
-  subject { Node.new('/Development/Programming Languages/Ruby') }
+  describe "the root node" do
+    before { @root_node = Node.new }
+    subject { @root_node }
 
-  describe ".tree" do
-    subject { Node }
-    let(:result) { subject.tree }
+    its(:is_root?) { should be_true }
+    its(:title) { should == Rwiki.configuration.root_page_name }
+    its(:parent) { should be_nil }
 
-    it "result should be an array" do
-      result.should be_instance_of(Array)
+    its(:to_tree_node_hash) { should be_instance_of(Hash) }
+    context "#to_tree_node_hash" do
+      subject { @root_node.to_tree_node_hash }
+
+      its([:text]) { should == 'Home' }
+      its([:leaf?]) { should be_false }
     end
 
-    it "result should contain three items" do
-      result.size.should == 4
+    describe "#tree" do
+      let(:result) { subject.tree }
+
+      it "result should be an array" do
+        result.should be_instance_of(Array)
+      end
+
+      it "result should contain three items" do
+        result.size.should == 4
+      end
     end
   end
+
+  before { @node = Node.new('/Home/Development/Programming Languages/Ruby') }
+  subject { @node }
 
   describe "#initialize" do
     context "for existing path" do
       it "should not raise an exception" do
-        lambda { Node.new('/Development/Programming Languages/Ruby') }.should_not raise_error
+        lambda { Node.new('/Home/Development/Programming Languages/Ruby') }.should_not raise_error
       end
     end
 
@@ -32,18 +49,20 @@ describe Rwiki::Node do
     end
   end
 
+  its(:is_root?) { should be_false }
+
   its(:title) { should == "Ruby" }
 
   its(:to_hash) { should be_instance_of(Hash) }
 
   its(:parent) { should be_instance_of(Node) }
-  its('parent.path') { should == 'Development/Programming Languages' }
+  its('parent.path') { should == '/Home/Development/Programming Languages' }
 
   its(:children) { should be_instance_of(Array) }
   its(:children) { should be_empty }
 
-  context "for the node with subpages" do
-    subject { Node.new('Development/Programming Languages') }
+  context "for the node with child pages" do
+    subject { Node.new('/Home/Development/Programming Languages') }
     let(:result) { subject.children }
 
     its('children.size') { should == 4 }
@@ -62,13 +81,13 @@ describe Rwiki::Node do
     end
   end
 
-  context "node with subpages" do
-    subject { Node.new('Development/Programming Languages') }
+  context "node with child pages" do
+    subject { Node.new('/Home/Development/Programming Languages') }
     its(:has_children?) { should be_true }
   end
 
-  context "node without subpages" do
-    subject { Node.new('Development/Programming Languages/Java') }
+  context "node without child pages" do
+    subject { Node.new('/Home/Development/Programming Languages/Java') }
     its(:has_children?) { should be_false }
   end
 
@@ -76,7 +95,7 @@ describe Rwiki::Node do
     before { subject.file_helper.expects(:read_file_content).returns('Lorem ipsum') }
     let(:result) { subject.file_content }
 
-    it "result should contain valid cotent" do
+    it "result should contain valid content" do
       result.should == "Lorem ipsum"
     end
   end
@@ -94,15 +113,15 @@ describe Rwiki::Node do
     end
   end
 
-  describe "#create_subpage" do
-    let(:result) { subject.create_subpage('Regular Expressions') }
+  describe "#add_page" do
+    let(:result) { subject.add_page('Regular Expressions') }
 
-    it "result should be a Node intance" do
+    it "result should be a Node instance" do
       result.should be_instance_of(Node)
     end
 
     it "result should have valid path" do
-      result.path.should == 'Development/Programming Languages/Ruby/Regular Expressions'
+      result.path.should == '/Home/Development/Programming Languages/Ruby/Regular Expressions'
     end
   end
 

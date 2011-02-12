@@ -17,8 +17,4 @@ RSpec.configure do |config|
     create_tmpdir!
   end
 
-  config.after(:each) do
-    remove_tmpdir!
-  end
-
 end

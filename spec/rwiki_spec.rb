@@ -4,7 +4,9 @@ describe Rwiki do
 
   its(:configuration) { should be_instance_of(Rwiki::Configuration) }
 
-  its('configuration.rwiki_path') { should == '/tmp/rwiki_test/pages' }
+  its('configuration.rwiki_path') { should == '/tmp/rwiki_test/fixtures' }
+
+  its('configuration.root_page_name') { should == 'Home' }
 
   its('configuration.page_file_extension') { should == 'txt' }
 

@@ -35,7 +35,7 @@ module Rwiki::Utils
       File.open(full_file_path, 'r:UTF-8') { |f| f.read }
     end
 
-    def create_subpage(name)
+    def add_page(name)
       new_file_full_path = File.join(full_path, name)
       new_file_full_path += '.txt' unless name.end_with?(".#{Rwiki.configuration.page_file_extension}")
 
@@ -68,7 +68,10 @@ module Rwiki::Utils
       new_parent_full_path = self.class.expand_node_path(new_parent_path)
       return false if new_parent_full_path == full_path
 
-      if File.exists?(new_parent_full_path)
+      new_parent_file_full_path = self.class.expand_node_file_path(new_parent_path)
+      if File.exists?(new_parent_file_full_path)
+        FileUtils.mkdir(new_parent_full_path) unless Dir.exists?(new_parent_full_path)
+
         FileUtils.mv(full_path, new_parent_full_path)
         FileUtils.mv(full_file_path, new_parent_full_path)
 
@@ -82,10 +85,10 @@ module Rwiki::Utils
     def self.sanitize_path(path)
       sanitized_path = path.clone
 
-      sanitized_path.sub!(Rwiki.configuration.rwiki_path, '') if path.start_with?(Rwiki.configuration.rwiki_path)
-      sanitized_path.gsub!(/^\//, '')
-      sanitized_path.gsub!(/\/$/, '')
+      # remove the page file extension
       sanitized_path.gsub!(/\.#{Rwiki.configuration.page_file_extension}$/, '')
+      # remove the rwiki path
+      sanitized_path.sub!(Rwiki.configuration.rwiki_path, '') if path.start_with?(Rwiki.configuration.rwiki_path)
 
       sanitized_path
     end
