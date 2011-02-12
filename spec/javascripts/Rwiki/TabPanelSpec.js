@@ -14,7 +14,7 @@ describe("Rwiki.TabPanel", function() {
     $('#jasmine_content').empty();
   });
 
-  describe(":findTabsByParentPath method", function() {
+  describe(":findTabsByParentPath", function() {
     beforeEach(function() {
       var pages = [
         './foo/bar/test.txt',

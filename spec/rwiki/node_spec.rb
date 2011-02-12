@@ -4,7 +4,7 @@ describe Rwiki::Node do
 
   subject { Rwiki::Node.new('Development/Programming Languages/Ruby') }
 
-  describe ".tree method" do
+  describe ".tree" do
     subject { Rwiki::Node }
     let(:result) { subject.tree }
 
@@ -17,7 +17,7 @@ describe Rwiki::Node do
     end
   end
 
-  describe "#initialize method" do
+  describe "#initialize" do
     context "for existing path" do
       it "should not raise an exception" do
         lambda { Rwiki::Node.new('Development/Programming Languages/Ruby') }.should_not raise_error

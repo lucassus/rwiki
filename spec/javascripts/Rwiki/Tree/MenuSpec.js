@@ -5,7 +5,7 @@ describe("Rwiki.Tree.Menu", function() {
     menu = new Rwiki.Tree.Menu();
   });
 
-  describe(":show method", function() {
+  describe(":show", function() {
     var node = {};
     var xy = {};
 

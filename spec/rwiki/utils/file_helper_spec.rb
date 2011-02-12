@@ -28,7 +28,7 @@ describe Rwiki::Utils::FileHelper do
     end
   end
 
-  describe "#delete method" do
+  describe "#delete" do
     it "should remove page file" do
       full_file_path = subject.full_file_path
       subject.delete
@@ -46,12 +46,12 @@ describe Rwiki::Utils::FileHelper do
 
   context do
     subject { Rwiki::Utils::FileHelper.new('About') }
-    
+
     its(:read_file_content) { should be_instance_of(String) }
     its(:read_file_content) { should == "h1. This is a sample page, zażółć gęsią jaźń" }
   end
 
-  describe ".sanitize_path method" do
+  describe ".sanitize_path" do
     context "for path with trailing slashes" do
       let(:result) { Rwiki::Utils::FileHelper.sanitize_path('/Development/Programming Languages/JavaScript/') }
       it "should strip the slashes" do
