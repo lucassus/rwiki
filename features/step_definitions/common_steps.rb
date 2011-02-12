@@ -44,7 +44,7 @@ end
 Then /^I should see generated content for the node with path "([^"]*)"$/ do |path|
   require 'lorax'
 
-  wiki_page_html = Rwiki::Models::Page.new(path).to_html
+  wiki_page_html = Rwiki::Node.new(path).html_content
   wiki_page_html = "<div>#{wiki_page_html}</div>"
   page_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
   page_html = "<div>#{page_html}</div>"

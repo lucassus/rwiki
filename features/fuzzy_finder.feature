@@ -12,5 +12,5 @@ Feature: Tree Panel
 
     Then I should have the following open tabs:
       | home |
-    And I should see page title "Rwiki ./test.txt"
-    And I should see generated content for the node with path "./test.txt"
+    And I should see page title "Rwiki /Home/About"
+    And I should see generated content for the node with path "/Home/About"

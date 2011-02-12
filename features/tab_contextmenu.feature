@@ -10,18 +10,18 @@ Feature: Tab Panel
     Then I should have no open tabs
 
   Examples:
-    | path                        |
-    | ./home.txt                  |
-    | ./test.txt                  |
-    | ./folder/test 1.txt         |
-    | ./folder/test 2.txt         |
-    | ./folder/test.txt           |
-    | ./folder/subfolder/ruby.txt |
+    | path                                         |
+    | /Home                                        |
+    | /Home/About                                  |
+    | /Home/Personal stuff/Notes                   |
+    | /Home/Development/Programming Languages      |
+    | /Home/Personal stuff/Addresses               |
+    | /Home/Development/Programming Languages/Ruby |
 
   Scenario Outline: Close other tabs
-    When I open the page for the tree node with path "./home.txt"
-    When I open the page for the tree node with path "./folder/subfolder/ruby.txt"
-    And I open the page for the tree node with path "./test.txt"
+    When I open the page for the tree node with path "/Home"
+    When I open the page for the tree node with path "/Home/Development/Programming Languages/Ruby"
+    And I open the page for the tree node with path "/Home/About"
     And I right click the tab with path "<path>"
     And I follow "Close Other Tabs"
 
@@ -30,15 +30,15 @@ Feature: Tab Panel
     And I should see active tab titled "<title>"
 
   Examples:
-    | path                        | title |
-    | ./home.txt                  | home  |
-    | ./folder/subfolder/ruby.txt | ruby  |
-    | ./test.txt                  | test  |
+    | path                                         | title |
+    | /Home                                        | Home  |
+    | /Home/Development/Programming Languages/Ruby | Ruby  |
+    | /Home/About                                  | About |
 
   Scenario: Close all tabs
-    When I open the page for the tree node with path "./home.txt"
-    When I open the page for the tree node with path "./folder/subfolder/ruby.txt"
-    And I open the page for the tree node with path "./test.txt"
-    And I right click the tab with path "./test.txt"
+    When I open the page for the tree node with path "/Home"
+    When I open the page for the tree node with path "/Home/Development/Programming Languages/Ruby"
+    And I open the page for the tree node with path "/Home/About"
+    And I right click the tab with path "/Home/About"
     And I follow "Close All Tabs"
     Then I should have no open tabs

@@ -9,23 +9,23 @@ Feature: Display the page
     And I should see generated content for the node with path "<path>"
 
   Examples:
-    | path                        | title  |
-    | ./home.txt                  | home   |
-    | ./test.txt                  | test   |
-    | ./folder/test.txt           | test   |
-    | ./folder/test 1.txt         | test 1 |
-    | ./folder/test 2.txt         | test 2 |
-    | ./folder/subfolder/ruby.txt | ruby   |
+    | path                                         | title                 |
+    | /Home                                        | Home                  |
+    | /Home/About                                  | About                 |
+    | /Home/Personal stuff/Addresses               | Addresses             |
+    | /Home/Personal stuff/Notes                   | Notes                 |
+    | /Home/Development/Programming Languages      | Programming Languages |
+    | /Home/Development/Programming Languages/Ruby | Ruby                  |
 
   Scenario: Display the several pages
-    When I open the page for the tree node with path "./home.txt"
-    And I open the page for the tree node with path "./folder/test.txt"
-    And I open the page for the tree node with path "./folder/subfolder/ruby.txt"
+    When I open the page for the tree node with path "/Home"
+    And I open the page for the tree node with path "/Home/Personal stuff/Addresses"
+    And I open the page for the tree node with path "/Home/Development/Programming Languages/Ruby"
 
     Then I should have the following open tabs:
-      | home |
-      | test |
-      | ruby |
+      | Home      |
+      | Addresses |
+      | Ruby      |
     Then I should see active tab titled "ruby"
-    And I should see page title "Rwiki ./folder/subfolder/ruby.txt"
-    And I should see generated content for the node with path "./folder/subfolder/ruby.txt"
+    And I should see page title "Rwiki /Home/Development/Programming Languages/Ruby"
+    And I should see generated content for the node with path "/Home/Development/Programming Languages/Ruby"

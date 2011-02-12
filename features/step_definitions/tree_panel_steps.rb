@@ -8,7 +8,11 @@ Transform /^the node with path "([^"]*)"$/ do |path|
 end
 
 When /^I expand the parent for the node with path "([^"]*)"$/ do |path|
-  parts = path.split('/')[0..-2]
+  # TODO Here be dragons, refactor this part of the code
+  path.gsub!(/^\//, '')
+  parts = path.split('/')
+  parts[0] = "/" + parts[0]
+
   parts.each_index do |i|
     partial_path = parts[0..i].join('/')
     

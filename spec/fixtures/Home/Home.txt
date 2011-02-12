@@ -1,7 +1,0 @@
-h1. Sample page
-
-Lorem ipsum..
-
-h2. Sample section
-
-"(internal-link)Ruby notes":./folder/subfolder/ruby.txt

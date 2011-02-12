@@ -37,8 +37,6 @@ World do
   end
 
   After do |scenario|
-    remove_tmpdir!
-
     if scenario.failed?
       screenshots_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'reports', 'screenshots'))
       FileUtils.mkdir_p(screenshots_dir) unless Dir.exists?(screenshots_dir)
