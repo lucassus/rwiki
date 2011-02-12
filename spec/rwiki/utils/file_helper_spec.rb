@@ -23,24 +23,54 @@ describe Rwiki::Utils::FileHelper do
     end
 
     it "should return a new page full path" do
-      result = subject.create_subpage('Foo')
+      result = subject.create_subpage('Foo.txt')
       result.should == File.join(subject.full_path, 'Foo.txt')
     end
   end
 
   describe "#delete" do
-    it "should remove page file" do
-      full_file_path = subject.full_file_path
-      subject.delete
+    before { subject.delete }
 
-      File.exists?(full_file_path).should be_false
+    it "should remove page file" do
+      File.exists?(subject.full_file_path).should be_false
     end
 
     it "should remove subpages" do
-      full_path = subject.full_path
-      subject.delete
+      Dir.exist?(subject.full_file_path).should be_false
+    end
+  end
 
-      Dir.exist?(full_path).should be_false
+  describe "#rename" do
+    describe "to the non-existing new name" do
+      before { @result = subject.rename('Languages') }
+
+      it "should return true" do
+        @result.should be_true
+      end
+
+      it "should set the new path" do
+        subject.path.should == 'Development/Languages'
+      end
+
+      it "should rename the file and the corresponding directory" do
+        File.exists?('/tmp/rwiki_test/pages/Development/Programming Languages.txt').should be_false
+        Dir.exists?('/tmp/rwiki_test/pages/Development/Programming Languages').should be_false
+
+        File.exists?('/tmp/rwiki_test/pages/Development/Languages.txt').should be_true
+        Dir.exists?('/tmp/rwiki_test/pages/Development/Languages').should be_true
+      end
+    end
+
+    describe "to the existing new name" do
+      before { @result = subject.rename('Databases') }
+
+      it "should return false" do
+        @result.should be_false
+      end
+
+      it "should not change the path" do
+        subject.path.should == 'Development/Programming Languages'
+      end
     end
   end
 

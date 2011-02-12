@@ -33,7 +33,7 @@ module Rwiki::Utils
 
     def create_subpage(name)
       new_file_full_path = File.join(full_path, name)
-      new_file_full_path += '.txt' unless name.end_with?('.txt')
+      new_file_full_path += '.txt' unless name.end_with?(".#{Rwiki.configuration.page_file_extension}")
 
       FileUtils.mkdir_p(full_path) unless Dir.exists?(full_path)
       File.open(new_file_full_path, 'w') { |f| f.write("h1. #{name}\n\n") }
@@ -43,6 +43,21 @@ module Rwiki::Utils
     def delete
       FileUtils.rm_rf(full_path)
       FileUtils.rm_rf("#{full_path}.txt")
+    end
+
+    def rename(new_name)
+      new_name.gsub!(/\.#{Rwiki.configuration.page_file_extension}$/, '')
+      new_full_path = File.join(full_parent_path, new_name)
+
+      unless File.exists?(new_full_path)
+        FileUtils.mv(full_path, new_full_path)
+        FileUtils.mv(full_file_path, "#{new_full_path}.#{Rwiki.configuration.page_file_extension}")
+
+        @path = self.class.sanitize_path(new_full_path)
+        true
+      else
+        false
+      end
     end
 
     def self.sanitize_path(path)
