@@ -12,6 +12,7 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
+require "cucumber/rake/task"
 require "rspec/core/rake_task"
 require "rspec/core/version"
 require 'rwiki'
@@ -25,10 +26,12 @@ RSpec::Core::RakeTask.new(:spec) do |t|
   t.verbose = false
 end
 
+Cucumber::Rake::Task.new(:cucumber)
+
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   gem.name        = "rwiki"
-  gem.license     = "MIT"
+  gem.license     = "GPLv3"
   gem.summary     = %Q{Yet another personal wiki}
   gem.description = %Q{Personal wiki based on ExtJS}
   gem.email       = "lucassus@gmail.com"
@@ -40,8 +43,5 @@ Jeweler::RubygemsDotOrgTasks.new
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:features)
 
-begin
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
-rescue cant_load_jasmine
-end
+require 'jasmine'
+load 'jasmine/tasks/jasmine.rake'
