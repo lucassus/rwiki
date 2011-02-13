@@ -44,11 +44,11 @@ end
 Then /^I should see generated content for the node with path "([^"]*)"$/ do |path|
   require 'lorax'
 
-  wiki_page_html = Rwiki::Node.new(path).html_content
-  wiki_page_html = "<div>#{wiki_page_html}</div>"
-  page_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
-  page_html = "<div>#{page_html}</div>"
+  expected_html = Rwiki::Node.new(path).html_content
+  expected_html = "<div>#{expected_html}</div>"
+  actual_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
+  actual_html = "<div>#{actual_html}</div>"
 
-  result = Lorax.diff(wiki_page_html, page_html)
+  result = Lorax.diff(expected_html, actual_html)
   result.deltas.should be_empty
 end

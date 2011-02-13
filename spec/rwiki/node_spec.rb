@@ -27,7 +27,7 @@ describe Rwiki::Node do
       end
 
       it "result should contain three items" do
-        result.size.should == 4
+        result.size.should == 3
       end
     end
   end

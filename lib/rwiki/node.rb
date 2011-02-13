@@ -68,7 +68,7 @@ module Rwiki
     end
 
     def html_content
-      @html_content ||= RedCloth.new(file_content).to_html
+      @html_content ||= TextileHelper.new(file_content).parse
     end
 
     def to_tree_node_hash
