@@ -53,11 +53,10 @@ module Rwiki
       path = params[:path].strip
       raw_content = params[:rawContent].force_encoding("UTF-8")
 
-      page = Node.new(path)
-      page.raw_content = raw_content
-      page.save
+      node = Node.new(path)
+      node.update_file_content(raw_content)
 
-      page.to_json
+      node.to_json
     end
 
     # create a new node

@@ -1,1 +1,1 @@
-h1. This is Rwiki's Home Page
+h1. This is Rwiki Home Page

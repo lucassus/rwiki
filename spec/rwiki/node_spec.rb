@@ -125,4 +125,16 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#update_file_content" do
+    before { subject.update_file_content("h1. The new content") }
+
+    it "should update the file content" do
+      subject.file_content.should == "h1. The new content"
+    end
+
+    it "should update the html content" do
+      subject.html_content.should == "<h1>The new content</h1>"
+    end
+  end
+
 end

@@ -35,6 +35,10 @@ module Rwiki::Utils
       File.open(full_file_path, 'r:UTF-8') { |f| f.read }
     end
 
+    def update_file_content(content)
+      File.open(full_file_path, 'w:UTF-8') { |f| f.write(content) }
+    end
+
     def add_page(name)
       new_file_full_path = File.join(full_path, name)
       new_file_full_path += '.txt' unless name.end_with?(".#{Rwiki.configuration.page_file_extension}")

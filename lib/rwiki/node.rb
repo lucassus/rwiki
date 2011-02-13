@@ -71,6 +71,11 @@ module Rwiki
       @html_content ||= TextileHelper.new(file_content).parse
     end
 
+    def update_file_content(file_content)
+      @file_helper.update_file_content(file_content)
+      reload!
+    end
+
     def to_tree_node_hash
       {
         :text => title,
@@ -107,6 +112,14 @@ module Rwiki
       end
 
       children
+    end
+
+    def reload!
+      @parent = nil
+      @children = nil
+      
+      @file_content = nil
+      @html_content = nil
     end
 
   end

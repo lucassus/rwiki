@@ -31,6 +31,13 @@ describe Rwiki::Utils::FileHelper do
     end
   end
 
+  describe "#update_content" do
+    it "should update the file content" do
+      subject.update_file_content("h1. The new content, zażółć gęsią jaźń")
+      subject.read_file_content.should == "h1. The new content, zażółć gęsią jaźń"
+    end
+  end
+
   describe "#delete" do
     before { subject.delete }
 

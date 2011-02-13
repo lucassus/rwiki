@@ -41,5 +41,5 @@ Feature: Editing a page
 
     When I fill in "editor" with "h1. A new page header"
     And I press "Cancel"
-    Then I should see "Sample page" within "h1"
+    Then I should see "This is Rwiki Home Page" within "h1"
     And I should see generated content for the node with path "/Home"

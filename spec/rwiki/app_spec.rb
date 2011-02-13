@@ -42,4 +42,12 @@ describe Rwiki::App do
     end
   end
 
+  describe 'on PUT to /node' do
+    before { put '/node', :path => '/Home/Development', :rawContent => 'h1. The new page content' }
+
+    it 'should respond with success' do
+      last_response.should be_ok
+    end
+  end
+
 end
