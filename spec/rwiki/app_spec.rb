@@ -50,4 +50,12 @@ describe Rwiki::App do
     end
   end
 
+  describe 'on DELETE to /node' do
+    before { delete '/node', :path => '/Home/Development' }
+
+    it 'should respond with success' do
+      last_response.should be_ok
+    end
+  end
+
 end

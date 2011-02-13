@@ -76,6 +76,10 @@ module Rwiki
       reload!
     end
 
+    def delete
+      @file_helper.delete
+    end
+
     def to_tree_node_hash
       {
         :text => title,

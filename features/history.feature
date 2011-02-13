@@ -7,9 +7,9 @@ Feature: History
     When I open the application for page with path "/Home"
 
     Then I should have the following open tabs:
-      | home |
+      | Home |
     And the node with path "/Home" should be selected
-    Then I should see "Sample page" within "h1"
+    Then I should see "This is Rwiki Home Page" within "h1"
     And I should see generated content for the node with path "/Home"
 
   Scenario Outline: After reload the application last opened page should be loaded
@@ -34,26 +34,26 @@ Feature: History
     When I open the page for the tree node with path "/Home/Personal stuff/Addresses"
     And I open the page for the tree node with path "/Home/About"
     And I open the page for the tree node with path "/Home"
-    Then I should see active tab titled "home"
+    Then I should see active tab titled "Home"
 
     And I press the browser back button
     Then the node with path "/Home/About" should be selected
     And I should see generated content for the node with path "/Home/About"
-    And I should see active tab titled "test"
+    And I should see active tab titled "About"
 
     When I press the browser back button
     Then the node with path "/Home/Personal stuff/Addresses" should be selected
     And I should see generated content for the node with path "/Home/Personal stuff/Addresses"
-    And I should see active tab titled "test"
+    And I should see active tab titled "Addresses"
 
     When I press the browser forward button
     Then the node with path "/Home/About" should be selected
     And I should see generated content for the node with path "/Home/About"
-    And I should see active tab titled "test"
+    And I should see active tab titled "About"
 
-    When I create a new page titled "A new page" for the node with path "./Info"
+    When I create a new page titled "A new page" for the node with path "/Home"
     And I press the browser back button
     And I press the browser forward button
-    Then the node with path "./Info/A new page.txt" should be selected
-    And I should see generated content for the node with path "./Info/A new page.txt"
+    Then the node with path "/Home/A new page" should be selected
+    And I should see generated content for the node with path "/Home/A new page"
     And I should see active tab titled "A new page"

@@ -137,4 +137,11 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#delete" do
+    it "should delete the node" do
+      subject.file_helper.expects(:delete)
+      subject.delete
+    end
+  end
+
 end

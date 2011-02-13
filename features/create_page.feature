@@ -16,12 +16,12 @@ Feature: Create page
     And I expand the node with path "/Home/Personal stuff"
     Then I should see the node titled "The new page"
 
-    When I click the node with path "/Home/Personal stuff/The new page.txt"
+    When I click the node with path "/Home/Personal stuff/The new page"
     Then I should have the following open tabs:
       | The new page |
-    And I should see page title "Rwiki /Home/Personal stuff/The new page.txt"
+    And I should see page title "Rwiki /Home/Personal stuff/The new page"
     And I should see "The new page" within "h1"
-    And I should see generated content for the node with path "/Home/Personal stuff/The new page.txt"
+    And I should see generated content for the node with path "/Home/Personal stuff/The new page"
 
   Scenario: Create an existing page
     When I right click the node with path "/Home/Personal stuff"

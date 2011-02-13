@@ -102,7 +102,7 @@ module Rwiki
     # delete the node
     delete '/node' do
       path = params[:path].strip
-      node = Node.new_from_path(path)
+      node = Node.new(path)
       node.delete
 
       { :path => node.path }.to_json
