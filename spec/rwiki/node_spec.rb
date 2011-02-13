@@ -137,6 +137,15 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#move" do
+    it "should move the node" do
+      new_parent = Node.new('/Home/About')
+      subject.file_helper.expects(:move).with('/Home/About')
+
+      subject.move_to(new_parent)
+    end
+  end
+
   describe "#delete" do
     it "should delete the node" do
       subject.file_helper.expects(:delete)

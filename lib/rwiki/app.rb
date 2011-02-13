@@ -94,7 +94,7 @@ module Rwiki
 
       result = node.to_hash
       result[:oldPath] = path
-      result[:success] = node.move(new_parent)
+      result[:success] = node.move_to(new_parent)
 
       result.to_json
     end

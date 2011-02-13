@@ -76,7 +76,7 @@ module Rwiki::Utils
       if File.exists?(new_parent_file_full_path)
         FileUtils.mkdir(new_parent_full_path) unless Dir.exists?(new_parent_full_path)
 
-        FileUtils.mv(full_path, new_parent_full_path)
+        FileUtils.mv(full_path, new_parent_full_path) if Dir.exists?(full_path)
         FileUtils.mv(full_file_path, new_parent_full_path)
 
         @path = File.join(new_parent_path, basename)

@@ -50,6 +50,14 @@ describe Rwiki::App do
     end
   end
 
+  describe 'on PUT to /node/move' do
+    before { put '/node/move', :newParentPath => '/Home/Personal stuff', :path => '/Home/Development' }
+
+    it 'should respond with success' do
+      last_response.should be_ok
+    end
+  end
+
   describe 'on DELETE to /node' do
     before { delete '/node', :path => '/Home/Development' }
 

@@ -50,6 +50,7 @@ Rwiki.init = function() {
     Rwiki.treePanel.openNodeFromLocationHash();
   });
 
+  // Initialize the internal links
   $('a.internal-link').live('click', function() {
     var path = $(this).attr('href');
     var node = Rwiki.treePanel.findNodeByPath(path);

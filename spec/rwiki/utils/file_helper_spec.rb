@@ -85,6 +85,9 @@ describe Rwiki::Utils::FileHelper do
   end
 
   describe "#move" do
+    it "should not move child directory if it does not exist"
+    it "should delete child directory if last child was moved"
+
     describe "to the valid new parent directory" do
       before { @result = subject.move('/Home/Personal stuff') }
 

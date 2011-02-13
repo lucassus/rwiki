@@ -76,6 +76,10 @@ module Rwiki
       reload!
     end
 
+    def move_to(node)
+      @file_helper.move(node.path)
+    end
+
     def delete
       @file_helper.delete
     end
