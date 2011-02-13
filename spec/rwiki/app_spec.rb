@@ -8,62 +8,47 @@ describe Rwiki::App do
     Rwiki::App
   end
 
-  describe 'on GET to /' do
-    before { get '/' }
-
+  def self.it_should_respond_with_success
     it 'should respond with success' do
       last_response.should be_ok
     end
   end
 
+  describe 'on GET to /' do
+    before { get '/' }
+    it_should_respond_with_success
+  end
+
   describe 'on GET to /nodes' do
     before { get '/nodes', :path => '.' }
-
-    it 'should respond with success' do
-      last_response.should be_ok
-    end
+    it_should_respond_with_success
   end
 
   describe 'on GET to /node' do
     context 'for non-existing page' do
       before { get '/node', :path => 'Non-existing' }
-
-      it 'should respond with error' do
-        last_response.should be_ok
-      end
+      it_should_respond_with_success
     end
 
     context 'for existing page' do
       before { get '/node', :path => '/Home/Development/Programming Languages/Ruby' }
-
-      it 'should respond with success' do
-        last_response.should be_ok
-      end
+      it_should_respond_with_success
     end
   end
 
   describe 'on PUT to /node' do
     before { put '/node', :path => '/Home/Development', :rawContent => 'h1. The new page content' }
-
-    it 'should respond with success' do
-      last_response.should be_ok
-    end
+    it_should_respond_with_success
   end
 
   describe 'on PUT to /node/move' do
     before { put '/node/move', :newParentPath => '/Home/Personal stuff', :path => '/Home/Development' }
-
-    it 'should respond with success' do
-      last_response.should be_ok
-    end
+    it_should_respond_with_success
   end
 
   describe 'on DELETE to /node' do
     before { delete '/node', :path => '/Home/Development' }
-
-    it 'should respond with success' do
-      last_response.should be_ok
-    end
+    it_should_respond_with_success
   end
 
 end
