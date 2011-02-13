@@ -1,13 +1,14 @@
 require 'rubygems' if RUBY_VERSION < "1.9"
 
 require 'ap'
-require 'coderay'
-require 'erb'
-require 'json/pure'
 require 'redcloth'
+require 'coderay'
+require 'json/pure'
+require 'fuzzy_file_finder'
+
 require 'sinatra'
 require 'sinatra/base'
-require 'fuzzy_file_finder'
+require 'erb'
 require 'smart_asset'
 
 module Rwiki

@@ -26,6 +26,6 @@ Feature: Display the page
       | Home      |
       | Addresses |
       | Ruby      |
-    Then I should see active tab titled "ruby"
+    Then I should see active tab titled "Ruby"
     And I should see page title "Rwiki /Home/Development/Programming Languages/Ruby"
     And I should see generated content for the node with path "/Home/Development/Programming Languages/Ruby"
