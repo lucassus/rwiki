@@ -1,4 +1,4 @@
-When /^I close tab for page "([^"]*)"$/ do |path|
+When /^I close a tab for node "([^"]*)"$/ do |path|
   tab_id = Capybara.current_session.evaluate_script <<-JS
     Rwiki.tabPanel.findTabByPagePath('#{path}').tabEl.id;
   JS
@@ -8,7 +8,7 @@ When /^I close tab for page "([^"]*)"$/ do |path|
   close_button.click rescue nil
 end
 
-When /^I click tab for page "([^"]*)"$/ do |path|
+When /^I click a tab for node "([^"]*)"$/ do |path|
   tab_id = Capybara.current_session.evaluate_script <<-JS
     Rwiki.tabPanel.findTabByPagePath('#{path}').tabEl.id;
   JS

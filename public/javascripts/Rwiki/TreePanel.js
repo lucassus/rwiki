@@ -22,8 +22,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       root: new Rwiki.Tree.Node({
         nodeType: 'async',
         text: Rwiki.rootFolderName,
-        draggable: false,
-        baseName: '.'
+        draggable: false
       }),
 
       tbar: toolbar

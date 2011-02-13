@@ -29,8 +29,8 @@ Feature: Tree Panel
   Scenario Outline: Move the node
     When I move the node with path "<path>" to "<new_parent_path>"
     And I reload the application
-    And I open the page for the tree node with path "<new_path>"
-    Then I should see generated content for the node with path "<new_path>"
+    And I open the node with path "<new_path>"
+    Then I should see a content for the node with path "<new_path>"
 
   Examples:
     | path                                         | new_parent_path      | new_path                         |

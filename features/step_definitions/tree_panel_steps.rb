@@ -28,15 +28,15 @@ When /^I expand (the node with path "(?:[^"]*)")$/ do |el_node_id|
   expand_node_icon.click if expand_node_icon
 end
 
-When /^I open the page for the tree node with path "([^"]*)"$/ do |path|
+When /^I open the node with path "([^"]*)"$/ do |path|
   When %{I expand the parent for the node with path "#{path}"}
   And %{I click the node with path "#{path}"}
   Then %{I should see the page "#{path}"}
 end
 
 Then /^I should see the page "([^"]*)"$/ do |path|
-  Then %{I should see generated content for the node with path "#{path}"}
-  And %{I should see page title "Rwiki #{path}"}
+  Then %{I should see a content for the node with path "#{path}"}
+  And %{I should see the application title "Rwiki #{path}"}
 
   And %{I should see enabled "Edit page" toolbar button}
   And %{I should see enabled "Print page" toolbar button}

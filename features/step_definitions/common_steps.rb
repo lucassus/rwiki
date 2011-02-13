@@ -19,7 +19,7 @@ When /^I reload the application$/ do
   JS
 end
 
-When /^I open the application for page with path "([^"]*)"$/ do |path|
+When /^I open the application for node with path "([^"]*)"$/ do |path|
   visit('/#' + path)
 end
 
@@ -27,11 +27,11 @@ Then /^I should see dialog box titled "([^"]*)"$/ do |title|
   %Q{Then I should see "#{title}" within "span.x-window-header-text"}
 end
 
-Then /^I should see page title "([^"]*)"$/ do |title|
+Then /^I should see the application title "([^"]*)"$/ do |title|
   find("title").text.should == title
 end
 
-When /^I create a new page titled "([^"]*)" for the node with path "([^"]*)"$/ do |title, path|
+When /^I create a new node titled "([^"]*)" for the node with path "([^"]*)"$/ do |title, path|
   When %{I right click the node with path "#{path}"}
   And %{I follow "Create page"}
   Then %{I should see dialog box titled "Create page"}
@@ -41,7 +41,7 @@ When /^I create a new page titled "([^"]*)" for the node with path "([^"]*)"$/ d
   Then %{I should see the node titled "#{title}"}
 end
 
-Then /^I should see generated content for the node with path "([^"]*)"$/ do |path|
+Then /^I should see a content for the node with path "([^"]*)"$/ do |path|
   require 'lorax'
 
   expected_html = Rwiki::Node.new(path).html_content

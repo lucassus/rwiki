@@ -4,7 +4,7 @@ Feature: Tab Panel
     Given I open the application
 
   Scenario Outline: Close tab
-    When I open the page for the tree node with path "<path>"
+    When I open the node with path "<path>"
     And I right click the tab with path "<path>"
     And I follow "Close Tab"
     Then I should have no open tabs
@@ -19,9 +19,9 @@ Feature: Tab Panel
     | /Home/Development/Programming Languages/Ruby |
 
   Scenario Outline: Close other tabs
-    When I open the page for the tree node with path "/Home"
-    When I open the page for the tree node with path "/Home/Development/Programming Languages/Ruby"
-    And I open the page for the tree node with path "/Home/About"
+    When I open the node with path "/Home"
+    When I open the node with path "/Home/Development/Programming Languages/Ruby"
+    And I open the node with path "/Home/About"
     And I right click the tab with path "<path>"
     And I follow "Close Other Tabs"
 
@@ -36,9 +36,9 @@ Feature: Tab Panel
     | /Home/About                                  | About |
 
   Scenario: Close all tabs
-    When I open the page for the tree node with path "/Home"
-    When I open the page for the tree node with path "/Home/Development/Programming Languages/Ruby"
-    And I open the page for the tree node with path "/Home/About"
+    When I open the node with path "/Home"
+    When I open the node with path "/Home/Development/Programming Languages/Ruby"
+    And I open the node with path "/Home/About"
     And I right click the tab with path "/Home/About"
     And I follow "Close All Tabs"
     Then I should have no open tabs

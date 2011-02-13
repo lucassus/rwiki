@@ -53,7 +53,7 @@ module Rwiki::Utils
       FileUtils.rm_rf("#{full_path}.txt")
     end
 
-    def rename(new_name)
+    def rename_to(new_name)
       new_name.gsub!(/\.#{Rwiki.configuration.page_file_extension}$/, '')
       new_full_path = File.join(full_parent_path, new_name)
 
@@ -68,7 +68,7 @@ module Rwiki::Utils
       end
     end
 
-    def move(new_parent_path)
+    def move_to(new_parent_path)
       new_parent_full_path = self.class.expand_node_path(new_parent_path)
       return false if new_parent_full_path == full_path
 

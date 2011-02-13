@@ -3,7 +3,7 @@ Feature: Tree Panel
   Background:
     Given I open the application
 
-  Scenario: Find a page
+  Scenario: Find a node
     Given this scenario is pending
 
     When I press "Find page"
@@ -12,5 +12,5 @@ Feature: Tree Panel
 
     Then I should have the following open tabs:
       | home |
-    And I should see page title "Rwiki /Home/About"
-    And I should see generated content for the node with path "/Home/About"
+    And I should see the application title "Rwiki /Home/About"
+    And I should see a content for the node with path "/Home/About"

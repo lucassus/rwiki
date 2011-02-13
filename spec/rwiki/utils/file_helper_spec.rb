@@ -52,7 +52,7 @@ describe Rwiki::Utils::FileHelper do
 
   describe "#rename" do
     describe "to the non-existing new name" do
-      before { @result = subject.rename('Languages') }
+      before { @result = subject.rename_to('Languages') }
 
       it "should return true" do
         @result.should be_true
@@ -72,7 +72,7 @@ describe Rwiki::Utils::FileHelper do
     end
 
     describe "to the existing new name" do
-      before { @result = subject.rename('Databases.txt') }
+      before { @result = subject.rename_to('Databases') }
 
       it "should return false" do
         @result.should be_false
@@ -84,73 +84,90 @@ describe Rwiki::Utils::FileHelper do
     end
   end
 
-  describe "#move" do
-    it "should not move child directory if it does not exist"
-    it "should delete child directory if last child was moved"
+  def self.it_should_return_true
+    it "should return true" do
+      result.should be_true
+    end
+  end
+
+  def self.it_should_return_false
+    it "should return false" do
+      result.should be_false
+    end
+  end
+
+  def self.it_should_move_node(old_path, new_path)
+    it "should move the file and corresponding directory" do
+      File.exists?(FileHelper.expand_node_file_path(old_path)).should be_false
+      Dir.exists?(FileHelper.expand_node_path(old_path)).should be_false
+    end
+
+    it "should move the file and corresponding directory to the new location" do
+      File.exists?(FileHelper.expand_node_file_path(new_path)).should be_true
+      Dir.exists?(FileHelper.expand_node_path(new_path)).should be_true
+    end
+  end
+
+  def self.it_should_move_the_child_nodes(old_path, new_path)
+    it "should move the child nodes" do
+      Dir.exists?(FileHelper.expand_node_path(old_path)).should be_false
+    end
+
+    it "should move the child nodes to the new location" do
+      Dir.exists?(FileHelper.expand_node_path(new_path)).should be_true
+    end
+  end
+
+  def self.it_should_set_the_new_path(expected_path)
+    it "should set the new path" do
+      subject.path.should == expected_path
+    end
+  end
+
+  # TODO cleanup this test scenario
+  describe "#move_to" do
+    it "should not move the child directory if it does not exist"
+    it "should delete the child directory if last child was moved"
+    it "should return false on move to the same node"
 
     describe "to the valid new parent directory" do
-      before { @result = subject.move('/Home/Personal stuff') }
+      before { @result = subject.move_to('/Home/Personal stuff') }
+      let(:result) { @result }
 
-      it "should return true" do
-        @result.should be_true
-      end
-
-      it "should set the new path" do
-        subject.path.should == '/Home/Personal stuff/Programming Languages'
-      end
-
-      it "should move the file and the corresponding directory" do
-        File.exists?(FileHelper.expand_node_file_path('/Home/Programming Languages')).should be_false
-        Dir.exists?(FileHelper.expand_node_path('/Home/Programming Languages')).should be_false
-
-        File.exists?(FileHelper.expand_node_file_path('/Home/Personal stuff/Programming Languages')).should be_true
-        Dir.exists?(FileHelper.expand_node_path('/Home/Personal stuff/Programming Languages')).should be_true
-      end
+      it_should_return_true
+      it_should_set_the_new_path('/Home/Personal stuff/Programming Languages')
+      it_should_move_node('/Home/Programming Languages', '/Home/Personal stuff/Programming Languages')
     end
 
     describe "to the valid new parent page" do
-      before { @result = subject.move('/Home/About') }
+      before { @result = subject.move_to('/Home/About') }
+      let(:result) { @result }
 
-      it "should return true" do
-        @result.should be_true
-      end
-
-      it "should set the new path" do
-        subject.path.should == '/Home/About/Programming Languages'
-      end
-
-      it "should move the file and the corresponding directory" do
-        File.exists?(FileHelper.expand_node_file_path('/Home/Development/Programming Languages')).should be_false
-        Dir.exists?(FileHelper.expand_node_path('/Home/Development/Programming Languages')).should be_false
-
-        File.exists?(FileHelper.expand_node_file_path('/Home/About')).should be_true
-        File.exists?(FileHelper.expand_node_file_path('/Home/About/Programming Languages')).should be_true
-        Dir.exists?(FileHelper.expand_node_path('/Home/About/Programming Languages')).should be_true
-      end
+      it_should_return_true
+      it_should_set_the_new_path('/Home/About/Programming Languages')
+      it_should_move_node('/Home/Development/Programming Languages', '/Home/About/Programming Languages')
+      it_should_move_the_child_nodes('/Home/Development/Programming Languages', '/Home/About/Programming Languages')
     end
 
     describe "to the non-existing parent" do
-      before { @result = subject.move('Non-Existing') }
+      before { @result = subject.move_to('Non-Existing') }
+      let(:result) { @result }
 
-      it "should return false" do
-        @result.should be_false
-      end
+      it_should_return_false
     end
 
     describe "to the invalid new parent" do
-      before { @result = subject.move('/Home/Programming Languages/Java') }
+      before { @result = subject.move_to('/Home/Programming Languages/Java') }
+      let(:result) { @result }
 
-      it "should return false" do
-        @result.should be_false
-      end
+      it_should_return_false
     end
 
     describe "to self" do
-      before { @result == subject.move('/Home/Programming Languages') }
+      before { @result == subject.move_to('/Home/Programming Languages') }
+      let(:result) { @result }
 
-      it "should return false" do
-        @result.should be_false
-      end
+      it_should_return_false
     end
   end
 

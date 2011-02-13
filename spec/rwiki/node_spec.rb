@@ -137,10 +137,10 @@ describe Rwiki::Node do
     end
   end
 
-  describe "#move" do
+  describe "#move_to" do
     it "should move the node" do
       new_parent = Node.new('/Home/About')
-      subject.file_helper.expects(:move).with('/Home/About')
+      subject.file_helper.expects(:move_to).with('/Home/About')
 
       subject.move_to(new_parent)
     end
