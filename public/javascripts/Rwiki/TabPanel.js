@@ -52,16 +52,16 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     this.on('rwiki:pageLoaded', this.onPageLoaded);
     this.on('rwiki:lastPageClosed', this.onLastPageClosed);
     this.on('rwiki:pageSaved', this.onPageSaved);
-    this.on('rwiki:nodeRenamed', this.onNodeRenamed);
-    this.on('rwiki:nodeDeleted', this.onNodeDeleted);
+    this.on('rwiki:pageRenamed', this.onNodeRenamed);
+    this.on('rwiki:pageDeleted', this.onNodeDeleted);
 
-    this.relayEvents(Rwiki.Data.NodeManager.getInstance(), [
+    this.relayEvents(Rwiki.Data.PageManager.getInstance(), [
       'rwiki:pageLoaded',
       'rwiki:pageCreated',
       'rwiki:lastPageClosed',
       'rwiki:pageSaved',
-      'rwiki:nodeRenamed',
-      'rwiki:nodeDeleted']);
+      'rwiki:pageRenamed',
+      'rwiki:pageDeleted']);
   },
 
   findOrCreatePageTab: function(page) {
@@ -94,7 +94,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   findTabsByParentPath: function(parentPath) {
     return this.findBy(function() {
       var path = this.getPagePath();
-      return Rwiki.Data.NodeManager.getInstance().isParent(parentPath, path);
+      return Rwiki.Data.PageManager.getInstance().isParent(parentPath, path);
     });
   },
 
@@ -111,11 +111,11 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
       Ext.History.add(tab.getPagePath());
       document.title = 'Rwiki ' + tab.getPagePath();
-      Rwiki.Data.NodeManager.getInstance().loadPage(tab.getPagePath());
+      Rwiki.Data.PageManager.getInstance().loadPage(tab.getPagePath());
       tab.setIsLoading(true);
     } else {
       document.title = 'Rwiki';
-      Rwiki.Data.NodeManager.getInstance().fireEvent('rwiki:lastPageClosed');
+      Rwiki.Data.PageManager.getInstance().fireEvent('rwiki:lastPageClosed');
     }
   },
 

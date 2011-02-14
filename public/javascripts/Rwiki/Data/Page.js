@@ -4,11 +4,11 @@ Ext.ns('Rwiki.Data');
  * Transfer object used in Rwiki events handlers
  * @param data
  */
-Rwiki.Data.Node = function(data) {
+Rwiki.Data.Page = function(data) {
   this._data = data;
 };
 
-Rwiki.Data.Node.prototype = {
+Rwiki.Data.Page.prototype = {
 
   /**
    * Returns data binded by ajax event handler 

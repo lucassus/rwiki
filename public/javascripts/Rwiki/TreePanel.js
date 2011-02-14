@@ -45,15 +45,15 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     this.on('rwiki:pageLoaded', this.onPageLoaded);
     this.on('rwiki:pageCreated', this.onPageCreated);
-    this.on('rwiki:nodeRenamed', this.onNodeRenamed);
-    this.on('rwiki:nodeDeleted', this.onNodeDeleted);
+    this.on('rwiki:pageRenamed', this.onNodeRenamed);
+    this.on('rwiki:pageDeleted', this.onNodeDeleted);
     this.on('beforemovenode', this.onBeforeMoveNode);
 
-    this.relayEvents(Rwiki.Data.NodeManager.getInstance(), [
+    this.relayEvents(Rwiki.Data.PageManager.getInstance(), [
       'rwiki:pageLoaded',
       'rwiki:pageCreated',
-      'rwiki:nodeRenamed',
-      'rwiki:nodeDeleted']);
+      'rwiki:pageRenamed',
+      'rwiki:pageDeleted']);
   },
 
   onContextMenu: function(node, e) {
@@ -67,7 +67,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onClick: function(node) {
-    var page = new Rwiki.Data.Node({ path: node.getPath() });
+    var page = new Rwiki.Data.Page({ path: node.getPath() });
     this.fireEvent('rwiki:pageSelected', page);
   },
 
@@ -108,16 +108,16 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     var path = node.getPath();
     var newParentPath = newParent.getPath();
 
-    var result = Rwiki.Data.NodeManager.getInstance().moveNode(path, newParentPath);
+    var result = Rwiki.Data.PageManager.getInstance().moveNode(path, newParentPath);
 
     return result.success;
   },
 
   findNodeByPath: function(path) {
     var node = null;
-    this.root.cascadeAll(function(curretNode) {
-      if (curretNode.getPath() == path) {
-        node = curretNode;
+    this.root.cascadeAll(function(currentNode) {
+      if (currentNode.getPath() == path) {
+        node = currentNode;
         return false;
       }
     });

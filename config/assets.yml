@@ -10,14 +10,13 @@ javascripts:
     - vendor/markitup/jquery.markitup
 
   rwiki:
-    - Rwiki/Data/Node
-    - Rwiki/Data/NodeManager
+    - Rwiki/Data/Page
+    - Rwiki/Data/PageManager
     - Rwiki/Editor/EditorPanel
     - Rwiki/Tabs/PageTab
     - Rwiki/Tree/Loader
     - Rwiki/Tree/Menu
     - Rwiki/Tree/Node
-    - Rwiki/Tree/Toolbar
     - Rwiki/EditorWindow
     - Rwiki/FuzzyFinderWindow
     - Rwiki/NavigationPanel

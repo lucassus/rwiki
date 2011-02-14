@@ -32,9 +32,8 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
     this.node = node;
     node.select();
 
-    var isRoot = node.isRoot;
-    this.setItemDisabled('delete-node', isRoot);
-    this.setItemDisabled('rename-node', isRoot);
+    this.setItemDisabled('delete-node', node.isRoot);
+    this.setItemDisabled('rename-node', node.isRoot);
 
     this.showAt(xy);
   },
@@ -82,8 +81,6 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
 
   setItemDisabled: function(id, disabled) {
     var item = this.findById(id);
-    if (item == null) return;
-
     item.setDisabled(disabled);
   }
 });

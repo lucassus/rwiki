@@ -26,7 +26,7 @@ Rwiki.init = function() {
   Rwiki.treeLoaded = false;
 
   Rwiki.treePanel = new Rwiki.TreePanel();
-  Rwiki.nodeManager = Rwiki.Data.NodeManager.getInstance();
+  Rwiki.nodeManager = Rwiki.Data.PageManager.getInstance();
   Rwiki.captureEvents(Rwiki.nodeManager);
 
   Rwiki.nodeManager.on('rwiki:beforePageLoad', function() {
