@@ -21,8 +21,7 @@ Rwiki.Tree.Toolbar = Ext.extend(Ext.Toolbar, {
 
     Ext.apply(this, {
       items: [
-      filterField,
-      {
+      filterField, {
         iconCls: 'icon-expand-all',
         tooltip: 'Expand All',
         handler: function() {

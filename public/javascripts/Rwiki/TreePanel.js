@@ -2,7 +2,7 @@ Ext.ns('Rwiki');
 
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function() {
-    var toolbar = new Rwiki.Tree.Toolbar();
+    this.toolbar = new Rwiki.Tree.Toolbar();
 
     Ext.apply(this, {
       id: 'tree',
@@ -25,7 +25,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         draggable: false
       }),
 
-      tbar: toolbar
+      tbar: this.toolbar
     });
 
     Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
@@ -40,21 +40,25 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       folderSort: true
     });
 
+    this.initToolbarEvents();
+
+    this.addEvents('rwiki:pageSelected');
+  },
+
+  initToolbarEvents: function() {
     var self = this;
 
-    toolbar.on('expandAll', function() {
+    this.toolbar.on('expandAll', function() {
       self.root.expandChildNodes(true);
     });
 
-    toolbar.on('collapseAll', function() {
+    this.toolbar.on('collapseAll', function() {
       self.root.collapseChildNodes(true);
     });
 
-    toolbar.on('filterFieldChanged', function(text) {
+    this.toolbar.on('filterFieldChanged', function(text) {
       self.filter.filterTree(text);
     });
-
-    this.addEvents('rwiki:pageSelected');
   },
 
   initEvents: function() {
