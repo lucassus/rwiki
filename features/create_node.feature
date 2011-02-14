@@ -5,8 +5,8 @@ Feature: Create a node
 
   Scenario: Create a new node
     When I right click the node with path "/Home/Personal stuff"
-    And I follow "Create page"
-    Then I should see dialog box titled "Create page"
+    And I follow "Add page"
+    Then I should see dialog box titled "Add page"
 
     When I fill in the input with "The new page" within the dialog box
     And I press "OK" within the dialog box
@@ -25,8 +25,8 @@ Feature: Create a node
 
   Scenario: Create an existing node
     When I right click the node with path "/Home/Personal stuff"
-    And I follow "Create page"
-    Then I should see dialog box titled "Create page"
+    And I follow "Add page"
+    Then I should see dialog box titled "Add page"
 
     When I fill in the input with "test" within the dialog box
     And I press "OK" within the dialog box
@@ -38,16 +38,3 @@ Feature: Create a node
 
     When I click the node with path "/Home/Personal stuff/Addresses"
     Then I should see a content for the node with path "/Home/Personal stuff/Addresses"
-
-  Scenario: Create a folder
-    When I right click the node with path "/Home/Personal stuff"
-    And I follow "Create folder"
-    Then I should see dialog box titled "Create folder"
-
-    When I fill in the input with "The new folder" within the dialog box
-    And I press "OK" within the dialog box
-    Then I should see the node titled "The new folder"
-
-    When I reload the application
-    And I expand the node with path "/Home/Personal stuff"
-    Then I should see the node titled "The new folder"

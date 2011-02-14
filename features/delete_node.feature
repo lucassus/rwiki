@@ -5,7 +5,7 @@ Feature: Delete a node
 
   Scenario: Delete a node
     When I right click the node with path "/Home/Personal stuff"
-    And I follow "Delete node"
+    And I follow "Delete page"
     Then I should see dialog box titled "Confirm"
 
     When I press "Yes" within the dialog box
@@ -18,7 +18,7 @@ Feature: Delete a node
     When I open the node with path "/Home/Personal stuff"
     And I open the node with path "/Home/Development"
     And I right click the node with path "/Home/Development"
-    And I follow "Delete node"
+    And I follow "Delete page"
     Then I should see dialog box titled "Confirm"
 
     When I press "Yes" within the dialog box
@@ -27,7 +27,7 @@ Feature: Delete a node
     And I should see the application title "Rwiki /Home/Personal stuff"
 
     When I right click the node with path "/Home/Personal stuff"
-    And I follow "Delete node"
+    And I follow "Delete page"
     Then I should see dialog box titled "Confirm"
 
     When I press "Yes" within the dialog box

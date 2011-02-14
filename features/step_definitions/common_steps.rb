@@ -50,5 +50,8 @@ Then /^I should see a content for the node with path "([^"]*)"$/ do |path|
   actual_html = "<div>#{actual_html}</div>"
 
   result = Lorax.diff(expected_html, actual_html)
+  unless result.deltas.empty?
+    ap result.deltas
+  end
   result.deltas.should be_empty
 end

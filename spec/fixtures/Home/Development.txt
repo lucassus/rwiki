@@ -1,4 +1,3 @@
 h1. Development notes
 
-"(internal-link)Ruby notes":/Home/Development/Programming Languages/Ruby
 "(internal-link)MySQL notes":/Home/Development/Databases/MySQL
