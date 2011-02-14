@@ -4,18 +4,19 @@ module Rwiki
 
     class Error < StandardError; end 
 
-    attr_reader :path
     attr_reader :file_helper
 
     def initialize(path = Rwiki.configuration.root_page_name)
-      @path = FileHelper.sanitize_path(path)
-      @file_helper = FileHelper.new(@path)
-
+      @file_helper = FileHelper.new(path)
       raise Error.new("can't find the #{path} page") unless @file_helper.exists?
     end
 
     def is_root?
-      path == Rwiki.configuration.root_page_name
+      @file_helper.path == Rwiki.configuration.root_page_name
+    end
+
+    def path
+      @file_helper.path
     end
 
     def full_path
@@ -74,6 +75,10 @@ module Rwiki
     def update_file_content(file_content)
       @file_helper.update_file_content(file_content)
       reload!
+    end
+
+    def rename_to(new_name)
+      @file_helper.rename_to(new_name)
     end
 
     def move_to(node)

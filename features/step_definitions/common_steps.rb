@@ -33,8 +33,8 @@ end
 
 When /^I create a new node titled "([^"]*)" for the node with path "([^"]*)"$/ do |title, path|
   When %{I right click the node with path "#{path}"}
-  And %{I follow "Create page"}
-  Then %{I should see dialog box titled "Create page"}
+  And %{I follow "Add page"}
+  Then %{I should see dialog box titled "Add page"}
 
   When %{I fill in the input with "#{title}" within the dialog box}
   And %{I press "OK" within the dialog box}

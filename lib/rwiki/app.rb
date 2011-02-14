@@ -75,7 +75,7 @@ module Rwiki
       path = params[:path].strip
       new_name = params[:newName].strip
 
-      node = Node.new_from_path(path)
+      node = Node.new(path)
       node.rename_to(new_name)
 
       result = node.to_hash

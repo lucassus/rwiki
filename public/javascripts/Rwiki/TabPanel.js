@@ -149,6 +149,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     tab.setContent(page.getHtmlContent());
   },
 
+  // TODO cleanup this method
   onNodeRenamed: function(page) {
     var oldPath = page.getData().oldPath;
     var currentTab = this.getActiveTab();

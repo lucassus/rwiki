@@ -8,15 +8,15 @@ Feature: Rename a node
     And I follow "Rename page"
     Then I should see dialog box titled "Rename page"
 
-    When I fill in the input with "The New About" within the dialog box
+    When I fill in the input with "The new About" within the dialog box
     And I press "OK" within the dialog box
-    Then I should see the node titled "The new home"
+    Then I should see the node titled "The new About"
 
     When I reload the application
-    Then I should see the node titled "The new home"
+    Then I should see the node titled "The new About"
 
-    When I click the node with path "/Home/The New About"
-    And I should see a content for the node with path "./The new home.txt"
+    When I click the node with path "/Home/The new About"
+    And I should see a content for the node with path "/Home/The new About"
 
   Scenario: Rename a page to existing name
     When I right click the node with path "/Home/About"
@@ -36,23 +36,23 @@ Feature: Rename a node
     Then I should see a content for the node with path "/Home/About"
     And I should see the application title "Rwiki /Home/About"
     And I should have the following open tabs:
-      | Home |
-      | Test |
+      | Home  |
+      | About |
 
   Scenario: Rename a page when tab is open
     When I click the node with path "/Home/About"
     And I click the node with path "/Home"
     Then I should see the application title "Rwiki /Home"
 
-    And I right click the node with path "/Home"
+    And I right click the node with path "/Home/About"
     And I follow "Rename page"
     Then I should see dialog box titled "Rename page"
 
-    When I fill in the input with "The new home" within the dialog box
+    When I fill in the input with "The new About" within the dialog box
     And I press "OK" within the dialog box
-    Then I should see the node titled "The new home"
+    Then I should see the node titled "The new About"
     And I should have the following open tabs:
-      | test         |
-      | The new home |
-    And I should see the application title "Rwiki ./The new home.txt"
-    And I should see a content for the node with path "./The new home.txt"
+      | The new About |
+      | Home          |
+    And I should see the application title "Rwiki /Home/The new About"
+    And I should see a content for the node with path "/Home/The new About"

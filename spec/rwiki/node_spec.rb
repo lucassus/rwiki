@@ -137,6 +137,22 @@ describe Rwiki::Node do
     end
   end
 
+  describe "#rename_to" do
+    context 'when renaming is successful' do
+      it "should rename the node" do
+        subject.file_helper.expects(:rename_to).with('Lisp').returns(true)
+        subject.rename_to('Lisp')
+      end
+    end
+
+    context 'when renaming was fail' do
+      it "should not rename the node" do
+        subject.file_helper.expects(:rename_to).with('Stupid PHP').returns(false)
+        subject.rename_to('Stupid PHP')
+      end
+    end
+  end
+
   describe "#move_to" do
     it "should move the node" do
       new_parent = Node.new('/Home/About')

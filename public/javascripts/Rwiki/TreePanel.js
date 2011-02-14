@@ -94,7 +94,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
   onNodeRenamed: function(page) {
     var treeNode = this.findNodeByPath(page.getData().oldPath);
-    treeNode.setBaseName(page.getBaseName());
     treeNode.setText(page.getTitle());
   },
 

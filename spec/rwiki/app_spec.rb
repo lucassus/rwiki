@@ -41,6 +41,11 @@ describe Rwiki::App do
     it_should_respond_with_success
   end
 
+  describe 'on POST to /rename' do
+    before { post '/node/rename', :path => '/Home/Development', :newName => 'Nerd stuff' }
+    it_should_respond_with_success
+  end
+
   describe 'on PUT to /node/move' do
     before { put '/node/move', :newParentPath => '/Home/Personal stuff', :path => '/Home/Development' }
     it_should_respond_with_success

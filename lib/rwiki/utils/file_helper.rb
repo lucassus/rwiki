@@ -4,7 +4,7 @@ module Rwiki::Utils
     attr_reader :path
 
     def initialize(path)
-      @path = path
+      @path = self.class.sanitize_path(path)
     end
 
     def file_path
@@ -58,7 +58,7 @@ module Rwiki::Utils
       new_full_path = File.join(full_parent_path, new_name)
 
       unless File.exists?(new_full_path)
-        FileUtils.mv(full_path, new_full_path)
+        FileUtils.mv(full_path, new_full_path) if Dir.exists?(full_path)
         FileUtils.mv(full_file_path, "#{new_full_path}.#{Rwiki.configuration.page_file_extension}")
 
         @path = self.class.sanitize_path(new_full_path)

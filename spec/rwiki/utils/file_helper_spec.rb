@@ -51,6 +51,8 @@ describe Rwiki::Utils::FileHelper do
   end
 
   describe "#rename" do
+    it "should rename corresponding children directory"
+
     describe "to the non-existing new name" do
       before { @result = subject.rename_to('Languages') }
 
