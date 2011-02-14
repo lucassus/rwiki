@@ -57,9 +57,8 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     this.relayEvents(Rwiki.Data.NodeManager.getInstance(), [
       'rwiki:pageLoaded',
-      'rwiki:folderCreated',
-      'rwiki:lastPageClosed',
       'rwiki:pageCreated',
+      'rwiki:lastPageClosed',
       'rwiki:pageSaved',
       'rwiki:nodeRenamed',
       'rwiki:nodeDeleted']);

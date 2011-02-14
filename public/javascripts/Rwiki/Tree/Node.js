@@ -1,11 +1,15 @@
 Ext.ns('Rwiki.Tree');
 
-Rwiki.Tree.Node = Ext.extend(Ext.tree.AsyncTreeNode, {
+Rwiki.Tree.Node = function(config) {
+  Rwiki.Tree.Node.superclass.constructor.apply(this, arguments);
+};
+
+Ext.extend(Rwiki.Tree.Node, Ext.tree.AsyncTreeNode, {
   getPath: function() {
     return Rwiki.Tree.Node.superclass.getPath.call(this, 'text');
   },
 
-  expandAll: function() {
+  expandAllParents: function() {
     var nodes = [];
 
     this.bubble(function(n) {
@@ -18,6 +22,16 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.AsyncTreeNode, {
       var node = nodes[i];
       if (node.isExpandable()) {
         node.expand(false);
+      }
+    }
+  },
+
+  expandAll: function() {
+    if (this.isExpandable()) {
+      this.expand();
+      var cs = this.childNodes;
+      for (var i = 0, len = cs.length; i < len; i++) {
+        cs[i].expandAll();
       }
     }
   },

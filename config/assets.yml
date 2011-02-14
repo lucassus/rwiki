@@ -14,7 +14,6 @@ javascripts:
     - Rwiki/Data/NodeManager
     - Rwiki/Editor/EditorPanel
     - Rwiki/Tabs/PageTab
-    - Rwiki/Tree/Filter
     - Rwiki/Tree/Loader
     - Rwiki/Tree/Menu
     - Rwiki/Tree/Node

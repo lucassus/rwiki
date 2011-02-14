@@ -23,7 +23,7 @@ Rwiki.Tree.Filter = Ext.extend(Ext.tree.TreeFilter, {
       this.clear();
       return;
     }
-    this.tree.expandAll();
+    this.tree.root.expandAll();
 
     this.markCount  = [];
     this.hiddenNodes = [];

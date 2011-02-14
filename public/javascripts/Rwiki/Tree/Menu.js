@@ -5,25 +5,19 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
     Ext.apply(this, {
       id: 'feeds-ctx',
       items: [{
-        text: 'Create folder',
-        id: 'create-folder',
-        iconCls: 'icon-create-folder',
-        scope: this,
-        handler: this.onCreateFolder
-      }, {
-        text: 'Create page',
+        text: 'Add page',
         id: 'create-page',
         iconCls: 'icon-create-page',
         scope: this,
         handler: this.onCreatePage
       }, '-',  {
-        text: 'Rename node',
+        text: 'Rename page',
         id: 'rename-node',
         iconCls: 'icon-rename-node',
         scope: this,
         handler: this.onRenameNode
       }, {
-        text: 'Delete node',
+        text: 'Delete page',
         id: 'delete-node',
         iconCls: 'icon-delete-node',
         scope: this,
@@ -38,44 +32,29 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
     this.node = node;
     node.select();
 
-    var isRoot = node.id == Rwiki.rootFolderName;
+    var isRoot = node.isRoot;
     this.setItemDisabled('delete-node', isRoot);
     this.setItemDisabled('rename-node', isRoot);
-
-    var isPage = node.attributes.cls == 'page';
-    this.setItemDisabled('create-folder', isPage);
-    this.setItemDisabled('create-page', isPage);
 
     this.showAt(xy);
   },
 
-  onCreateFolder: function() {
-    var parentNode = this.node;
-    if (parentNode.cls == 'file') return;
-
-    Ext.MessageBox.prompt('Create folder', 'New folder name:', function(button, name) {
-      if (button != 'ok') return;
-
-      var parentPath = parentNode.getPath('baseName');
-      Rwiki.nodeManager.createFolder(parentPath, name);
-    });
-  },
-
   onCreatePage: function() {
     var parentNode = this.node;
-    if (parentNode.cls == 'file') return;
 
     Ext.MessageBox.prompt('Create page', 'New page name:', function(button, name) {
       if (button != 'ok') return;
 
-      var parentPath = parentNode.getPath('baseName');
+      var parentPath = parentNode.getPath();
       Rwiki.nodeManager.createPage(parentPath, name);
     });
   },
 
   onRenameNode: function() {
     var node = this.node;
-    var oldPath = node.getPath('baseName');
+    if (node.isRoot) return;
+
+    var oldPath = node.getPath();
     var oldBaseName = node.text;
 
     var callback = function(button, newName) {
@@ -88,7 +67,9 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
 
   onDeleteNode: function() {
     var node = this.node;
-    var path = node.getPath('baseName');
+    if (node.isRoot) return;
+    
+    var path = node.getPath();
 
     var callback = function(button) {
       if (button != 'yes') return;

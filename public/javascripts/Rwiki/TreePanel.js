@@ -2,7 +2,6 @@ Ext.ns('Rwiki');
 
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   constructor: function() {
-    this.toolbar = new Rwiki.Tree.Toolbar();
 
     Ext.apply(this, {
       id: 'tree',
@@ -23,42 +22,20 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
         nodeType: 'async',
         text: Rwiki.rootFolderName,
         draggable: false
-      }),
-
-      tbar: this.toolbar
+      })
     });
 
     Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
-
-    this.contextMenu = new Rwiki.Tree.Menu();
-    this.on('contextmenu', this.onContextMenu, this);
-
-    this.filter = new Rwiki.Tree.Filter(this);
     this.root.expand();
 
     new Ext.tree.TreeSorter(this, {
       folderSort: true
     });
 
-    this.initToolbarEvents();
+    this.contextMenu = new Rwiki.Tree.Menu();
+    this.on('contextmenu', this.onContextMenu, this);
 
     this.addEvents('rwiki:pageSelected');
-  },
-
-  initToolbarEvents: function() {
-    var self = this;
-
-    this.toolbar.on('expandAll', function() {
-      self.root.expandChildNodes(true);
-    });
-
-    this.toolbar.on('collapseAll', function() {
-      self.root.collapseChildNodes(true);
-    });
-
-    this.toolbar.on('filterFieldChanged', function(text) {
-      self.filter.filterTree(text);
-    });
   },
 
   initEvents: function() {
@@ -67,7 +44,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('click', this.onClick);
 
     this.on('rwiki:pageLoaded', this.onPageLoaded);
-    this.on('rwiki:folderCreated', this.onFolderCreated);
     this.on('rwiki:pageCreated', this.onPageCreated);
     this.on('rwiki:nodeRenamed', this.onNodeRenamed);
     this.on('rwiki:nodeDeleted', this.onNodeDeleted);
@@ -75,7 +51,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     this.relayEvents(Rwiki.Data.NodeManager.getInstance(), [
       'rwiki:pageLoaded',
-      'rwiki:folderCreated',
       'rwiki:pageCreated',
       'rwiki:nodeRenamed',
       'rwiki:nodeDeleted']);
@@ -103,25 +78,10 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     }
   },
 
-  onFolderCreated: function(page) {
-    var node = new Rwiki.Tree.Node({
-      baseName: page.getBaseName(),
-      text: page.getTitle(),
-      cls: 'folder',
-      expandable: true,
-      leaf: false
-    });
-
-    var parentNode = this.findNodeByPath(page.getParentPath());
-    parentNode.expand();
-    parentNode.appendChild(node);
-  },
-
   onPageCreated: function(page) {
     var treeNode = new Rwiki.Tree.Node({
       baseName: page.getBaseName(),
       text: page.getTitle(),
-      cls: 'page',
       expandable: false,
       leaf: true
     });
@@ -171,7 +131,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     var path = location.hash.replace(new RegExp('^#'), '');
     var node = this.findNodeByPath(path);
     if (node) {
-      node.expandAll();
+      node.expandAllParents();
       this.onClick(node);
     }
   }

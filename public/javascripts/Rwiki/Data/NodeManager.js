@@ -21,7 +21,6 @@ Rwiki.Data.NodeManager = Ext.extend(Ext.util.Observable, {
       'rwiki:beforePageLoad',
       'rwiki:pageLoaded',
       'rwiki:nodeDeleted',
-      'rwiki:folderCreated',
       'rwiki:pageCreated',
       'rwiki:pageSaved',
       'rwiki:nodeRenamed',
@@ -47,34 +46,21 @@ Rwiki.Data.NodeManager = Ext.extend(Ext.util.Observable, {
     });
   },
 
-  createFolder: function(parentPath, name) {
-    this._createNode(parentPath, name, true);
-  },
-  
   createPage: function(parentPath, name) {
-    this._createNode(parentPath, name, false);
-  },
-
-  _createNode: function(parentPath, name, isFolder) {
     Ext.Ajax.request({
       url: '/node',
       type: 'POST',
       params: {
         parentPath: parentPath,
-        name: name,
-        isFolder: isFolder
+        name: name
       },
       scope: this,
       timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
-        var page = new Rwiki.Data.Node(data);
+        var node = new Rwiki.Data.Node(data);
 
-        if (isFolder) {
-          this.fireEvent('rwiki:folderCreated', page);
-        } else {
-          this.fireEvent('rwiki:pageCreated', page);
-        }
+        this.fireEvent('rwiki:pageCreated', node);
       }
     });
   },
