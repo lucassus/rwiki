@@ -15,8 +15,6 @@ group :development do
   gem "ruby-debug19"
 
   gem "rack-test"
-  gem "test-unit"
-  gem "shoulda"
   gem "jasmine"
   gem "rspec"
   gem "mocha"
@@ -26,8 +24,6 @@ group :development do
   gem "capybara"
   gem "selenium-webdriver"
   gem "rspec"
-  gem "rspec-core"
-  gem "rspec-expectations"
   gem "lorax"
 
   gem "awesome_print"
