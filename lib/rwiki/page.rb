@@ -1,5 +1,5 @@
 module Rwiki
-  class Node
+  class Page
     include Rwiki::Utils
 
     class Error < StandardError; end 
@@ -29,7 +29,7 @@ module Rwiki
 
     def parent
       return if is_root?
-      @parent ||= Node.new(@file_helper.full_parent_path)
+      @parent ||= Page.new(@file_helper.full_parent_path)
     end
 
     def children
@@ -61,7 +61,7 @@ module Rwiki
     end
 
     def add_page(name)
-      Node.new(@file_helper.add_page(name))
+      Page.new(@file_helper.add_page(name))
     end
 
     def file_content
@@ -120,7 +120,7 @@ module Rwiki
       if Dir.exists?(full_path)
         files = Dir.glob("#{full_path}/*.txt").sort
         files.each do |file|
-          children << Node.new(file)
+          children << Page.new(file)
         end
       end
 

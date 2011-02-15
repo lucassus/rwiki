@@ -8,7 +8,8 @@ When /^I close a tab for node "([^"]*)"$/ do |path|
   close_button.click rescue nil
 end
 
-When /^I click a tab for node "([^"]*)"$/ do |path|
+# TODO rename this step
+When /^I click a tab for page "([^"]*)"$/ do |path|
   tab_id = Capybara.current_session.evaluate_script <<-JS
     Rwiki.tabPanel.findTabByPagePath('#{path}').tabEl.id;
   JS
@@ -30,6 +31,7 @@ Then /^I should have no open tabs$/ do
   page.all("div.x-tab-panel ul li[class!='x-tab-edge']").size.should == 0
 end
 
+# TODO rename this scenario
 When /^I right click the tab with path "([^"]*)"$/ do |path|
   Capybara.current_session.execute_script <<-JS
     var tab = Rwiki.tabPanel.findTabByPagePath('#{path}');
@@ -37,4 +39,3 @@ When /^I right click the tab with path "([^"]*)"$/ do |path|
     Rwiki.tabPanel.fireEvent('contextmenu', Rwiki.tabPanel, tab, eventStub)
   JS
 end
-

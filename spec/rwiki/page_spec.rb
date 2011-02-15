@@ -1,10 +1,10 @@
 require File.expand_path(File.join('..', 'spec_helper'), File.dirname(__FILE__))
 
-describe Rwiki::Node do
+describe Rwiki::Page do
   include Rwiki
 
   describe "the root node" do
-    before { @root_node = Node.new }
+    before { @root_node = Page.new }
     subject { @root_node }
 
     its(:is_root?) { should be_true }
@@ -32,19 +32,19 @@ describe Rwiki::Node do
     end
   end
 
-  before { @node = Node.new('/Home/Development/Programming Languages/Ruby') }
+  before { @node = Page.new('/Home/Development/Programming Languages/Ruby') }
   subject { @node }
 
   describe "#initialize" do
     context "for existing path" do
       it "should not raise an exception" do
-        lambda { Node.new('/Home/Development/Programming Languages/Ruby') }.should_not raise_error
+        lambda { Page.new('/Home/Development/Programming Languages/Ruby') }.should_not raise_error
       end
     end
 
     context "for non-existing path" do
       it "should raise an exception" do
-        lambda { Node.new('non-existing') }.should raise_error(Node::Error, "can't find the non-existing page")
+        lambda { Page.new('non-existing') }.should raise_error(Page::Error, "can't find the non-existing page")
       end
     end
   end
@@ -55,21 +55,21 @@ describe Rwiki::Node do
 
   its(:to_hash) { should be_instance_of(Hash) }
 
-  its(:parent) { should be_instance_of(Node) }
+  its(:parent) { should be_instance_of(Page) }
   its('parent.path') { should == '/Home/Development/Programming Languages' }
 
   its(:children) { should be_instance_of(Array) }
   its(:children) { should be_empty }
 
   context "for the node with child pages" do
-    subject { Node.new('/Home/Development/Programming Languages') }
+    subject { Page.new('/Home/Development/Programming Languages') }
     let(:result) { subject.children }
 
     its('children.size') { should == 4 }
 
     it "children should contain Node objects" do
       result.each do |node|
-        node.should be_instance_of(Node)
+        node.should be_instance_of(Page)
       end
     end
 
@@ -82,12 +82,12 @@ describe Rwiki::Node do
   end
 
   context "node with child pages" do
-    subject { Node.new('/Home/Development/Programming Languages') }
+    subject { Page.new('/Home/Development/Programming Languages') }
     its(:has_children?) { should be_true }
   end
 
   context "node without child pages" do
-    subject { Node.new('/Home/Development/Programming Languages/Java') }
+    subject { Page.new('/Home/Development/Programming Languages/Java') }
     its(:has_children?) { should be_false }
   end
 
@@ -117,7 +117,7 @@ describe Rwiki::Node do
     let(:result) { subject.add_page('Regular Expressions') }
 
     it "result should be a Node instance" do
-      result.should be_instance_of(Node)
+      result.should be_instance_of(Page)
     end
 
     it "result should have valid path" do
@@ -155,7 +155,7 @@ describe Rwiki::Node do
 
   describe "#move_to" do
     it "should move the node" do
-      new_parent = Node.new('/Home/About')
+      new_parent = Page.new('/Home/About')
       subject.file_helper.expects(:move_to).with('/Home/About')
 
       subject.move_to(new_parent)

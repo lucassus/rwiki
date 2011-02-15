@@ -33,17 +33,17 @@ module Rwiki
 
     # get the nodes tree
     get '/nodes' do
-      Node.new.tree.to_json
+      Page.new.tree.to_json
     end
 
     # get the node's content
     get '/node' do
       begin
         path = params[:path].strip
-        page = Node.new(path)
+        page = Page.new(path)
 
         page.to_json
-      rescue Rwiki::Node::Error => error
+      rescue Rwiki::Page::Error => error
         { :success => false, :message => error.message }.to_json
       end
     end
@@ -53,7 +53,7 @@ module Rwiki
       path = params[:path].strip
       raw_content = params[:rawContent].force_encoding("UTF-8")
 
-      node = Node.new(path)
+      node = Page.new(path)
       node.update_file_content(raw_content)
 
       node.to_json
@@ -64,7 +64,7 @@ module Rwiki
       parent_path = params[:parentPath].strip
       name = params[:name].strip
 
-      parent_node = Node.new(parent_path)
+      parent_node = Page.new(parent_path)
       node = parent_node.add_page(name)
 
       node.to_json
@@ -75,7 +75,7 @@ module Rwiki
       path = params[:path].strip
       new_name = params[:newName].strip
 
-      node = Node.new(path)
+      node = Page.new(path)
       node.rename_to(new_name)
 
       result = node.to_hash
@@ -89,8 +89,8 @@ module Rwiki
       path = params[:path].strip
       new_parent_path = params[:newParentPath].strip
 
-      node = Node.new(path)
-      new_parent = Node.new(new_parent_path)
+      node = Page.new(path)
+      new_parent = Page.new(new_parent_path)
 
       result = node.to_hash
       result[:oldPath] = path
@@ -102,7 +102,7 @@ module Rwiki
     # delete the node
     delete '/node' do
       path = params[:path].strip
-      node = Node.new(path)
+      node = Page.new(path)
       node.delete
 
       { :path => node.path }.to_json
@@ -110,14 +110,14 @@ module Rwiki
 
     get '/fuzzy_finder' do
       query = params[:query]
-      matches = Node.fuzzy_finder(query)
+      matches = Page.fuzzy_finder(query)
 
       { :results => matches, :count => matches.size }.to_json
     end
 
     get '/node/print' do
       path = params[:path].strip
-      page = Node.new(path)
+      page = Page.new(path)
       @html = page.to_html
 
       erb :print, :layout => false

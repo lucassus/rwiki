@@ -19,7 +19,7 @@ When /^I reload the application$/ do
   JS
 end
 
-When /^I open the application for node with path "([^"]*)"$/ do |path|
+When /^I open the application for page "([^"]*)"$/ do |path|
   visit('/#' + path)
 end
 
@@ -31,20 +31,20 @@ Then /^I should see the application title "([^"]*)"$/ do |title|
   find("title").text.should == title
 end
 
-When /^I create a new node titled "([^"]*)" for the node with path "([^"]*)"$/ do |title, path|
-  When %{I right click the node with path "#{path}"}
+When /^I create a new page titled "([^"]*)" for the parent "([^"]*)"$/ do |title, path|
+  When %{I right click the tree node "#{path}"}
   And %{I follow "Add page"}
   Then %{I should see dialog box titled "Add page"}
 
   When %{I fill in the input with "#{title}" within the dialog box}
   And %{I press "OK" within the dialog box}
-  Then %{I should see the node titled "#{title}"}
+  Then %{I should see the page titled "#{title}"}
 end
 
-Then /^I should see a content for the node with path "([^"]*)"$/ do |path|
+Then /^I should see a content for the page  "([^"]*)"$/ do |path|
   require 'lorax'
 
-  expected_html = Rwiki::Node.new(path).html_content
+  expected_html = Rwiki::Page.new(path).html_content
   expected_html = "<div>#{expected_html}</div>"
   actual_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
   actual_html = "<div>#{actual_html}</div>"

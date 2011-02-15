@@ -4,33 +4,33 @@ Feature: Tree Panel
     Given I open the application
 
   Scenario: Browsing the root node
-    Then for the node with path "/Home" I should see following nodes:
+    Then for the tree node "/Home" I should see following nodes:
       | Development    |
       | Personal stuff |
       | About          |
-    And I should not see the node titled "Ruby"
-    And I should not see the node titled "Addresses"
+    And I should not see the tree node titled "Ruby"
+    And I should not see the tree node titled "Addresses"
 
   Scenario: Expand the "/Home/Personal stuff" node
-    When I expand the node with path "/Home/Personal stuff"
-    Then for the node with path "/Home/Personal stuff" I should see following nodes:
+    When I expand the tree node "/Home/Personal stuff"
+    Then for the tree node "/Home/Personal stuff" I should see following nodes:
       | Addresses |
       | Notes     |
 
   Scenario: Expand the "/Home/Development" node
-    When I expand the node with path "/Home/Development"
-    And I expand the node with path "/Home/Development/Programming Languages"
-    Then for the node with path "/Home/Development/Programming Languages" I should see following nodes:
+    When I expand the tree node "/Home/Development"
+    And I expand the tree node "/Home/Development/Programming Languages"
+    Then for the tree node "/Home/Development/Programming Languages" I should see following nodes:
       | Java       |
       | JavaScript |
       | Python     |
       | Ruby       |
 
-  Scenario Outline: Move the node
-    When I move the node with path "<path>" to "<new_parent_path>"
+  Scenario Outline: Move the tree node
+    When I move the tree node "<path>" to "<new_parent_path>"
     And I reload the application
-    And I open the node with path "<new_path>"
-    Then I should see a content for the node with path "<new_path>"
+    And I open the page "<new_path>"
+    Then I should see a content for the page  "<new_path>"
 
   Examples:
     | path                                         | new_parent_path      | new_path                         |
