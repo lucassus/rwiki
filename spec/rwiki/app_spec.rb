@@ -8,12 +8,6 @@ describe Rwiki::App do
     Rwiki::App
   end
 
-  def self.it_should_respond_with_success
-    it 'should respond with success' do
-      last_response.should be_ok
-    end
-  end
-
   describe 'on GET to /' do
     before { get '/' }
     it_should_respond_with_success

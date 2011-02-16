@@ -4,6 +4,13 @@ module RwikiMacros
   end
 
   module ClassMethods
+
+    def it_should_respond_with_success
+      it 'should respond with success' do
+        last_response.should be_ok
+      end
+    end
+
     def it_should_return_true
       it "should return true" do
         result.should be_true
