@@ -1,6 +1,10 @@
 Ext.ns('Rwiki');
 
-Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
+Rwiki.TabPanel = function(config) {
+  Rwiki.TabPanel.superclass.constructor.apply(this, arguments);
+};
+
+Ext.extend(Rwiki.TabPanel, Ext.TabPanel, {
   initComponent: function() {
     this.editPageButton = new Ext.Button({
       text: 'Edit page',
@@ -52,8 +56,8 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     this.on('rwiki:pageLoaded', this.onPageLoaded);
     this.on('rwiki:lastPageClosed', this.onLastPageClosed);
     this.on('rwiki:pageSaved', this.onPageSaved);
-    this.on('rwiki:pageRenamed', this.onNodeRenamed);
-    this.on('rwiki:pageDeleted', this.onNodeDeleted);
+    this.on('rwiki:pageRenamed', this.onPageRenamed);
+    this.on('rwiki:pageDeleted', this.onPageDeleted);
 
     this.relayEvents(Rwiki.Data.PageManager.getInstance(), [
       'rwiki:pageLoaded',
@@ -150,7 +154,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   // TODO cleanup this method
-  onNodeRenamed: function(page) {
+  onPageRenamed: function(page) {
     var oldPath = page.getData().oldPath;
     var currentTab = this.getActiveTab();
 
@@ -180,7 +184,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     }
   },
 
-  onNodeDeleted: function(data) {
+  onPageDeleted: function(data) {
     var tabs = this.findTabsByParentPath(data.path);
     for (var i = 0; i < tabs.length; i++) {
       var tab = tabs[i];

@@ -92,12 +92,12 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     treeNode.select();
   },
 
-  onNodeRenamed: function(page) {
+  onPageRenamed: function(page) {
     var treeNode = this.findNodeByPath(page.getData().oldPath);
     treeNode.setText(page.getTitle());
   },
 
-  onNodeDeleted: function(data) {
+  onPageDeleted: function(data) {
     var path = data.path;
     var node = this.findNodeByPath(path);
     node.remove();

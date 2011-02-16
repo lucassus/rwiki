@@ -59,7 +59,7 @@ Rwiki.Data.Page.prototype = {
    * Returns node's title displayed on tree panel or tab panel
    */
   getTitle: function() {
-    return this.getBaseName().replace(new RegExp('\.txt$'), '');
+    return this.getBaseName();
   }
 
 };
