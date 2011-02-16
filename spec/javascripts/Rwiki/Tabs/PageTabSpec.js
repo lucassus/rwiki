@@ -1,6 +1,6 @@
 describe("Rwiki.Tab.PageTab", function() {
   var tab;
-  var pagePath = './page.txt';
+  var pagePath = '/Home/Page';
 
   beforeEach(function() {
     tab = new Rwiki.TabPanel.PageTab();

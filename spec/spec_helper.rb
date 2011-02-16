@@ -6,9 +6,12 @@ require 'ap'
 require 'rack/test'
 
 require 'tmpdir_helper'
-include TmpdirHelper
+require 'rwiki_macros'
 
 RSpec.configure do |config|
+
+  config.include(TmpdirHelper)
+  config.include(RwikiMacros)  
 
   # == Mock Framework
   config.mock_with :mocha

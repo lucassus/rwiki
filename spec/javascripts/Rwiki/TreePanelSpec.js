@@ -7,14 +7,14 @@ describe("Rwiki.TreePanel", function() {
       baseName: '.',
       text: 'Home',
       children: [{
-        baseName: 'test.txt',
-        text: 'test.txt',
+        baseName: 'Test',
+        text: 'Test',
         leaf: true
       }, {
         baseName: 'Develop',
         text: 'Develop',
         children: [{
-          baseName: 'Ruby.txt',
+          baseName: 'Ruby',
           text: 'Ruby',
           leaf: true
         }]
@@ -41,24 +41,24 @@ describe("Rwiki.TreePanel", function() {
       expect(node).not.toBeNull();
     }),
 
-    it("should find ./test.txt node", function() {
-      var node = treePanel.findNodeByPath('./test.txt');
+    it("should find /Home/test.txt node", function() {
+      var node = treePanel.findNodeByPath('/Home/test');
 
       expect(node).not.toBeNull();
       expect(node.getBaseName()).toEqual('test.txt');
-      expect(node.getPath('baseName')).toEqual('./test.txt');
+      expect(node.getPath('baseName')).toEqual('/Home/test');
     });
 
-    it("should find ./Develop/Ruby.txt node", function() {
-      var node = treePanel.findNodeByPath('./Develop/Ruby.txt');
+    it("should find /Home/Develop/Ruby.txt node", function() {
+      var node = treePanel.findNodeByPath('/Home/Develop/Ruby');
       
       expect(node).not.toBeNull();
       expect(node.getBaseName()).toEqual('Ruby.txt');
-      expect(node.getPath('baseName')).toEqual('./Develop/Ruby.txt');
+      expect(node.getPath('baseName')).toEqual('/Home/Develop/Ruby');
     });
 
-    it("should not find ./Develop/Non-existing.txt", function() {
-      var node = treePanel.findNodeByPath('./Develop/Non-existing.txt');
+    it("should not find /Home/Develop/Non-existing.txt", function() {
+      var node = treePanel.findNodeByPath('/Home/Develop/Non-existing');
       expect(node).toBeNull();
     });
   });
@@ -69,14 +69,14 @@ describe("Rwiki.TreePanel", function() {
     describe("for leaf node", function() {
       beforeEach(function() {
         node.isLeaf = jasmine.createSpy('node.isLeaf').andReturn(true);
-        node.getPath = jasmine.createSpy('node.getPath').andReturn('./path');
+        node.getPath = jasmine.createSpy('node.getPath').andReturn('/Home/path');
 
         spyOn(treePanel, 'fireEvent');
         treePanel.onClick(node);
       });
 
       it("should fire event", function() {
-        expect(treePanel.fireEvent).toHaveBeenCalledWith('rwiki:pageSelected', new Rwiki.Data.Node({path: './path'}));
+        expect(treePanel.fireEvent).toHaveBeenCalledWith('rwiki:pageSelected', new Rwiki.Data.Node({path: '/Home/path'}));
       });
     });
   });
@@ -84,15 +84,15 @@ describe("Rwiki.TreePanel", function() {
   describe(":onFolderCreated handler", function() {
     beforeEach(function() {
       var node = new Rwiki.Data.Node({
-        path: './Develop/New folder',
-        parentPath: './Develop'
+        path: '/Home/Develop/New folder',
+        parentPath: '/Home/Develop'
       });
 
       treePanel.onFolderCreated(node);
     });
 
     it("should create and append a valid node", function() {
-      var node = treePanel.findNodeByPath('./Develop/New folder');
+      var node = treePanel.findNodeByPath('/Home/Develop/New folder');
 
       expect(node).not.toBeNull();
       expect(node.getBaseName()).toEqual('New folder');
@@ -104,18 +104,18 @@ describe("Rwiki.TreePanel", function() {
   describe(":onPageCreated handler", function() {
     beforeEach(function() {
       var node = new Rwiki.Data.Node({
-        path: './Develop/New page.txt',
-        parentPath: './Develop'
+        path: '/Home/Develop/New page',
+        parentPath: '/Home/Develop'
       });
       
       treePanel.onPageCreated(node);
     });
 
     it("should create and append a valid node", function() {
-      var node = treePanel.findNodeByPath('./Develop/New page.txt');
+      var node = treePanel.findNodeByPath('/Home/Develop/New page');
 
       expect(node).not.toBeNull();
-      expect(node.getBaseName()).toEqual('New page.txt');
+      expect(node.getBaseName()).toEqual('New page');
       expect(node.attributes.text).toEqual('New page');
       expect(node.isLeaf()).toBeTruthy();
     });
@@ -124,18 +124,18 @@ describe("Rwiki.TreePanel", function() {
   describe(":onNodeRenamed handler", function() {
     beforeEach(function() {
       var node = new Rwiki.Data.Node({
-        path: './Develop/Python.txt',
-        oldPath: './Develop/Ruby.txt'
+        path: '/Home/Develop/Python',
+        oldPath: '/Home/Develop/Ruby'
       });
 
-      treePanel.onNodeRenamed(node);
+      treePanel.onPageRenamed(node);
     });
 
     it("should rename node", function() {
-      var oldNode = treePanel.findNodeByPath('./Develop/Ruby.txt');
+      var oldNode = treePanel.findNodeByPath('/Home/Develop/Ruby');
       expect(oldNode).toBeNull();
 
-      var node = treePanel.findNodeByPath('./Develop/Python.txt');
+      var node = treePanel.findNodeByPath('/Home/Develop/Python');
       expect(node).not.toBeNull();
       expect(node.getBaseName()).toEqual('Python.txt');
       expect(node.attributes.text).toEqual('Python');
@@ -146,14 +146,14 @@ describe("Rwiki.TreePanel", function() {
   describe(":onNodeDeleted handler", function() {
     beforeEach(function() {
       var data = {
-        path: './Develop/Ruby.txt'
+        path: '/Home/Develop/Ruby'
       };
 
-      treePanel.onNodeDeleted(data);
+      treePanel.onPageDeleted(data);
     });
 
     it("should delete node", function() {
-      var node = treePanel.findNodeByPath('./Develop/Ruby.txt');
+      var node = treePanel.findNodeByPath('/Home/Develop/Ruby');
       expect(node).toBeNull();
     });
   });

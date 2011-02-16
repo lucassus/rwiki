@@ -16,23 +16,21 @@ describe("Rwiki.TabPanel", function() {
 
   describe(":findTabsByParentPath", function() {
     beforeEach(function() {
-      var pages = [
-        './foo/bar/test.txt',
-        './foo/bar/test/test 1.txt',
-        './foo/bar/test/test 2.txt',
-        './foo/bar.txt',
-        './foo/test',
-        './foo/test/bar 1.txt',
-        './foo/test/bar 2.txt',
-        './foo/testbar.txt'
+      var paths = [
+        '/Home/foo/bar/test',
+        '/Home/foo/bar/test/test 1',
+        '/Home/foo/bar/test/test 2',
+        '/Home/foo/bar',
+        '/Home/foo/test',
+        '/Home/foo/test/bar 1',
+        '/Home/foo/test/bar 2',
+        '/Home/foo/testbar'
       ];
 
-      for (var i = 0; i < pages.length; i++) {
-        var path = pages[i];
-        if (path.match(new RegExp('\.txt$'))) {
-          var page = new Rwiki.Data.Node({path: path});
-          tabPanel.createPageTab(page);
-        }
+      for (var i = 0; i < paths.length; i++) {
+        var path = paths[i];
+        var page = new Rwiki.Data.Page({path: path});
+        tabPanel.createPageTab(page);
       }
 
       this.addMatchers({
@@ -51,25 +49,27 @@ describe("Rwiki.TabPanel", function() {
       });
     });
 
-    it("should return valid tabs for './foo/bar'", function() {
-      var tabs = tabPanel.findTabsByParentPath('./foo/bar');
+    it("should return valid tabs for '/Home/foo/bar'", function() {
+      var tabs = tabPanel.findTabsByParentPath('/Home/foo/bar');
+      
       expect(tabs.length).toBe(3);
-      expect(tabs).toIncludeTabWithPath('./foo/bar/test.txt');
-      expect(tabs).toIncludeTabWithPath('./foo/bar/test/test 1.txt');
-      expect(tabs).toIncludeTabWithPath('./foo/bar/test/test 2.txt');
+      expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test');
+      expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test/test 1');
+      expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test/test 2');
     });
     
-    it("should return valid tabs for './foo/test'", function() {
-      var tabs = tabPanel.findTabsByParentPath('./foo/test');
+    it("should return valid tabs for '/Home/foo/test'", function() {
+      var tabs = tabPanel.findTabsByParentPath('/Home/foo/test');
+      
       expect(tabs.length).toBe(2);
-      expect(tabs).toIncludeTabWithPath('./foo/test/bar 1.txt');
-      expect(tabs).toIncludeTabWithPath('./foo/test/bar 2.txt');
+      expect(tabs).toIncludeTabWithPath('/Home/foo/test/bar 1');
+      expect(tabs).toIncludeTabWithPath('/Home/foo/test/bar 2');
     });
   });
 
   describe("onPageCreated handler", function() {
-    var page = new Rwiki.Data.Node({
-      path: './page.txt',
+    var page = new Rwiki.Data.Page({
+      path: '/Home/page',
       text: 'page'
     });
     var tab = {};

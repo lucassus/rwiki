@@ -1,4 +1,4 @@
-describe("Rwiki.Data.Node", function() {
+describe("Rwiki.Data.Page", function() {
   var node;
   var data = {
     path: './Development/Dynamic languages/Ruby.txt',
@@ -7,7 +7,7 @@ describe("Rwiki.Data.Node", function() {
   };
 
   beforeEach(function() {
-    node = new Rwiki.Data.Node(data);
+    node = new Rwiki.Data.Page(data);
   });
 
   describe(":getPath", function() {

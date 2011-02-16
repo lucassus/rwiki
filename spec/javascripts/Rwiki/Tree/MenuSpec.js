@@ -29,21 +29,17 @@ describe("Rwiki.Tree.Menu", function() {
 
       this.addMatchers({
         toBeDisabled: function() {
-          return this.actual.disabled == true;
+          return this.actual.disabled;
         },
         toBeEnabled: function() {
-          return this.actual.disabled == false;
+          return !this.actual.disabled;
         }
       });
     });
 
     describe("when root node is selected", function() {
       beforeEach(function() {
-        node.id = Rwiki.rootFolderName;
-        node.attributes = {
-          cls: 'folder'
-        };
-
+        node.isRoot = true;
         menu.show(node, xy);
       });
 
@@ -55,43 +51,14 @@ describe("Rwiki.Tree.Menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
       });
 
-      itShouldDisable('delete-node');
-      itShouldDisable('rename-node');
-      itShouldEnable('create-folder');
-      itShouldEnable('create-page');
-    });
-
-    describe("when folder node is selected", function() {
-      beforeEach(function() {
-        node.id = './folder';
-        node.attributes = {
-          cls: 'folder'
-        };
-
-        menu.show(node, xy);
-      });
-
-      it("should select node", function() {
-        expect(node.select).toHaveBeenCalled();
-      });
-
-      it("should show the menu", function() {
-        expect(menu.showAt).toHaveBeenCalledWith(xy);
-      });
-
-      itShouldEnable('delete-node');
-      itShouldEnable('rename-node');
-      itShouldEnable('create-folder');
+      itShouldDisable('delete-page');
+      itShouldDisable('rename-page');
       itShouldEnable('create-page');
     });
 
     describe("when page node is selected", function() {
       beforeEach(function() {
-        node.id = './page.txt';
-        node.attributes = {
-          cls: 'page'
-        };
-
+        node.isRoot = false;
         menu.show(node, xy);
       });
 
@@ -103,10 +70,9 @@ describe("Rwiki.Tree.Menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
       });
 
-      itShouldEnable('delete-node');
-      itShouldEnable('rename-node');
-      itShouldDisable('create-folder');
-      itShouldDisable('create-page');
+      itShouldEnable('delete-page');
+      itShouldEnable('rename-page');
+      itShouldEnable('create-page');
     });
   });
 
@@ -125,16 +91,6 @@ describe("Rwiki.Tree.Menu", function() {
       });
     });
 
-    describe("'Create folder' option", function() {
-      beforeEach(function() {
-        item = menu.findById('create-folder');
-      });
-
-      it("should have 'Create folder' title", function() {
-        expect(item).toBeTitledAs("Create folder");
-      });
-    });
-
     describe("'Create page' option", function() {
       beforeEach(function() {
         item = menu.findById('create-page');
@@ -147,7 +103,7 @@ describe("Rwiki.Tree.Menu", function() {
 
     describe("'Rename node' option", function() {
       beforeEach(function() {
-        item = menu.findById('rename-node');
+        item = menu.findById('rename-page');
       });
 
       it("should have 'Rename node' title", function() {
@@ -157,7 +113,7 @@ describe("Rwiki.Tree.Menu", function() {
 
     describe("'Delete node' option", function() {
       beforeEach(function() {
-        item = menu.findById('delete-node');
+        item = menu.findById('delete-page');
       });
 
       it("should have 'Delete node' title", function() {
