@@ -12,7 +12,7 @@ module Rwiki
     end
 
     def is_root?
-      @file_helper.path == Rwiki.configuration.root_page_name
+      @file_helper.path == Rwiki.configuration.root_page_path
     end
 
     def path

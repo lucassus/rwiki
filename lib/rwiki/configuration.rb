@@ -14,5 +14,9 @@ module Rwiki
       @page_file_extension = 'txt'
     end
 
+    def root_page_path
+      '/' + root_page_name
+    end
+
   end
 end

@@ -89,6 +89,7 @@ module Rwiki::Utils
     def self.sanitize_path(path)
       sanitized_path = path.clone
 
+      sanitized_path = '/' + sanitized_path unless sanitized_path.start_with?('/')
       # remove the page file extension
       sanitized_path.gsub!(/\.#{Rwiki.configuration.page_file_extension}$/, '')
       # remove the rwiki path
