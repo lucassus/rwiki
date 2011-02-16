@@ -78,14 +78,17 @@ module Rwiki
     end
 
     def rename_to(new_name)
+      raise Error.new("cannot rename the #{Rwiki.configuration.root_page_name} page") if is_root?
       @file_helper.rename_to(new_name)
     end
 
     def move_to(node)
+      raise Error.new("cannot move the #{Rwiki.configuration.root_page_name} page") if is_root?
       @file_helper.move_to(node.path)
     end
 
     def delete
+      raise Error.new("cannot delete the #{Rwiki.configuration.root_page_name} page") if is_root?
       @file_helper.delete
     end
 

@@ -149,9 +149,16 @@ describe Rwiki::Utils::FileHelper do
     end
 
     context "for full node path" do
-      let(:result) { FileHelper.sanitize_path(FileHelper.expand_node_path('/Home/Programming Languages/JavaScript.txt')) }
-      it "should strip rwiki_path and file extension" do
+      let(:result) { FileHelper.sanitize_path(FileHelper.expand_node_path('/Home/Programming Languages/JavaScript')) }
+      it "should strip rwiki_path" do
         result.should == "/Home/Programming Languages/JavaScript"
+      end
+    end
+
+    context "for path without a slash on the beginning" do
+      let(:result) { FileHelper.sanitize_path('Home') }
+      it "should add slash" do
+        result.should == '/Home'
       end
     end
   end
