@@ -26,6 +26,7 @@ group :development do
   gem "rspec"
   gem "lorax"
 
+  gem "watchr"
   gem "awesome_print"
   gem "capistrano"
 end
