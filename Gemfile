@@ -24,6 +24,7 @@ group :development do
   gem "capybara"
   gem "selenium-webdriver"
   gem "rspec"
+  gem "fuubar"
   gem "lorax"
 
   gem "watchr"
