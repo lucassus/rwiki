@@ -51,25 +51,58 @@ describe Rwiki::Utils::FileHelper do
   end
 
   describe "#rename" do
-    it "should rename corresponding children directory"
+    shared_examples_for :successful_renaming do
+      specify "and should return true" do
+        result.should be_true
+      end
+
+      it "sets the new path" do
+        subject.path.should == path_after
+      end
+
+      specify "the file for the old page name should no longer exist" do
+        page_file_before = FileHelper.expand_node_file_path(path_before)
+        File.exists?(page_file_before).should be_false
+      end
+
+      specify "the file for the new page should exist" do
+        page_file_after = FileHelper.expand_node_file_path(path_after)
+        File.exists?(page_file_after).should be_true
+      end
+    end
 
     describe "to the non-existing new name" do
-      before { @result = subject.rename_to('Languages') }
+      context "for page with child pages" do
+        let(:path_before) { '/Home/Development/Programming Languages' }
+        let(:new_name) { 'Languages' }
+        let(:path_after) { '/Home/Development/Languages' }
 
-      it "should return true" do
-        @result.should be_true
+        before { @result = subject.rename_to(new_name) }
+        let(:result) { @result }
+
+        it_behaves_like :successful_renaming
+
+        specify "the old folder for the child pages should no longer exist" do
+          child_folder_before = FileHelper.expand_node_path(path_before)
+          Dir.exists?(child_folder_before).should be_false
+        end
+
+        specify "the new folder for the child pages should exist" do
+          child_folder_after = FileHelper.expand_node_path(path_after)
+          Dir.exists?(child_folder_after).should be_true
+        end
       end
 
-      it "should set the new path" do
-        subject.path.should == '/Home/Development/Languages'
-      end
+      context "for page without child pages" do
+        let(:path_before) { '/Home/Development/Programming Languages/Python' }
+        let(:new_name) { 'Crunchy Frog' }
+        let(:path_after) { '/Home/Development/Programming Languages/Crunchy Frog' }
 
-      it "should rename the file and the corresponding directory" do
-        File.exists?(FileHelper.expand_node_file_path('/Home/Development/Programming Languages.txt')).should be_false
-        Dir.exists?(FileHelper.expand_node_path('/Home/Development/Programming Languages')).should be_false
+        subject { FileHelper.new(path_before) }
+        before { @result = subject.rename_to(new_name) }
+        let(:result) { @result }
 
-        File.exists?(FileHelper.expand_node_file_path('/Home/Development/Languages.txt')).should be_true
-        Dir.exists?(FileHelper.expand_node_path('/Home/Development/Languages')).should be_true
+        it_behaves_like :successful_renaming
       end
     end
 
@@ -92,22 +125,53 @@ describe Rwiki::Utils::FileHelper do
     it "should delete the child directory if last child was moved"
     it "should return false on move to the same node"
 
+    shared_examples_for :successful_moving do
+      it "should return true" do
+        result.should be_true
+      end
+
+      it "should set the new path" do
+        subject.path.should == path_after
+      end
+
+      it "should move the file and corresponding directory" do
+        File.exists?(FileHelper.expand_node_file_path(path_before)).should be_false
+        Dir.exists?(FileHelper.expand_node_path(path_before)).should be_false
+      end
+
+      it "should move the file and corresponding directory to the new location" do
+        File.exists?(FileHelper.expand_node_file_path(path_after)).should be_true
+        Dir.exists?(FileHelper.expand_node_path(path_after)).should be_true
+      end
+    end
+
+    shared_examples_for :unsuccessful_moving do
+      it "should return false" do
+        result.should be_false
+      end
+    end
+
     describe "to the valid new parent directory" do
-      before { @result = subject.move_to('/Home/Personal stuff') }
+      let(:new_parent_path) { '/Home/Personal stuff' }
+      let(:path_before) { '/Home/Programming Languages' }
+      let(:path_after) { '/Home/Personal stuff/Programming Languages' }
+
+      before { @result = subject.move_to(new_parent_path) }
       let(:result) { @result }
 
-      it_should_return_true
-      it_should_set_the_new_path('/Home/Personal stuff/Programming Languages')
-      it_should_move_node('/Home/Programming Languages', '/Home/Personal stuff/Programming Languages')
+      it_behaves_like :successful_moving
     end
 
     describe "to the valid new parent page" do
+      let(:new_parent_path) { '/Home/About' }
+      let(:path_before) { '/Home/Programming Languages' }
+      let(:path_after) { '/Home/About/Programming Languages' }
+
       before { @result = subject.move_to('/Home/About') }
       let(:result) { @result }
 
-      it_should_return_true
-      it_should_set_the_new_path('/Home/About/Programming Languages')
-      it_should_move_node('/Home/Development/Programming Languages', '/Home/About/Programming Languages')
+      it_behaves_like :successful_moving
+
       it_should_move_the_child_nodes('/Home/Development/Programming Languages', '/Home/About/Programming Languages')
     end
 
@@ -115,21 +179,21 @@ describe Rwiki::Utils::FileHelper do
       before { @result = subject.move_to('Non-Existing') }
       let(:result) { @result }
 
-      it_should_return_false
+      it_behaves_like :unsuccessful_moving
     end
 
     describe "to the invalid new parent" do
       before { @result = subject.move_to('/Home/Programming Languages/Java') }
       let(:result) { @result }
 
-      it_should_return_false
+      it_behaves_like :unsuccessful_moving
     end
 
     describe "to self" do
       before { @result == subject.move_to('/Home/Programming Languages') }
       let(:result) { @result }
 
-      it_should_return_false
+      it_behaves_like :unsuccessful_moving
     end
   end
 
