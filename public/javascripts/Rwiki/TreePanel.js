@@ -1,8 +1,8 @@
 Ext.ns('Rwiki');
 
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
+  
   constructor: function() {
-
     Ext.apply(this, {
       id: 'tree',
       region: 'center',
@@ -29,7 +29,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.root.expand();
 
     new Ext.tree.TreeSorter(this, {
-      folderSort: true
+      folderSort: false
     });
 
     this.contextMenu = new Rwiki.Tree.Menu();

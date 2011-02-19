@@ -1,10 +1,7 @@
 Ext.ns('Rwiki');
 
-Rwiki.TabPanel = function(config) {
-  Rwiki.TabPanel.superclass.constructor.apply(this, arguments);
-};
-
-Ext.extend(Rwiki.TabPanel, Ext.TabPanel, {
+Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
+  
   initComponent: function() {
     this.editPageButton = new Ext.Button({
       text: 'Edit page',

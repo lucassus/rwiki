@@ -7,19 +7,19 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
       items: [{
         text: 'Add page',
         id: 'create-page',
-        iconCls: 'icon-create-page',
+        iconCls: 'icon-add-page',
         scope: this,
         handler: this.onCreatePage
       }, '-',  {
         text: 'Rename page',
         id: 'rename-node',
-        iconCls: 'icon-rename-node',
+        iconCls: 'icon-rename-page',
         scope: this,
         handler: this.onRenameNode
       }, {
         text: 'Delete page',
         id: 'delete-node',
-        iconCls: 'icon-delete-node',
+        iconCls: 'icon-delete-page',
         scope: this,
         handler: this.onDeleteNode
       }]

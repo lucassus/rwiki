@@ -35,6 +35,19 @@
   padding: 5px;
 }
 
+.rwiki-tree-node {
+  font-size: 15px;
+  padding: 2px;
+}
+
+.icon-folder-page {
+  background-image: url(/images/icons/folder_page.png) !important;  
+}
+
+.icon-page {
+  background-image: url(/images/icons/page.png) !important;  
+}
+
 .icon-expand-all {
   background-image: url(/images/icons/expand-all.gif) !important;
 }
@@ -54,16 +67,16 @@
   background-image: url(/images/icons/folder_add.png) !important;
 }
 
-.icon-create-page {
+.icon-add-page {
   background-image: url(/images/icons/page_add.png) !important;
 }
 
-.icon-rename-node {
-  background-image: url(/images/icons/folder_edit.png) !important;
+.icon-rename-page {
+  background-image: url(/images/icons/tab_edit.png) !important;
 }
 
-.icon-delete-node {
-  background-image: url(/images/icons/delete.png) !important;
+.icon-delete-page {
+  background-image: url(/images/icons/page_delete.png) !important;
 }
 
 .icon-search {

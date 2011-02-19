@@ -1,10 +1,16 @@
 Ext.ns('Rwiki.Tree');
 
-Rwiki.Tree.Node = function(config) {
-  Rwiki.Tree.Node.superclass.constructor.apply(this, arguments);
-};
+Rwiki.Tree.Node = Ext.extend(Ext.tree.AsyncTreeNode, {
 
-Ext.extend(Rwiki.Tree.Node, Ext.tree.AsyncTreeNode, {
+  constructor: function(config) {
+    config = Ext.apply({
+      cls: 'rwiki-tree-node',
+      iconCls: 'icon-page'
+    }, config);
+
+    Rwiki.Tree.Node.superclass.constructor.call(this, config);
+  },
+
   getPath: function() {
     return Rwiki.Tree.Node.superclass.getPath.call(this, 'text');
   },
