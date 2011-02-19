@@ -227,4 +227,26 @@ describe Rwiki::Utils::FileHelper do
     end
   end
 
+  describe '.create_home_page!' do
+    context 'when the home page does not exist' do
+      before do
+        home_page = Rwiki::Page.new
+
+        # delete the home page
+        FileUtils.rm_rf(home_page.file_helper.full_path)
+        FileUtils.rm_rf(home_page.file_helper.full_file_path)
+      end
+
+      it "should create the home page" do
+        FileHelper.create_home_page!
+
+        home_page = nil
+        lambda { home_page = Rwiki::Page.new }.should_not raise_error
+
+        home_page.should_not be_nil
+        File.exist?(home_page.file_helper.full_file_path)
+      end
+    end
+  end
+
 end

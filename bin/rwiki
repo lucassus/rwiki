@@ -8,4 +8,5 @@ rwiki_path = (ARGV[0] ? File.expand_path(ARGV[0]) : Dir.pwd).freeze
 puts "Rwiki path is: #{rwiki_path}"
 Rwiki.configuration.rwiki_path = rwiki_path
 
+Rwiki::Utils::FileHelper.create_home_page!
 Rwiki::App.run!

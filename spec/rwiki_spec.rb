@@ -9,4 +9,7 @@ describe Rwiki do
   its('configuration.root_page_path') { should == '/Home' }
   its('configuration.page_file_extension') { should == 'txt' }
 
+  its('configuration.root_page_full_path') { should == '/tmp/rwiki_test/fixtures/Home' }
+  its('configuration.root_page_full_file_path') { should == '/tmp/rwiki_test/fixtures/Home.txt' }
+
 end

@@ -8,4 +8,5 @@ rwiki_path = config[:rwiki_path]
 puts "Rwiki path is: #{rwiki_path}"
 Rwiki.configuration.rwiki_path = rwiki_path
 
+Rwiki::Utils::FileHelper.create_home_page!
 run Rwiki::App

@@ -105,6 +105,13 @@ module Rwiki::Utils
     def self.expand_node_file_path(path)
       "#{expand_node_path(path)}.#{Rwiki.configuration.page_file_extension}"
     end
-    
+
+    def self.create_home_page!
+      return if File.exists?(Rwiki.configuration.root_page_full_file_path)
+
+      FileUtils.mkdir_p(Rwiki.configuration.rwiki_path)
+      FileUtils.touch(Rwiki.configuration.root_page_full_file_path)
+    end
+
   end
 end

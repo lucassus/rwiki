@@ -18,5 +18,13 @@ module Rwiki
       '/' + root_page_name
     end
 
+    def root_page_full_path
+      File.join(rwiki_path, root_page_path)
+    end
+
+    def root_page_full_file_path
+      root_page_full_path + '.' + page_file_extension
+    end
+
   end
 end
