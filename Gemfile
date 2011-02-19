@@ -13,11 +13,12 @@ gem "smart_asset"
 group :development do
   gem "jeweler"
   gem "ruby-debug19"
+  gem "shotgun"
 
   gem "rack-test"
-  gem "jasmine"
   gem "rspec"
   gem "mocha"
+  gem "jasmine"
 
   gem "cucumber"
   gem "cucumber-rails"
