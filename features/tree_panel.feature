@@ -5,9 +5,9 @@ Feature: Tree Panel
 
   Scenario: Browsing the root node
     Then for the tree node "/Home" I should see following nodes:
+      | About          |
       | Development    |
       | Personal stuff |
-      | About          |
     And I should not see the tree node titled "Ruby"
     And I should not see the tree node titled "Addresses"
 
