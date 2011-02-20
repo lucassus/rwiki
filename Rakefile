@@ -14,6 +14,8 @@ end
 require "cucumber/rake/task"
 require "rspec/core/rake_task"
 require "rspec/core/version"
+require 'ci/reporter/rake/rspec'
+
 require 'rwiki'
 
 task :default => :spec

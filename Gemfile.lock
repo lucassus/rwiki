@@ -23,6 +23,8 @@ GEM
     celerity (0.8.8)
     childprocess (0.1.7)
       ffi (~> 0.6.3)
+    ci_reporter (1.6.4)
+      builder (>= 2.1.2)
     coderay (0.9.7)
     columnize (0.3.2)
     cucumber (0.10.0)
@@ -132,6 +134,7 @@ DEPENDENCIES
   awesome_print
   capistrano
   capybara
+  ci_reporter
   coderay
   cucumber
   cucumber-rails

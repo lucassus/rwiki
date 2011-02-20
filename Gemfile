@@ -14,6 +14,7 @@ group :development do
   gem "jeweler"
   gem "ruby-debug19"
   gem "shotgun"
+  gem "ci_reporter"
 
   gem "rack-test"
   gem "rspec"
