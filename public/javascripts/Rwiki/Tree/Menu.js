@@ -6,19 +6,19 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
       id: 'feeds-ctx',
       items: [{
         text: 'Add page',
-        id: 'create-page',
+        id: 'add-page',
         iconCls: 'icon-add-page',
         scope: this,
         handler: this.onCreatePage
       }, '-',  {
         text: 'Rename page',
-        id: 'rename-node',
+        id: 'rename-page',
         iconCls: 'icon-rename-page',
         scope: this,
         handler: this.onRenameNode
       }, {
         text: 'Delete page',
-        id: 'delete-node',
+        id: 'delete-page',
         iconCls: 'icon-delete-page',
         scope: this,
         handler: this.onDeleteNode
@@ -32,8 +32,8 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
     this.node = node;
     node.select();
 
-    this.setItemDisabled('delete-node', node.isRoot);
-    this.setItemDisabled('rename-node', node.isRoot);
+    this.setItemDisabled('delete-page', node.isRoot);
+    this.setItemDisabled('rename-page', node.isRoot);
 
     this.showAt(xy);
   },

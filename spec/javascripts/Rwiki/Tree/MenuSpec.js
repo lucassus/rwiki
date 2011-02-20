@@ -51,9 +51,9 @@ describe("Rwiki.Tree.Menu", function() {
         expect(menu.showAt).toHaveBeenCalledWith(xy);
       });
 
+      itShouldEnable('add-page');
       itShouldDisable('delete-page');
       itShouldDisable('rename-page');
-      itShouldEnable('create-page');
     });
 
     describe("when page node is selected", function() {
@@ -72,7 +72,7 @@ describe("Rwiki.Tree.Menu", function() {
 
       itShouldEnable('delete-page');
       itShouldEnable('rename-page');
-      itShouldEnable('create-page');
+      itShouldEnable('add-page');
     });
   });
 
@@ -91,13 +91,13 @@ describe("Rwiki.Tree.Menu", function() {
       });
     });
 
-    describe("'Create page' option", function() {
+    describe("'Add page' option", function() {
       beforeEach(function() {
-        item = menu.findById('create-page');
+        item = menu.findById('add-page');
       });
 
-      it("should have 'Create page' title", function() {
-        expect(item).toBeTitledAs("Create page");
+      it("should have 'Add page' title", function() {
+        expect(item).toBeTitledAs("Add page");
       });
     });
 
@@ -106,18 +106,18 @@ describe("Rwiki.Tree.Menu", function() {
         item = menu.findById('rename-page');
       });
 
-      it("should have 'Rename node' title", function() {
-        expect(item).toBeTitledAs("Rename node");
+      it("should have 'Rename page' title", function() {
+        expect(item).toBeTitledAs("Rename page");
       });
     });
 
-    describe("'Delete node' option", function() {
+    describe("'Delete page' option", function() {
       beforeEach(function() {
         item = menu.findById('delete-page');
       });
 
-      it("should have 'Delete node' title", function() {
-        expect(item).toBeTitledAs("Delete node");
+      it("should have 'Delete page' title", function() {
+        expect(item).toBeTitledAs("Delete page");
       });
     });
   });

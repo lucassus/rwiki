@@ -1,7 +1,7 @@
 describe("Rwiki.Data.Page", function() {
   var node;
   var data = {
-    path: './Development/Dynamic languages/Ruby.txt',
+    path: '/Home/Development/Dynamic languages/Ruby',
     htmlContent: 'html content',
     rawContent: 'raw content'
   };
@@ -13,21 +13,21 @@ describe("Rwiki.Data.Page", function() {
   describe(":getPath", function() {
     it("should return valid path", function() {
       var path = node.getPath();
-      expect(path).toEqual('./Development/Dynamic languages/Ruby.txt');
+      expect(path).toEqual('/Home/Development/Dynamic languages/Ruby');
     });
   });
 
   describe(":getParentPath", function() {
     it("should return valid parent path", function() {
       var parentPath = node.getParentPath();
-      expect(parentPath).toEqual('./Development/Dynamic languages');
+      expect(parentPath).toEqual('/Home/Development/Dynamic languages');
     });
   });
 
   describe(":getBaseName", function() {
     it("should return valid base name", function() {
       var baseName = node.getBaseName();
-      expect(baseName).toEqual("Ruby.txt");
+      expect(baseName).toEqual("Ruby");
     });
   });
 

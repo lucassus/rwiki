@@ -5,19 +5,14 @@ git remote prune origin
 git gc
 
 export WORKING_PATH=$(pwd)
-export SELENIUM_SERVER_PORT=4444
 export DISPLAY=:92
 
 rvm use 1.9.2
 bundle install --path vendor/bundle
-
 script/xvfb start
-script/selenium start
 
 bundle exec rake jasmine:ci --trace
 RESULT=$?
 
 script/xvfb stop
-script/selenium stop
-
 exit $RESULT

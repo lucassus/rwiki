@@ -49,18 +49,18 @@ describe("Rwiki.TabPanel", function() {
       });
     });
 
-    it("should return valid tabs for '/Home/foo/bar'", function() {
+    xit("should return valid tabs for '/Home/foo/bar'", function() {
       var tabs = tabPanel.findTabsByParentPath('/Home/foo/bar');
-      
+
       expect(tabs.length).toBe(3);
       expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test');
       expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test/test 1');
       expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test/test 2');
     });
-    
-    it("should return valid tabs for '/Home/foo/test'", function() {
+
+    xit("should return valid tabs for '/Home/foo/test'", function() {
       var tabs = tabPanel.findTabsByParentPath('/Home/foo/test');
-      
+
       expect(tabs.length).toBe(2);
       expect(tabs).toIncludeTabWithPath('/Home/foo/test/bar 1');
       expect(tabs).toIncludeTabWithPath('/Home/foo/test/bar 2');
