@@ -28,8 +28,6 @@ Rwiki.init = function() {
   // TabPanel history
   Ext.History.init();
 
-  var firstLoad = true;
-
   // TODO find better solution
   Rwiki.ajaxCallCompleted = true;
 
