@@ -19,7 +19,7 @@
 
     <script type="text/javascript">
       Ext.onReady(function() {
-        Rwiki.nodes = <%= Rwiki::Page.new.tree.to_json %>;
+        Rwiki.nodes = <%= @json_tree_nodes %>;
         Rwiki.init();
       });
     </script>

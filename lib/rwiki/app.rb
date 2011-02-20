@@ -28,6 +28,7 @@ module Rwiki
     end
 
     get '/' do
+      @json_tree_nodes = Rwiki::Page.new.tree.to_json
       erb :index
     end
 
