@@ -99,7 +99,7 @@ module Rwiki
     def to_tree_node_hash
       {
         :text => title,
-        :leaf => leaf?
+        :leaf => false
       }
     end
 
