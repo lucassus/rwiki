@@ -6,7 +6,7 @@ Feature: Display the page
   Scenario Outline: Display the page
     When I open the page "<path>"
     Then I should see active tab titled "<title>"
-    And I should see a content for the page  "<path>"
+    And I should see a content for the page "<path>"
 
   Examples:
     | path                                         | title                 |
@@ -28,4 +28,4 @@ Feature: Display the page
       | Ruby      |
     Then I should see active tab titled "Ruby"
     And I should see the application title "Rwiki /Home/Development/Programming Languages/Ruby"
-    And I should see a content for the page  "/Home/Development/Programming Languages/Ruby"
+    And I should see a content for the page "/Home/Development/Programming Languages/Ruby"

@@ -35,7 +35,7 @@ When /^I open the page "([^"]*)"$/ do |path|
 end
 
 Then /^I should see the page "([^"]*)"$/ do |path|
-  Then %{I should see a content for the page  "#{path}"}
+  Then %{I should see a content for the page "#{path}"}
   And %{I should see the application title "Rwiki #{path}"}
 
   And %{I should see enabled "Edit page" toolbar button}

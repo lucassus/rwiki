@@ -28,7 +28,6 @@ World do
   include TmpdirHelper
 
   AfterStep do
-    Given %Q{I wait for load the tree}
     And %Q{I wait for an ajax call complete}
   end
 

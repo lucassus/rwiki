@@ -10,7 +10,7 @@ Feature: History
       | Home |
     And the tree node "/Home" should be selected
     Then I should see "This is Rwiki Home Page" within "h1"
-    And I should see a content for the page  "/Home"
+    And I should see a content for the page "/Home"
 
   Scenario Outline: After reload the application last opened page should be loaded
     When I open the page "<path>"
@@ -18,7 +18,7 @@ Feature: History
 
     Then I should see active tab titled "<title>"
     And I should see the application title "Rwiki <path>"
-    And I should see a content for the page  "<path>"
+    And I should see a content for the page "<path>"
     And the tree node "<path>" should be selected
 
   Examples:
@@ -38,22 +38,22 @@ Feature: History
 
     And I press the browser back button
     Then the tree node "/Home/About" should be selected
-    And I should see a content for the page  "/Home/About"
+    And I should see a content for the page "/Home/About"
     And I should see active tab titled "About"
 
     When I press the browser back button
     Then the tree node "/Home/Personal stuff/Addresses" should be selected
-    And I should see a content for the page  "/Home/Personal stuff/Addresses"
+    And I should see a content for the page "/Home/Personal stuff/Addresses"
     And I should see active tab titled "Addresses"
 
     When I press the browser forward button
     Then the tree node "/Home/About" should be selected
-    And I should see a content for the page  "/Home/About"
+    And I should see a content for the page "/Home/About"
     And I should see active tab titled "About"
 
     When I create a new page titled "A new page" for the parent "/Home"
     And I press the browser back button
     And I press the browser forward button
     Then the tree node "/Home/A new page" should be selected
-    And I should see a content for the page  "/Home/A new page"
+    And I should see a content for the page "/Home/A new page"
     And I should see active tab titled "A new page"

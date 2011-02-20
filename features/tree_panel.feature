@@ -30,7 +30,7 @@ Feature: Tree Panel
     When I move the tree node "<path>" to "<new_parent_path>"
     And I reload the application
     And I open the page "<new_path>"
-    Then I should see a content for the page  "<new_path>"
+    Then I should see a content for the page "<new_path>"
 
   Examples:
     | path                                         | new_parent_path      | new_path                         |

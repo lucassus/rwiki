@@ -17,11 +17,11 @@ Feature: Editing the page
     And I press "Save"
     Then I should not see the window
     And I should see "A new page header" within "h1"
-    And I should see a content for the page  "/Home"
+    And I should see a content for the page "/Home"
 
     When I reload the application
     Then I should see "A new page header" within "h1"
-    And I should see a content for the page  "/Home"
+    And I should see a content for the page "/Home"
 
   Scenario: Edit and Save and continue
     When I click the tree node "/Home"
@@ -32,7 +32,7 @@ Feature: Editing the page
     And I press "Save and continue"
     Then I should see the window titled "Editing page /Home"
     And I should see "A new page header" within "h1"
-    And I should see a content for the page  "/Home"
+    And I should see a content for the page "/Home"
 
     Scenario: Edit and Cancel
     When I click the tree node "/Home"
@@ -42,4 +42,4 @@ Feature: Editing the page
     When I fill in "editor" with "h1. A new page header"
     And I press "Cancel"
     Then I should see "This is Rwiki Home Page" within "h1"
-    And I should see a content for the page  "/Home"
+    And I should see a content for the page "/Home"

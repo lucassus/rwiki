@@ -41,7 +41,7 @@ When /^I create a new page titled "([^"]*)" for the parent "([^"]*)"$/ do |title
   Then %{I should see the page titled "#{title}"}
 end
 
-Then /^I should see a content for the page  "([^"]*)"$/ do |path|
+Then /^I should see a content for the page "([^"]*)"$/ do |path|
   require 'lorax'
 
   expected_html = Rwiki::Page.new(path).html_content

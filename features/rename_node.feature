@@ -16,7 +16,7 @@ Feature: Rename a node
     Then I should see the page titled "The new About"
 
     When I click the tree node "/Home/The new About"
-    And I should see a content for the page  "/Home/The new About"
+    And I should see a content for the page "/Home/The new About"
 
   Scenario: Rename a page to existing name
     When I right click the tree node "/Home/About"
@@ -30,10 +30,10 @@ Feature: Rename a node
     And I should see "Personal stuff"
 
     When I click the tree node "/Home"
-    And I should see a content for the page  "/Home"
+    And I should see a content for the page "/Home"
 
     When I click the tree node "/Home/About"
-    Then I should see a content for the page  "/Home/About"
+    Then I should see a content for the page "/Home/About"
     And I should see the application title "Rwiki /Home/About"
     And I should have the following open tabs:
       | Home  |
@@ -55,4 +55,4 @@ Feature: Rename a node
       | The new About |
       | Home          |
     And I should see the application title "Rwiki /Home/The new About"
-    And I should see a content for the page  "/Home/The new About"
+    And I should see a content for the page "/Home/The new About"
