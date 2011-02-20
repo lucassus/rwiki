@@ -3,7 +3,7 @@ Ext.ns('Rwiki');
 Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   
   initComponent: function() {
-    this.editPageButton = new Ext.Button({
+    this.editPageButton = new Rwiki.Button({
       text: 'Edit page',
       iconCls: 'icon-edit',
       scope: this,
@@ -11,7 +11,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       disabled: true
     });
 
-    this.printPageButton = new Ext.Button({
+    this.printPageButton = new Rwiki.Button({
       text: 'Print page',
       iconCls: 'icon-print',
       scope: this,
@@ -19,7 +19,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       disabled: true
     });
 
-    this.findPageButton = new Ext.Button({
+    this.findPageButton = new Rwiki.Button({
       text: 'Find page',
       iconCls: 'icon-search',
       scope: this,

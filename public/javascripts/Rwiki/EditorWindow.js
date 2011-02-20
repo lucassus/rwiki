@@ -16,22 +16,22 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
       bodyStyle: 'padding: 5px;',
       buttonAlign: 'center',
       items: this.editorPanel,
-      buttons: [ {
+      buttons: [new Rwiki.Button({
         text: 'Save',
         scope: this,
         handler: this.onSaveButton,
         iconCls: 'icon-save'
-      }, {
+      }), new Rwiki.Button({
         text: 'Save and continue',
         scope: this,
         handler: this.onSaveAndContinueButton,
         iconCls: 'icon-save'
-      }, {
+      }), new Rwiki.Button({
         text: 'Cancel',
         scope: this,
         handler: this.onCancelButton,
         iconCls: 'icon-cancel'
-      }]
+      })]
     });
 
     Rwiki.EditorWindow.superclass.constructor.apply(this, arguments);
