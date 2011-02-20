@@ -181,8 +181,8 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     }
   },
 
-  onPageDeleted: function(data) {
-    var tabs = this.findTabsByParentPath(data.path);
+  onPageDeleted: function(page) {
+    var tabs = this.findTabsByParentPath(page.getPath());
     for (var i = 0; i < tabs.length; i++) {
       var tab = tabs[i];
       this.remove(tab);

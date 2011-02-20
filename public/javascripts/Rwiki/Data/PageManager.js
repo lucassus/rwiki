@@ -110,7 +110,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
       timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
-        this.fireEvent('rwiki:pageDeleted', data);
+        var page = new Rwiki.Data.Page(data);
+        this.fireEvent('rwiki:pageDeleted', page);
       }
     });
   },
