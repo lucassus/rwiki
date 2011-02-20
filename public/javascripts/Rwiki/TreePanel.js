@@ -98,9 +98,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     treeNode.setText(page.getTitle());
   },
 
-  onPageDeleted: function(data) {
-    var path = data.path;
-    var node = this.findNodeByPath(path);
+  onPageDeleted: function(page) {
+    var node = this.findNodeByPath(page.getPath());
     node.remove();
   },
 
