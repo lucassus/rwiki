@@ -48,6 +48,11 @@ describe Rwiki::App do
   describe 'on GET to /fuzzy_finder' do
     before { get '/fuzzy_finder', :query => 'Ruby' }
     it_should_respond_with_success
+    end
+
+  describe 'on GET to /node/print' do
+    before { get '/node/print', :path => '/Home/About' }
+    it_should_respond_with_success
   end
 
 end

@@ -113,7 +113,7 @@ module Rwiki
     get '/node/print' do
       path = params[:path].strip
       page = Page.new(path)
-      @html = page.to_html
+      @html_content = page.html_content
 
       erb :print, :layout => false
     end
