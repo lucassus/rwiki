@@ -123,16 +123,5 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     });
 
     return node;
-  },
-
-  openNodeFromLocationHash: function() {
-    if (!location.hash) return;
-
-    var path = location.hash.replace(new RegExp('^#'), '');
-    var node = this.findNodeByPath(path);
-    if (node) {
-      node.expandAllParents();
-      this.onClick(node);
-    }
   }
 });

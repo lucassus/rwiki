@@ -52,7 +52,10 @@ Rwiki.Data.Page.prototype = {
    * Returns node's file name
    */
   getBaseName: function() {
-    return this.getPath().split('/').pop();
+    var path = this.getPath();
+    if (path) {
+      return path.split('/').pop();
+    }
   },
 
   /**

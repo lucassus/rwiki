@@ -14,6 +14,15 @@ Rwiki.captureEvents = function(observable) {
   });
 };
 
+Rwiki.loadPageFromLocation = function() {
+  if (!location.hash) return;
+  var path = location.hash.replace(new RegExp('^#'), '');
+  var node = Rwiki.treePanel.findNodeByPath(path);
+  if (node) {
+    Rwiki.treePanel.onClick(node);
+  }
+};
+
 Rwiki.init = function() {
 
   // TabPanel history
@@ -23,7 +32,6 @@ Rwiki.init = function() {
 
   // TODO find better solution
   Rwiki.ajaxCallCompleted = true;
-  Rwiki.treeLoaded = false;
 
   Rwiki.treePanel = new Rwiki.TreePanel();
   Rwiki.nodeManager = Rwiki.Data.PageManager.getInstance();
@@ -43,11 +51,6 @@ Rwiki.init = function() {
     statusAlign: 'right',
     defaultText: 'Ready',
     iconCls: 'x-status-valid'
-  });
-
-  Rwiki.treePanel.getLoader().on('load', function() {
-    Rwiki.treeLoaded = true;
-    Rwiki.treePanel.openNodeFromLocationHash();
   });
 
   // Initialize the internal links
@@ -74,12 +77,11 @@ Rwiki.init = function() {
     }
   });
 
-  // Handle this change event in order to restore the UI to the appropriate history state
   Ext.History.on('change', function() {
-    Rwiki.treePanel.openNodeFromLocationHash();
+    Rwiki.loadPageFromLocation();
   });
 
-  // Create layout
+  // Create the layout
 
   var navigationPanel = new Rwiki.NavigationPanel({
     items: [Rwiki.treePanel]
@@ -93,6 +95,7 @@ Rwiki.init = function() {
     listeners: {
       afterrender: function() {
         Rwiki.treePanel.root.expand();
+        Rwiki.loadPageFromLocation();
       }
     }
   });
