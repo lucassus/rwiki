@@ -23,6 +23,10 @@ Rwiki.loadPageFromLocation = function() {
   }
 };
 
+Rwiki.setAppTitle = function(title) {
+  document.title = 'Rwiki ' + title;
+};
+
 Rwiki.init = function() {
 
   // TabPanel history

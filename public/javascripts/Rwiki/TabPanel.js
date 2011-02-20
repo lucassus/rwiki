@@ -111,11 +111,11 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       }
 
       Ext.History.add(tab.getPagePath());
-      document.title = 'Rwiki ' + tab.getPagePath();
+      Rwiki.setAppTitle(tab.getPagePath());
       Rwiki.Data.PageManager.getInstance().loadPage(tab.getPagePath());
       tab.setIsLoading(true);
     } else {
-      document.title = 'Rwiki';
+      Rwiki.setAppTitle('');
       Rwiki.Data.PageManager.getInstance().fireEvent('rwiki:lastPageClosed');
     }
   },
@@ -150,33 +150,30 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     tab.setContent(page.getHtmlContent());
   },
 
-  // TODO cleanup this method
   onPageRenamed: function(page) {
     var oldPath = page.getData().oldPath;
     var currentTab = this.getActiveTab();
 
-    var tab = null;
-    var isPage = oldPath.match(new RegExp('\.txt$'));
-    if (isPage) {
-      tab = this.findTabByPagePath(oldPath);
-      if (tab == null) return;
-
+    // set a new title and path for the current tab
+    var tab = this.findTabByPagePath(oldPath);
+    if (tab) {
       tab.setPagePath(page.getPath());
       tab.setTitle(page.getTitle());
 
       if (tab == currentTab) {
-        document.title = 'Rwiki ' + page.getPath();
+        Rwiki.setAppTitle(page.getPath());
       }
-    } else {
-      var tabs = this.findTabsByParentPath(oldPath);
-      for (var i = 0; i < tabs.length; i++) {
-        tab = tabs[i];
-        var newPath = tab.getPagePath().replace(oldPath, page.getPath());
-        tab.setPagePath(newPath);
+    }
 
-        if (tab == currentTab) {
-          document.title = 'Rwiki ' + newPath;
-        }
+    // set a new title and path for all child tabs
+    var tabs = this.findTabsByParentPath(oldPath);
+    for (var i = 0; i < tabs.length; i++) {
+      tab = tabs[i];
+      var newPath = tab.getPagePath().replace(oldPath, page.getPath());
+      tab.setPagePath(newPath);
+
+      if (tab == currentTab) {
+        Rwiki.setAppTitle(page.getPath());
       }
     }
   },

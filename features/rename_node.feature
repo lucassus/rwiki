@@ -3,20 +3,33 @@ Feature: Rename a node
   Background:
     Given I open the application
 
-  Scenario: Rename a page
-    When I right click the tree node "/Home/About"
+  Scenario Outline: Rename a page
+    When I open the page "<path>"
+    Then I should see the application title "Rwiki <path>"
+
+    When I right click the tree node "<path>"
     And I follow "Rename page"
     Then I should see dialog box titled "Rename page"
 
-    When I fill in the input with "The new About" within the dialog box
+    When I fill in the input with "<new_name>" within the dialog box
     And I press "OK" within the dialog box
-    Then I should see the page titled "The new About"
+    Then I should see the page titled "<new_name>"
+    And I should see the application title "Rwiki <new_path>"
+    And I should have the following open tabs:
+      | <new_name> |
 
     When I reload the application
-    Then I should see the page titled "The new About"
+    And I expand the parent for the tree node "<new_path>"
+    And I click the tree node "<new_path>"
+    Then I should see a content for the page "<new_path>"
 
-    When I click the tree node "/Home/The new About"
-    And I should see a content for the page "/Home/The new About"
+  Examples:
+    | path                                           | new_name      | new_path                                             |
+    | /Home/About                                    | The new About | /Home/The new About                                  |
+    | /Home/Development                              | Geek stuff    | /Home/Geek stuff                                     |
+    | /Home/Development/Programming Languages        | Programming   | /Home/Development/Programming                        |
+    | /Home/Development/Programming Languages/Python | Crunchy frog  | /Home/Development/Programming Languages/Crunchy frog |
+    | /Home/Development/Databases                    | DB            | /Home/Development/DB                                 |
 
   Scenario: Rename a page to existing name
     When I right click the tree node "/Home/About"
@@ -25,7 +38,8 @@ Feature: Rename a node
 
     When I fill in the input with "Personal stuff" within the dialog box
     And I press "OK" within the dialog box
-    And I reload the application
+
+    When I reload the application
     And I should see "About"
     And I should see "Personal stuff"
 
@@ -39,20 +53,25 @@ Feature: Rename a node
       | Home  |
       | About |
 
-  Scenario: Rename a page when tab is open
-    When I click the tree node "/Home/About"
-    And I click the tree node "/Home"
-    Then I should see the application title "Rwiki /Home"
+  Scenario Outline: Rename the parent page
+    When I open the page "/Home/Development/Programming Languages/Java"
+    And I open the page "/Home/Development/Programming Languages/JavaScript"
+    And I open the page "/Home/Development/Programming Languages/Python"
+    And I open the page "/Home/Development/Programming Languages/Ruby"
 
-    And I right click the tree node "/Home/About"
+    When I right click the tree node "/Home/Development/Programming Languages"
     And I follow "Rename page"
     Then I should see dialog box titled "Rename page"
 
-    When I fill in the input with "The new About" within the dialog box
+    When I fill in the input with "Programming" within the dialog box
     And I press "OK" within the dialog box
-    Then I should see the page titled "The new About"
-    And I should have the following open tabs:
-      | The new About |
-      | Home          |
-    And I should see the application title "Rwiki /Home/The new About"
-    And I should see a content for the page "/Home/The new About"
+
+    When I click a tab for page "<path>"
+    Then I should see a content for the page "<path>"
+
+  Examples:
+    | path                                     |
+    | /Home/Development/Programming/Java       |
+    | /Home/Development/Programming/JavaScript |
+    | /Home/Development/Programming/Python     |
+    | /Home/Development/Programming/Ruby       |
