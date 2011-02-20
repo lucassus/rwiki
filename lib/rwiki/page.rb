@@ -6,6 +6,10 @@ module Rwiki
 
     attr_reader :file_helper
 
+    def self.root
+      self.new
+    end
+
     def initialize(path = Rwiki.configuration.root_page_name)
       @file_helper = FileHelper.new(path)
       raise Error.new("can't find the #{path} page") unless @file_helper.exists?

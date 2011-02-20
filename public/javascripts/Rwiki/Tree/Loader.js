@@ -3,9 +3,8 @@ Ext.ns('Rwiki.Tree');
 Rwiki.Tree.Loader = Ext.extend(Ext.tree.TreeLoader, {
   constructor: function() {
     Ext.apply(this, {
-      requestMethod: 'GET',
-      dataUrl: '/nodes',
-      preloadChildren: true
+      preloadChildren: true,
+      clearOnLoad: false
     });
 
     Rwiki.Tree.Loader.superclass.constructor.apply(this, arguments);

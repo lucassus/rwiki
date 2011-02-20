@@ -31,11 +31,6 @@ module Rwiki
       erb :index
     end
 
-    # get the nodes tree
-    get '/nodes' do
-      Page.new.tree.to_json
-    end
-
     # get the node's content
     get '/node' do
       begin

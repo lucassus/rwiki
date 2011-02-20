@@ -13,11 +13,6 @@ describe Rwiki::App do
     it_should_respond_with_success
   end
 
-  describe 'on GET to /nodes' do
-    before { get '/nodes', :path => '.' }
-    it_should_respond_with_success
-  end
-
   describe 'on GET to /node' do
     context 'for non-existing page' do
       before { get '/node', :path => 'Non-existing' }

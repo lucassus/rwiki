@@ -3,6 +3,12 @@ require File.expand_path(File.join('..', 'spec_helper'), File.dirname(__FILE__))
 describe Rwiki::Page do
   include Rwiki
 
+  describe '.root' do
+    it "should return the home page instance" do
+      Page.root.is_root?.should be_true
+    end
+  end
+
   describe ".new" do
     context "without arguments" do
       it "should return the home page instance" do

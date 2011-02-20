@@ -89,7 +89,12 @@ Rwiki.init = function() {
     layout: 'border',
     plain: true,
     renderTo: Ext.getBody(),
-    items: [navigationPanel, Rwiki.tabPanel]
+    items: [navigationPanel, Rwiki.tabPanel],
+    listeners: {
+      afterrender: function() {
+        Rwiki.treePanel.root.expand();
+      }
+    }
   });
 
   app.show();

@@ -21,13 +21,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       root: new Rwiki.Tree.Node({
         nodeType: 'async',
         text: Rwiki.rootFolderName,
-        draggable: false
+        draggable: false,
+        children: Rwiki.nodes
       })
     });
 
     Rwiki.TreePanel.superclass.constructor.apply(this, arguments);
-    this.root.expand();
 
+    this.loader.load(this.root);
     new Ext.tree.TreeSorter(this, {
       folderSort: false
     });
@@ -45,8 +46,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     this.on('rwiki:pageLoaded', this.onPageLoaded);
     this.on('rwiki:pageCreated', this.onPageCreated);
-    this.on('rwiki:pageRenamed', this.onNodeRenamed);
-    this.on('rwiki:pageDeleted', this.onNodeDeleted);
+    this.on('rwiki:pageRenamed', this.onPageRenamed);
+    this.on('rwiki:pageDeleted', this.onPageDeleted);
     this.on('beforemovenode', this.onBeforeMoveNode);
 
     this.relayEvents(Rwiki.Data.PageManager.getInstance(), [

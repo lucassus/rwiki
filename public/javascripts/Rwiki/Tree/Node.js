@@ -1,6 +1,6 @@
 Ext.ns('Rwiki.Tree');
 
-Rwiki.Tree.Node = Ext.extend(Ext.tree.AsyncTreeNode, {
+Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
 
   constructor: function(config) {
     config = Ext.apply({
