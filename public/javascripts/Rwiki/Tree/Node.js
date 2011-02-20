@@ -15,6 +15,10 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
     return Rwiki.Tree.Node.superclass.getPath.call(this, 'text');
   },
 
+  getName: function() {
+    return this.text;
+  },
+
   expandAllParents: function() {
     var nodes = [];
 

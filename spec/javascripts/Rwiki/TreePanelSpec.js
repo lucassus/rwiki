@@ -37,24 +37,24 @@ describe("Rwiki.TreePanel", function() {
 
   describe(":findNodeByPath function", function() {
     it("should find root node", function() {
-      var node = treePanel.findNodeByPath('.');
+      var node = treePanel.findNodeByPath('/Home');
       expect(node).not.toBeNull();
     }),
 
-    it("should find '/Home/test' node", function() {
-      var node = treePanel.findNodeByPath('/Home/test');
+    it("should find '/Home/Test' node", function() {
+      var node = treePanel.findNodeByPath('/Home/Test');
 
       expect(node).not.toBeNull();
-      expect(node.getBaseName()).toEqual('test');
-      expect(node.getPath('baseName')).toEqual('/Home/test');
+      expect(node.getName()).toEqual('Test');
+      expect(node.getPath()).toEqual('/Home/Test');
     });
 
     it("should find '/Home/Develop/Ruby' node", function() {
       var node = treePanel.findNodeByPath('/Home/Develop/Ruby');
 
       expect(node).not.toBeNull();
-      expect(node.getBaseName()).toEqual('Ruby');
-      expect(node.getPath('baseName')).toEqual('/Home/Develop/Ruby');
+      expect(node.getName()).toEqual('Ruby');
+      expect(node.getPath()).toEqual('/Home/Develop/Ruby');
     });
 
     it("should not find '/Home/Develop/Non-existing'", function() {
