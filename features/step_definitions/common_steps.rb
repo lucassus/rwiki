@@ -44,6 +44,7 @@ end
 Then /^I should see a content for the page "([^"]*)"$/ do |path|
   require 'lorax'
 
+  sleep 1 # TODO quick fix
   expected_html = Rwiki::Page.new(path).html_content
   expected_html = "<div>#{expected_html}</div>"
   actual_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html
