@@ -19,6 +19,7 @@ module Rwiki
   autoload :App, 'rwiki/app'
   autoload :Configuration, 'rwiki/configuration'
   autoload :Page, 'rwiki/page'
+  autoload :Rake, 'rwiki/rake'
   autoload :Utils, 'rwiki/utils'
 
   def self.debug
