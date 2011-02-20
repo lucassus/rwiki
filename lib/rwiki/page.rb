@@ -115,6 +115,20 @@ module Rwiki
       to_hash.to_json
     end
 
+    # TODO cleanup and write tests
+    def self.fuzzy_finder(query)
+      @finder ||= FuzzyFileFinder.new(Rwiki.configuration.rwiki_path)
+      @finder.rescan!
+
+      matches = @finder.find(query).sort_by { |m| [-m[:score], m[:path]] }
+      matches.each do |m|
+        m[:path] = m[:path].gsub(Rwiki.configuration.rwiki_path, '').gsub(/\.#{Rwiki.configuration.page_file_extension}$/, '')
+        m[:highlighted_path] = m[:highlighted_path].gsub(/\.#{Rwiki.configuration.page_file_extension}$/, '')
+      end
+
+      matches
+    end
+
     protected
 
     def fetch_children

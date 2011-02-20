@@ -17,6 +17,10 @@ Rwiki.captureEvents = function(observable) {
 Rwiki.loadPageFromLocation = function() {
   if (!location.hash) return;
   var path = location.hash.replace(new RegExp('^#'), '');
+  Rwiki.openPage(path);
+};
+
+Rwiki.openPage = function(path) {
   var node = Rwiki.treePanel.findNodeByPath(path);
   if (node) {
     Rwiki.treePanel.onClick(node);

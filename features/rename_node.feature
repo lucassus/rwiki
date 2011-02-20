@@ -1,5 +1,6 @@
 Feature: Rename a node
 
+  # TODO refactor this feature
   Background:
     Given I open the application
 
