@@ -88,9 +88,11 @@ module Rwiki
       node = Page.new(path)
       new_parent = Page.new(new_parent_path)
 
+      success = node.move_to(new_parent)
+      
       result = node.to_hash
       result[:oldPath] = path
-      result[:success] = node.move_to(new_parent)
+      result[:success] = success
 
       result.to_json
     end
