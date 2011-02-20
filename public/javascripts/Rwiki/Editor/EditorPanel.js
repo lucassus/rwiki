@@ -9,10 +9,15 @@ Rwiki.Editor.Panel = Ext.extend(Ext.Panel, {
 
       listeners: {
         resize: function(panel, width, height) {
+          // some magic number for tuning the editor layout
           var offset = 36 - 25;
           $('.markItUpContainer').height(height - offset);
-          var editorOffset = 73 - 25;
-          $('#editor').height(height - editorOffset);
+
+          var heightOffset = 73 - 25;
+          $('#editor').height(height - heightOffset);
+
+          var widthOffset = 26;
+          $('#editor').width(width - widthOffset);
         }
       }
     });
