@@ -75,6 +75,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   onPageLoaded: function(page) {
     var node = this.findNodeByPath(page.getPath());
     if (node) {
+      node.expandAllParents();
       node.select();
     }
   },
