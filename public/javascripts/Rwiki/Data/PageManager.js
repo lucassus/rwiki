@@ -20,9 +20,12 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
     this.addEvents(
       'rwiki:beforePageLoad',
       'rwiki:pageLoaded',
+
+      'rwiki:beforePageSave',
+      'rwiki:pageSaved',
+
       'rwiki:pageDeleted',
       'rwiki:pageCreated',
-      'rwiki:pageSaved',
       'rwiki:pageRenamed',
       'rwiki:lastPageClosed'
     );
@@ -66,6 +69,9 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
   },
 
   savePage: function(path, rawContent) {
+    var page = new Rwiki.Data.Page({ path: path });
+    this.fireEvent('rwiki:beforePageSave', page);
+
     Ext.Ajax.request({
       url: '/node',
       method: 'PUT',
