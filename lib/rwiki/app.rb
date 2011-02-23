@@ -27,6 +27,13 @@ module Rwiki
       { :success => false, :message => message }.to_json
     end
 
+    after do
+      if params[:emulateSlowConnection] == 'true'
+        duration = (1..5).to_a.sample
+        sleep(duration)
+      end
+    end
+
     get '/' do
       @json_tree_nodes = Rwiki::Page.new.tree.to_json
       erb :index

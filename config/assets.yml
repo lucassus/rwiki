@@ -18,6 +18,7 @@ javascripts:
     - Rwiki/Tree/Menu
     - Rwiki/Tree/Node
     - Rwiki/Button
+    - Rwiki/Debug
     - Rwiki/EditorWindow
     - Rwiki/FuzzyFinderWindow
     - Rwiki/NavigationPanel

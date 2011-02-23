@@ -1,18 +1,7 @@
 Ext.ns('Rwiki');
 
+// TODO fetch if from the configuration
 Rwiki.rootFolderName = 'Home';
-
-/**
- * Log the event names to the console of any observable object.
- */
-Rwiki.captureEvents = function(observable) {
-  Ext.util.Observable.capture(observable, function(eventName, data) {
-    if (!window.console) return;
-
-    console.log(data);
-    console.log(eventName);
-  });
-};
 
 Rwiki.loadPageFromLocation = function() {
   if (!location.hash) return;
@@ -41,7 +30,7 @@ Rwiki.init = function() {
 
   Rwiki.treePanel = new Rwiki.TreePanel();
   Rwiki.nodeManager = Rwiki.Data.PageManager.getInstance();
-  Rwiki.captureEvents(Rwiki.nodeManager);
+  Rwiki.Debug.captureEvents(Rwiki.nodeManager);
 
   Rwiki.nodeManager.on('rwiki:beforePageLoad', function() {
     Rwiki.ajaxCallCompleted = false;

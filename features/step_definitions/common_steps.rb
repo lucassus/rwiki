@@ -13,6 +13,12 @@ When /^I open the application$/ do
   And %{I should see disabled "Print page" toolbar button}
 end
 
+When /^the connection is slow$/ do
+  Capybara.current_session.execute_script <<-JS
+    Rwiki.Debug.emulateSlowConnection(true);
+  JS
+end
+
 When /^I reload the application$/ do
   Capybara.current_session.execute_script <<-JS
     window.location.reload();

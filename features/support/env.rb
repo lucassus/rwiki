@@ -27,10 +27,6 @@ World do
   require File.expand_path(File.join(File.dirname(__FILE__), '../../spec/tmpdir_helper'))
   include TmpdirHelper
 
-  AfterStep do
-    And %Q{I wait for an ajax call complete}
-  end
-
   Before do
     create_tmpdir!
   end
