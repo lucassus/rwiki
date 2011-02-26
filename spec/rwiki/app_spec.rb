@@ -5,8 +5,11 @@ describe Rwiki::App do
   include Rack::Test::Methods
 
   def app
-    Rwiki::App
+    @app ||= Rwiki::App
   end
+  subject { app }
+
+  its(:environment) { should == :test }
 
   describe 'on GET to /' do
     before { get '/' }

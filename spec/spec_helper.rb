@@ -8,8 +8,9 @@ require 'rack/test'
 require 'tmpdir_helper'
 require 'rwiki_macros'
 
-RSpec.configure do |config|
+Rwiki::App.set :environment, :test
 
+RSpec.configure do |config|
   config.include(TmpdirHelper)
   config.include(RwikiMacros)  
 
@@ -19,5 +20,4 @@ RSpec.configure do |config|
   config.before(:each) do
     create_tmpdir!
   end
-
 end
