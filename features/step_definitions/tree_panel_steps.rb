@@ -52,6 +52,7 @@ end
 
 When /^I click (the tree node "(?:[^"]*)")$/ do |el_node_id|
   page.find("div##{el_node_id}").click
+  And %{I wait for load the page}
 end
 
 When /^I right click (the tree node "([^"]*)")$/ do |el_node_id, path|

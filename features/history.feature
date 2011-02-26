@@ -3,13 +3,12 @@ Feature: History
   Background:
     Given I open the application
 
-  Scenario: Open bide with path given in the url
+  Scenario: Open page with path given in the url
     When I open the application for page "/Home"
 
     Then I should have the following open tabs:
       | Home |
     And the tree node "/Home" should be selected
-    Then I should see "This is Rwiki Home Page" within "h1"
     And I should see a content for the page "/Home"
 
   Scenario Outline: After reload the application last opened page should be loaded

@@ -45,6 +45,7 @@ Feature: Create a new page
     Then I should see the page titled "<new_page_name>"
 
     When I click the tree node "<parent_path>/<new_page_name>"
+    And I wait for load the page
     Then I should see a content for the page "<parent_path>/<new_page_name>"
 
   Examples:

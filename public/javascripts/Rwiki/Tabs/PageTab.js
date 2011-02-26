@@ -19,7 +19,7 @@ Rwiki.Tabs.PageTab = Ext.extend(Ext.Container, {
     this._isLoading = isLoading;
 
     if (this.isLoading()) {
-      this.mask = new Ext.LoadMask(Ext.get(this.id), {msg: 'Loading the Page...'});
+      this.mask = new Ext.LoadMask(Ext.get(this.id), {msg: 'Loading the page...'});
       this.mask.show();
     } else if (this.mask) {
       this.mask.hide();

@@ -7,6 +7,19 @@ Given /^this scenario is pending$/ do
   pending # always
 end
 
+When /^I wait for (\d+) second$/ do |n|
+  sleep(n.to_i)
+end
+
+When /^I wait for load the page$/ do
+  mask_selector = 'div.x-mask-loading'
+  condition = lambda { page.all(mask_selector, :visible => true).empty? rescue true }
+  unless condition.call
+    Then %{I should see "Loading the page..." within "#{mask_selector}"}
+    wait_until(10, &condition)
+  end
+end
+
 When /^I open the application$/ do
   When %Q{I go to the home page}
   Then %{I should see disabled "Edit page" toolbar button}
@@ -27,6 +40,7 @@ end
 
 When /^I open the application for page "([^"]*)"$/ do |path|
   visit('/#' + path)
+  And %{I wait for load the page}
 end
 
 Then /^I should see dialog box titled "([^"]*)"$/ do |title|

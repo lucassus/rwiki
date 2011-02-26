@@ -25,20 +25,15 @@ Rwiki.init = function() {
   // TabPanel history
   Ext.History.init();
 
-  // TODO find better solution
-  Rwiki.ajaxCallCompleted = true;
-
   Rwiki.treePanel = new Rwiki.TreePanel();
   Rwiki.nodeManager = Rwiki.Data.PageManager.getInstance();
   Rwiki.Debug.captureEvents(Rwiki.nodeManager);
 
   Rwiki.nodeManager.on('rwiki:beforePageLoad', function() {
-    Rwiki.ajaxCallCompleted = false;
     Rwiki.statusBar.showBusy();
   });
 
   Rwiki.nodeManager.on('rwiki:pageLoaded', function() {
-    Rwiki.ajaxCallCompleted = true;
     Rwiki.statusBar.clearStatus({useDefaults: true});
   });
 
