@@ -11,11 +11,14 @@ When /^I wait for (\d+) second$/ do |n|
   sleep(n.to_i)
 end
 
+Then /^I should see loading a page mask$/ do
+  Then %{I should see "Loading the page..." within "div.x-mask-loading"}
+end
+
 When /^I wait for load the page$/ do
-  mask_selector = 'div.x-mask-loading'
-  condition = lambda { page.all(mask_selector, :visible => true).empty? rescue true }
+  condition = lambda { page.all('div.x-mask-loading', :visible => true).empty? rescue true }
   unless condition.call
-    Then %{I should see "Loading the page..." within "#{mask_selector}"}
+    Then %{I should see loading a page mask}
     wait_until(10, &condition)
   end
 end
@@ -41,6 +44,7 @@ end
 When /^I open the application for page "([^"]*)"$/ do |path|
   visit('/#' + path)
   And %{I wait for load the page}
+  sleep 0.5 # wait for insert the page to the DOM
 end
 
 Then /^I should see dialog box titled "([^"]*)"$/ do |title|
@@ -64,7 +68,6 @@ end
 Then /^I should see a content for the page "([^"]*)"$/ do |path|
   require 'lorax'
 
-  sleep 1 # TODO quick fix
   expected_html = Rwiki::Page.new(path).html_content
   expected_html = "<div>#{expected_html}</div>"
   actual_html = Nokogiri::HTML(page.body).css('div.page-container:not(.x-hide-display)').first.inner_html

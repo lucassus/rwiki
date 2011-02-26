@@ -1,4 +1,4 @@
-Feature: Masking on slow connection
+Feature: Loading mask on slow connection
 
   Background:
     Given I open the application
@@ -7,7 +7,6 @@ Feature: Masking on slow connection
   Scenario Outline: Mask on loading a page
     When I expand the parent for the tree node "<path>"
     And I click the tree node "<path>"
-    Then I should see "Loading the Page..." within "div.x-masked"
 
   Examples:
     | path                                         |

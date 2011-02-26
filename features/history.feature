@@ -3,13 +3,22 @@ Feature: History
   Background:
     Given I open the application
 
-  Scenario: Open page with path given in the url
-    When I open the application for page "/Home"
+  Scenario Outline: Open page with path given in the url
+    When I open the application for page "<path>"
 
     Then I should have the following open tabs:
-      | Home |
-    And the tree node "/Home" should be selected
-    And I should see a content for the page "/Home"
+      | <title> |
+    And the tree node "<path>" should be selected
+    And I should see a content for the page "<path>"
+
+  Examples:
+    | path                                         | title                 |
+    | /Home                                        | Home                  |
+    | /Home/About                                  | About                 |
+    | /Home/Personal stuff/Addresses               | Addresses             |
+    | /Home/Personal stuff/Notes                   | Notes                 |
+    | /Home/Development/Programming Languages      | Programming Languages |
+    | /Home/Development/Programming Languages/Ruby | Ruby                  |
 
   Scenario Outline: After reload the application last opened page should be loaded
     When I open the page "<path>"
