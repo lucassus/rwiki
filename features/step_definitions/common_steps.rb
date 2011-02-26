@@ -22,11 +22,12 @@ When /^I wait for load the page$/ do
     Then %{I should see loading a page mask}
     wait_until(10, &condition)
   end
-  sleep 0.5 # wait for insert the page to the DOM
+  sleep 0.25 # wait for insert the page to the DOM
 end
 
 When /^I open the application$/ do
   When %Q{I go to the home page}
+  sleep 0.25 # wait for the DOM
   Then %{I should see disabled "Edit page" toolbar button}
   And %{I should see disabled "Print page" toolbar button}
 
