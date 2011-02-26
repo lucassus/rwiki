@@ -29,7 +29,7 @@ module Rwiki
 
     after do
       if params[:emulateSlowConnection] == 'true'
-        duration = (1..5).to_a.sample
+        duration = (1..3).to_a.sample
         sleep(duration)
       end
     end

@@ -23,6 +23,7 @@ Feature: History
   Scenario Outline: After reload the application last opened page should be loaded
     When I open the page "<path>"
     And I reload the application
+    And I wait for load the page
 
     Then I should see active tab titled "<title>"
     And I should see the application title "Rwiki <path>"

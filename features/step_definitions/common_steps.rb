@@ -17,16 +17,20 @@ end
 
 When /^I wait for load the page$/ do
   condition = lambda { page.all('div.x-mask-loading', :visible => true).empty? rescue true }
+  sleep 0.5 # wait for the mask
   unless condition.call
     Then %{I should see loading a page mask}
     wait_until(10, &condition)
   end
+  sleep 0.5 # wait for insert the page to the DOM
 end
 
 When /^I open the application$/ do
   When %Q{I go to the home page}
   Then %{I should see disabled "Edit page" toolbar button}
   And %{I should see disabled "Print page" toolbar button}
+
+  Given %{the connection is slow}
 end
 
 When /^the connection is slow$/ do
@@ -44,7 +48,6 @@ end
 When /^I open the application for page "([^"]*)"$/ do |path|
   visit('/#' + path)
   And %{I wait for load the page}
-  sleep 0.5 # wait for insert the page to the DOM
 end
 
 Then /^I should see dialog box titled "([^"]*)"$/ do |title|
@@ -62,6 +65,7 @@ When /^I create a new page titled "([^"]*)" for the parent "([^"]*)"$/ do |title
 
   When %{I fill in the input with "#{title}" within the dialog box}
   And %{I press "OK" within the dialog box}
+  And %{I wait for load the page}
   Then %{I should see the page titled "#{title}"}
 end
 
