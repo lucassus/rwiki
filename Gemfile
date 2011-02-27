@@ -6,7 +6,11 @@ gem "coderay"
 gem "json_pure"
 gem "thin"
 gem "fuzzy_file_finder"
-gem "smart_asset"
+
+group :staging do
+  gem "capistrano"
+  gem "smart_asset"
+end
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
@@ -17,7 +21,6 @@ group :development do
 
   gem "watchr"
   gem "awesome_print"
-  gem "capistrano"
 end
 
 group :test do
