@@ -9,7 +9,9 @@ gem "fuzzy_file_finder"
 
 group :staging do
   gem "capistrano"
+
   gem "smart_asset"
+  gem "archive-tar-minitar"
 end
 
 # Add dependencies to develop your gem here.
