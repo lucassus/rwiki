@@ -22,7 +22,7 @@ When /^I wait for load the page$/ do
     Then %{I should see loading a page mask}
     wait_until(10, &condition)
   end
-  sleep 0.25 # wait for insert the page to the DOM
+  sleep 0.5 # wait for insert the page to the DOM
 end
 
 When /^I open the application$/ do

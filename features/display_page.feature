@@ -11,7 +11,7 @@ Feature: Display the page
   Examples:
     | path                                         | title                 |
     | /Home                                        | Home                  |
-    | /Home/About                                  | About                 |
+    | /Hom                                         | About                 |
     | /Home/Personal stuff/Addresses               | Addresses             |
     | /Home/Personal stuff/Notes                   | Notes                 |
     | /Home/Development/Programming Languages      | Programming Languages |

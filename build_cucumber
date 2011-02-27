@@ -11,6 +11,7 @@ rm -f features/reports/screenshots/*.png
 
 rvm use 1.9.2
 bundle install --path vendor/bundle
+bundle exec smart_asset
 
 # start cucumber on Xvfb
 export DISPLAY=:91
