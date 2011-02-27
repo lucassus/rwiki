@@ -1,25 +1,32 @@
 module Rwiki::Rake
   class Migrate
 
-    def initialize
+    def self.define_task
       namespace :rwiki do
         desc 'Migrate to the new rwiki structure'
         task :migrate do
           raise "unknown RWIKI_PATH" unless ENV['RWIKI_PATH']
-          
+
           Rwiki.configuration.rwiki_path = File.expand_path(ENV['RWIKI_PATH'])
           puts "Rwiki path is: #{Rwiki.configuration.rwiki_path}"
 
-          @rwiki_path = Rwiki.configuration.rwiki_path
-          @root_page_file = Rwiki.configuration.root_page_full_file_path
-          @root_page_path = Rwiki.configuration.root_page_full_path
-          @page_file_extension = Rwiki.configuration.page_file_extension
-
-          create_backup!
-          create_home_page!
-          update_pages!
+          self.new
+          execute!
         end
       end
+    end
+
+    def initialize
+      @rwiki_path = Rwiki.configuration.rwiki_path
+      @root_page_file = Rwiki.configuration.root_page_full_file_path
+      @root_page_path = Rwiki.configuration.root_page_full_path
+      @page_file_extension = Rwiki.configuration.page_file_extension
+    end
+
+    def execute!
+      create_backup!
+      create_home_page!
+      update_pages!
     end
 
     protected

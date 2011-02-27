@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+require 'rwiki'
+
+rwiki_path = (ARGV[0] ? File.expand_path(ARGV[0]) : Dir.pwd).freeze
+puts "Rwiki path is: #{rwiki_path}"
+Rwiki.configuration.rwiki_path = rwiki_path
+
+Rwiki::Rake::Migrate.new.execute!

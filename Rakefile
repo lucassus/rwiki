@@ -47,4 +47,4 @@ Cucumber::Rake::Task.new(:features)
 require 'jasmine'
 load 'jasmine/tasks/jasmine.rake'
 
-Rwiki::Rake::Migrate.new
+Rwiki::Rake::Migrate.define_task
