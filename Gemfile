@@ -1,5 +1,6 @@
 source "http://rubygems.org"
 
+gem "rake"
 gem "sinatra"
 gem "RedCloth", :require => 'redcloth'
 gem "coderay"
