@@ -31,4 +31,4 @@ namespace :deploy do
 end
 
 after :'deploy:update_code', :'deploy:symlink_shared'
-after :'bundle:install', :'deploy:smart_asset'
+after :'deploy:update', :'deploy:smart_asset'
