@@ -1,6 +1,5 @@
 source "http://rubygems.org"
 
-gem "rake"
 gem "sinatra"
 gem "RedCloth", :require => 'redcloth'
 gem "coderay"
@@ -15,22 +14,24 @@ group :development do
   gem "jeweler"
   gem "ruby-debug19"
   gem "shotgun"
-  gem "ci_reporter"
 
+  gem "watchr"
+  gem "awesome_print"
+  gem "capistrano"
+end
+
+group :test do
   gem "rack-test"
-  gem "rspec"
   gem "mocha"
   gem "jasmine"
+  gem "rspec"
+
+  gem "fuubar"
+  gem "ci_reporter"
 
   gem "cucumber"
   gem "cucumber-rails"
   gem "capybara"
   gem "selenium-webdriver"
-  gem "rspec"
-  gem "fuubar"
   gem "lorax"
-
-  gem "watchr"
-  gem "awesome_print"
-  gem "capistrano"
 end
