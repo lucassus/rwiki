@@ -30,7 +30,9 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
 
     for (var i = 0, len = nodes.length; i < len; i++) {
       var node = nodes[i];
-      if (node.isExpandable()) {
+      
+      var isNotACurrNode = node != this;
+      if (isNotACurrNode && node.isExpandable()) {
         node.expand(false);
       }
     }
