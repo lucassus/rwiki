@@ -29,7 +29,7 @@ namespace :deploy do
   end
 
   task :bundle_install, :roles => :app do
-    run "cd #{current_path} && bundle install --path vendor/bundle"
+    run "cd #{current_path} && bundle install --without development --path vendor/bundle"
   end
 
   task :smart_asset, :roles => :app do
