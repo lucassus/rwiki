@@ -16,6 +16,7 @@ end
 # Include everything needed to run rake, tests, features, etc.
 group :development do
   gem "jeweler"
+  gem "ruby-graphviz"
   gem "ruby-debug19"
   gem "shotgun"
 
