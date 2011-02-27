@@ -1,6 +1,3 @@
-require 'rubygems' if RUBY_VERSION < "1.9"
-
-require 'ap'
 require 'redcloth'
 require 'coderay'
 require 'json/pure'
