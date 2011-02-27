@@ -27,7 +27,6 @@ end
 
 When /^I open the application$/ do
   When %Q{I go to the home page}
-  sleep 0.25 # wait for the DOM
   Then %{I should see disabled "Edit page" toolbar button}
   And %{I should see disabled "Print page" toolbar button}
 

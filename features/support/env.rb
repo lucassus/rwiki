@@ -42,7 +42,7 @@ World do
         scenario.feature.file
        end
 
-      file_name = "#{feature_file.split('/').last}:#{scenario.line}.png"
+      file_name = "#{feature_file.split('/').last}-#{scenario.line}.png"
       page.driver.browser.save_screenshot(File.join(screenshots_dir, file_name))
     end
   end
