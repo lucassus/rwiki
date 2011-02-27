@@ -146,6 +146,7 @@ DEPENDENCIES
   lorax
   mocha
   rack-test
+  rake
   rspec
   ruby-debug19
   selenium-webdriver
