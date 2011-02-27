@@ -31,6 +31,10 @@ namespace :deploy do
   task :bundle_install, :roles => :app do
     run "cd #{current_path} && bundle install --path vendor/bundle"
   end
+
+  task :smart_asset, :roles => :app do
+    run "cd #{current_path} && bundle exec smart_asset"
+  end
 end
 
 after :deploy, :'deploy:symlink_shared'
