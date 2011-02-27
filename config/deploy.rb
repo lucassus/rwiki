@@ -1,5 +1,6 @@
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
+require "bundler/capistrano"
 
 set :rvm_type, :system
 
@@ -22,14 +23,6 @@ namespace :deploy do
     # Symlink configuration
     run "rm -rf #{release_path}/config/config.yml"
     run "ln -s #{shared_path}/config/config.yml #{release_path}/config/config.yml"
-
-    # Symlink gems
-    run "rm -rf #{release_path}/vendor/bundle"
-    run "ln -s #{shared_path}/bundle #{release_path}/vendor/bundle"
-  end
-
-  task :bundle_install, :roles => :app do
-    run "cd #{current_path} && bundle install --without development --path vendor/bundle"
   end
 
   task :smart_asset, :roles => :app do
@@ -37,6 +30,5 @@ namespace :deploy do
   end
 end
 
-after :deploy, :'deploy:symlink_shared'
-after :deploy, :'deploy:bundle_install'
-after :deploy, :'deploy:smart_asset'
+after :'deploy:update_code', :'deploy:symlink_shared'
+after :'bundle:install', :'deploy:smart_asset'
