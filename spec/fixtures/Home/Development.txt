@@ -1,3 +1,5 @@
 h1. Development notes
 
 "(internal-link)MySQL notes":/Home/Development/Databases/MySQL
+
+This is the FooBar search test

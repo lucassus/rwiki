@@ -2,6 +2,7 @@ require 'redcloth'
 require 'coderay'
 require 'json/pure'
 require 'fuzzy_file_finder'
+require 'find'
 
 require 'sinatra'
 require 'sinatra/base'

@@ -27,6 +27,10 @@ module Rwiki
       @file_helper.full_path
     end
 
+    def full_file_path
+      @file_helper.full_file_path
+    end
+
     def title
       @file_helper.basename
     end
@@ -124,6 +128,24 @@ module Rwiki
       matches.each do |m|
         m[:path] = m[:path].gsub(Rwiki.configuration.rwiki_path, '').gsub(/\.#{Rwiki.configuration.page_file_extension}$/, '')
         m[:highlighted_path] = m[:highlighted_path].gsub(/\.#{Rwiki.configuration.page_file_extension}$/, '')
+      end
+
+      matches
+    end
+
+    def findgrep(pattern, matches = [])
+      if pattern.kind_of? String
+        pattern = /#{Regexp.escape(pattern)}/
+      end
+
+      children.each do |child|
+        child.file_content.lines.grep(pattern) do |line|
+          matches << { :path => child.path, :line => line.strip }
+        end
+
+        if child.has_children?
+          child.findgrep(pattern, matches)
+        end
       end
 
       matches

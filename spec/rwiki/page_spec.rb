@@ -202,4 +202,49 @@ describe Rwiki::Page do
       end
     end
   end
+
+  describe "#findgrep" do
+    let(:page) { Page.new('/Home/Development') }
+    subject { page }
+    
+    describe "results" do
+      let(:results) { page.findgrep('FooBar') }
+      subject { results }
+
+      it { should be_instance_of(Array) }
+      it { should have(4).items }
+
+      describe "first result" do
+        subject { results[0] }
+
+        it { should be_instance_of(Hash) }
+        its([:path]) { should == '/Home/Development/Databases' }
+        its([:line]) { should == 'FooBar' }
+      end
+
+      describe "second result" do
+        subject { results[1] }
+
+        it { should be_instance_of(Hash) }
+        its([:path]) { should == '/Home/Development/Databases' }
+        its([:line]) { should == 'and another FooBar' }
+      end
+
+      describe "third result" do
+        subject { results[2] }
+
+        it { should be_instance_of(Hash) }
+        its([:path]) { should == '/Home/Development/Databases/MySQL' }
+        its([:line]) { should == "SELECT * FROM users WHERE login LIKE '%FooBar%';" }
+      end
+
+      describe "fourth result" do
+        subject { results[3] }
+
+        it { should be_instance_of(Hash) }
+        its([:path]) { should == '/Home/Development/Programming Languages' }
+        its([:line]) { should == 'h2. FooBar' }
+      end
+    end
+  end
 end
