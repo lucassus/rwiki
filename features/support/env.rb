@@ -24,7 +24,7 @@ World do
   include RSpec::Expectations
   include RSpec::Matchers
 
-  require File.expand_path(File.join(File.dirname(__FILE__), '../../spec/tmpdir_helper'))
+  require File.expand_path(File.join(File.dirname(__FILE__), '../../spec/support/tmpdir_helper'))
   include TmpdirHelper
 
   Before do
