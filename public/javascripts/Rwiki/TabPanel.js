@@ -26,6 +26,13 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       handler: this.onFuzzyFinder
     });
 
+    this.findTextButton = new Rwiki.Button({
+      text: 'Text search',
+      iconCls: 'icon-search',
+      scope: this,
+      handler: this.onTextSearch
+    });
+
     Ext.applyIf(this, {
       region: 'center',
       deferredRender: false,
@@ -35,7 +42,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         autoScroll: true
       },
       plugins: new Ext.ux.TabCloseMenu(),
-      tbar: [this.editPageButton, this.printPageButton, this.findPageButton]
+      tbar: [this.editPageButton, this.printPageButton, this.findPageButton, this.findTextButton]
     });
 
     Rwiki.TabPanel.superclass.initComponent.apply(this, arguments);
@@ -206,6 +213,11 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   onFuzzyFinder: function() {
     var fuzzyFinder = new Rwiki.FuzzyFinderWindow();
     fuzzyFinder.show();
+  },
+
+  onTextSearch: function() {
+    var textSearch = new Rwiki.TextSearchWindow();
+    textSearch.show();
   },
 
   onPrint: function() {

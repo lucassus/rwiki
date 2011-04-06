@@ -46,12 +46,17 @@ describe Rwiki::App do
   describe 'on DELETE to /node' do
     before { delete '/node', :path => '/Home/Development' }
     it_should_respond_with_success
-    end
+  end
 
   describe 'on GET to /fuzzy_finder' do
     before { get '/fuzzy_finder', :query => 'Ruby' }
     it_should_respond_with_success
-    end
+  end
+
+  describe 'on GET to /text_search' do
+    before { get '/text_search', :query => 'Ruby' }
+    it_should_respond_with_success
+  end
 
   describe 'on GET to /node/print' do
     before { get '/node/print', :path => '/Home/About' }

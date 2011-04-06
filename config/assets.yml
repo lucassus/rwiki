@@ -21,6 +21,7 @@ javascripts:
     - Rwiki/Debug
     - Rwiki/EditorWindow
     - Rwiki/FuzzyFinderWindow
+    - Rwiki/TextSearchWindow
     - Rwiki/NavigationPanel
     - Rwiki/TabPanel
     - Rwiki/TreePanel

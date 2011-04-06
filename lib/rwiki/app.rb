@@ -115,9 +115,16 @@ module Rwiki
 
     get '/fuzzy_finder' do
       query = params[:query]
-      matches = Page.fuzzy_finder(query)
+      results = Page.fuzzy_finder(query)
 
-      { :results => matches, :count => matches.size }.to_json
+      { :results => results, :count => results.size }.to_json
+    end
+
+    get '/text_search' do
+      query = params[:query]
+      results = Page.root.findgrep(query)
+
+      { :results => results, :count => results.size }.to_json
     end
 
     get '/node/print' do
