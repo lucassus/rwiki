@@ -1,30 +1,28 @@
-Ext.ns('Rwiki');
+Ext.ns('Rwiki.Search');
 
-Rwiki.FuzzyFinderWindow = Ext.extend(Ext.Window, {
+Rwiki.Search.TextSearchWindow = Ext.extend(Ext.Window, {
   constructor: function() {
     var self = this;
 
     var dataStore = new Ext.data.Store({
       proxy: new Ext.data.HttpProxy({
         method: 'GET',
-        url: '/fuzzy_finder'
+        url: '/text_search'
       }),
 
       reader: new Ext.data.JsonReader({
         root: 'results',
-        totalProperty: 'count',
-        id: 'path'
+        totalProperty: 'count'
       }, [
         {name: 'path', mapping: 'path'},
-        {name: 'score', mapping: 'score'},
-        {name: 'highlighted_path', mapping: 'highlighted_path'}
+        {name: 'line', mapping: 'line'}
       ])
     });
 
     // Custom rendering Template
     var resultTpl = new Ext.XTemplate(
       '<tpl for="."><div class="search-item">',
-        '{highlighted_path}',
+        '{path}: {line}',
       '</div></tpl>'
     );
 
@@ -37,7 +35,7 @@ Rwiki.FuzzyFinderWindow = Ext.extend(Ext.Window, {
       hideTrigger: true,
       tpl: resultTpl,
       itemSelector: 'div.search-item',
-      onSelect: function(record) { 
+      onSelect: function(record) {
         var path = record.data.path;
         Rwiki.openPage(path);
         self.close();
@@ -45,7 +43,7 @@ Rwiki.FuzzyFinderWindow = Ext.extend(Ext.Window, {
     });
 
     Ext.apply(this, {
-      title: 'FuzzyFinder',
+      title: 'Text search',
       maximizable: false,
       modal: true,
       width: 600,
@@ -56,6 +54,6 @@ Rwiki.FuzzyFinderWindow = Ext.extend(Ext.Window, {
       defaultButton: search
     });
 
-    Rwiki.FuzzyFinderWindow.superclass.constructor.apply(this, arguments);
+    Rwiki.Search.TextSearchWindow.superclass.constructor.apply(this, arguments);
   }
 });

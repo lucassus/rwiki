@@ -211,12 +211,12 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   onFuzzyFinder: function() {
-    var fuzzyFinder = new Rwiki.FuzzyFinderWindow();
+    var fuzzyFinder = new Rwiki.Search.FuzzyFinderWindow();
     fuzzyFinder.show();
   },
 
   onTextSearch: function() {
-    var textSearch = new Rwiki.TextSearchWindow();
+    var textSearch = new Rwiki.Search.TextSearchWindow();
     textSearch.show();
   },
 

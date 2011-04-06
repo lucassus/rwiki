@@ -13,6 +13,8 @@ javascripts:
     - Rwiki/Data/Page
     - Rwiki/Data/PageManager
     - Rwiki/Editor/EditorPanel
+    - Rwiki/Search/FuzzyFinderWindow
+    - Rwiki/Search/TextSearchWindow
     - Rwiki/Tabs/PageTab
     - Rwiki/Tree/Loader
     - Rwiki/Tree/Menu
@@ -20,8 +22,6 @@ javascripts:
     - Rwiki/Button
     - Rwiki/Debug
     - Rwiki/EditorWindow
-    - Rwiki/FuzzyFinderWindow
-    - Rwiki/TextSearchWindow
     - Rwiki/NavigationPanel
     - Rwiki/TabPanel
     - Rwiki/TreePanel
