@@ -37,7 +37,7 @@ stylesheets:
     - vendor/markitup/sets/textile/style
 
   rwiki:
+    - Rwiki/page
     - Rwiki/coderay
     - Rwiki/markitup
-    - Rwiki/page
     - style

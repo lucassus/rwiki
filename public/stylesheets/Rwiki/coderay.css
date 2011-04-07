@@ -34,3 +34,7 @@
 .CodeRay .sy { color:#6C9CBD } /* symbol */
 .CodeRay .ta { color:#E7BE69 } /* html tag */
 .CodeRay .pc { color:#6C9CBD } /* boolean */
+
+.CodeRay p {
+  margin: 0px;
+}
