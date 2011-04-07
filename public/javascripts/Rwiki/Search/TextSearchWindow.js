@@ -1,10 +1,14 @@
 Ext.ns('Rwiki.Search');
 
-Rwiki.Search.TextSearchWindow = Ext.extend(Ext.Window, {
+Rwiki.Search.TextSearchWindow = Ext.extend(Rwiki.Search.Window, {
   constructor: function() {
-    var self = this;
+    Rwiki.Search.TextSearchWindow.superclass.constructor.apply(this, [{
+      title: 'Text search'
+    }]);
+  },
 
-    var dataStore = new Ext.data.Store({
+  _getDataStore: function() {
+    return new Ext.data.Store({
       proxy: new Ext.data.HttpProxy({
         method: 'GET',
         url: '/text_search'
@@ -18,42 +22,14 @@ Rwiki.Search.TextSearchWindow = Ext.extend(Ext.Window, {
         {name: 'line', mapping: 'line'}
       ])
     });
+  },
 
-    // Custom rendering Template
-    var resultTpl = new Ext.XTemplate(
+  // Custom rendering Template
+  _getResultTemplate: function() {
+    return new Ext.XTemplate(
       '<tpl for="."><div class="search-item">',
         '{path}: {line}',
       '</div></tpl>'
     );
-
-    var search = new Ext.form.ComboBox({
-      store: dataStore,
-      minChars: 2,
-      displayField: 'title',
-      typeAhead: false,
-      loadingText: 'Searching...',
-      hideTrigger: true,
-      tpl: resultTpl,
-      itemSelector: 'div.search-item',
-      onSelect: function(record) {
-        var path = record.data.path;
-        Rwiki.openPage(path);
-        self.close();
-      }
-    });
-
-    Ext.apply(this, {
-      title: 'Text search',
-      maximizable: false,
-      modal: true,
-      width: 600,
-      layout: 'fit',
-      plain: true,
-      bodyStyle: 'padding: 5px;',
-      items: [search],
-      defaultButton: search
-    });
-
-    Rwiki.Search.TextSearchWindow.superclass.constructor.apply(this, arguments);
   }
 });
