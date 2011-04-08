@@ -2,6 +2,14 @@ h1. RWiki changelog
 
 h2. 0.3.0
 
+* Added smart_asset gem for maintaining JavaScript and CSS files
+* Added simple internal links
+* Added the loading mask
+* Added the Home Page
+* Added pages history feature (back and forward buttons in the browser)
+* Changed the structure of the working directory (see: ./bin/rwiki-migrate)
+* Better layout for the Editor window
+* Prevent button from stealing the focus
 * Added simple text search
 
 h2. 0.2.4
