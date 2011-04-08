@@ -1,0 +1,7 @@
+h1. RWiki changelog
+
+h2. 0.3.0
+
+* Added simple text search
+
+h2. 0.2.4

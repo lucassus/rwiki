@@ -45,4 +45,3 @@ h2. Note on Patches/Pull Requests
 h2. Copyright
 
 Copyright (c) 2010 Łukasz Bandzarewicz. See LICENSE for details.
-
