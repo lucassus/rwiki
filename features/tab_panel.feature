@@ -3,6 +3,7 @@ Feature: Tab Panel
   Background:
     Given I open the application
 
+  @javascript
   Scenario: Close a tab
     When I open the page "/Home"
     And I open the page "/Home/About"
@@ -20,6 +21,7 @@ Feature: Tab Panel
     When I close a tab for node "/Home"
     Then I should have no open tabs
 
+  @javascript
   Scenario: Switching the tabs
     When I open the page "/Home"
     And I open the page "/Home/About"

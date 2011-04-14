@@ -4,16 +4,9 @@ require 'rspec'
 require 'cucumber/web/tableish'
 require 'capybara'
 require 'capybara/cucumber'
+require 'capybara-webkit'
 
-# Selenium setup
-require 'selenium/webdriver'
-Capybara.register_driver :selenium do |app|
-  profile = Selenium::WebDriver::Firefox::Profile.new
-  load_firebug_extension = false
-  profile.add_extension File.expand_path(File.join(File.dirname(__FILE__), 'firebug-1.6.1-fx.xpi')) if load_firebug_extension
-  Capybara::Driver::Selenium.new(app, :profile => profile)
-end
-Capybara.default_driver = :selenium
+Capybara.javascript_driver = :webkit
 
 World do
   Rwiki::App.set(:environment, :test)

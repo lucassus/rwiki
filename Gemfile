@@ -35,6 +35,7 @@ group :test do
   gem "cucumber"
   gem "cucumber-rails"
   gem "capybara"
+  gem "capybara-webkit"
   gem "selenium-webdriver"
   gem "lorax"
 end
