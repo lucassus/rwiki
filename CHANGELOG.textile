@@ -13,3 +13,7 @@ h2. 0.3.0
 * Added simple text search
 
 h2. 0.2.4
+
+* Added page's toolbar
+* Added FuzzyFinder
+* Added print a page feature
