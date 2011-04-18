@@ -11,15 +11,15 @@
 #   - dist/**/*.js
 #
 src_files:
-    - public/javascripts/vendor/jquery/jquery-1.5.js
-    - public/javascripts/vendor/markitup/jquery.markitup.js
+  - public/javascripts/vendor/jquery/jquery-1.5.js
+  - public/javascripts/vendor/markitup/jquery.markitup.js
 
-    - public/javascripts/vendor/ext/adapter/jquery/ext-jquery-adapter.js
-    - public/javascripts/vendor/ext/ext-all-debug-w-comments.js
-    - public/javascripts/vendor/ext/ux/**/*.js
+  - public/javascripts/vendor/ext/ext-jquery-adapter-debug.js
+  - public/javascripts/vendor/ext/ext-all-debug-w-comments.js
+  - public/javascripts/vendor/ext/ux/**/*.js
 
-    - public/javascripts/Rwiki.js
-    - public/javascripts/Rwiki/**/*.js
+  - public/javascripts/Rwiki.js
+  - public/javascripts/Rwiki/**/*.js
 
 # stylesheets
 #
