@@ -5,9 +5,9 @@ describe 'Rwiki.TabPanel', ->
     tabContent = $('<div />').attr('id', 'tabpanel-div')
     $('#jasmine_content').append(tabContent)
 
-    tabPanel = new Rwiki.TabPanel({
+    tabPanel = new Rwiki.TabPanel(
       renderTo: 'tabpanel-div'
-    })
+    )
 
   afterEach ->
     $('#jasmine_content').empty()
@@ -26,38 +26,33 @@ describe 'Rwiki.TabPanel', ->
       ]
 
       for path in paths
-        page = new Rwiki.Data.Page({path: path})
+        page = new Rwiki.Data.Page(path: path)
         tabPanel.createPageTab(page)
 
-      this.addMatchers({
-        toIncludeTabWithPath: (path) ->
-          result = false
-          for tab in this.actual
-            result = tab.getPagePath == path
-            break if result
-          return result
-	     })
-      
-    xit "should return valid tabs for '/Home/foo/bar'", ->
+    it "should return valid tabs for '/Home/foo/bar'", ->
       tabs = tabPanel.findTabsByParentPath('/Home/foo/bar')
+      nthTabPagePath = (n) -> tabs[n].getPagePath()
+
+      expect(tabs.length).toBe(4)
+      expect(nthTabPagePath(0)).toBe('/Home/foo/bar/test')
+      expect(nthTabPagePath(1)).toBe('/Home/foo/bar/test/test 1')
+      expect(nthTabPagePath(2)).toBe('/Home/foo/bar/test/test 2')
+      expect(nthTabPagePath(3)).toBe('/Home/foo/bar')
+
+    it "should return valid tabs for '/Home/foo/test'", ->
+      tabs = tabPanel.findTabsByParentPath('/Home/foo/test')
+      nthTabPagePath = (n) -> tabs[n].getPagePath()
 
       expect(tabs.length).toBe(3)
-      expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test')
-      expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test/test 1')
-      expect(tabs).toIncludeTabWithPath('/Home/foo/bar/test/test 2')
-
-    xit "should return valid tabs for '/Home/foo/test'", ->
-      tabs = tabPanel.findTabsByParentPath('/Home/foo/test')
-
-      expect(tabs.length).toBe(2)
-      expect(tabs).toIncludeTabWithPath('/Home/foo/test/bar 1')
-      expect(tabs).toIncludeTabWithPath('/Home/foo/test/bar 2')
+      expect(nthTabPagePath(0)).toBe('/Home/foo/test')
+      expect(nthTabPagePath(1)).toBe('/Home/foo/test/bar 1')
+      expect(nthTabPagePath(2)).toBe('/Home/foo/test/bar 2')
 
   describe "onPageCreated handler", ->
-    page = new Rwiki.Data.Page({
+    page = new Rwiki.Data.Page(
       path: '/Home/page',
       text: 'page'
-    })
+    )
     tab = {}
 
     beforeEach ->
