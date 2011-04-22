@@ -115,4 +115,3 @@ describe "Rwiki.TreePanel", ->
     it "should delete node", ->
       node = treePanel.findNodeByPath('/Home/Develop/Ruby')
       expect(node).toBeNull()
-
