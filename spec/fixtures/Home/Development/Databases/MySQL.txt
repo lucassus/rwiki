@@ -1,5 +1,5 @@
 h1. MySQL
 
 <code>
-SELECT * FROM users WHERE login LIKE '%FooBar%';
+SELECT * FROM users WHERE login LIKE '%foobar%';
 </code>

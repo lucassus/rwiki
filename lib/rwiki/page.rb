@@ -2,7 +2,7 @@ module Rwiki
   class Page
     include Rwiki::Utils
 
-    class Error < StandardError; end 
+    class Error < StandardError; end
 
     attr_reader :file_helper
 
@@ -134,9 +134,7 @@ module Rwiki
     end
 
     def findgrep(pattern, matches = [])
-      if pattern.kind_of? String
-        pattern = /#{Regexp.escape(pattern)}/
-      end
+      pattern = /#{Regexp.escape(pattern)}/i if pattern.kind_of?(String)
 
       children.each do |child|
         child.file_content.lines.grep(pattern) do |line|
@@ -173,7 +171,7 @@ module Rwiki
     def reload!
       @parent = nil
       @children = nil
-      
+
       @file_content = nil
       @html_content = nil
     end
