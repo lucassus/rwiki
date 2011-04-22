@@ -70,4 +70,3 @@ describe 'Rwiki.TabPanel', ->
 
     it "should open a new tab", ->
       expect(tab.show).toHaveBeenCalled()
-
