@@ -29,3 +29,6 @@ log
 
 ## CI REPORTS
 features/reports/
+
+# conpiled jasmine specs
+spec/javascripts/Rwiki
