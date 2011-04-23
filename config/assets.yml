@@ -20,6 +20,7 @@ javascripts:
     - Rwiki/Tree/Loader
     - Rwiki/Tree/Menu
     - Rwiki/Tree/Node
+    - Rwiki/AboutDialog
     - Rwiki/Button
     - Rwiki/Debug
     - Rwiki/EditorWindow

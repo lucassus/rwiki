@@ -236,32 +236,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   },
 
   onAbout: function() {
-    var self = this;
-
     if (!this.aboutDialog) {
-      this.aboutDialog = new Ext.Window({
-        applyTo: 'about-dialog',
-        width: 400,
-        height: 200,
-        plain: true,
-        modal: true,
-        closeAction: 'hide',
-        items: new Ext.TabPanel({
-          applyTo: 'hello-tabs',
-          autoTabs: true,
-          activeTab: 0,
-          deferredRender: false,
-          border: false
-        }),
-        buttons: [{
-          text: 'Close',
-          handler: function() {
-            self.aboutDialog.hide();
-          }
-        }]
-      });
+      this.aboutDialog = new Rwiki.AboutDialog();
     }
 
-    this.aboutDialog.show(this);
+    this.aboutDialog.show();
   }
 });
