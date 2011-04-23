@@ -1,4 +1,4 @@
-require File.expand_path(File.join('..', 'spec_helper'), File.dirname(__FILE__))
+require 'spec_helper'
 
 describe Rwiki::Page do
   include Rwiki

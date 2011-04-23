@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require File.expand_path(File.join('..', '..', 'spec_helper'), File.dirname(__FILE__))
+require 'spec_helper'
 
 describe Rwiki::Utils::FileHelper do
   include Rwiki::Utils
