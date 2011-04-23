@@ -98,3 +98,7 @@
 .icon-print {
   background-image: url(/images/icons/printer.png) !important;
 }
+
+.icon-about {
+  background-image: url(/images/icons/information.png) !important;
+}
