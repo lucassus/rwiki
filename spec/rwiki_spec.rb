@@ -15,6 +15,8 @@ describe Rwiki do
 
     its(:root_page_full_path) { should == '/tmp/rwiki_test/fixtures/Home' }
     its(:root_page_full_file_path) { should == '/tmp/rwiki_test/fixtures/Home.txt' }
+
+    its(:version) { should == '0.2.4' }
   end
 
 end

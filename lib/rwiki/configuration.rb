@@ -26,5 +26,9 @@ module Rwiki
       root_page_full_path + '.' + page_file_extension
     end
 
+    def version
+      Rwiki::Version::STRING
+    end
+
   end
 end

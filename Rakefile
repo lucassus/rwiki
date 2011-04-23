@@ -30,6 +30,7 @@ end
 Cucumber::Rake::Task.new(:cucumber)
 
 require 'jeweler'
+require './lib/rwiki/version.rb'
 Jeweler::Tasks.new do |gem|
   gem.name        = "rwiki"
   gem.license     = "GPLv3"
@@ -38,6 +39,7 @@ Jeweler::Tasks.new do |gem|
   gem.email       = "lucassus@gmail.com"
   gem.homepage    = "http://github.com/lucassus/rwiki"
   gem.authors     = ["Łukasz Bandzarewicz"]
+  gem.version     = Rwiki::Version::STRING
 end
 Jeweler::RubygemsDotOrgTasks.new
 

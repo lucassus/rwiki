@@ -19,6 +19,7 @@ module Rwiki
   autoload :Page, 'rwiki/page'
   autoload :Rake, 'rwiki/rake'
   autoload :Utils, 'rwiki/utils'
+  autoload :Version, 'rwiki/version'
 
   def self.debug
     require 'ruby-debug'
