@@ -1,7 +1,7 @@
 Ext.ns('Rwiki');
 
 Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
-  
+
   initComponent: function() {
     this.editPageButton = new Rwiki.Button({
       text: 'Edit page',
@@ -33,6 +33,13 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       handler: this.onTextSearch
     });
 
+    this.aboutButton = new Rwiki.Button({
+      text: 'About',
+      iconCls: 'icon-about',
+      scope: this,
+      handler: this.onAbout
+    });
+
     Ext.applyIf(this, {
       region: 'center',
       deferredRender: false,
@@ -42,7 +49,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         autoScroll: true
       },
       plugins: new Ext.ux.TabCloseMenu(),
-      tbar: [this.editPageButton, this.printPageButton, this.findPageButton, this.findTextButton]
+      tbar: [this.editPageButton, this.printPageButton, this.findPageButton, this.findTextButton, this.aboutButton]
     });
 
     Rwiki.TabPanel.superclass.initComponent.apply(this, arguments);
@@ -76,10 +83,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   findOrCreatePageTab: function(page) {
     var tab = this.findTabByPagePath(page.getPath());
-    
+
     if (!tab) {
       tab = this.createPageTab(page);
-    } 
+    }
 
     return tab;
   },
@@ -91,7 +98,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     tab.setPagePath(page.getPath());
     this.add(tab);
-    
+
     return tab;
   },
 
@@ -142,7 +149,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     tab.show();
 
     tab.setIsLoading(false);
-    
+
     this.editPageButton.setDisabled(false);
     this.printPageButton.setDisabled(false);
   },
@@ -226,5 +233,35 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       var path = currentTab.getPagePath();
       window.open('/node/print?path=' + path, 'Rwiki ' + path, 'width=800,height=600,scrollbars=yes')
     }
+  },
+
+  onAbout: function() {
+    var self = this;
+
+    if (!this.aboutDialog) {
+      this.aboutDialog = new Ext.Window({
+        applyTo: 'about-dialog',
+        width: 400,
+        height: 200,
+        plain: true,
+        modal: true,
+        closeAction: 'hide',
+        items: new Ext.TabPanel({
+          applyTo: 'hello-tabs',
+          autoTabs: true,
+          activeTab: 0,
+          deferredRender: false,
+          border: false
+        }),
+        buttons: [{
+          text: 'Close',
+          handler: function() {
+            self.aboutDialog.hide();
+          }
+        }]
+      });
+    }
+
+    this.aboutDialog.show(this);
   }
 });
