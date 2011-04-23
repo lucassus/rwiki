@@ -1,5 +1,5 @@
 module TmpdirHelper
-  TMP_DIR = '/tmp/rwiki_test'
+  TMP_DIR = File.expand_path(File.join('..', '..', 'tmp'), File.dirname(__FILE__)).freeze
 
   def tmp_dir
     TMP_DIR
