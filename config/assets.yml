@@ -1,7 +1,7 @@
 javascripts:
   jquery:
     - vendor/jquery/jquery-1.5
-    
+
   extjs:
     - vendor/ext/ux/StatusBar
     - vendor/ext/ux/TabCloseMenu
@@ -17,6 +17,7 @@ javascripts:
     - Rwiki/Search/FuzzyFinderWindow
     - Rwiki/Search/TextSearchWindow
     - Rwiki/Tabs/PageTab
+    - Rwiki/Tabs/Toolbar
     - Rwiki/Tree/Loader
     - Rwiki/Tree/Menu
     - Rwiki/Tree/Node

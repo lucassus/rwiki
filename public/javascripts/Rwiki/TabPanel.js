@@ -3,57 +3,9 @@ Ext.ns('Rwiki');
 Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   initComponent: function() {
-    this.editPageButton = new Rwiki.Button({
-      text: 'Edit page',
-      iconCls: 'icon-edit',
-      scope: this,
-      handler: this.onEditPage,
-      disabled: true
-    });
+    this.toolbar = new Rwiki.Tabs.Toolbar();
 
-    this.printPageButton = new Rwiki.Button({
-      text: 'Print page',
-      iconCls: 'icon-print',
-      scope: this,
-      handler: this.onPrint,
-      disabled: true
-    });
-
-    this.findPageButton = new Rwiki.Button({
-      text: 'Find page',
-      iconCls: 'icon-search',
-      scope: this,
-      handler: this.onFuzzyFinder
-    });
-
-    this.findTextButton = new Rwiki.Button({
-      text: 'Text search',
-      iconCls: 'icon-search',
-      scope: this,
-      handler: this.onTextSearch
-    });
-
-    this.aboutButton = new Rwiki.Button({
-      text: 'About',
-      iconCls: 'icon-about',
-      scope: this,
-      handler: this.onAbout
-    });
-
-    var toolBar = new Ext.Toolbar({
-      enableOverflow: true,
-      items: [
-        this.editPageButton,
-        this.printPageButton,
-        '-',
-        this.findPageButton,
-        this.findTextButton,
-        '->',
-        this.aboutButton
-      ]
-    });
-
-    Ext.applyIf(this, {
+    Ext.apply(this, {
       region: 'center',
       deferredRender: false,
       activeTab: 0,
@@ -62,7 +14,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         autoScroll: true
       },
       plugins: new Ext.ux.TabCloseMenu(),
-      tbar: toolBar
+      tbar: this.toolbar
     });
 
     Rwiki.TabPanel.superclass.initComponent.apply(this, arguments);
@@ -91,12 +43,20 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       'rwiki:beforePageSave',
       'rwiki:pageSaved',
       'rwiki:pageRenamed',
-      'rwiki:pageDeleted']);
+      'rwiki:pageDeleted'
+    ]);
+
+    this.on('rwiki:toolbar:editPage', this.onEditPage);
+    this.on('rwiki:toolbar:printPage', this.onPrintPage);
+
+    this.relayEvents(this.toolbar, [
+      'rwiki:toolbar:editPage',
+      'rwiki:toolbar:printPage'
+    ]);
   },
 
   findOrCreatePageTab: function(page) {
     var tab = this.findTabByPagePath(page.getPath());
-
     if (!tab) {
       tab = this.createPageTab(page);
     }
@@ -162,14 +122,11 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     tab.show();
 
     tab.setIsLoading(false);
-
-    this.editPageButton.setDisabled(false);
-    this.printPageButton.setDisabled(false);
+    this.toolbar.enablePageRelatedItems();
   },
 
   onLastPageClosed: function() {
-    this.editPageButton.setDisabled(true);
-    this.printPageButton.setDisabled(true);
+    this.toolbar.disablePageRelatedItems();
   },
 
   onBeforePageSave: function(page) {
@@ -230,17 +187,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     }
   },
 
-  onFuzzyFinder: function() {
-    var fuzzyFinder = new Rwiki.Search.FuzzyFinderWindow();
-    fuzzyFinder.show();
-  },
-
-  onTextSearch: function() {
-    var textSearch = new Rwiki.Search.TextSearchWindow();
-    textSearch.show();
-  },
-
-  onPrint: function() {
+  onPrintPage: function() {
     var currentTab = this.getActiveTab();
     if (currentTab) {
       var path = currentTab.getPagePath();
@@ -248,11 +195,5 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     }
   },
 
-  onAbout: function() {
-    if (!this.aboutDialog) {
-      this.aboutDialog = new Rwiki.AboutDialog();
-    }
-
-    this.aboutDialog.show();
-  }
 });
+
