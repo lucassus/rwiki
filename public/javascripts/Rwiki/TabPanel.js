@@ -40,6 +40,19 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       handler: this.onAbout
     });
 
+    var toolBar = new Ext.Toolbar({
+      enableOverflow: true,
+      items: [
+        this.editPageButton,
+        this.printPageButton,
+        '-',
+        this.findPageButton,
+        this.findTextButton,
+        '->',
+        this.aboutButton
+      ]
+    });
+
     Ext.applyIf(this, {
       region: 'center',
       deferredRender: false,
@@ -49,7 +62,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         autoScroll: true
       },
       plugins: new Ext.ux.TabCloseMenu(),
-      tbar: [this.editPageButton, this.printPageButton, this.findPageButton, this.findTextButton, this.aboutButton]
+      tbar: toolBar
     });
 
     Rwiki.TabPanel.superclass.initComponent.apply(this, arguments);
