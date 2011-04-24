@@ -63,10 +63,16 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
   },
 
   onCancelButton: function() {
-    this.hide();
+    this._exitEditor();
   },
 
   close: function() {
-    this.hide();
+    this._exitEditor();
+  },
+
+  _exitEditor: function() {
+    if (!this.editorPanel.isContentChanged() || confirm('Content has been changes, continue?')) {
+      this.hide();
+    }
   }
 });

@@ -12,6 +12,7 @@ h2. 0.3.0
 * Prevent button from stealing the focus
 * Added simple text search
 * Added about dialog window
+* Confirm close editor when the content has been changed
 
 h2. 0.2.4
 
