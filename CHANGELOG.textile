@@ -11,6 +11,7 @@ h2. 0.3.0
 * Better layout for the Editor window
 * Prevent button from stealing the focus
 * Added simple text search
+* Added about dialog window
 
 h2. 0.2.4
 
