@@ -50,7 +50,7 @@ Rwiki.init = function() {
     if (node) {
       Rwiki.treePanel.onClick(node);
     }
-    
+
     return false;
   });
 
@@ -98,14 +98,14 @@ Rwiki.init = function() {
     alt: true,
     stopEvent: true,
     fn: function() {
-      Rwiki.tabPanel.onEditPage();
+      Rwiki.tabPanel.getToolbar().onEditPage();
     }
   }, {
     key: "t",
     ctrl: true,
     stopEvent: true,
     fn: function() {
-      Rwiki.tabPanel.onFuzzyFinder();
+      Rwiki.tabPanel.getToolbar().onFuzzyFinder();
     }
   }, {
     key: "w",
@@ -116,5 +116,5 @@ Rwiki.init = function() {
       Rwiki.tabPanel.remove(tab);
     }
   }]);
-  
+
 };

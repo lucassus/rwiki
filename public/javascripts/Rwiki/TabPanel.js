@@ -88,6 +88,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     });
   },
 
+  getToolbar: function() {
+    return this.toolbar;
+  },
+
   onPageSelected: function(page) {
     var tab = this.findOrCreatePageTab(page);
     tab.show();
