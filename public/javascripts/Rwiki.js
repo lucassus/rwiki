@@ -121,14 +121,21 @@ Rwiki.init = function() {
     alt: true,
     stopEvent: true,
     fn: function() {
-      Rwiki.tabPanel.onEditPage();
+      Rwiki.tabPanel.getToolbar().onEditPage();
     }
   }, {
     key: "t",
     ctrl: true,
     stopEvent: true,
     fn: function() {
-      Rwiki.tabPanel.onFuzzyFinder();
+      Rwiki.tabPanel.getToolbar().onFuzzyFinder();
+    }
+  }, {
+    key: "s",
+    ctrl: true,
+    stopEvent: true,
+    fn: function() {
+      Rwiki.tabPanel.getToolbar().onTextSearch();
     }
   }, {
     key: "w",

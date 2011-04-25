@@ -78,8 +78,8 @@ Rwiki.Editor.Panel = Ext.extend(Ext.Panel, {
   },
 
   setContent: function(content) {
-    this.oldContent = content;
     this.editorContainer.val(content);
+    this.updateOldContent();
   },
 
   getContent: function() {
@@ -88,6 +88,10 @@ Rwiki.Editor.Panel = Ext.extend(Ext.Panel, {
 
   clearContent: function() {
     this.editorContainer.val('');
+  },
+
+  updateOldContent: function() {
+    this.oldContent = this.getContent();
   },
 
   isContentChanged: function() {

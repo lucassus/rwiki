@@ -51,6 +51,7 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
 
   savePage: function() {
     Rwiki.Data.PageManager.getInstance().savePage(this.pagePath, this.editorPanel.getContent());
+    this.editorPanel.updateOldContent();
   },
 
   onSaveButton: function() {
