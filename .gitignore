@@ -32,3 +32,6 @@ features/reports/
 
 # conpiled jasmine specs
 spec/javascripts/Rwiki
+
+# Rwiki configuration file
+config/config.yml
