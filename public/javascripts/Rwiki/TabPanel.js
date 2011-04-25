@@ -103,7 +103,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
         return;
       }
 
-      Ext.History.add(tab.getPagePath());
       Rwiki.setAppTitle(tab.getPagePath());
       Rwiki.Data.PageManager.getInstance().loadPage(tab.getPagePath());
       tab.setIsLoading(true);

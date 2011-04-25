@@ -5,7 +5,7 @@ module Rwiki
     set :app_file, File.join(File.dirname(__FILE__), '../../..')
 
     include SmartAsset::Adapters::Sinatra
-    
+
     disable :show_exceptions
     enable :raise_errors
     enable :logging
@@ -34,8 +34,9 @@ module Rwiki
       end
     end
 
-    get '/' do
+    get %r{^/(page(.*))?$} do
       @json_tree_nodes = Rwiki::Page.new.tree.to_json
+      @page_path = params[:captures].last if params[:captures]
       erb :index
     end
 
@@ -96,7 +97,7 @@ module Rwiki
       new_parent = Page.new(new_parent_path)
 
       success = node.move_to(new_parent)
-      
+
       result = node.to_hash
       result[:oldPath] = path
       result[:success] = success
