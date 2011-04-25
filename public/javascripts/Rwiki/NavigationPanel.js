@@ -12,7 +12,7 @@ Rwiki.NavigationPanel = Ext.extend(Ext.Panel, {
 
       split: true,
       collapsible: true,
-      
+
       width: 255,
       minSize: 255,
       maxSize: 500,

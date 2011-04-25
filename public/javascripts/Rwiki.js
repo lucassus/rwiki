@@ -20,6 +20,10 @@ Rwiki.setAppTitle = function(title) {
   document.title = 'Rwiki ' + title;
 };
 
+Rwiki.updateToc = function(htmlToc) {
+  $('div#toc-container').html(htmlToc);
+};
+
 Rwiki.init = function() {
 
   // TabPanel history
@@ -33,8 +37,13 @@ Rwiki.init = function() {
     Rwiki.statusBar.showBusy();
   });
 
-  Rwiki.nodeManager.on('rwiki:pageLoaded', function() {
+  Rwiki.nodeManager.on('rwiki:pageLoaded', function(page) {
+    Rwiki.updateToc(page.getHtmlToc());
     Rwiki.statusBar.clearStatus({useDefaults: true});
+  });
+
+  Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
+    Rwiki.updateToc(page.getHtmlToc());
   });
 
   Rwiki.statusBar = new Ext.ux.StatusBar({
@@ -50,7 +59,7 @@ Rwiki.init = function() {
     if (node) {
       Rwiki.treePanel.onClick(node);
     }
-    
+
     return false;
   });
 
@@ -73,15 +82,29 @@ Rwiki.init = function() {
 
   // Create the layout
 
-  var navigationPanel = new Rwiki.NavigationPanel({
-    items: [Rwiki.treePanel]
-  });
+  var tocPanel = {
+    id: 'toc-panel',
+    title: 'Table of Content',
+    region: 'center',
+    bodyStyle: 'padding-bottom:15px;background:#eee;',
+    autoScroll: true,
+    html: '<div id="toc-container">When you select a page from the tree, the TOC will display here.</div>'
+  };
 
-  var app = new Ext.Viewport({
+  var appViewport = new Ext.Viewport({
     layout: 'border',
     plain: true,
     renderTo: Ext.getBody(),
-    items: [navigationPanel, Rwiki.tabPanel],
+    items: [{
+      layout: 'border',
+      region: 'west',
+      split: true,
+      collapsible: true,
+      width: 250,
+      minSize: 200,
+      maxSize: 500,
+      items: [Rwiki.treePanel, tocPanel]
+    }, Rwiki.tabPanel],
     listeners: {
       afterrender: function() {
         Rwiki.treePanel.root.expand();
@@ -90,7 +113,7 @@ Rwiki.init = function() {
     }
   });
 
-  app.show();
+  appViewport.show();
 
   // map one key by key code
   var map = new Ext.KeyMap(document, [{
@@ -116,5 +139,5 @@ Rwiki.init = function() {
       Rwiki.tabPanel.remove(tab);
     }
   }]);
-  
+
 };

@@ -11,7 +11,7 @@ Rwiki.Data.Page = function(data) {
 Rwiki.Data.Page.prototype = {
 
   /**
-   * Returns data binded by ajax event handler 
+   * Returns data binded by ajax event handler
    */
   getData: function() {
     return this._data;
@@ -22,6 +22,13 @@ Rwiki.Data.Page.prototype = {
    */
   getHtmlContent: function() {
     return this._data.htmlContent;
+  },
+
+  /**
+  * Returns node's html table of content
+  */
+  getHtmlToc: function() {
+    return this._data.htmlToc;
   },
 
   /**
@@ -44,7 +51,7 @@ Rwiki.Data.Page.prototype = {
   getParentPath: function() {
     var paths = this.getPath().split('/');
     paths.pop();
-    
+
     return paths.join('/');
   },
 

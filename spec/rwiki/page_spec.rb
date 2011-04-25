@@ -134,7 +134,11 @@ describe Rwiki::Page do
     end
 
     describe "#html_content" do
-      before { subject.file_helper.expects(:read_file_content).returns('h1. Lorem ipsum') }
+      before do
+        subject.file_helper.expects(:read_file_content).returns('h1. Lorem ipsum')
+        subject.textile_helper.expects(:parsed_content).returns('<h1>Lorem ipsum</h1>')
+      end
+
       let(:result) { subject.html_content }
 
       it "result should be a String instance" do
@@ -166,7 +170,7 @@ describe Rwiki::Page do
       end
 
       it "should update the html content" do
-        subject.html_content.should == "<h1>The new content</h1>"
+        subject.html_content.should == %Q{<h1><a name="The-new-content">The new content</a></h1>}
       end
     end
 

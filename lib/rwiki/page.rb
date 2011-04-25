@@ -5,6 +5,7 @@ module Rwiki
     class Error < StandardError; end
 
     attr_reader :file_helper
+    attr_reader :textile_helper
 
     def self.root
       self.new
@@ -12,32 +13,36 @@ module Rwiki
 
     def initialize(path = Rwiki.configuration.root_page_name)
       @file_helper = FileHelper.new(path)
-      raise Error.new("can't find the #{path} page") unless @file_helper.exists?
+      raise Error.new("can't find the #{path} page") unless file_helper.exists?
+    end
+
+    def textile_helper
+      @textile_helper ||= TextileHelper.new(file_content)
     end
 
     def is_root?
-      @file_helper.path == Rwiki.configuration.root_page_path
+      file_helper.path == Rwiki.configuration.root_page_path
     end
 
     def path
-      @file_helper.path
+      file_helper.path
     end
 
     def full_path
-      @file_helper.full_path
+      file_helper.full_path
     end
 
     def full_file_path
-      @file_helper.full_file_path
+      file_helper.full_file_path
     end
 
     def title
-      @file_helper.basename
+      file_helper.basename
     end
 
     def parent
       return if is_root?
-      @parent ||= Page.new(@file_helper.full_parent_path)
+      @parent ||= Page.new(file_helper.full_parent_path)
     end
 
     def children
@@ -69,35 +74,39 @@ module Rwiki
     end
 
     def add_page(name)
-      Page.new(@file_helper.add_page(name))
+      Page.new(file_helper.add_page(name))
     end
 
     def file_content
-      @file_content ||= @file_helper.read_file_content
+      @file_content ||= file_helper.read_file_content
     end
 
     def html_content
-      @html_content ||= TextileHelper.new(file_content).parse
+      @html_content ||= textile_helper.parsed_content
+    end
+
+    def html_toc
+      @html_toc ||= textile_helper.parsed_toc
     end
 
     def update_file_content(file_content)
-      @file_helper.update_file_content(file_content)
+      file_helper.update_file_content(file_content)
       reload!
     end
 
     def rename_to(new_name)
       raise Error.new("cannot rename the #{Rwiki.configuration.root_page_name} page") if is_root?
-      @file_helper.rename_to(new_name)
+      file_helper.rename_to(new_name)
     end
 
     def move_to(node)
       raise Error.new("cannot move the #{Rwiki.configuration.root_page_name} page") if is_root?
-      @file_helper.move_to(node.path)
+      file_helper.move_to(node.path)
     end
 
     def delete
       raise Error.new("cannot delete the #{Rwiki.configuration.root_page_name} page") if is_root?
-      @file_helper.delete
+      file_helper.delete
     end
 
     def to_tree_node_hash
@@ -111,7 +120,8 @@ module Rwiki
       {
         :path => path,
         :rawContent => file_content,
-        :htmlContent => html_content
+        :htmlContent => html_content,
+        :htmlToc => html_toc
       }
     end
 

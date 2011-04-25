@@ -119,7 +119,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     tab.setTitle(page.getTitle());
     tab.setContent(page.getHtmlContent());
-    tab.show();
 
     tab.setIsLoading(false);
     this.toolbar.enablePageRelatedItems();

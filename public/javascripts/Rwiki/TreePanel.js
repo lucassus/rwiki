@@ -1,11 +1,15 @@
 Ext.ns('Rwiki');
 
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
-  
+
   constructor: function() {
     Ext.apply(this, {
       id: 'tree',
-      region: 'center',
+      title: 'Navigation panel',
+      region: 'north',
+      split: true,
+      height: 400,
+      minSize: 150,
       autoScroll: true,
 
       animate: true,
