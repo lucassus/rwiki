@@ -108,6 +108,13 @@ Rwiki.init = function() {
       Rwiki.tabPanel.getToolbar().onFuzzyFinder();
     }
   }, {
+    key: "s",
+    ctrl: true,
+    stopEvent: true,
+    fn: function() {
+      Rwiki.tabPanel.getToolbar().onTextSearch();
+    }
+  }, {
     key: "w",
     ctrl: true,
     stopEvent: true,
