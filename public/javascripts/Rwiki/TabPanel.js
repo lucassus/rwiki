@@ -25,12 +25,10 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
     this.addEvents('rwiki:editPage');
 
-    this.on('rwiki:pageSelected', this.onPageSelected),
     this.on('tabchange', this.onTabChange);
 
     this.on('rwiki:pageCreated', this.onPageCreated);
     this.on('rwiki:pageLoaded', this.onPageLoaded);
-    this.on('rwiki:lastPageClosed', this.onLastPageClosed);
     this.on('rwiki:beforePageSave', this.onBeforePageSave);
     this.on('rwiki:pageSaved', this.onPageSaved);
     this.on('rwiki:pageRenamed', this.onPageRenamed);
@@ -39,7 +37,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     this.relayEvents(Rwiki.Data.PageManager.getInstance(), [
       'rwiki:pageLoaded',
       'rwiki:pageCreated',
-      'rwiki:lastPageClosed',
       'rwiki:beforePageSave',
       'rwiki:pageSaved',
       'rwiki:pageRenamed',
@@ -69,7 +66,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       title: page.getTitle()
     });
 
-    tab.setPagePath(page.getPath());
+    tab.setPage(page);
     this.add(tab);
 
     return tab;
@@ -92,23 +89,16 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     return this.toolbar;
   },
 
-  onPageSelected: function(page) {
-    var tab = this.findOrCreatePageTab(page);
-    tab.show();
-  },
-
   onTabChange: function(panel, tab) {
     if (tab) {
-      if (tab.isLoading()) {
-        return;
-      }
+      var page = tab.getPage();
 
-      Rwiki.setAppTitle(tab.getPagePath());
-      Rwiki.Data.PageManager.getInstance().loadPage(tab.getPagePath());
-      tab.setIsLoading(true);
+      Rwiki.setAppTitle(page.getPath());
+      window.history.pushState({path: page.getPath()}, page.getTitle(), '/page' + page.getPath());
     } else {
       Rwiki.setAppTitle('');
-      Rwiki.Data.PageManager.getInstance().fireEvent('rwiki:lastPageClosed');
+      window.history.pushState({ path: null }, 'Rwiki', '/');
+      this.toolbar.disablePageRelatedItems();
     }
   },
 
@@ -119,16 +109,12 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   onPageLoaded: function(page) {
     var tab = this.findOrCreatePageTab(page);
+    tab.show();
 
-    tab.setTitle(page.getTitle());
-    tab.setContent(page.getHtmlContent());
-
-    tab.setIsLoading(false);
     this.toolbar.enablePageRelatedItems();
   },
 
   onLastPageClosed: function() {
-    this.toolbar.disablePageRelatedItems();
   },
 
   onBeforePageSave: function(page) {

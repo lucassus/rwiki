@@ -39,8 +39,6 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     this.contextMenu = new Rwiki.Tree.Menu();
     this.on('contextmenu', this.onContextMenu, this);
-
-    this.addEvents('rwiki:pageSelected');
   },
 
   initEvents: function() {
@@ -72,8 +70,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onClick: function(node) {
-    var page = new Rwiki.Data.Page({ path: node.getPath() });
-    this.fireEvent('rwiki:pageSelected', page);
+    Rwiki.Data.PageManager.getInstance().loadPage(node.getPath());
   },
 
   onPageLoaded: function(page) {

@@ -3,13 +3,6 @@ Ext.ns('Rwiki');
 // TODO fetch it from the configuration
 Rwiki.rootFolderName = 'Home';
 
-Rwiki.openPage = function(path) {
-  var node = Rwiki.treePanel.findNodeByPath(path);
-  if (node) {
-    Rwiki.treePanel.onClick(node);
-  }
-};
-
 Rwiki.setAppTitle = function(title) {
   document.title = 'Rwiki ' + title;
 };
@@ -25,13 +18,6 @@ Rwiki.init = function() {
 
   Rwiki.nodeManager.on('rwiki:beforePageLoad', function() {
     Rwiki.statusBar.showBusy();
-  });
-
-  Rwiki.nodeManager.on('rwiki:pageLoaded', function(page) {
-    Rwiki.updateToc(page.getHtmlToc());
-    Rwiki.statusBar.clearStatus({useDefaults: true});
-
-    history.pushState({path: page.getPath()}, page.getTitle(), '/page' + page.getPath());
   });
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
@@ -58,7 +44,6 @@ Rwiki.init = function() {
   Rwiki.tabPanel = new Rwiki.TabPanel({
     bbar: Rwiki.statusBar
   });
-  Rwiki.tabPanel.relayEvents(Rwiki.treePanel, ['rwiki:pageSelected']);
 
   var editorWindow = new Rwiki.EditorWindow();
   Rwiki.tabPanel.on('rwiki:editPage', function(path) {
@@ -139,13 +124,14 @@ Rwiki.init = function() {
     var pageRegexp = /^\/page(.*)$/
     if (pageRegexp.test(window.location.pathname)) {
       var path = pageRegexp.exec(window.location.pathname)[1];
-      Rwiki.openPage(path);
+      Rwiki.Data.PageManager.getInstance().loadPage(path);
     }
   }
 
   loadPageFromLocation();
-  $(window).bind('popstate', function(event) {
+
+  window.onpopstate = function(event) {
     loadPageFromLocation();
-  });
+  };
 
 };

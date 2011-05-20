@@ -9,7 +9,6 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
     this.timeout = 10000;
 
     this.initEvents();
-//    Ext.Ajax.on('requestexception', this.onAjaxException);
   },
 
   onAjaxException: function() {
@@ -26,8 +25,7 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
 
       'rwiki:pageDeleted',
       'rwiki:pageCreated',
-      'rwiki:pageRenamed',
-      'rwiki:lastPageClosed'
+      'rwiki:pageRenamed'
     );
   },
 

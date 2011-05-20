@@ -11,6 +11,33 @@ Rwiki.Tabs.PageTab = Ext.extend(Ext.Container, {
     Rwiki.Tabs.PageTab.superclass.constructor.apply(this, arguments);
   },
 
+  setPage: function(page) {
+    this._page = page;
+  },
+
+  getPage: function() {
+    return this._page;
+  },
+
+  setTitle: function(title) {
+    $(this.tabEl).find('.x-tab-strip-text').text(title);
+  },
+
+  setContent: function(content) {
+    var pageContainer = this.getPageContainer();
+    pageContainer.html(content);
+  },
+
+  show: function() {
+    Rwiki.Tabs.PageTab.superclass.show.apply(this, arguments);
+
+    this.setTitle(this._page.getTitle());
+    this.setContent(this._page.getHtmlContent());
+
+    Rwiki.updateToc(this._page.getHtmlToc());
+    Rwiki.statusBar.clearStatus({ useDefaults: true });
+  },
+
   isLoading: function() {
     return this._isLoading;
   },
@@ -27,23 +54,10 @@ Rwiki.Tabs.PageTab = Ext.extend(Ext.Container, {
   },
 
   getPagePath: function() {
-    return this.path;
-  },
-
-  setPagePath: function(path) {
-    this.path = path;
-  },
-
-  setContent: function(htmlContent) {
-    var pageContainer = this.getPageContainer();
-    pageContainer.html(htmlContent);
+    return this._page.getPath();
   },
 
   getPageContainer: function() {
     return $('#' + this.id);
-  },
-
-  setTitle: function(title) {
-    $(this.tabEl).find('.x-tab-strip-text').text(title);
   }
 });
