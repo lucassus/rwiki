@@ -15,7 +15,7 @@ When /^I expand the parent for the tree node "([^"]*)"$/ do |path|
 
   parts.each_index do |i|
     partial_path = parts[0..i].join('/')
-    
+
     When %{I expand the tree node "#{partial_path}"}
   end
 end
@@ -23,7 +23,7 @@ end
 When /^I expand (the tree node "(?:[^"]*)")$/ do |el_node_id|
   ec_selector = "div##{el_node_id} img.x-tree-ec-icon.x-tree-elbow-plus"
   ec_last_selector = "div##{el_node_id} img.x-tree-ec-icon.x-tree-elbow-end-plus"
-  
+
   expand_node_icon = (page.all(ec_selector) | page.all(ec_last_selector)).first
   expand_node_icon.click if expand_node_icon
 end
@@ -58,7 +58,7 @@ end
 When /^I right click (the tree node "([^"]*)")$/ do |el_node_id, path|
   element = page.find("div##{el_node_id}")
   location = element.native.location
-  
+
   Capybara.current_session.execute_script <<-JS
     var node = Rwiki.treePanel.findNodeByPath('#{path}')
     var eventStub = { getXY: function() { return [#{location.x}, #{location.y}] } };
