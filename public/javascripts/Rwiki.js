@@ -11,6 +11,16 @@ Rwiki.updateToc = function(htmlToc) {
   $('div#toc-container').html(htmlToc);
 };
 
+Rwiki.openPage = function(path) {
+  var pageTab = Rwiki.tabPanel.findTabByPagePath(path);
+  if (pageTab) {
+    // page is already loaded, just show the corresponding tab
+    pageTab.show();
+  } else {
+    Rwiki.Data.PageManager.getInstance().loadPage(path);
+  }
+};
+
 Rwiki.init = function() {
   Rwiki.treePanel = new Rwiki.TreePanel();
   Rwiki.nodeManager = Rwiki.Data.PageManager.getInstance();

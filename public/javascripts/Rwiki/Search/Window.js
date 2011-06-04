@@ -1,6 +1,7 @@
 Ext.ns('Rwiki.Search');
 
 Rwiki.Search.Window = Ext.extend(Ext.Window, {
+
   constructor: function() {
     var search = new Ext.form.ComboBox({
       store: this._getDataStore(),
