@@ -39,6 +39,7 @@ Rwiki.init = function() {
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
     Rwiki.updateToc(page.getHtmlToc());
+    Ext.getBody().unmask();
   });
 
   Rwiki.statusBar = new Ext.ux.StatusBar({
