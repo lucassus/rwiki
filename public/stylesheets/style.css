@@ -40,6 +40,28 @@
   padding: 2px;
 }
 
+#toc-container {
+  font-size: 15px;
+}
+
+#toc-container a {
+  text-decoration: none;
+  color: black;
+}
+
+#toc-container ol {
+  counter-reset: item;
+}
+
+#toc-container li:before {
+  counter-increment: item;
+  content: counters(item, ".") ". ";
+}
+
+#toc-container li ol {
+  margin-left: 15px;
+}
+
 .icon-folder-page {
   background-image: url(/images/icons/folder_page.png) !important;  
 }

@@ -31,7 +31,7 @@ module Rwiki::Utils
       content.gsub(HEADER_REGEXP) do
         number = $~[:number].to_i
         name = $~[:name].strip
-        anchor = name.gsub(/\s/, '-')
+        anchor = sanitize_anchor_name(name)
 
         toc_items << ('#' * number) + %Q{ "#{name}":##{anchor}}
       end
@@ -56,7 +56,7 @@ module Rwiki::Utils
         number = $~[:number].to_i
         name = $~[:name].strip
 
-        %Q{h#{number}. <a name="#{sanitize_anchor_name(name)}">#{name}</a>\n}
+        %Q{\nh#{number}. <a name="#{sanitize_anchor_name(name)}">#{name}</a>}
       end
     end
 
