@@ -38,21 +38,6 @@ Rwiki.Tabs.PageTab = Ext.extend(Ext.Container, {
     Rwiki.statusBar.clearStatus({ useDefaults: true });
   },
 
-  isLoading: function() {
-    return this._isLoading;
-  },
-
-  setIsLoading: function(isLoading) {
-    this._isLoading = isLoading;
-
-    if (this.isLoading()) {
-      this.mask = new Ext.LoadMask(Ext.get(this.id), {msg: 'Loading the page...'});
-      this.mask.show();
-    } else if (this.mask) {
-      this.mask.hide();
-    }
-  },
-
   getPagePath: function() {
     return this._page.getPath();
   },

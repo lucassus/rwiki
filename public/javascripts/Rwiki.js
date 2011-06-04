@@ -17,6 +17,7 @@ Rwiki.openPage = function(path) {
     // page is already loaded, just show the corresponding tab
     pageTab.show();
   } else {
+    Ext.getBody().mask('Loading page: ' + path);
     Rwiki.Data.PageManager.getInstance().loadPage(path);
   }
 };
@@ -33,6 +34,7 @@ Rwiki.init = function() {
   Rwiki.nodeManager.on('rwiki:pageLoaded', function(page) {
     Rwiki.updateToc(page.getHtmlToc());
     Rwiki.statusBar.clearStatus({useDefaults: true});
+    Ext.getBody().unmask();
   });
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {

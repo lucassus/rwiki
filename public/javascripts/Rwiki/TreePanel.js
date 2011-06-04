@@ -71,13 +71,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onClick: function(node) {
-    var pageTab = Rwiki.tabPanel.findTabByPagePath(node.getPath());
-    if (pageTab) {
-      // page is already loaded, just show the corresponding tab
-      pageTab.show();
-    } else {
-      Rwiki.Data.PageManager.getInstance().loadPage(node.getPath());
-    }
+    Rwiki.openPage(node.getPath())
   },
 
   onPageLoaded: function(page) {

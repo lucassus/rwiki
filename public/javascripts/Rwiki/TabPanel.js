@@ -114,15 +114,12 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   onBeforePageSave: function(page) {
     var tab = this.findTabByPagePath(page.getPath());
     if (tab == null) return;
-
-    tab.setIsLoading(true);
   },
 
   onPageSaved: function(page) {
     var tab = this.findTabByPagePath(page.getPath());
     if (tab == null) return;
 
-    tab.setIsLoading(false);
     tab.setContent(page.getHtmlContent());
   },
 
