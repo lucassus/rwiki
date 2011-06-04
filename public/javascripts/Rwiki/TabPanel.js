@@ -92,7 +92,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
   onTabChange: function(panel, tab) {
     if (tab) {
       var page = tab.getPage();
-
       Rwiki.setAppTitle(page.getPath());
     } else {
       Rwiki.setAppTitle('');
@@ -110,9 +109,6 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     tab.show();
 
     this.toolbar.enablePageRelatedItems();
-  },
-
-  onLastPageClosed: function() {
   },
 
   onBeforePageSave: function(page) {

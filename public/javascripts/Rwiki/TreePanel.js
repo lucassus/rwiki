@@ -56,7 +56,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       'rwiki:pageLoaded',
       'rwiki:pageCreated',
       'rwiki:pageRenamed',
-      'rwiki:pageDeleted']);
+      'rwiki:pageDeleted'
+    ]);
   },
 
   onContextMenu: function(node, e) {
@@ -70,7 +71,13 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onClick: function(node) {
-    Rwiki.Data.PageManager.getInstance().loadPage(node.getPath());
+    var pageTab = Rwiki.tabPanel.findTabByPagePath(node.getPath());
+    if (pageTab) {
+      // page is already loaded, just show the corresponding tab
+      pageTab.show();
+    } else {
+      Rwiki.Data.PageManager.getInstance().loadPage(node.getPath());
+    }
   },
 
   onPageLoaded: function(page) {
