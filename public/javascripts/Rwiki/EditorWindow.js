@@ -37,16 +37,27 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
     Rwiki.EditorWindow.superclass.constructor.apply(this, arguments);
   },
 
+  initEvents: function() {
+    Rwiki.EditorWindow.superclass.initEvents.apply(this, arguments);
+
+    this.relayEvents(Rwiki.Data.PageManager.getInstance(), ['rwiki:pageLoaded']);
+    this.on('rwiki:pageLoaded', this.onPageLoaded);
+  },
+
   setPagePath: function(path) {
     this.pagePath = path;
     this.setTitle('Editing page ' + path);
   },
 
   show: function() {
-    Rwiki.Data.PageManager.getInstance().loadPage(this.pagePath);
     Rwiki.EditorWindow.superclass.show.apply(this, arguments);
 
     Ext.get('editor-container').mask('Loading the page...');
+    Rwiki.Data.PageManager.getInstance().loadPage(this.pagePath);
+  },
+
+  onPageLoaded: function() {
+    Ext.get('editor-container').unmask();
   },
 
   savePage: function() {
