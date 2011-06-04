@@ -74,7 +74,6 @@ Rwiki.Editor.Panel = Ext.extend(Ext.Panel, {
 
   onPageLoaded: function(page) {
     this.setContent(page.getRawContent());
-    Ext.get('editor-container').unmask();
   },
 
   setContent: function(content) {
