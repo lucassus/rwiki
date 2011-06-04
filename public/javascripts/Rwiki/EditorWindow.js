@@ -54,11 +54,14 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
     Rwiki.EditorWindow.superclass.show.apply(this, arguments);
 
     Ext.get('editor-container').mask('Loading page: ' + this.pagePath);
+    this._disableButtons();
+
     Rwiki.Data.PageManager.getInstance().loadPage(this.pagePath);
   },
 
   onPageLoaded: function() {
     Ext.get('editor-container').unmask();
+    this._enableButtons();
   },
 
   savePage: function() {
@@ -74,6 +77,7 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
 
   onSaveAndContinueButton: function() {
     Ext.get('editor-container').mask('Saving page: ' + this.pagePath);
+    this._disableButtons();
     this.savePage();
   },
 
@@ -89,5 +93,23 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
     if (!this.editorPanel.isContentChanged() || confirm('Content has been changes, continue?')) {
       this.hide();
     }
+  },
+
+  _disableButtons: function() {
+    this._eachButton(function(button) {
+      button.setDisabled(true);
+    });
+  },
+
+  _enableButtons: function() {
+    this._eachButton(function(button) {
+      button.setDisabled(false);
+    });
+  },
+
+  _eachButton: function(callback) {
+    Ext.each(this.buttons, function(button) {
+      callback(button);
+    });
   }
 });
