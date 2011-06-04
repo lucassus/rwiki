@@ -35,6 +35,34 @@ Rwiki.Mask.prototype = {
   },
 
   /**
+   * Displays creating page mask.
+   */
+  creatingPage: function(parentPath, name) {
+    this._mask('Creating page: ' + parentPath + '/' + name);
+  },
+
+  /**
+   * Displays deleting page mask.
+   */
+  deletingPage: function(path) {
+    this._mask('Deleting page:' + path);
+  },
+
+  /**
+   * Displays renaming page mask.
+   */
+  renamingPage: function(oldPath, newName) {
+    this._mask('Renaming page: ' + oldPath + ' to: ' + newName);
+  },
+
+  /**
+   * Displays moving page mask.
+   */
+  movingPage: function(path, newParentPath) {
+    this._mask('Moving page: ' + path + ' to: ' + newParentPath);
+  },
+
+  /**
    * Hides the mask and sets the container to default value;
    */
   hide: function() {

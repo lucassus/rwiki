@@ -48,6 +48,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
   },
 
   createPage: function(parentPath, name) {
+    Rwiki.mask.creatingPage(parentPath, name);
+
     Ext.Ajax.request({
       url: '/node',
       type: 'POST',
@@ -61,6 +63,7 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var data = Ext.decode(response.responseText);
         var node = new Rwiki.Data.Page(data);
 
+        Rwiki.mask.hide();
         this.fireEvent('rwiki:pageCreated', node);
       }
     });
@@ -88,6 +91,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
   },
 
   renameNode: function(oldPath, newName) {
+    Rwiki.mask.renamingPage(oldPath, newName);
+
     Ext.Ajax.request({
       url: '/node/rename',
       method: 'POST',
@@ -100,12 +105,16 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
       success: function(response) {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Data.Page(data);
+
+        Rwiki.mask.hide();
         this.fireEvent('rwiki:pageRenamed', page);
       }
     });
   },
 
   deleteNode: function(path) {
+    Rwiki.mask.deletingPage(path);
+
     Ext.Ajax.request({
       url: '/node',
       method: 'DELETE',
@@ -115,12 +124,16 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
       success: function(response) {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Data.Page(data);
+
+        Rwiki.mask.hide();
         this.fireEvent('rwiki:pageDeleted', page);
       }
     });
   },
 
   moveNode: function(path, newParentPath) {
+    Rwiki.mask.movingPage(path, newParentPath);
+
     var self = this;
     var result = $.ajax({
       type: 'PUT',
@@ -134,6 +147,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
       timeout: this.timeout,
       success: function(data) {
         var page = new Rwiki.Data.Page(data);
+
+        Rwiki.mask.hide();
         self.fireEvent('rwiki:pageRenamed', page);
       }
     });
