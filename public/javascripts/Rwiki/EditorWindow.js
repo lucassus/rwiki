@@ -3,6 +3,7 @@ Ext.ns('Rwiki');
 Rwiki.EditorWindow = Ext.extend(Ext.Window, {
   constructor: function() {
     this.editorPanel = new Rwiki.Editor.Panel();
+    this._container = Ext.get('editor-container');
 
     Ext.apply(this, {
       maximizable: true,
@@ -53,14 +54,14 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
   show: function() {
     Rwiki.EditorWindow.superclass.show.apply(this, arguments);
 
-    Ext.get('editor-container').mask('Loading page: ' + this.pagePath);
+    Rwiki.mask.on(this._container).loadingPage(this.pagePath);
     this._disableButtons();
 
     Rwiki.Data.PageManager.getInstance().loadPage(this.pagePath);
   },
 
   onPageLoaded: function() {
-    Ext.get('editor-container').unmask();
+    Rwiki.mask.on(this._container).hide();
     this._enableButtons();
   },
 
@@ -70,13 +71,15 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
   },
 
   onSaveButton: function() {
-    Ext.getBody().mask('Saving page: ' + this.pagePath);
+    Rwiki.mask.savingPage(this.pagePath);
+
     this.savePage();
     this.hide();
   },
 
   onSaveAndContinueButton: function() {
-    Ext.get('editor-container').mask('Saving page: ' + this.pagePath);
+    Rwiki.mask.on(this._container).savingPage(this.pagePath);
+
     this._disableButtons();
     this.savePage();
   },

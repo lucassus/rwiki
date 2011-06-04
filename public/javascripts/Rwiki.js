@@ -17,10 +17,13 @@ Rwiki.openPage = function(path) {
     // page is already loaded, just show the corresponding tab
     pageTab.show();
   } else {
-    Ext.getBody().mask('Loading page: ' + path);
+    Rwiki.mask.loadingPage(path);
     Rwiki.Data.PageManager.getInstance().loadPage(path);
   }
 };
+
+// Create mask instance
+Rwiki.mask = new Rwiki.Mask(Ext.getBody());
 
 Rwiki.init = function() {
   Rwiki.treePanel = new Rwiki.TreePanel();
@@ -34,12 +37,12 @@ Rwiki.init = function() {
   Rwiki.nodeManager.on('rwiki:pageLoaded', function(page) {
     Rwiki.updateToc(page.getHtmlToc());
     Rwiki.statusBar.clearStatus({useDefaults: true});
-    Ext.getBody().unmask();
+    Rwiki.mask.hide();
   });
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
     Rwiki.updateToc(page.getHtmlToc());
-    Ext.getBody().unmask();
+    Rwiki.mask.hide();
   });
 
   Rwiki.statusBar = new Ext.ux.StatusBar({

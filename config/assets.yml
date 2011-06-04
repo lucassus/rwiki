@@ -25,6 +25,7 @@ javascripts:
     - Rwiki/Button
     - Rwiki/Debug
     - Rwiki/EditorWindow
+    - Rwiki/Mask
     - Rwiki/NavigationPanel
     - Rwiki/TabPanel
     - Rwiki/TreePanel
