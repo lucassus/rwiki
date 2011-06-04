@@ -60,14 +60,14 @@ Rwiki.init = function() {
 
   // Create the layout
 
-  var tocPanel = {
+  Rwiki.tocPanel = new Ext.Panel({
     id: 'toc-panel',
     title: 'Table of Content',
     region: 'center',
     bodyStyle: 'padding-bottom:15px;background:#eee;',
     autoScroll: true,
-    html: '<div id="toc-container">When you select a page from the tree, the TOC will display here.</div>'
-  };
+    html: '<div id="toc-container"><p class="info">When you select a page from the tree, the TOC will display here.</p></div>'
+  });
 
   var appViewport = new Ext.Viewport({
     layout: 'border',
@@ -81,7 +81,7 @@ Rwiki.init = function() {
       width: 250,
       minSize: 200,
       maxSize: 500,
-      items: [Rwiki.treePanel, tocPanel]
+      items: [Rwiki.treePanel, Rwiki.tocPanel]
     }, Rwiki.tabPanel],
     listeners: {
       afterrender: function() {

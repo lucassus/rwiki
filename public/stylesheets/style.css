@@ -41,7 +41,11 @@
 }
 
 #toc-container {
-  font-size: 15px;
+  font-size: 12px;
+  margin: 5px;
+  padding: 5px;
+  border: 1px dotted #999;
+  background: #F9F9F9;
 }
 
 #toc-container a {
