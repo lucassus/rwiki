@@ -20,6 +20,11 @@ Rwiki.init = function() {
     Rwiki.statusBar.showBusy();
   });
 
+  Rwiki.nodeManager.on('rwiki:pageLoaded', function(page) {
+    Rwiki.updateToc(page.getHtmlToc());
+    Rwiki.statusBar.clearStatus({useDefaults: true});
+  });
+
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
     Rwiki.updateToc(page.getHtmlToc());
   });
@@ -118,20 +123,4 @@ Rwiki.init = function() {
       Rwiki.tabPanel.remove(tab);
     }
   }]);
-
-  // Load page from the url
-  var loadPageFromLocation = function() {
-    var pageRegexp = /^\/page(.*)$/
-    if (pageRegexp.test(window.location.pathname)) {
-      var path = pageRegexp.exec(window.location.pathname)[1];
-      Rwiki.Data.PageManager.getInstance().loadPage(path);
-    }
-  }
-
-  loadPageFromLocation();
-
-  window.onpopstate = function(event) {
-    loadPageFromLocation();
-  };
-
 };
