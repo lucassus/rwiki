@@ -130,7 +130,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     // set a new title and path for the current tab
     var tab = this.findTabByPagePath(oldPath);
     if (tab) {
-      tab.setPagePath(page.getPath());
+      tab.setPage(page);
       tab.setTitle(page.getTitle());
 
       if (tab == currentTab) {
@@ -143,7 +143,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     for (var i = 0; i < tabs.length; i++) {
       tab = tabs[i];
       var newPath = tab.getPagePath().replace(oldPath, page.getPath());
-      tab.setPagePath(newPath);
+      tab.getPage().setPath(newPath);
 
       if (tab == currentTab) {
         Rwiki.setAppTitle(page.getPath());

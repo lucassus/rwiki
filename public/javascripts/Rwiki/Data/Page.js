@@ -46,6 +46,14 @@ Rwiki.Data.Page.prototype = {
   },
 
   /**
+   * Sets the new page path.
+   * @param path
+   */
+  setPath: function(path) {
+    this._data.path = path;
+  },
+
+  /**
    * Returns node's parent path
    */
   getParentPath: function() {
