@@ -56,12 +56,12 @@ Feature: Editing the page
     And I should see "<content>" within "h1"
 
   Examples:
-    | path                                         | content           |
-    | /Home                                        | A new page header |
-    | /Home/About                                  | A new About page  |
-    | /Home/Personal stuff/Addresses               | Moje adresy       |
-    | /Home/Development/Programming Languages/Ruby | Ruby is awesome   |
-    | /Home/Development/Programming Languages/Java | Java sux          |
+    | path                                         | content                                  |
+    | /Home                                        | This is Rwiki Home Page                  |
+    | /Home/About                                  | This is a sample page, zażółć gęsią jaźń |
+    | /Home/Personal stuff/Addresses               | Moje adresy                              |
+    | /Home/Development/Programming Languages/Ruby | Ruby is awesome                          |
+    | /Home/Development/Programming Languages/Java | Java sux                                 |
 
   Scenario: Edit and Cancel
     When I open the page "/Home"

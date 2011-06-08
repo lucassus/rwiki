@@ -9,6 +9,11 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
     }, config);
 
     Rwiki.Tree.Node.superclass.constructor.call(this, config);
+
+    this.on('beforemove', function(tree, node, oldParent, newParent) {
+      // do not allow to move a node to the same parent
+      return oldParent != newParent;
+    });
   },
 
   getPath: function() {
@@ -30,7 +35,7 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
 
     for (var i = 0, len = nodes.length; i < len; i++) {
       var node = nodes[i];
-      
+
       var isNotACurrNode = node != this;
       if (isNotACurrNode && node.isExpandable()) {
         node.expand(false);

@@ -1,5 +1,7 @@
 h1. Ruby code
 
+Ruby is awesome
+
 <code lang="ruby">
 When /^I create a new page titled "([^"]*)" for the node with path "([^"]*)"$/ do |title, path|
   When %{I right click the node with path "#{path}"}

@@ -39,6 +39,16 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
 
     this.contextMenu = new Rwiki.Tree.Menu();
     this.on('contextmenu', this.onContextMenu, this);
+
+    this.addEvents('rwiki:pageSelected');
+
+    this.on('nodedragover', function(e) {
+      var newParent = e.target;
+      var node = e.dropNode;
+
+      // do not allow to move a node to the same parent
+      return node.parentNode != newParent;
+    });
   },
 
   initEvents: function() {

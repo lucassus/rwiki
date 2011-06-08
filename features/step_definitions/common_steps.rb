@@ -71,6 +71,7 @@ end
 
 Then /^I should see a content for the page "([^"]*)"$/ do |path|
   require 'lorax'
+  require 'ap'
 
   expected_html = Rwiki::Page.new(path).html_content
   expected_html = "<div>#{expected_html}</div>"
