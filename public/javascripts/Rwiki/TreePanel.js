@@ -1,7 +1,7 @@
 Ext.ns('Rwiki');
 
 Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
-  
+
   constructor: function() {
     Ext.apply(this, {
       id: 'tree',
@@ -37,6 +37,14 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
     this.on('contextmenu', this.onContextMenu, this);
 
     this.addEvents('rwiki:pageSelected');
+
+    this.on('nodedragover', function(e) {
+      var newParent = e.target;
+      var node = e.dropNode;
+
+      // do not allow to move a node to the same parent
+      return node.parentNode != newParent;
+    });
   },
 
   initEvents: function() {
