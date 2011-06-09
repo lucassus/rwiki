@@ -42,7 +42,9 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
     var parentNode = this.node;
 
     Ext.MessageBox.prompt('Add page', 'New page name:', function(button, name) {
-      if (button != 'ok') return;
+      if (button !== 'ok') {
+        return;
+      }
 
       var parentPath = parentNode.getPath();
       Rwiki.nodeManager.createPage(parentPath, name);
@@ -51,13 +53,18 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
 
   onRenameNode: function() {
     var node = this.node;
-    if (node.isRoot) return;
+    if (node.isRoot) {
+      return;
+    }
 
     var oldPath = node.getPath();
     var oldBaseName = node.text;
 
     var callback = function(button, newName) {
-      if (button != 'ok') return;
+      if (button !== 'ok') {
+        return;
+      }
+
       Rwiki.nodeManager.renameNode(oldPath, newName);
     };
 
@@ -66,12 +73,17 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
 
   onDeleteNode: function() {
     var node = this.node;
-    if (node.isRoot) return;
-    
+    if (node.isRoot) {
+      return;
+    }
+
     var path = node.getPath();
 
     var callback = function(button) {
-      if (button != 'yes') return;
+      if (button !== 'yes') {
+        return;
+      }
+
       Rwiki.nodeManager.deleteNode(path);
     };
 

@@ -94,6 +94,6 @@ Rwiki.Editor.Panel = Ext.extend(Ext.Panel, {
   },
 
   isContentChanged: function() {
-    return this.getContent() != this.oldContent;
+    return this.getContent() !== this.oldContent;
   }
 });

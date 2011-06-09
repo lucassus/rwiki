@@ -12,7 +12,7 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
 
     this.on('beforemove', function(tree, node, oldParent, newParent) {
       // do not allow to move a node to the same parent
-      return oldParent != newParent;
+      return oldParent !== newParent;
     });
   },
 
@@ -33,10 +33,11 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
 
     nodes = nodes.reverse();
 
-    for (var i = 0, len = nodes.length; i < len; i++) {
+    var i;
+    for (i = 0, len = nodes.length; i < len; i++) {
       var node = nodes[i];
 
-      var isNotACurrNode = node != this;
+      var isNotACurrNode = node !== this;
       if (isNotACurrNode && node.isExpandable()) {
         node.expand(false);
       }
@@ -47,7 +48,8 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
     if (this.isExpandable()) {
       this.expand();
       var cs = this.childNodes;
-      for (var i = 0, len = cs.length; i < len; i++) {
+      var i;
+      for (i = 0, len = cs.length; i < len; i++) {
         cs[i].expandAll();
       }
     }
@@ -67,7 +69,8 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
 
     if (fn.apply(scope || this, args || [this]) !== false){
       var cs = this.childNodes;
-      for (var i = 0, len = cs.length; i < len; i++) {
+      var i;
+      for (i = 0, len = cs.length; i < len; i++) {
         cs[i].cascadeAll(fn, args);
       }
     }

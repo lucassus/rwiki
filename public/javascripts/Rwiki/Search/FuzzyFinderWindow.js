@@ -23,7 +23,7 @@ Rwiki.Search.FuzzyFinderWindow = Ext.extend(Rwiki.Search.Window, {
         {name: 'score', mapping: 'score'},
         {name: 'highlighted_path', mapping: 'highlighted_path'}
       ])
-    })
+    });
   },
 
   // Custom rendering Template

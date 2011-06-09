@@ -2,7 +2,7 @@ Ext.ns('Rwiki.Data');
 
 Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
   constructor: function() {
-    if (Rwiki.Data.PageManager.caller != Rwiki.Data.PageManager.getInstance) {
+    if (Rwiki.Data.PageManager.caller !== Rwiki.Data.PageManager.getInstance) {
       throw new Error("There is no public constructor for Rwiki.Data.PageManager");
     }
 
@@ -162,8 +162,9 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
 
     var result = true;
     var n = Math.min(parentParts.length, pathParts.length);
-    for (var i = 0; i < n; i++) {
-      if (parentParts[i] != pathParts[i]) {
+    var i;
+    for (i = 0; i < n; i++) {
+      if (parentParts[i] !== pathParts[i]) {
         result = false;
         break;
       }
@@ -176,7 +177,7 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
 Rwiki.Data.PageManager._instance = null;
 
 Rwiki.Data.PageManager.getInstance = function() {
-  if (this._instance == null) {
+  if (this._instance === null) {
     this._instance = new Rwiki.Data.PageManager();
   }
 
