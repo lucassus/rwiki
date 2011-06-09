@@ -7,10 +7,6 @@ Rwiki.setAppTitle = function(title) {
   document.title = 'Rwiki ' + title;
 };
 
-Rwiki.updateToc = function(htmlToc) {
-  $('div#toc-container').html(htmlToc);
-};
-
 Rwiki.openPage = function(path) {
   var pageTab = Rwiki.tabPanel.findTabByPagePath(path);
   if (pageTab) {
@@ -22,10 +18,8 @@ Rwiki.openPage = function(path) {
   }
 };
 
-// Create mask instance
-Rwiki.mask = new Rwiki.Mask(Ext.getBody());
-
 Rwiki.init = function() {
+  Rwiki.mask = new Rwiki.Mask(Ext.getBody());
   Rwiki.treePanel = new Rwiki.TreePanel();
   Rwiki.nodeManager = Rwiki.Data.PageManager.getInstance();
   Rwiki.Debug.captureEvents(Rwiki.nodeManager);
@@ -35,13 +29,11 @@ Rwiki.init = function() {
   });
 
   Rwiki.nodeManager.on('rwiki:pageLoaded', function(page) {
-    Rwiki.updateToc(page.getHtmlToc());
     Rwiki.statusBar.clearStatus({useDefaults: true});
     Rwiki.mask.hide();
   });
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
-    Rwiki.updateToc(page.getHtmlToc());
     Rwiki.mask.hide();
   });
 
@@ -75,15 +67,7 @@ Rwiki.init = function() {
   });
 
   // Create the layout
-
-  Rwiki.tocPanel = new Ext.Panel({
-    id: 'toc-panel',
-    title: 'Table of Content',
-    region: 'center',
-    bodyStyle: 'padding-bottom:15px;background:#eee;',
-    autoScroll: true,
-    html: '<div id="toc-container"><p class="info">When you select a page from the tree, the TOC will display here.</p></div>'
-  });
+  Rwiki.tocPanel = new Rwiki.TocPanel();
 
   var appViewport = new Ext.Viewport({
     layout: 'border',

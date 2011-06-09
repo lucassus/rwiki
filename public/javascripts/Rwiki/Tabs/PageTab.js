@@ -34,7 +34,6 @@ Rwiki.Tabs.PageTab = Ext.extend(Ext.Container, {
     this.setTitle(this._page.getTitle());
     this.setContent(this._page.getHtmlContent());
 
-    Rwiki.updateToc(this._page.getHtmlToc());
     Rwiki.statusBar.clearStatus({ useDefaults: true });
   },
 

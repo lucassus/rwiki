@@ -28,6 +28,7 @@ javascripts:
     - Rwiki/Mask
     - Rwiki/NavigationPanel
     - Rwiki/TabPanel
+    - Rwiki/TocPanel
     - Rwiki/TreePanel
     - Rwiki
 
