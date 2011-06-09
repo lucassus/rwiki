@@ -66,6 +66,15 @@ Rwiki.init = function() {
     }
   });
 
+  Rwiki.tabPanel.on('tabchange', function(panel, tab) {
+    if (tab) {
+      var page = tab.getPage();
+      window.history.pushState({ path: page.getPath() }, '', '/page' + page.getPath());
+    } else{
+      window.history.pushState({}, '', '/');
+    }
+  });
+
   // Create the layout
   Rwiki.tocPanel = new Rwiki.TocPanel();
 
@@ -123,4 +132,12 @@ Rwiki.init = function() {
       Rwiki.tabPanel.remove(tab);
     }
   }]);
+
+  // try to load a page from the location
+  var pageRegexp = /^\/page(.*)$/;
+  var pathName = window.location.pathname;
+  if (pageRegexp.test(pathName)) {
+    var path = pageRegexp.exec(pathName)[1];
+    Rwiki.openPage(path);
+  }
 };
