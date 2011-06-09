@@ -172,7 +172,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       var path = currentTab.getPagePath();
       window.open('/node/print?path=' + path, 'Rwiki ' + path, 'width=800,height=600,scrollbars=yes')
     }
-  },
+  }
 
 });
 
