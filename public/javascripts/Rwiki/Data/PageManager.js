@@ -68,7 +68,6 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var data = Ext.decode(response.responseText);
         var node = new Rwiki.Data.Page(data);
 
-        Rwiki.mask.hide();
         this.fireEvent('rwiki:pageCreated', node);
       }
     });
@@ -111,7 +110,6 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Data.Page(data);
 
-        Rwiki.mask.hide();
         this.fireEvent('rwiki:pageRenamed', page);
       }
     });
@@ -130,7 +128,6 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Data.Page(data);
 
-        Rwiki.mask.hide();
         this.fireEvent('rwiki:pageDeleted', page);
       }
     });
