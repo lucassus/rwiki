@@ -9,7 +9,9 @@ Rwiki.TocPanel = Ext.extend(Ext.Panel, {
     Ext.apply(this, {
       id: 'toc-panel',
       title: 'Table of Content',
-      region: 'center',
+      region: 'south',
+      split: true,
+      height: 300,
       bodyStyle: 'padding-bottom:15px;background:#eee;',
       autoScroll: true,
       html: '<div id="toc-container"></div>'
