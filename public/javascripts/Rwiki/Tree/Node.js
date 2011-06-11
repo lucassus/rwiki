@@ -67,11 +67,11 @@ Rwiki.Tree.Node = Ext.extend(Ext.tree.TreeNode, {
       this.expand(false, false);
     }
 
-    if (fn.apply(scope || this, args || [this]) !== false){
+    if (fn.apply(scope || this, args || [this])) {
       var cs = this.childNodes;
-      var i;
-      for (i = 0, len = cs.length; i < len; i++) {
-        cs[i].cascadeAll(fn, args);
+
+      for (var i = 0, len = cs.length; i < len; i++) {
+        cs[i].cascadeAll(fn, scope, args);
       }
     }
 

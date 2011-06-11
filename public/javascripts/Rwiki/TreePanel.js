@@ -131,6 +131,8 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
       if (currentNode.getPath() == path) {
         node = currentNode;
         return false;
+      } else {
+        return true;
       }
     });
 

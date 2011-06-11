@@ -2,7 +2,7 @@ describe "Rwiki.Tree.Menu", ->
   menu = null
 
   beforeEach ->
-    menu = new Rwiki.Tree.Menu
+    menu = new Rwiki.Tree.Menu()
 
   describe ":show", ->
     node = {}
@@ -19,8 +19,8 @@ describe "Rwiki.Tree.Menu", ->
         expect(item).toBeEnabled()
 
     beforeEach ->
-      node.select = jasmine.createSpy('select');
-      menu.showAt = jasmine.createSpy('showAt');
+      node.select = jasmine.createSpy('select')
+      menu.showAt = jasmine.createSpy('showAt')
 
       this.addMatchers(
         toBeDisabled: ->
