@@ -7,12 +7,7 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
     }
 
     this.timeout = 10000;
-
     this.initEvents();
-  },
-
-  onAjaxException: function() {
-    alert('Something went wrong...');
   },
 
   initEvents: function() {
@@ -28,6 +23,13 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
       'rwiki:pageCreated',
       'rwiki:pageRenamed'
     );
+  },
+
+  _onFailure: function(response, opts) {
+    Rwiki.mask.hide();
+
+    var window = new Rwiki.ExceptionWindow();
+    window.showResponse(response);
   },
 
   loadPage: function(path) {
@@ -48,7 +50,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         } else {
           this.fireEvent('rwiki:pageNotFound', data.message);
         }
-      }
+      },
+      failure: this._onFailure
     });
   },
 
@@ -69,7 +72,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var node = new Rwiki.Data.Page(data);
 
         this.fireEvent('rwiki:pageCreated', node);
-      }
+      },
+      failure: this._onFailure
     });
   },
 
@@ -90,7 +94,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var data = Ext.decode(response.responseText);
         var page = new Rwiki.Data.Page(data);
         this.fireEvent('rwiki:pageSaved', page);
-      }
+      },
+      failure: this._onFailure
     });
   },
 
@@ -111,7 +116,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var page = new Rwiki.Data.Page(data);
 
         this.fireEvent('rwiki:pageRenamed', page);
-      }
+      },
+      failure: this._onFailure
     });
   },
 
@@ -129,7 +135,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
         var page = new Rwiki.Data.Page(data);
 
         this.fireEvent('rwiki:pageDeleted', page);
-      }
+      },
+      failure: this._onFailure
     });
   },
 
@@ -152,7 +159,8 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
 
         Rwiki.mask.hide();
         self.fireEvent('rwiki:pageRenamed', page);
-      }
+      },
+      failure: this._onFailure
     });
 
     return Ext.util.JSON.decode(result.responseText);
