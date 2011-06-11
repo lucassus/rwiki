@@ -43,6 +43,22 @@ Rwiki.init = function() {
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
     Rwiki.mask.hide();
+    Rwiki.flash.success('Page ' + page.getPath() + ' was saved!');
+  });
+
+  Rwiki.nodeManager.on('rwiki:pageDeleted', function(page) {
+    Rwiki.mask.hide();
+    Rwiki.flash.success('Page' + page.getPath() + ' was deleted!');
+  });
+
+  Rwiki.nodeManager.on('rwiki:pageCreated', function(page) {
+    Rwiki.mask.hide();
+    Rwiki.flash.success('Page' + page.getPath() + ' was created!');
+  });
+
+  Rwiki.nodeManager.on('rwiki:pageRenamed', function(page) {
+    Rwiki.mask.hide();
+    Rwiki.flash.success('Page' + page.getPath() + ' was renamed!');
   });
 
   Rwiki.statusBar = new Ext.ux.StatusBar({
