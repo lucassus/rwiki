@@ -46,7 +46,7 @@ module Rwiki
         path = params[:path].strip
         page = Page.new(path)
 
-        page.to_json
+        page.to_json(:success => true)
       rescue Rwiki::Page::Error => error
         { :success => false, :message => error.message }.to_json
       end

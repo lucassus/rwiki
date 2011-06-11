@@ -19,6 +19,14 @@ Rwiki.openPage = function(path) {
   }
 };
 
+Rwiki.flash = function(message, type) {
+  Ext.ux.Msg.flash({
+    msg: message,
+    time: 20000000,
+    type: type
+  });
+};
+
 Rwiki.init = function() {
   Rwiki.mask = new Rwiki.Mask(Ext.getBody());
   Rwiki.treePanel = new Rwiki.TreePanel();
@@ -32,6 +40,11 @@ Rwiki.init = function() {
   Rwiki.nodeManager.on('rwiki:pageLoaded', function(page) {
     Rwiki.statusBar.clearStatus({useDefaults: true});
     Rwiki.mask.hide();
+  });
+
+  Rwiki.nodeManager.on('rwiki:pageNotFound', function(message) {
+    Rwiki.mask.hide();
+    Rwiki.flash(message, 'error');
   });
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {

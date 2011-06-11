@@ -3,6 +3,7 @@ javascripts:
     - vendor/jquery/jquery-1.5
 
   extjs:
+    - vendor/ext/ux/Ext.ux.MessageBox.flash
     - vendor/ext/ux/StatusBar
     - vendor/ext/ux/TabCloseMenu
 
@@ -35,6 +36,7 @@ javascripts:
 stylesheets:
   extjs:
     - vendor/ext/ext-all
+    - vendor/ext/css/Ext.ux.MessageBox.flash
 
   markitup:
     - vendor/markitup/skins/markitup/style

@@ -1,0 +1,272 @@
+/* 
+    Document   : Ext.ux.MessageBox.flash
+    Created on : 22/01/2010, 16:26:28
+    Author     : Otavio
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+    padding: 0px;
+    margin:0px;
+}
+
+#msg-div {
+    position:absolute;
+    width: 100%;
+    top:10px;
+    z-index:20000;
+    padding: 0px;
+    margin:0px;
+}
+
+/* General message box style*/
+.flash {padding:0px;margin:0px;}
+
+.flash .msg{
+    font-family: arial;
+    font-size: 14px;
+    font-weight: bold;
+    text-align:center;
+    width: 100%;
+}
+
+.flash table{
+    padding: 0px;
+    cursor:pointer;
+    margin-top: 5px;
+}
+
+/* Define top box style*/
+.flash .lt{
+    background-image: url(/images/flash/lt.png);
+    background-repeat: no-repeat;
+    width: 53px;
+    height: 11px;
+}
+
+.flash .ct{
+    background-image: url(/images/flash/ct.png);
+    background-repeat: repeat-x;
+    min-width: 210px;
+    height: 11px;
+
+}
+
+.flash .rt{
+    background-image: url(/images/flash/rt.png);
+    background-repeat: no-repeat;
+    width: 11px;
+    height: 11px;
+}
+
+/* Define middle box style*/
+.flash .lm{
+    background-repeat: repeat-y;
+    width: 53px;
+    min-height: 18px;
+}
+
+.flash .cm{
+    min-width: 210px;
+    height: 18px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.flash .rm{
+    background-repeat: repeat-y;
+    width: 11px;
+    height: 18px;
+}
+
+/* Define bottom box style*/
+.flash .lb{
+    background-image: url(/images/flash/lb.png);
+    background-repeat: no-repeat;
+    width: 53px;
+    height: 11px;
+}
+
+.flash .cb{
+    background-image: url(/images/flash/cb.png);
+    background-repeat: repeat-x;
+    min-width: 210px;
+    height: 11px;
+
+}
+
+.flash .rb{
+    background-image: url(/images/flash/rb.png);
+    background-repeat: no-repeat;
+    width: 11px;
+    height: 11px;
+}
+
+/* Flash Success message box style*/
+/* top */
+.flash .success .lt{
+    background-position: 0px 0px;
+}
+
+.flash .success .ct{
+    background-position: 0px 0px;
+    color: #fff;
+}
+
+.flash .success .rt{
+    background-position: 0px 0px;
+}
+/* middle */
+.flash .success .lm{
+    background-image: url(/images/flash/s_lm.png);
+}
+
+.flash .success .cm{
+    background-image: url(/images/flash/s_cm.png);
+    color: #fff;
+}
+
+.flash .success .rm{
+    background-image: url(/images/flash/s_rm.png);
+}
+
+.flash .success .icon{
+    background-image: url(/images/flash/success-icon.png);
+    width: 26px;
+    height: 21px;
+}
+
+/* Flash Error message box style*/
+/* top */
+.flash .error .lt{
+    background-position: 0px -11px;
+}
+
+.flash .error .ct{
+    background-position: 0px -11px;
+}
+
+.flash .error .rt{
+    background-position: 0px -11px;
+}
+/* middle */
+.flash .error .lm{
+    background-image: url(/images/flash/e_lm.png);
+}
+
+.flash .error .cm{
+    background-image: url(/images/flash/e_cm.png);
+    color: #fff;
+}
+
+.flash .error .rm{
+    background-image: url(/images/flash/e_rm.png);
+}
+/* bottom */
+.flash .error .lb{
+    background-position: 0px -11px;
+}
+
+.flash .error .cb{
+    background-position: 0px -11px;
+}
+
+.flash .error .rb{
+    background-position: 0px -11px;
+}
+
+.flash .error .icon{
+    background-image: url(/images/flash/error-icon.png);
+    width: 21px;
+    height: 21px;
+}
+
+/* Flash Warning message box style*/
+/* top */
+.flash .warning .lt{
+    background-position: 0px -22px;
+}
+
+.flash .warning .ct{
+    background-position: 0px -22px;
+}
+
+.flash .warning .rt{
+    background-position: 0px -22px;
+}
+/* middle */
+.flash .warning .lm{
+    background-image: url(/images/flash/w_lm.png);
+}
+
+.flash .warning .cm{
+    background-image: url(/images/flash/w_cm.png);
+    color: #3F4247;
+}
+
+.flash .warning .rm{
+    background-image: url(/images/flash/w_rm.png);
+}
+/* bottom */
+.flash .warning .lb{
+    background-position: 0px -22px;
+}
+
+.flash .warning .cb{
+    background-position: 0px -22px;
+}
+
+.flash .warning .rb{
+    background-position: 0px -22px;
+}
+
+.flash .warning .icon{
+    background-image: url(/images/flash/warning-icon.png);
+    width: 8px;
+    height: 21px;
+}
+
+/* Flash Info message box style*/
+/* top */
+.flash .info .lt{
+    background-position: 0px -33px;
+}
+
+.flash .info .ct{
+    background-position: 0px -33px;
+}
+
+.flash .info .rt{
+    background-position: 0px -33px;
+}
+/* middle */
+.flash .info .lm{
+    background-image: url(/images/flash/i_lm.png);
+}
+
+.flash .info .cm{
+    background-image: url(/images/flash/i_cm.png);
+    color: #3F4247;
+}
+
+.flash .info .rm{
+    background-image: url(/images/flash/i_rm.png);
+}
+/* bottom */
+.flash .info .lb{
+    background-position: 0px -33px;
+}
+
+.flash .info .cb{
+    background-position: 0px -33px;
+}
+
+.flash .info .rb{
+    background-position: 0px -33px;
+}
+
+.flash .info .icon{
+    background-image: url(/images/flash/info-icon.png);
+    width: 8px;
+    height: 21px;
+}

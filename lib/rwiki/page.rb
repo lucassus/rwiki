@@ -13,7 +13,7 @@ module Rwiki
 
     def initialize(path = Rwiki.configuration.root_page_name)
       @file_helper = FileHelper.new(path)
-      raise Error.new("can't find the #{path} page") unless file_helper.exists?
+      raise Error.new("Cannot find the #{path} page") unless file_helper.exists?
     end
 
     def textile_helper
@@ -95,17 +95,17 @@ module Rwiki
     end
 
     def rename_to(new_name)
-      raise Error.new("cannot rename the #{Rwiki.configuration.root_page_name} page") if is_root?
+      raise Error.new("Cannot rename the #{Rwiki.configuration.root_page_name} page") if is_root?
       file_helper.rename_to(new_name)
     end
 
     def move_to(node)
-      raise Error.new("cannot move the #{Rwiki.configuration.root_page_name} page") if is_root?
+      raise Error.new("Cannot move the #{Rwiki.configuration.root_page_name} page") if is_root?
       file_helper.move_to(node.path)
     end
 
     def delete
-      raise Error.new("cannot delete the #{Rwiki.configuration.root_page_name} page") if is_root?
+      raise Error.new("Cannot delete the #{Rwiki.configuration.root_page_name} page") if is_root?
       file_helper.delete
     end
 
@@ -125,8 +125,8 @@ module Rwiki
       }
     end
 
-    def to_json
-      to_hash.to_json
+    def to_json(extra_attrs = {})
+      to_hash.merge(extra_attrs).to_json
     end
 
     # TODO cleanup and write tests

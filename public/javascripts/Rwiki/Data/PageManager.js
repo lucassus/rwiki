@@ -19,6 +19,7 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
     this.addEvents(
       'rwiki:beforePageLoad',
       'rwiki:pageLoaded',
+      'rwiki:pageNotFound',
 
       'rwiki:beforePageSave',
       'rwiki:pageSaved',
@@ -41,8 +42,12 @@ Rwiki.Data.PageManager = Ext.extend(Ext.util.Observable, {
       timeout: this.timeout,
       success: function(response) {
         var data = Ext.decode(response.responseText);
-        var page = new Rwiki.Data.Page(data);
-        this.fireEvent('rwiki:pageLoaded', page);
+        if (data.success) {
+          var page = new Rwiki.Data.Page(data);
+          this.fireEvent('rwiki:pageLoaded', page);
+        } else {
+          this.fireEvent('rwiki:pageNotFound', data.message);
+        }
       }
     });
   },
