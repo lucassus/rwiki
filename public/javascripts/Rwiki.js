@@ -19,16 +19,10 @@ Rwiki.openPage = function(path) {
   }
 };
 
-Rwiki.flash = function(message, type) {
-  Ext.ux.Msg.flash({
-    msg: message,
-    time: 20000000,
-    type: type
-  });
-};
-
 Rwiki.init = function() {
   Rwiki.mask = new Rwiki.Mask(Ext.getBody());
+  Rwiki.flash = new Rwiki.Flash();
+
   Rwiki.treePanel = new Rwiki.TreePanel();
   Rwiki.nodeManager = Rwiki.Data.PageManager.getInstance();
   Rwiki.Debug.captureEvents(Rwiki.nodeManager);
@@ -44,7 +38,7 @@ Rwiki.init = function() {
 
   Rwiki.nodeManager.on('rwiki:pageNotFound', function(message) {
     Rwiki.mask.hide();
-    Rwiki.flash(message, 'error');
+    Rwiki.flash.error(message);
   });
 
   Rwiki.nodeManager.on('rwiki:pageSaved', function(page) {
