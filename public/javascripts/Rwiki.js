@@ -8,6 +8,7 @@ Rwiki.setAppTitle = function(title) {
 };
 
 Rwiki.openPage = function(path) {
+  path = unescape(path);
   var pageTab = Rwiki.tabPanel.findTabByPagePath(path);
   if (pageTab) {
     // page is already loaded, just show the corresponding tab
@@ -46,11 +47,7 @@ Rwiki.init = function() {
   // Initialize the internal links
   $('a.internal-link').live('click', function() {
     var path = $(this).attr('href');
-    var node = Rwiki.treePanel.findNodeByPath(path);
-    if (node) {
-      Rwiki.treePanel.onClick(node);
-    }
-
+    Rwiki.openPage(path);
     return false;
   });
 
