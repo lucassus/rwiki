@@ -26,7 +26,6 @@ end
 
 group :test do
   gem 'guard'
-  gem 'guard-coffeescript'
   gem 'libnotify'
 
   gem 'rack-test'
