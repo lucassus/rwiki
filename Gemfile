@@ -27,12 +27,13 @@ end
 group :test do
   gem 'guard'
   gem 'guard-coffeescript'
-  gem 'guard-livereload'
   gem 'libnotify'
 
   gem 'rack-test'
   gem 'mocha'
   gem 'jasmine'
+  gem 'barista'
+  gem 'rack-asset-compiler'
   gem 'rspec'
 
   gem 'fuubar'
