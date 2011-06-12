@@ -23,6 +23,7 @@ javascripts:
     - Rwiki/Tree/Menu
     - Rwiki/Tree/Node
     - Rwiki/AboutDialog
+    - Rwiki/PageNameDialog
     - Rwiki/Button
     - Rwiki/Debug
     - Rwiki/EditorWindow

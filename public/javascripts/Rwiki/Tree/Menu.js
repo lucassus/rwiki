@@ -41,14 +41,16 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
   onCreatePage: function() {
     var parentNode = this.node;
 
-    Ext.MessageBox.prompt('Add page', 'New page name:', function(button, name) {
+    var callback = function(button, name) {
       if (button !== 'ok') {
         return;
       }
 
       var parentPath = parentNode.getPath();
       Rwiki.nodeManager.createPage(parentPath, name);
-    });
+    }
+
+    Ext.MessageBox.prompt('Add page', 'New page name:', callback);
   },
 
   onRenameNode: function() {
