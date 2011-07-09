@@ -1,5 +1,5 @@
 describe "Rwiki.Data.Page", ->
-  node;
+  node
   data = {
     path: '/Home/Development/Dynamic languages/Ruby',
     htmlContent: 'html content',
@@ -7,11 +7,11 @@ describe "Rwiki.Data.Page", ->
   }
 
   beforeEach ->
-    node = new Rwiki.Data.Page(data);
+    node = new Rwiki.Data.Page(data)
 
   describe ":getPath", ->
     it "should return valid path", ->
-      path = node.getPath();
+      path = node.getPath()
       expect(path).toEqual('/Home/Development/Dynamic languages/Ruby')
 
   describe ":getParentPath", ->

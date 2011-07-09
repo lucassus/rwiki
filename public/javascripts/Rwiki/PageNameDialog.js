@@ -1,5 +1,12 @@
 Ext.ns('Rwiki');
 
+Ext.apply(Ext.form.VTypes, {
+  pageName: function(val, field) {
+    return /^\w+[\s\w]+\w+$/.test(val);
+  },
+  pageNameText: 'Page name is invalid'
+});
+
 Rwiki.PageNameDialog = Ext.extend(Ext.Window, {
   constructor: function() {
     this.formPanel = new Ext.FormPanel({
@@ -9,7 +16,8 @@ Rwiki.PageNameDialog = Ext.extend(Ext.Window, {
       items: [{
         fieldLabel: 'Page name',
         name: 'page_name',
-        allowBlank: false
+        allowBlank: false,
+        vtype: 'pageName'
       }],
       buttons: [{
         text: 'Ok'

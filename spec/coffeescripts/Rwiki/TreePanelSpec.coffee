@@ -57,19 +57,17 @@ describe "Rwiki.TreePanel", ->
       expect(node).toBeNull()
 
   describe ":onClick handler", ->
-    node = {};
+    node = {}
 
     describe "for leaf node", ->
       beforeEach ->
-        node.isLeaf = jasmine.createSpy('node.isLeaf').andReturn(true)
+        Rwiki.openPage = jasmine.createSpy('Rwiki.openPage')
         node.getPath = jasmine.createSpy('node.getPath').andReturn('/Home/path')
 
-        spyOn(treePanel, 'fireEvent');
-        treePanel.onClick(node);
+        treePanel.onClick(node)
 
-      it "should fire event", ->
-        expect(treePanel.fireEvent).toHaveBeenCalledWith('rwiki:pageSelected', new Rwiki.Data.Page(path: '/Home/path'))
-
+      it "should open the page", ->
+        expect(Rwiki.openPage).toHaveBeenCalledWith('/Home/path')
 
   describe ":onPageCreated handler", ->
     beforeEach ->

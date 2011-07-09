@@ -80,7 +80,7 @@ Rwiki.TreePanel = Ext.extend(Ext.tree.TreePanel, {
   },
 
   onClick: function(node) {
-    Rwiki.openPage(node.getPath())
+    Rwiki.openPage(node.getPath());
   },
 
   onPageLoaded: function(page) {
