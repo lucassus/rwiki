@@ -64,7 +64,7 @@ When /^I reload the application$/ do
 end
 
 When /^I open the application for page "([^"]*)"$/ do |path|
-  visit('/#' + path)
+  visit('/page/' + path)
   And %{I wait for load the page}
 end
 
