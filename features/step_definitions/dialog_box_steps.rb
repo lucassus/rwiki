@@ -15,7 +15,7 @@ When /^I press "([^"]*)" within the dialog box$/ do |button|
 end
 
 Then /^I should see the window titled "([^"]*)"$/ do |title|
-  page.find("span.x-window-header-text").text.should == title
+  page.find("div.x-window span.x-window-header-text").text.should == title
 end
 
 Then /^I should not see the window$/ do

@@ -20,13 +20,14 @@ Feature: Editing the page
   Scenario Outline: Edit and save the page
     When I open the page "<path>"
     And I press "Edit page"
+    And I wait for load the page
     Then I should see the window titled "Editing page <path>"
 
     When I fill in "editor" with "h1. <content>"
     And I press "Save"
     Then I should not see the window
 
-    When I wait for load the page
+    When I wait for save the page
     Then I should see "<content>" within "h1"
     And I should see a content for the page "<path>"
 
@@ -46,11 +47,12 @@ Feature: Editing the page
   Scenario Outline: Edit and Save and continue
     When I open the page "<path>"
     And I press "Edit page"
+    And I wait for load the page
     Then I should see the window titled "Editing page <path>"
 
     When I fill in "editor" with "h1. <content>"
     And I press "Save and continue"
-    And I wait for load the page
+    And I wait for save the page
     Then I should see the window titled "Editing page <path>"
     And I should see a content for the page "<path>"
     And I should see "<content>" within "h1"

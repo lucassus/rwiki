@@ -11,20 +11,25 @@ When /^I wait for (\d+) second$/ do |n|
   sleep(n.to_i)
 end
 
-Then /^I should see loading a page mask$/ do
-  Then %{I should see "Loading page:" within "div.ext-el-mask-msg"}
-end
-
 When /^I wait for load the page$/ do
   condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
   sleep 0.5 # wait for the mask
   unless condition.call
-    Then %{I should see loading a page mask}
+    Then %{I should see "Loading page:" within "div.ext-el-mask-msg"}
     wait_until(10, &condition)
   end
   sleep 0.5 # wait for insert the page to the DOM
 end
 
+When /^I wait for save the page$/ do
+  condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
+  sleep 0.5 # wait for the mask
+  unless condition.call
+    Then %{I should see "Saving page:" within "div.ext-el-mask-msg"}
+    wait_until(10, &condition)
+  end
+  sleep 0.5 # wait for insert the page to the DOM
+end
 When /^I open the application$/ do
   When %Q{I go to the home page}
   Then %{I should see disabled "Edit page" toolbar button}
