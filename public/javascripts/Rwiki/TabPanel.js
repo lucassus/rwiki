@@ -101,6 +101,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
 
   onPageCreated: function(page) {
     var tab = this.createPageTab(page);
+    this.toolbar.enablePageRelatedItems();
     tab.show();
   },
 
