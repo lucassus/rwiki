@@ -12,11 +12,11 @@ When /^I wait for (\d+) second$/ do |n|
 end
 
 Then /^I should see loading a page mask$/ do
-  Then %{I should see "Loading the page..." within "div.x-mask-loading"}
+  Then %{I should see "Loading page:" within "div.ext-el-mask-msg"}
 end
 
 When /^I wait for load the page$/ do
-  condition = lambda { page.all('div.x-mask-loading', :visible => true).empty? rescue true }
+  condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
   sleep 0.5 # wait for the mask
   unless condition.call
     Then %{I should see loading a page mask}

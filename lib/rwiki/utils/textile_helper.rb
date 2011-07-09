@@ -1,5 +1,6 @@
 module Rwiki::Utils
   class TextileHelper
+    require 'uri'
 
     # Regexp for extracting an article headers
     HEADER_REGEXP = /^\s*h(?<number>[1-6]?)\.\s+(?<name>.*)/.freeze
@@ -61,7 +62,7 @@ module Rwiki::Utils
     end
 
     def sanitize_anchor_name(name)
-      name.gsub(/\s/, '-')
+      URI.escape name.gsub(/\s/, '-')
     end
 
   end

@@ -41,6 +41,6 @@ group :test do
   gem 'cucumber'
   gem 'cucumber-rails'
   gem 'capybara'
-  gem 'selenium-webdriver'
+  gem "selenium-webdriver", "~> 2.0.0"
   gem 'lorax'
 end
