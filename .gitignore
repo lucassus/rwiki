@@ -35,3 +35,8 @@ spec/javascripts/Rwiki
 
 # Rwiki configuration file
 config/config.yml
+
+public/javascripts/packaged
+public/stylesheets/packaged
+spec/reports
+tmp
