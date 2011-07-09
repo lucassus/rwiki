@@ -10,6 +10,7 @@ Feature: Create a new page
 
     When I fill in the input with "<new_page_name>" within the dialog box
     And I press "OK" within the dialog box
+    And I wait for create the page
     Then I should see the page titled "<new_page_name>"
 
     When I reload the application
