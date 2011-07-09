@@ -3,7 +3,7 @@ Ext.ns('Rwiki');
 Rwiki.TocPanel = Ext.extend(Ext.Panel, {
   constructor: function() {
     this._current_page_path = null;
-    this._default_content = 'When you select a page from the tree, the Table of Content will display here.';
+    this._default_content = 'When you select a page from the tree, the Table of Content will be displayed here.';
     this._page_without_toc_content = 'This page does not have any sections.';
 
     Ext.apply(this, {
