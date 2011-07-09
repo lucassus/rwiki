@@ -7,6 +7,7 @@ gem 'json_pure'
 gem 'thin'
 gem 'fuzzy_file_finder'
 gem 'grit'
+gem 'foreverb'
 
 gem 'smart_asset'
 gem 'archive-tar-minitar'

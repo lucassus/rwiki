@@ -1,12 +1,21 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+rwiki_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(rwiki_dir) unless $LOAD_PATH.include?(rwiki_dir)
 require 'rwiki'
+require 'forever'
 
-rwiki_path = (ARGV[0] ? File.expand_path(ARGV[0]) : Dir.pwd).freeze
-puts "Rwiki path is: #{rwiki_path}"
-Rwiki.configuration.rwiki_path = rwiki_path
+Forever.run do
+  pid '/tmp/rwiki.pid'
+  log '/tmp/rwiki.log'
 
-Rwiki::Utils::FileHelper.create_home_page!
-Rwiki::App.run!
+  on_ready do
+    rwiki_path = (ARGV[0] ? File.expand_path(ARGV[0]) : Dir.pwd).freeze
+    puts "Rwiki path is: #{rwiki_path}"
+    Rwiki.configuration.rwiki_path = rwiki_path
+
+    Rwiki::Utils::FileHelper.create_home_page!
+    Rwiki::App.run!
+  end
+end
