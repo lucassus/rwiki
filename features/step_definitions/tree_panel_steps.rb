@@ -1,3 +1,4 @@
+# Transforms node path to the correspoding tree node div id
 Transform /^the tree node "([^"]*)"$/ do |path|
   Capybara.current_session.execute_script <<-JS
     // get the ExtJS internal tree node id
@@ -15,7 +16,6 @@ When /^I expand the parent for the tree node "([^"]*)"$/ do |path|
 
   parts.each_index do |i|
     partial_path = parts[0..i].join('/')
-
     When %{I expand the tree node "#{partial_path}"}
   end
 end
@@ -74,13 +74,17 @@ Then /^(the tree node "(?:[^"]*)") should not be selected$/ do |el_node_id|
   page.has_no_css? "div##{el_node_id}.x-tree-selected"
 end
 
-When /^I move the tree node "([^"]*)" to "([^"]*)"$/ do |path, parent_path|
-  Capybara.current_session.execute_script <<-JS
-    var node = Rwiki.treePanel.findNodeByPath('#{path}');
-    var parentNode = Rwiki.treePanel.findNodeByPath('#{parent_path}');
+When /^I move (the tree node "(?:[^"]*)") to (the tree node "(?:[^"]*)")$/ do |node_id, target_node_id|
+  browser = Capybara.current_session.driver.browser
 
-    parentNode.appendChild(node);
-  JS
+  # find the corresponding elements
+  node_element = browser.find_element(:xpath, "//div[@id='#{node_id}']")
+  target_node_element = browser.find_element(:xpath, "//div[@id='#{target_node_id}']")
+
+  # perform node drag and drop
+  browser.mouse.down(node_element)
+  browser.mouse.move_to(target_node_element)
+  browser.mouse.up
 end
 
 Then /^for (the tree node "(?:[^"]*)") I should see following nodes:$/ do |el_node_id, table|
