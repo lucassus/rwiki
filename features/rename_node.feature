@@ -14,6 +14,7 @@ Feature: Rename a node
 
     When I fill in the input with "<new_name>" within the dialog box
     And I press "OK" within the dialog box
+    And I wait for rename the page
     Then I should see the page titled "<new_name>"
     And I should see the application title "Rwiki <new_path>"
     And I should have the following open tabs:
@@ -39,6 +40,7 @@ Feature: Rename a node
 
     When I fill in the input with "Personal stuff" within the dialog box
     And I press "OK" within the dialog box
+    And I wait for rename the page
 
     When I reload the application
     And I should see "About"
@@ -66,6 +68,7 @@ Feature: Rename a node
 
     When I fill in the input with "Programming" within the dialog box
     And I press "OK" within the dialog box
+    And I wait for rename the page
 
     When I click a tab for page "<path>"
     Then I should see a content for the page "<path>"

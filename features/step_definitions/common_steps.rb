@@ -42,6 +42,16 @@ When /^I wait for create the page$/ do
   sleep 0.5 # wait for insert the page to the DOM
 end
 
+When /^I wait for rename the page$/ do
+  condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
+  sleep 0.5 # wait for the mask
+  unless condition.call
+    Then %{I should see "Renaming page:" within "div.ext-el-mask-msg"}
+    wait_until(10, &condition)
+  end
+  sleep 0.5 # wait for insert the page to the DOM
+end
+
 When /^I wait for move the page$/ do
   condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
   sleep 0.5 # wait for the mask
