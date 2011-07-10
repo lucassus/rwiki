@@ -18,22 +18,42 @@ Run the application
 rwiki /path/to/your/wiki-files
 </code>
 
-h2. Screenshots
+h2. Features
 
 h3. Browsing pages
 
-!http://img534.imageshack.us/img534/9779/rwikishowpage.png(test)!
+!https://github.com/lucassus/rwiki/raw/master/screenshots/rwiki-main-screen.png(Rwiki main screen)!
 
 h3. Editing a page
 
-!http://img17.imageshack.us/img17/5865/rwikieditingpage.png(test)!
+!https://github.com/lucassus/rwiki/raw/master/screenshots/rwiki-edit-page-feature.png(Rwiki editing a page)!
 
-h3. FuzzyFinder
+h3. Syntax highlight
 
-!http://img197.imageshack.us/img197/107/rwikifuzzyfinder.png(test)!
+h4. Ruby code
+
+!https://github.com/lucassus/rwiki/raw/master/screenshots/rwiki-ruby-syntax.png(Rwiki ruby code)!
+
+h4. Java code
+
+!https://github.com/lucassus/rwiki/raw/master/screenshots/rwiki-java-syntax.png(Rwiki java code)!
+
+h3. Searching
+
+h4. FuzzyFinder
+
+!https://github.com/lucassus/rwiki/raw/master/screenshots/rwiki-fuzzy-finder.png(Rwiki fuzyy finder)!
+
+h4. Simple text search
+
+!https://github.com/lucassus/rwiki/raw/master/screenshots/rwiki-text-search.png(Rwiki test search)!
+
+h3. Table of Content
+
+!https://github.com/lucassus/rwiki/raw/master/screenshots/rwiki-toc.png(Rwiki Table of Content)!
 
 h2. Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
