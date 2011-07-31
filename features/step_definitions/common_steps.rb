@@ -11,55 +11,34 @@ When /^I wait for (\d+) second$/ do |n|
   sleep(n.to_i)
 end
 
-# TODO dry this steps
-When /^I wait for load the page$/ do
+When /I wait for "([^"]*)" loading mask disappear/ do |text|
   condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
   sleep 0.5 # wait for the mask
   unless condition.call
-    Then %{I should see "Loading page:" within "div.ext-el-mask-msg"}
+    Then %{I should see "#{text}" within "div.ext-el-mask-msg"}
     wait_until(10, &condition)
   end
   sleep 0.5 # wait for insert the page to the DOM
+end
+
+When /^I wait for load the page$/ do
+  When %{I wait for "Loading page:" loading mask disappear}
 end
 
 When /^I wait for save the page$/ do
-  condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
-  sleep 0.5 # wait for the mask
-  unless condition.call
-    Then %{I should see "Saving page:" within "div.ext-el-mask-msg"}
-    wait_until(10, &condition)
-  end
-  sleep 0.5 # wait for insert the page to the DOM
+  When %{I wait for "Saving page:" loading mask disappear}
 end
 
 When /^I wait for create the page$/ do
-  condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
-  sleep 0.5 # wait for the mask
-  unless condition.call
-    Then %{I should see "Creating page:" within "div.ext-el-mask-msg"}
-    wait_until(10, &condition)
-  end
-  sleep 0.5 # wait for insert the page to the DOM
+  When %{I wait for "Creating page:" loading mask disappear}
 end
 
 When /^I wait for rename the page$/ do
-  condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
-  sleep 0.5 # wait for the mask
-  unless condition.call
-    Then %{I should see "Renaming page:" within "div.ext-el-mask-msg"}
-    wait_until(10, &condition)
-  end
-  sleep 0.5 # wait for insert the page to the DOM
+  When %{I wait for "Renaming page:" loading mask disappear}
 end
 
 When /^I wait for move the page$/ do
-  condition = lambda { page.all('div.ext-el-mask-msg', :visible => true).empty? rescue true }
-  sleep 0.5 # wait for the mask
-  unless condition.call
-    Then %{I should see "Moving page:" within "div.ext-el-mask-msg"}
-    wait_until(10, &condition)
-  end
-  sleep 0.5 # wait for insert the page to the DOM
+  When %{I wait for "Moving page:" loading mask disappear}
 end
 
 When /^I open the application$/ do
