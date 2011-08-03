@@ -59,6 +59,7 @@ Rwiki.init = function() {
   Rwiki.nodeManager.on('rwiki:pageRenamed', function(page) {
     Rwiki.mask.hide();
     Rwiki.flash.success('Page' + page.getPath() + ' was renamed!');
+    window.history.pushState({ path: page.getPath() }, '', '/page' + page.getPath());
   });
 
   Rwiki.statusBar = new Ext.ux.StatusBar({

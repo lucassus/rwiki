@@ -94,6 +94,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
       var page = tab.getPage();
       Rwiki.setAppTitle(page.getPath());
     } else {
+      // last tab was closed
       Rwiki.setAppTitle('');
       this.toolbar.disablePageRelatedItems();
     }
