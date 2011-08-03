@@ -13,6 +13,7 @@ Rwiki.Tabs.PageTab = Ext.extend(Ext.Container, {
 
   setPage: function(page) {
     this._page = page;
+    this.setContent(page.getHtmlContent());
   },
 
   getPage: function() {

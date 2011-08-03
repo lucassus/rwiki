@@ -122,7 +122,7 @@ Rwiki.TabPanel = Ext.extend(Ext.TabPanel, {
     var tab = this.findTabByPagePath(page.getPath());
     if (tab == null) return;
 
-    tab.setContent(page.getHtmlContent());
+    tab.setPage(page);
   },
 
   onPageRenamed: function(page) {
