@@ -52,6 +52,7 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
   },
 
   show: function() {
+    Rwiki.keyMap.disable();
     Rwiki.EditorWindow.superclass.show.apply(this, arguments);
 
     Rwiki.mask.on(this._container).loadingPage(this.pagePath);
@@ -94,6 +95,7 @@ Rwiki.EditorWindow = Ext.extend(Ext.Window, {
 
   _exitEditor: function() {
     if (!this.editorPanel.isContentChanged() || confirm('Content has been changes, continue?')) {
+      Rwiki.keyMap.enable();
       this.hide();
     }
   },

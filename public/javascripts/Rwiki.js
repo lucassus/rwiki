@@ -123,30 +123,26 @@ Rwiki.init = function() {
   appViewport.show();
 
   // map one key by key code
-  var map = new Ext.KeyMap(document, [{
+  Rwiki.keyMap = new Ext.KeyMap(document, [{
     key: "e",
-    alt: true,
     stopEvent: true,
     fn: function() {
       Rwiki.tabPanel.getToolbar().onEditPage();
     }
   }, {
     key: "t",
-    ctrl: true,
     stopEvent: true,
     fn: function() {
       Rwiki.tabPanel.getToolbar().onFuzzyFinder();
     }
   }, {
     key: "s",
-    ctrl: true,
     stopEvent: true,
     fn: function() {
       Rwiki.tabPanel.getToolbar().onTextSearch();
     }
   }, {
     key: "w",
-    ctrl: true,
     stopEvent: true,
     fn: function() {
       var tab = Rwiki.tabPanel.getActiveTab();
