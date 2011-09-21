@@ -33,7 +33,14 @@ Rwiki.Search.Window = Ext.extend(Ext.Window, {
     Rwiki.Search.Window.superclass.constructor.apply(this, arguments);
   },
 
+  show: function() {
+    Rwiki.keyMap.disable();
+    Rwiki.Search.Window.superclass.show.apply(this, arguments);
+  },
+
   onSelectResult: function(combo, record) {
+    Rwiki.keyMap.enable();
+
     var path = record.data.path;
     Rwiki.openPage(path);
 

@@ -40,8 +40,11 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
 
   onCreatePage: function() {
     var parentNode = this.node;
+    Rwiki.keyMap.disable();
 
     var callback = function(button, name) {
+      Rwiki.keyMap.enable();
+
       if (button !== 'ok') {
         return;
       }
@@ -54,6 +57,7 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
   },
 
   onRenameNode: function() {
+    Rwiki.keyMap.disable();
     var node = this.node;
     if (node.isRoot) {
       return;
@@ -63,6 +67,7 @@ Rwiki.Tree.Menu = Ext.extend(Ext.menu.Menu, {
     var oldBaseName = node.text;
 
     var callback = function(button, newName) {
+      Rwiki.keyMap.enable();
       if (button !== 'ok') {
         return;
       }
