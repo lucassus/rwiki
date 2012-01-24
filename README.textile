@@ -1,6 +1,7 @@
 h1. rwiki
 
 Personal wiki inspired by Zim http://zim-wiki.org/
+note: new shiny version is commin: https://github.com/lucassus/geeki
 
 h2. Installation
 
