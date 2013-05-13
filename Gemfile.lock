@@ -1,7 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    RedCloth (4.2.7)
+    RedCloth (4.2.9)
     archive-tar-minitar (0.5.2)
     awesome_print (0.4.0)
     barista (1.2.1)
