@@ -17,7 +17,6 @@ gem 'archive-tar-minitar'
 group :development do
   gem 'jeweler'
   gem 'ruby-graphviz'
-  gem 'ruby-debug19'
   gem 'shotgun'
 
   gem 'watchr'
